@@ -1,0 +1,38 @@
+<body class="login-body">
+    <div class="login-topbar">
+        <a href="#" class="logo">
+            <img src="../../../assets/layout/images/ecuador-logo.png" alt="ecuador-layout" />
+        </a>
+    </div>
+
+    <div class="login-image">
+        <div class="login-panel">
+            <p-toast position="top-right" [baseZIndex]="10000"></p-toast>
+            <!--<p-progressSpinner [style]="{width: '50px', height: '50px'}"
+                styleClass="custom-spinner" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>-->
+            <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+                    <img src="../../../assets/images/logo_footer.png" alt="rosa-mistica" class="img" />
+
+                <div class="ui-g-12">
+                    <div class="input-wrapper">
+                        <input type="text" autocomplete="off" placeholder="email" class="ui-inputtext ui-widget"
+                        formControlName="email">
+                    </div>
+                </div>
+
+                <div class="checkbox-container">
+                    <button type="submit" [disabled]="!checkoutForm.valid"
+                        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                        <span class="ui-button-text ui-c">Send</span>
+                    </button>
+                </div>
+
+
+                <div class="separator"></div>
+
+            </form>
+
+        </div>
+    </div>
+
+</body>

@@ -1,0 +1,26 @@
+
+form{
+    margin-top: -30px;
+}
+
+.img{
+    height: 75px !important;
+    margin-bottom: 20px !important;
+}
+
+@keyframes p-progress-spinner-color {
+    100%,
+    0% {
+        stroke: #d62d20;
+    }
+    40% {
+        stroke: #0057e7;
+    }
+    66% {
+        stroke: #008744;
+    }
+    80%,
+    90% {
+        stroke: #ffa700;
+    }
+}

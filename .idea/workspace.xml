@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2fb84d15-4a53-4e8f-9f47-8b50308a2165" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="JsBowerSettings">
+    <node-interpreter value="project" />
+    <exe-path />
+    <config-path />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>false</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>false</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="ProjectId" id="1ZrJ4iYzH2quZSIGjTaxWwCJWcU" />
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>AngularJS</id>
+          </State>
+          <State>
+            <id>TypeScript</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>TypescriptExplicitMemberType</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/assets/demo/images/car" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.jscs" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.path.for.package.stylelint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="" />
+    <property name="node.js.selected.package.jscs" value="" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="node.js.selected.package.stylelint" value="" />
+    <property name="node.js.selected.package.tslint" value="$PROJECT_DIR$/node_modules/tslint" />
+    <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.TypeScript" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/assets/demo/images/car" />
+      <recent name="$PROJECT_DIR$/src/app" />
+      <recent name="$PROJECT_DIR$/src/assets/sass" />
+      <recent name="$PROJECT_DIR$/src/assets/layout/images" />
+      <recent name="$PROJECT_DIR$/src/assets/layout/css" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/e2e/src" />
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/e2e" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>$USER_HOME$/.subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2fb84d15-4a53-4e8f-9f47-8b50308a2165" name="Default" comment="" />
+      <created>1527571734470</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1527571734470</updated>
+      <workItem from="1527571736473" duration="19802000" />
+      <workItem from="1527840223606" duration="329000" />
+      <workItem from="1528174241952" duration="3082000" />
+      <workItem from="1528347450960" duration="359000" />
+      <workItem from="1528353205819" duration="89000" />
+      <workItem from="1528615149560" duration="2009000" />
+      <workItem from="1528712365746" duration="7049000" />
+      <workItem from="1528792976688" duration="1078000" />
+      <workItem from="1529305439307" duration="410000" />
+      <workItem from="1529313336816" duration="288000" />
+      <workItem from="1530007561393" duration="917000" />
+      <workItem from="1530088733978" duration="5301000" />
+      <workItem from="1530166769159" duration="17000" />
+      <workItem from="1530174473968" duration="84000" />
+      <workItem from="1530175910254" duration="781000" />
+      <workItem from="1530255558577" duration="113000" />
+      <workItem from="1530527427915" duration="11244000" />
+      <workItem from="1530623257364" duration="10253000" />
+      <workItem from="1531382734493" duration="605000" />
+      <workItem from="1531730450329" duration="112000" />
+      <workItem from="1531896826330" duration="930000" />
+      <workItem from="1532434647121" duration="394000" />
+      <workItem from="1533540971046" duration="9678000" />
+      <workItem from="1534319252496" duration="84000" />
+      <workItem from="1534319742434" duration="115000" />
+      <workItem from="1535522599102" duration="8133000" />
+      <workItem from="1535702960286" duration="948000" />
+      <workItem from="1535954955554" duration="2007000" />
+      <workItem from="1536663078664" duration="2466000" />
+      <workItem from="1536922103718" duration="2100000" />
+      <workItem from="1538390384093" duration="7249000" />
+      <workItem from="1539068068361" duration="1616000" />
+      <workItem from="1539330945126" duration="8946000" />
+      <workItem from="1539859936244" duration="11000" />
+      <workItem from="1543849480890" duration="1685000" />
+      <workItem from="1544443225057" duration="643000" />
+      <workItem from="1544444584857" duration="4350000" />
+      <workItem from="1544518920172" duration="381000" />
+      <workItem from="1544527626826" duration="581000" />
+      <workItem from="1544704248432" duration="1337000" />
+      <workItem from="1545059665892" duration="972000" />
+      <workItem from="1545121740777" duration="404000" />
+      <workItem from="1545388470811" duration="792000" />
+      <workItem from="1561538568426" duration="9416000" />
+      <workItem from="1568705326918" duration="238000" />
+      <workItem from="1585591091302" duration="12572000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/node_modules/karma/config.tpl.js" />
+      </list>
+    </option>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
