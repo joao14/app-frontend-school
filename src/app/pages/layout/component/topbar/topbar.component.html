@@ -15,23 +15,25 @@
     </a>
 
     <div class="search-input">
-        <select name="miselect" [(ngModel)]="languajeSelected" (change)="onChange($event)">
-            <option [value]="lan.code" *ngFor="let lan of languajes">{{lan.name}}</option>
+        <i class="fa fa-language" aria-hidden="true" style="color: white;"></i> &nbsp;
+        <select name="miselect" (change)="onChange($event)" class="fixed">
+            <option value="es" selected="selected">Español</option>
+            <option value="en">English</option>
+            <option value="ch">日本人</option>
         </select>
     </div>
 
     <a id="topbar-profile-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)">
         <span>{{name | titlecase }}</span>
-        <img src="assets/layout/images/avatar.png" alt="ecuador-layout" class="topbar-profile" />
+        <img [src]="user.photo" alt="ecuador-layout" class="topbar-profile" />
         <i class="fa fa-sort-desc"></i>
     </a>
 
     <ul id="topbar-usermenu" class="fadeInDown animated" [ngClass]="{'usermenu-active': app.topbarMenuActive}">
-        <li>
-            <a href="#" (click)="app.onTopbarSubItemClick($event)">
+        <li #miperfil [ngClass]="{'menuitem-active':app.activeTopbarItem === miperfil}">
+            <a href="#" (click)="app.onTopbarItemClick($event, miperfil)" >
                 <i class="fa fa-fw fa-user"></i>
-                <span class="topbar-item-name">Profile</span>
-                <span class="topbar-submenuitem-badge">4</span>
+                <span class="topbar-item-name">{{ 'Perfil' | translate }}</span>
             </a>
         </li>
         <li #settings [ngClass]="{'menuitem-active':app.activeTopbarItem === settings}">
@@ -134,7 +136,7 @@
         <li>
             <a href="#" (click)="app.singout()">
                 <i class="fa fa-fw fa-sign-out"></i>
-                <span class="topbar-item-name">Salir</span>
+                <span class="topbar-item-name">{{ 'Salir' | translate }}</span>
             </a>
         </li>
     </ul>

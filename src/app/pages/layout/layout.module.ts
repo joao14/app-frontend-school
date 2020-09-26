@@ -1,3 +1,6 @@
+import { InputTextModule } from 'primeng/inputtext';
+import { TranslateModule } from '@ngx-translate/core';
+import { BreadcrumbService } from './../../../services/breadcrumb.service';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PanelModule } from 'primeng/panel';
@@ -12,7 +15,7 @@ import { MenuComponent } from './component/menu/menu.component';
 import { BreadcrumbComponent } from './component/breadcrumb/breadcrumb.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { AppMenuitemComponent } from './component/menu/app.menuitem.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccordionModule } from 'primeng/accordion';
 import { DropdownModule } from 'primeng/dropdown';
 import { MenuService } from './../../../services/app.menu.service';
@@ -25,6 +28,7 @@ import { RouterModule } from '@angular/router';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { MessageModule } from 'primeng';
+import { MiperfilComponent } from './miperfil/miperfil.component';
 
 
 
@@ -44,7 +48,10 @@ import { MessageModule } from 'primeng';
         ToolbarModule,
         PanelModule,
         CheckboxModule,
-        FullCalendarModule
+        FullCalendarModule,
+        TranslateModule,
+        InputTextModule,
+        ReactiveFormsModule
     ],
     declarations: [
         LayoutComponent,
@@ -53,9 +60,11 @@ import { MessageModule } from 'primeng';
         BreadcrumbComponent,
         MenuComponent,
         TopbarComponent,
-        PanelComponent
+        PanelComponent,
+
     ], providers: [
         MenuService,
+        BreadcrumbService
     ]
 })
 export class LayoutModule { }

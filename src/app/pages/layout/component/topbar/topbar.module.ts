@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'primeng/primeng';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,7 +14,8 @@ import {DropdownModule} from 'primeng/dropdown';
         DropdownModule,
         BrowserAnimationsModule,
         SharedModule,
-        FormsModule
+        FormsModule,
+        TranslateModule
     ]
 })
 export class TopbarModule { }

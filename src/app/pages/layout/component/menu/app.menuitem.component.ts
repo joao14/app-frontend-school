@@ -1,11 +1,11 @@
 import { MenuService } from './../../../../../services/app.menu.service';
 import { LayoutComponent } from './../../layout.component';
 
-import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {Subscription} from 'rxjs';
-import {filter} from 'rxjs/operators';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -91,7 +91,10 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
     key: string;
 
     constructor(public app: LayoutComponent, public router: Router, private cd: ChangeDetectorRef, private menuService: MenuService) {
+        console.log('MENU SERVICE');
         this.menuSourceSubscription = this.menuService.menuSource$.subscribe(key => {
+            console.log('ACTIVE UNO');
+            console.log(key);
             // deactivate current active menu
             if (this.active && this.key !== key && key.indexOf(this.key) !== 0) {
                 this.active = false;
@@ -99,11 +102,14 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
         });
 
         this.menuResetSubscription = this.menuService.resetSource$.subscribe(() => {
+            console.log('ACTIVE DOS');
+
             this.active = false;
         });
 
         this.router.events.pipe(filter(event => event instanceof NavigationEnd))
             .subscribe(params => {
+                console.log('PARAMETROS');
                 if (this.app.isSlim() || this.app.isHorizontal()) {
                     this.active = false;
                 } else {
@@ -117,7 +123,9 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        console.log('... Se esta consultando todos los menu itemssss...');
+        console.log('ON INIT');
+        console.log(this.item);
+
         if (!(this.app.isSlim() || this.app.isHorizontal()) && this.item.routerLink) {
             this.updateActiveStateFromRoute();
         }
@@ -146,7 +154,7 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
 
         // execute command
         if (this.item.command) {
-            this.item.command({originalEvent: event, item: this.item});
+            this.item.command({ originalEvent: event, item: this.item });
         }
 
         // toggle active state

@@ -1,15 +1,23 @@
+import { SelectItem } from 'primeng/primeng';
+import { Router } from '@angular/router';
+import { ApisService } from './../../../../../services/apis.service';
 import { Component, OnInit } from '@angular/core';
-import { LazyLoadEvent } from 'primeng/api';
-import { FilterMetadata } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
+
 export interface User {
+    id: string;
     identification: string;
     name: string;
     lastname: string;
+    phone: string;
+    direction: string;
+    city: string;
     photo: string;
     email: string;
     status: boolean;
+    razosoci: string;
+    tipo: string;
 }
 
 @Component({
@@ -24,110 +32,112 @@ export class ClientesComponent implements OnInit {
     selectedUsers: Array<User> = [];
     flag: boolean = true;
     loading: boolean;
+    options: SelectItem[];
+    selectoptions: any;
 
-    constructor() { }
+    constructor(private api: ApisService, private router: Router) { }
 
     ngOnInit(): void {
-        this.users = [
-            {
-                identification: '1720009057',
-                name: 'Alexander',
-                lastname: 'Merino',
-                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                email: 'alexmerino67@gmail.com',
-                status: true
-            },
-            {
-                identification: '1720009056',
-                name: 'Joao',
-                lastname: 'Romero',
-                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                email: 'alexmer895@gmail.com',
-                status: false
-            },
-            {
-                identification: '1720009053',
-                name: 'Cristiano',
-                lastname: 'Ronaldo',
-                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                email: 'alexmer895@gmail.com',
-                status: false
-            },
-            {
-                identification: '1726609056',
-                name: 'Leonel',
-                lastname: 'Messi',
-                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                email: 'alexmer895@gmail.com',
-                status: false
-            },
-            {
-                identification: '1720119056',
-                name: 'Juan',
-                lastname: 'Mata',
-                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                email: 'alexmer895@gmail.com',
-                status: false
-            },
-            {
-                identification: '172089056',
-                name: 'Maricicio',
-                lastname: 'Isla',
-                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                email: 'alexmer895@gmail.com',
-                status: false
-            },
-            {
-                identification: '1420009056',
-                name: 'Abriñ',
-                lastname: 'Sendero',
-                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                email: 'alexmer895@gmail.com',
-                status: false
-            },
-            {
-                identification: '1120009056',
-                name: 'Paulina',
-                lastname: 'Tamayo',
-                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                email: 'alexmer895@gmail.com',
-                status: false
-            },
-            {
-                identification: '1350009056',
-                name: 'Sabrina',
-                lastname: 'Gutierrez',
-                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                email: 'alexmer895@gmail.com',
-                status: false
-            },
-            {
-                identification: '1330009056',
-                name: 'Priscila',
-                lastname: 'Arreaga',
-                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                email: 'alexmer895@gmail.com',
-                status: false
-            },
-            {
-                identification: '1100009056',
-                name: ' Luis',
-                lastname: 'Morantes',
-                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                email: 'alexmer895@gmail.com',
-                status: false
-            },
-            {
-                identification: '1770009056',
-                name: 'Carlos ',
-                lastname: 'Villaran',
-                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                email: 'alexmer895@gmail.com',
-                status: false
+        this.options = [{ label: 'Todos', value: null }, { label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];
+        this.api.getclients(localStorage.getItem('token')).then(users => {
+            console.log('Data');
+            console.log(users);
+            if (users.headerApp.code === 200) {
+                users.data.clientes.forEach(element => {
+                    let userTemp = {
+                        id: element.entiId,
+                        identification: element.entiDni,
+                        name: element.nombres,
+                        lastname: element.apellidos,
+                        phone: element.phone,
+                        direction: element.direccion,
+                        city: element.ciudad,
+                        photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
+                        email: element.email,
+                        status: element.estado === 'A' ? true : false,
+                        razosoci: element.razosoci,
+                        tipo: element.tipo
+                    }
+                    this.users.push(userTemp);
+                });
+                console.log('LISTA DE USUARIOS');
+                console.log(this.users);
+
             }
-        ]
+        }).catch(error => {
+            console.log('Error consulta de usuarios');
+            console.log(error);
+        })
+
 
         this.loading = false;
+    }
+
+    addClient() {
+        console.log('Editando el cliente');
+        this.router.navigate(['/edit']);
+    }
+
+    desactivate(user: User) {
+        console.log('Se esta desactivando ek usuario');
+        console.log(user);
+        this.router.navigate(['/edit'], { state: { user: JSON.stringify(user) } });
+    }
+
+    onRepresentativeChange(event) {
+        console.log('Se selecciono otro evento');
+        console.log(event);
+        console.log(event.value);
+        console.log(this.users);
+        this.users = [];
+        this.api.getclients(localStorage.getItem('token')).then(users => {
+            if (users.headerApp.code === 200) {
+                users.data.clientes.forEach(element => {
+                    if (event.value == null) {
+                        let userTemp = {
+                            id: element.entiId,
+                            identification: element.entiDni,
+                            name: element.nombres,
+                            lastname: element.apellidos,
+                            phone: element.phone,
+                            direction: element.direccion,
+                            city: element.ciudad,
+                            photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
+                            email: element.email,
+                            status: element.estado === 'A' ? true : false,
+                            razosoci: element.razosoci,
+                            tipo: element.tipo
+                        }
+                        this.users.push(userTemp);
+                    } else
+                        if (element.estado === event.value) {
+                            let userTemp = {
+                                id: element.entiId,
+                                identification: element.entiDni,
+                                name: element.nombres,
+                                lastname: element.apellidos,
+                                phone: element.phone,
+                                direction: element.direccion,
+                                city: element.ciudad,
+                                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
+                                email: element.email,
+                                status: element.estado === 'A' ? true : false,
+                                razosoci: element.razosoci,
+                                tipo: element.tipo
+                            }
+                            this.users.push(userTemp);
+                        }
+                });
+                console.log('LISTA DE USUARIOS');
+                console.log(this.users);
+
+            }
+        }).catch(err => {
+            console.log('consultando los errores');
+            console.log(err);
+
+        })
+
     }
 
 }

@@ -5,7 +5,10 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
     {
         path: '',
-        component: ClientesComponent
+        component: ClientesComponent,
+        children: [
+            //{ path: 'edit', loadChildren: () => import('./edit/edit.module').then(m => m.EditModule) }
+        ]
     }
 ];
 
@@ -13,4 +16,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class ClientesRoutingModule {}
+export class ClientesRoutingModule { }

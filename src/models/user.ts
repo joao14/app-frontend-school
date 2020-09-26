@@ -7,4 +7,5 @@ export interface user {
     name: string;
     lastname: string;
     roles: roles[];
+    photo: string;
 }

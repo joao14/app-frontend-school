@@ -1,0 +1,100 @@
+<div class="ui-g">
+    <div class="ui-g-12 ui-lg-6">
+        <p-blockUI [blocked]="blockedPanel">
+            <i class="pi pi-lock" style="font-size: 3rem"></i>
+        </p-blockUI>
+        <p-toast position="center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+            <ng-template let-message pTemplate="message">
+                <div class="p-flex p-flex-column" style="flex: 1">
+                    <div class="p-text-center">
+                        <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                        <h4>{{message.summary}}</h4>
+                        <p>{{message.detail}}</p>
+                    </div>
+                    <div class="ui-fluid">
+                        <div class="ui-g-12 ui-md-6">
+                            <button type="button" pButton (click)="onConfirm()" label="Yes" class="ui-button-success"></button>
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <button type="button" pButton (click)="onReject()" label="No" class="ui-button-primary"></button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-toast>
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+                <button (click)="save()" pButton class="ui-button-success" icon="pi pi-check" label="Guardar"
+                    *ngIf="!edit"></button> &nbsp;
+
+                <button (click)="modificar()" pButton class="ui-button-primary" icon="pi pi-pencil" label="Modificar"
+                    *ngIf="edit"></button> &nbsp;
+
+                <button (click)="cancelar()" pButton class="ui-button-warning" icon="pi pi-arrow-left"
+                    label="Atrás"></button> &nbsp;
+
+
+            </div>
+        </p-toolbar>
+        <div class="card card-w-title ui-fluid">
+
+            <h1 *ngIf="!edit">Agregar nuevo cliente</h1>
+            <h1 *ngIf="edit">Editar Cliente</h1>
+            <div class="ui-g form-group">
+                <div class="ui-g-12 ui-md-6">
+                    <label for="identification">Identificación</label>
+                    <input type="text" name="identification" pInputText autocomplete="off" maxlength="100"
+                        [(ngModel)]="client.entiDni" />
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <label for="state">Estado</label>
+                    <p-selectButton [options]="options" [(ngModel)]="client.estado"></p-selectButton>
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <label for="name">Nombres</label>
+                    <input type="text" name="name" pInputText autocomplete="off" maxlength="100"
+                        [(ngModel)]="client.nombres" />
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <label for="lastname">Apellidos</label>
+                    <input type="text" name="lastname" pInputText autocomplete="off" maxlength="100"
+                        [(ngModel)]="client.apellidos" />
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <label for="type">Tipo</label>
+                    <p-dropdown [options]="tipos" [(ngModel)]="client.tipo" placeholder="Seleccione"
+                        (onChange)="selecttipo($event)" optionLabel="name"></p-dropdown>
+                </div>
+
+                <div class="ui-g-12 ui-md-6" *ngIf="client.tipo=='J'">
+                    <label for="businessname">Razón Social</label>
+                    <input type="text" name="businessname" pInputText autocomplete="off" maxlength="100"
+                        [(ngModel)]="client.razosoci" />
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" pInputText autocomplete="off" maxlength="100"
+                        [(ngModel)]="client.email" />
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <label for="phone">Teléfono</label>
+                    <input type="text" name="phone" pInputText autocomplete="off" maxlength="100"
+                        [(ngModel)]="client.phone" />
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <label for="country">Ciudad</label>
+                    <input type="text" name="country" pInputText autocomplete="off" maxlength="100"
+                        [(ngModel)]="client.ciudad" />
+                </div>
+
+                <div class="ui-g-12 ui-md-12">
+                    <label for="address">Dirección</label>
+                    <textarea [rows]="3" [cols]="30" name="address" pInputTextarea placeholder="Your Message"
+                        autoResize="autoResize" [(ngModel)]="client.direccion"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

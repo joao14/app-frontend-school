@@ -1,5 +1,7 @@
 export const ch={
     "title":"china",
+    "Perfil":"浸透する",
+    "Salir":"唾液",
     "Lista de Usuarios":"ユーザーリスト",
     "Identificación":"識別",
     "Nombres":"名前",

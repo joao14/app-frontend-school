@@ -21,10 +21,10 @@ export class MenuComponent implements OnInit {
             {
                 label: 'CRM', icon: 'fa fa-fw fa-cogs',
                 items: [
-                    { label: 'Clientes', icon: 'fa fa-fw fa-user-circle-o', routerLink: ['/clientes'], routerLinkActive: 'active' }
+                    { label: 'Clientes', icon: 'fa fa-fw fa-user-circle-o', routerLink: ['/clientes'] }
                 ]
             },
-            { label: 'Facturación', icon: 'fa fa-fw fa-pencil-square-o', routerLink: ['/factura'], routerLinkActive: 'active' }
+            { label: 'Facturación', icon: 'fa fa-fw fa-pencil-square-o', routerLink: ['/factura'] }
             /*{
                 label: 'Menu Colors', icon: 'fa fa-fw fa-paint-brush',
                 items: [

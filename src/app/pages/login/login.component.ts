@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
         console.log(this.checkoutForm.get("username").value);
 
         //this.api.login(this.checkoutForm.get("username").value, this.checkoutForm.get("password").value).then(data => {
-        this.api.login('admin', 'admin').then(data => {
+        this.api.login('admin', '5lCKao').then(data => {
             console.log("Data response");
             console.log(data);
             if (data.headerApp.code === 200) {
@@ -51,8 +51,9 @@ export class LoginComponent implements OnInit {
                     state: data.data.usuario.estado,
                     name: data.data.usuario.nombres,
                     lastname: data.data.usuario.apellidos,
-                    roles: roles_
-                }
+                    roles: roles_,
+                    photo: 'https://previews.123rf.com/images/djvstock/djvstock1508/djvstock150806855/44096519-web-developer-design-vector-illustration-eps-10-.jpg'
+                                }
                 localStorage.setItem("user", JSON.stringify(user));
                 localStorage.setItem("token", data.data.usuario.token);
                 this.router.navigate(['/dashboard']);

@@ -1,5 +1,7 @@
 export const en={
     "title":"inglés",
+    "Perfil":"Profile",
+    "Salir": "Go Out",
     "Lista de Usuarios":"List of Users",
     "Identificación":"Identification",
     "Nombres":"Names",

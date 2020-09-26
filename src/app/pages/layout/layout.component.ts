@@ -105,6 +105,9 @@ export class LayoutComponent implements OnInit {
         }
 
         event.preventDefault();
+        console.log('GO.....');
+        console.log(item);
+        this.router.navigate(['miperfil']);
     }
 
     singout(){

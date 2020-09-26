@@ -1,0 +1,17 @@
+select {
+    width: 120px;
+    height: 35px;
+    font-size: 15px;
+    color: white;
+    background: transparent;
+    border: none;
+    padding: 10px;
+}
+
+.fixed option {
+    background: #050505;
+    line-height: 1.2em;
+    font-size: 12pt;
+    margin-top: 15px;
+
+}
