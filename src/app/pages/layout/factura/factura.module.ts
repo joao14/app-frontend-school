@@ -2,14 +2,28 @@ import { FacturaComponent } from './factura.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FacturaRoutingModule } from './factura-routing.module';
+import { InputTextModule, PanelModule, AccordionModule, InputTextareaModule, RadioButtonModule, ButtonModule, AutoCompleteModule, DropdownModule, TableModule } from 'primeng';
+import { FormsModule } from '@angular/forms';
+import { DragdropDirective } from 'src/app/directive/dragdrop.directive';
 
 
 
 @NgModule({
-    declarations: [FacturaComponent],
+    declarations: [FacturaComponent, DragdropDirective],
     imports: [
         CommonModule,
-        FacturaRoutingModule
-    ]
-})
+        FacturaRoutingModule,
+        InputTextModule,
+        PanelModule,
+        AccordionModule,
+        InputTextareaModule,
+        RadioButtonModule,
+        ButtonModule,
+        FormsModule,
+        AutoCompleteModule,
+        DropdownModule,
+        TableModule
+        
+    ]   
+}) 
 export class FacturaModule { }

@@ -23,6 +23,7 @@ import { NodeService } from './demo/service/nodeservice';
 
 //Para traducir
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { DragdropDirective } from './directive/dragdrop.directive';
 
 @NgModule({
     imports: [

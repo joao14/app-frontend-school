@@ -1,57 +1,169 @@
 <div class="ui-g ui-fluid">
-    <div class="ui-g-12 ui-lg-6">
+    <div class="ui-g-12">
         <div class="card card-w-title">
-            <h1>InputText1</h1>
+            <h1>Facturación Cliente</h1>
+            <p-accordion>
+                <p-accordionTab header="Parametros" [selected]="true">
+                    <div class="ui-g form-group">
+
+                        <div class="ui-g-12 ui-md-6">
+                            <span class="ui-float-label">
+                                <input type="text" id="client" pInputText [(ngModel)]="factura.client">
+                                <label for="client">Customer</label>
+                            </span>
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <span class="ui-float-label">
+                                <input type="text" id="city" pInputText [(ngModel)]="factura.city">
+                                <label for="city">Ciudad</label>
+                            </span>
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <span class="ui-float-label">
+                                <input type="text" id="mark" pInputText [(ngModel)]="factura.mark">
+                                <label for="mark">Marca</label>
+                            </span>
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <span class="ui-float-label">
+                                <input type="text" id="mawba" pInputText [(ngModel)]="factura.mawba">
+                                <label for="mawba">Mawba</label>
+                            </span>
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <span class="ui-float-label">
+                                <input type="text" id="freightforwarder" pInputText
+                                    [(ngModel)]="factura.freightforwarder">
+                                <label for="freightforwarder">Freightforwarder</label>
+                            </span>
+                        </div>
+                        <div class="ui-g-12 ui-md-6">
+                            <span class="ui-float-label">
+                                <input type="text" id="bounch" pInputText [(ngModel)]="factura.bounch">
+                                <label for="bounch">Bounch</label>
+                            </span>
+                        </div>
+                        <div class="ui-g-12 ui-md-12">
+                            <span class="ui-float-label">
+                                <textarea pInputTextarea id="address" [(ngModel)]="factura.address"></textarea>
+                                <label for="address">Address</label>
+                            </span>
+                        </div>
+
+                    </div>
+                </p-accordionTab>
+            </p-accordion>
             <div class="ui-g form-group">
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText placeholder="Name">
+                <div class="ui-g-12 ui-md-6">
+                    <button pButton type="button" icon="pi pi-pencil" class="ui-button-primary" label="Carga manual"
+                        (click)="selectOptions('manual')"></button>
+
+                    <button pButton type="button" icon="pi pi-upload" class="ui-button-success" label="Importart Excel"
+                        (click)="selectOptions('automatico')"></button>
                 </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText placeholder="Email">
+            </div>
+            <br>
+            <!--Agregar manualmente-->
+            <div *ngIf="manual">
+                <div class="ui-g form-group">
+                    <div class="ui-g-12 ui-md-1">
+                        <label class="lbl">Caja</label>
+                        <input type="text" pInputText placeholder="HB">
+                    </div>
+                    <div class="ui-g-12 ui-md-1">
+                        <label class="lbl">Piezas</label>
+                        <input type="text" pInputText placeholder="0">
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+
+                        <label class="lbl">Finca</label>
+                        <input type="text" pInputText placeholder="Nombre finca">
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        <label class="lbl">Flores</label>
+                        <p-autoComplete [suggestions]="flowers" (completeMethod)="search($event)"
+                            placeholder="Nombre flor"></p-autoComplete>
+                    </div>
+                    <div class="ui-g-12 ui-md-1">
+                        <label class="lbl">Tallos</label>
+                        <input type="text" pInputText placeholder="0">
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        <label class="lbl">Tamaño</label>
+                        <p-dropdown [options]="tamanios" placeholder="Seleccione"></p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-md-1">
+                        <label class="lbl">Tallos</label>
+                        <input type="text" pInputText placeholder="0">
+                    </div>
+                    <div class="ui-g-12 ui-md-1">
+                        <label class="lbl">Precio</label>
+                        <input type="text" pInputText placeholder="0.00" readonly>
+                    </div>
+                    <div class="ui-g-12 ui-md-1">
+                        <label class="lbl">Total</label>
+                        <input type="text" pInputText placeholder="0.00" readonly>
+                    </div>
                 </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText placeholder="Phone">
+
+                <div class="ui-g-12 ui-md-1">
+                    <button pButton type="button" icon="pi pi-plus" class="ui-button-success"
+                        style="border-radius: 25px;width: 50%;text-align: center;" (click)="add()"></button>
                 </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText placeholder="Disabled" disabled="disabled">
+
+                <div class="ui-g form-group">
+                    <!--Total factura-->
+                    <div class="ui-g-12 ui-md-12">
+                        <label>Total : <span>{{factura.total | currency}}</span></label>
+                    </div>
+                    <!--Total factura-->
+                    <div class="ui-g-12 ui-md-12">
+                        <label>Tallos : <span>0</span></label>
+                    </div>
                 </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText readonly="readonly" placeholder="Readonly">
+            </div>
+            <div *ngIf="automatico">
+                <div class="uploadfilecontainer" (click)="fileInput.click()" appDragdrop
+                    (onFileDropped)="uploadFile($event)" *ngIf="files.length <= 0">
+                    <input hidden type="file" #fileInput (change)="uploadFile($event)" accept=".xlsx, .xls, .csv">
                 </div>
-                <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText class="ng-dirty ng-invalid" placeholder="Invalid">
+                <div class="files-list" *ngFor="let file of files;let i= index">
+                    <p> {{ file }} </p>
+                    <button class="delete-file" (click)="deleteAttachment(i)">
+                        <img src="../../../../assets/images/recicler.jpeg">
+                    </button>
                 </div>
+                <p-table [value]="items" *ngIf="files.length > 0">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Farmacia</th>
+                            <th>Flor</th>                            
+                            <th>Precio</th>
+                            <th>Tallos</th>
+                            <th>Total</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-item>
+                        <tr>
+                            <td>{{item.farmacia}}</td>
+                            <td>{{item.flor }}</td>
+                            <td>{{item.price | currency}}</td>
+                            <td>{{item.stems }}</td>                            
+                            <td>{{item.subtotal | currency}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <tr>
+                            <td colspan="3" class="p-text-center">Totales</td>
+                            <td>{{factura.tallos }}</td>
+                            <td>{{factura.total | currency: 'USD'}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
             </div>
 
         </div>
 
-        <div class="card">
-            <h1 class="centerText">Pie Chart 2</h1>
-
-        </div>
-
-        <div class="card">
-            <h1 class="centerText">Polar Area Chart 3</h1>
-
-        </div>
     </div>
-    <div class="ui-g-12 ui-lg-6">
-        <div class="card">
-            <h1 class="centerText">Bar Chart 4</h1>
-
-        </div>
-
-        <div class="card">
-            <h1 class="centerText">Doughnut Chart 5</h1>
-
-        </div>
-
-        <div class="card">
-            <h1 class="centerText">Radar Chart 6</h1>
-
-    </div>
-
-
-
 
 </div>

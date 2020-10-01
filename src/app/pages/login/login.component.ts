@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         console.log('Your order has been submitted 2.....');
         console.log(this.checkoutForm.get("username").value);
-
+        
         //this.api.login(this.checkoutForm.get("username").value, this.checkoutForm.get("password").value).then(data => {
-        this.api.login('admin', '5lCKao').then(data => {
+        this.api.login('admin', 'admin').then(data => {
             console.log("Data response");
             console.log(data);
             if (data.headerApp.code === 200) {

@@ -27,7 +27,7 @@ import { RouterModule } from '@angular/router';
 
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
-import { MessageModule } from 'primeng';
+import { MessageModule, AutoCompleteModule } from 'primeng';
 import { MiperfilComponent } from './miperfil/miperfil.component';
 
 
@@ -51,7 +51,8 @@ import { MiperfilComponent } from './miperfil/miperfil.component';
         FullCalendarModule,
         TranslateModule,
         InputTextModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AutoCompleteModule
     ],
     declarations: [
         LayoutComponent,

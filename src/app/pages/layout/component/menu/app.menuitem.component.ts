@@ -123,8 +123,8 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        console.log('ON INIT');
-        console.log(this.item);
+        //console.log('ON INIT');
+        //console.log(this.item);
 
         if (!(this.app.isSlim() || this.app.isHorizontal()) && this.item.routerLink) {
             this.updateActiveStateFromRoute();
