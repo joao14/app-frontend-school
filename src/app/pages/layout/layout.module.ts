@@ -27,8 +27,8 @@ import { RouterModule } from '@angular/router';
 
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
-import { MessageModule, AutoCompleteModule } from 'primeng';
-import { MiperfilComponent } from './miperfil/miperfil.component';
+import { MessageModule, AutoCompleteModule, CardModule, SplitButtonModule, SelectButtonModule, ConfirmDialogModule } from 'primeng';
+
 
 
 
@@ -52,8 +52,12 @@ import { MiperfilComponent } from './miperfil/miperfil.component';
         TranslateModule,
         InputTextModule,
         ReactiveFormsModule,
-        AutoCompleteModule
-    ],
+        AutoCompleteModule,
+        CardModule,
+        SplitButtonModule,
+        SelectButtonModule,
+        ConfirmDialogModule
+    ], 
     declarations: [
         LayoutComponent,
         AppMenuitemComponent,

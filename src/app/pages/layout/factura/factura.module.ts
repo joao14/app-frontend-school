@@ -2,7 +2,7 @@ import { FacturaComponent } from './factura.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FacturaRoutingModule } from './factura-routing.module';
-import { InputTextModule, PanelModule, AccordionModule, InputTextareaModule, RadioButtonModule, ButtonModule, AutoCompleteModule, DropdownModule, TableModule } from 'primeng';
+import { InputTextModule, PanelModule, AccordionModule, InputTextareaModule, RadioButtonModule, ButtonModule, AutoCompleteModule, DropdownModule, TableModule, ToolbarModule, CardModule, SplitButtonModule, SelectButtonModule, ToastModule, ConfirmDialogModule } from 'primeng';
 import { FormsModule } from '@angular/forms';
 import { DragdropDirective } from 'src/app/directive/dragdrop.directive';
 
@@ -22,7 +22,13 @@ import { DragdropDirective } from 'src/app/directive/dragdrop.directive';
         FormsModule,
         AutoCompleteModule,
         DropdownModule,
-        TableModule
+        TableModule,
+        ToolbarModule,
+        CardModule,
+        SplitButtonModule,
+        SelectButtonModule,
+        ToastModule,
+        ConfirmDialogModule
         
     ]   
 }) 
