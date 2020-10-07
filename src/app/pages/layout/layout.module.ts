@@ -28,6 +28,7 @@ import { RouterModule } from '@angular/router';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { MessageModule, AutoCompleteModule, CardModule, SplitButtonModule, SelectButtonModule, ConfirmDialogModule } from 'primeng';
+import { PrealertaComponent } from './prealerta/prealerta.component';
 
 
 
@@ -66,7 +67,6 @@ import { MessageModule, AutoCompleteModule, CardModule, SplitButtonModule, Selec
         MenuComponent,
         TopbarComponent,
         PanelComponent,
-
     ], providers: [
         MenuService,
         BreadcrumbService

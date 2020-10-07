@@ -1,0 +1,271 @@
+<div class="ui-g">
+    <div class="ui-g-12">
+        <div class="card card-w-title">
+            <h1>Pre Alerta</h1>
+            <p-toast></p-toast>
+            <div class="ui-g form-group ui-fluid">
+                <div class="ui-g-12 ui-md-8"></div>
+                <div class="ui-g-12 ui-md-2">
+                    <button pButton type="button" [icon]="optionSelect=='manual'?'pi pi-circle-on':'pi pi-circle-off'"
+                        class="ui-button-success ouput_btn_table" label="Ingreso manual"
+                        (click)="selectOption('manual')"></button>
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                    <button pButton type="button" icon="pi pi-upload" label="Subir archivo"
+                        [icon]="optionSelect=='automatico'?'pi pi-circle-on':'pi pi-circle-off'"
+                        class="ui-button-warning ouput_btn_table" (click)="selectOption('automatico')"></button>
+                </div>
+            </div>
+            <div *ngIf="optionSelect=='manual'">
+                <p-accordion>
+                    <p-accordionTab header="Datos de la Prealerta" [selected]="true">
+                        <div class="ui-g form-group ui-fluid">
+                            <div class="ui-g-12 ui-md-3">
+                                <label for="embarque" class="lbl">Embarque</label>
+                                <input type="text" id="embarque" pInputText [(ngModel)]="item.embarque">
+                            </div>
+                            <div class="ui-g-12 ui-md-3">
+                                <label for="hbbq" class="lbl">HB/QB</label>
+                                <input type="text" id="hbbq" pInputText [(ngModel)]="item.HBBQ">
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <label for="cliente" class="lbl">Cliente</label>
+                                <input type="text" id="cliente" pInputText [(ngModel)]="item.cliente">
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <label for="rosamistica" class="lbl">Rosa Mística</label>
+                                <input type="text" id="rosamistica" pInputText [(ngModel)]="item.rosamistica">
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <label for="finca" class="lbl">Finca</label>
+                                <input type="text" id="finca" pInputText [(ngModel)]="item.finca">
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6">
+                                <label for="marca" class="lbl">Marca</label>
+                                <input type="text" id="marca" pInputText [(ngModel)]="item.marca">
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <label for="freightforwader" class="lbl">Freightforwader</label>
+                                <input type="text" id="freightforwader" pInputText [(ngModel)]="item.freightforwader">
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <label for="variedad" class="lbl">Variedad</label>
+                                <input type="text" id="variedad" pInputText [(ngModel)]="item.variedad">
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <label for="cm" class="lbl">CM</label>
+                                <input type="text" id="cm" pInputText [(ngModel)]="item.CM">
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <label for="tallos" class="lbl">Tallos</label>
+                                <input type="text" id="tallos" pInputText [(ngModel)]="item.tallos">
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <label for="total" class="lbl">Total</label>
+                                <input type="text" id="total" pInputText [(ngModel)]="item.total">
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <label for="compra" class="lbl">Compra</label>
+                                <input type="text" id="compra" pInputText [(ngModel)]="item.compra">
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <label for="venta" class="lbl">Venta</label>
+                                <input type="text" id="venta" pInputText [(ngModel)]="item.venta">
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <label for="state" class="lbl">Estado</label>
+                                <p-dropdown [options]="status" placeholder="Seleccione" optionLabel="name" id="state"
+                                    [(ngModel)]="item.status">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6">
+                                <br>
+                                <div class="ui-g-12 ui-md-5">
+                                    <button pButton type="button" icon="pi pi-save"
+                                        class="ui-button-primary ouput_btn_table" label="Agregar"
+                                        (click)="save()"></button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+            <div *ngIf="optionSelect=='automatico'">
+                <div class="uploadfilecontainer" (click)="fileInput.click()" appDragdrop
+                    (onFileDropped)="uploadFile($event)" *ngIf="files.length <= 0">
+                    <input hidden type="file" #fileInput (change)="uploadFile($event)" accept=".xlsx, .xls">
+                </div>
+                <div class="files-list" *ngFor="let file of files;let i= index">
+                    <p> {{ file.name }} </p>
+                    <button class="delete-file" (click)="deleteAttachment(i)">
+                        <img src="../../../../assets/images/recicler.jpeg">
+                    </button>
+                </div>
+            </div>
+
+            <p-table [value]="items" class="p-datatable-responsive-demo">
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        Items de la prealerta [ {{items.length}} ]
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 4em;"></th>
+                        <th>Embarque</th>
+                        <th>HBQB</th>
+                        <th>Cliente</th>
+                        <th>Finca</th>
+                        <th>Marca</th>
+                        <th>Tallos</th>
+                        <th>Total</th>
+
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                    <tr>
+                        <td><span class="p-column-title">
+                                <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
+                                    (click)="deleteItem(data)"></button>
+                            </span>
+                        </td>
+                        <td>
+                            <button type="button" pButton class="p-button-text p-button-rounded p-button-plain"
+                                [label]="data.embarque" (click)="rowexpasion(data)"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
+                            </button>
+                        </td>
+                        <td><span class="p-column-title">{{data.HBBQ }}</span></td>
+                        <td><span class="p-column-title">{{data.cliente }}</span></td>
+                        <td><span class="p-column-title">{{data.finca}}</span></td>
+                        <td><span class="p-column-title">{{data.marca}}</span></td>
+                        <td><span class="p-column-title">{{data.tallos}}</span></td>
+                        <td><span class="p-column-title">{{data.total}}</span></td>
+                    </tr>
+                    <tr *ngIf="expanded">
+                        <td colspan="8">
+                            <div class="ui-g form-group ui-fluid">
+                                <div class="ui-g-12 ui-md-6">
+                                    <label for="marca" class="lbl">Rosa Mística</label>
+                                    <span>{{data.rosamistica}}</span>
+                                </div>
+                                <div class="ui-g-12 ui-md-6">
+                                    <label for="marca" class="lbl">Freightforwader</label>
+                                    <span>{{data.freightforwader}}</span>
+                                </div>
+                                <div class="ui-g-12 ui-md-6">
+                                    <label for="marca" class="lbl">Variedad</label>
+                                    <span>{{data.variedad}}</span>
+                                </div>
+                                <div class="ui-g-12 ui-md-6">
+                                    <label for="marca" class="lbl">CM</label>
+                                    <span>{{data.CM}}</span>
+                                </div>
+                                <div class="ui-g-12 ui-md-6">
+                                    <label for="marca" class="lbl">Compra</label>
+                                    <span>{{data.compra}}</span>
+                                </div>
+                                <div class="ui-g-12 ui-md-6">
+                                    <label for="marca" class="lbl">Venta</label>
+                                    <span>{{data.venta}}</span>
+                                </div>
+                                <div class="ui-g-12 ui-md-6">
+                                    <label for="marca" class="lbl">Status</label>
+                                    <span>{{data.status}}</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                        <td colspan="6" class="total_table">Totales</td>
+                        <td><span class="total_tallos">{{ prealert.tallos}}</span></td>
+                        <td><span class="total_valor">{{ prealert.total | currency: 'USD'}}</span></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <br>
+            <div class="ui-g form-group ui-fluid">
+                <div class="ui-grid-col-10"></div>
+                <div class="ui-grid-col-2">
+                    <button pButton type="button" icon="pi pi-arrow-right" class="ui-button-help btn_enviar"
+                        label="Enviar" (click)="save()" [disabled]="items.length <= 0"></button>
+                </div>
+            </div>
+            <!--Resumen totales-->
+            <div class="ui-grid ui-grid-responsive ui-fluid" class="resumen">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4" style="text-align: right;font-weight: bold;font-size: 30px;">
+                        Total:
+                    </div>
+                    <div class="ui-grid-col-8" style="text-align: center;"><span
+                            class="total_valor_resumen">{{prealert.total | currency: 'USD'}}</span></div>
+                </div>
+                <br>
+                <div class="ui-grid ui-grid-responsive ui-fluid">
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-10"></div>
+                        <div class="ui-grid-col-2">
+                            <button pButton icon="pi pi-arrow-right"
+                                class="ui-button-help btn_enviar_responsive" label="Enviar" (click)="save()"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Table responsive-->
+            <div class="ui-grid ui-grid-responsive ui-fluid" class="data" *ngFor="let item of items">                
+                <div class="card card-w-title">
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-12">
+                            <button pButton type="button" class="ui-button-danger btn_card" icon="pi pi-trash"
+                                (click)="deleteItem(item)"></button>
+                        </div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-4"><span class="label">Embarque</span></div>
+                        <div class="ui-grid-col-8"><span class="value">{{item.embarque }}</span></div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-4"><span class="label">HBQB</span></div>
+                        <div class="ui-grid-col-8"><span class="value">{{item.HBBQ}}</span></div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-4"><span class="label">Cliente</span></div>
+                        <div class="ui-grid-col-8"><span class="value">{{item.cliente}}</span></div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-4"><span class="label">Finca</span></div>
+                        <div class="ui-grid-col-8"><span class="value">{{item.finca}}</span></div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-4"><span class="label">Marca</span></div>
+                        <div class="ui-grid-col-8"><span class="value">{{item.marca}}</span></div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-4"><span class="label">Total</span></div>
+                        <div class="ui-grid-col-8"><span class="value">{{item.total | currency}}</span></div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+        <!--Confirmar cuadro de dialogo confirm-->
+        <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+            <p-footer>
+                <button type="button" pButton icon="pi pi-times" class="ui-button-danger" label="No"></button>
+                <button type="button" pButton icon="pi pi-check" class="ui-button-success" label="Yes"></button>
+            </p-footer>
+        </p-confirmDialog>
+
+    </div>
+
+</div>

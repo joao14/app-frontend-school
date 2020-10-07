@@ -1,15 +1,16 @@
-import { Router } from '@angular/router';
-import { MenuService } from './../../../services/app.menu.service';
-import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { MenuService } from "./../../../services/app.menu.service";
+import { Component, OnInit } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
-    selector: 'app-layout',
-    templateUrl: './layout.component.html',
-    styleUrls: ['./layout.component.css']
+    selector: "app-layout",
+    templateUrl: "./layout.component.html",
+    styleUrls: ["./layout.component.css"],
+    providers: [TranslateService],
 })
 export class LayoutComponent implements OnInit {
-
-    menuMode = 'static';
+    menuMode = "static";
 
     topbarMenuActive: boolean;
 
@@ -33,10 +34,13 @@ export class LayoutComponent implements OnInit {
 
     rightPanelClick: boolean;
 
-    constructor(private menuService: MenuService, private router: Router) { }
+    constructor(
+        private menuService: MenuService,
+        private router: Router,
+        private translate: TranslateService
+    ) { }
 
     ngOnInit(): void {
-        console.log('....Se esta iniciando la aplicación con el LAYOUT...');
     }
 
     onLayoutClick() {
@@ -95,6 +99,16 @@ export class LayoutComponent implements OnInit {
         event.preventDefault();
     }
 
+    onTopbarItemClickLanguajes(event, item) {        
+        this.topbarItemClick = true;
+        if (this.activeTopbarItem === item) {
+            this.activeTopbarItem = null;
+        } else {
+            this.activeTopbarItem = item;
+        }
+        event.preventDefault();
+    }
+
     onTopbarItemClick(event, item) {
         this.topbarItemClick = true;
 
@@ -105,17 +119,29 @@ export class LayoutComponent implements OnInit {
         }
 
         event.preventDefault();
-        console.log('GO.....');
-        console.log(item);
-        this.router.navigate(['miperfil']);
+        this.router.navigate(["miperfil"]);
     }
 
-    singout(){
+    singout() {
         localStorage.clear();
-        this.router.navigate(['/']);
+        this.router.navigate(["/"]);
     }
 
     onTopbarSubItemClick(event) {
+        event.preventDefault();
+    }
+
+    onTopbarSubItemClickLanguajes(event) {
+        let languajes = "";
+        if (event.target.text == "Español") {
+            languajes = "es";
+        } else if (event.target.text == "English") {
+            languajes = "en";
+        } else {
+            languajes = "ch";
+        }
+
+        this.translate.use(languajes);
         event.preventDefault();
     }
 
@@ -130,19 +156,19 @@ export class LayoutComponent implements OnInit {
     }
 
     isHorizontal() {
-        return this.menuMode === 'horizontal';
+        return this.menuMode === "horizontal";
     }
 
     isSlim() {
-        return this.menuMode === 'slim';
+        return this.menuMode === "slim";
     }
 
     isOverlay() {
-        return this.menuMode === 'overlay';
+        return this.menuMode === "overlay";
     }
 
     isStatic() {
-        return this.menuMode === 'static';
+        return this.menuMode === "static";
     }
 
     isMobile() {
@@ -162,5 +188,4 @@ export class LayoutComponent implements OnInit {
         this.overlayMenuActive = false;
         this.staticMenuMobileActive = false;
     }
-
 }

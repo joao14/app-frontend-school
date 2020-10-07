@@ -11,10 +11,14 @@ export class MenuService {
     resetSource$ = this.resetSource.asObservable();
 
     onMenuStateChange(key: string) {
+        console.log('Change estado');
+        console.log(key);
+        console.log('HOla');
         this.menuSource.next(key);
     }
 
     reset() {
+        console.log('RESET');
         this.resetSource.next();
     }
 }

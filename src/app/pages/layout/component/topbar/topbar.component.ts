@@ -34,6 +34,10 @@ export class TopbarComponent implements OnInit {
         this.translate.use(event.target.value);
     }
 
+    onselectlanguajes(languajes: string){
+        console.log('Esta cambiando el lenguaje');
+        
+    }
 
 
 }

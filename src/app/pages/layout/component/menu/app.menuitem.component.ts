@@ -95,8 +95,14 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
         this.menuSourceSubscription = this.menuService.menuSource$.subscribe(key => {
             console.log('ACTIVE UNO');
             console.log(key);
+            console.log(this.active);
+            console.log(this.key);
+            console.log(key.indexOf(this.key));
+            console.log('*******');
             // deactivate current active menu
             if (this.active && this.key !== key && key.indexOf(this.key) !== 0) {
+                console.log('INDEX');
+                console.log('TRUE');
                 this.active = false;
             }
         });
@@ -109,7 +115,6 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
 
         this.router.events.pipe(filter(event => event instanceof NavigationEnd))
             .subscribe(params => {
-                console.log('PARAMETROS');
                 if (this.app.isSlim() || this.app.isHorizontal()) {
                     this.active = false;
                 } else {
@@ -123,8 +128,6 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        //console.log('ON INIT');
-        //console.log(this.item);
 
         if (!(this.app.isSlim() || this.app.isHorizontal()) && this.item.routerLink) {
             this.updateActiveStateFromRoute();
@@ -151,6 +154,7 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
 
         // notify other items
         this.menuService.onMenuStateChange(this.key);
+        console.log(this.menuService);
 
         // execute command
         if (this.item.command) {
@@ -159,11 +163,12 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
 
         // toggle active state
         if (this.item.items) {
+            console.log('1.1');
             this.active = !this.active;
         } else {
+            console.log('1.2');
             // activate item
             this.active = true;
-
             // reset horizontal menu
             if (this.app.isSlim() || this.app.isHorizontal()) {
                 this.menuService.reset();

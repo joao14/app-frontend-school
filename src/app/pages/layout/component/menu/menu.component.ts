@@ -11,21 +11,55 @@ import { Component, OnInit } from '@angular/core';
 export class MenuComponent implements OnInit {
 
     model: any[];
+    selectItem: string = '';
 
     constructor(public app: LayoutComponent, public router: Router) { }
 
     ngOnInit() {
 
         this.model = [
-            { label: 'Dashboard', icon: 'fa fa-fw fa-home', routerLink: ['/'] },
+            { label: 'Dashboard', icon: 'fa fa-fw fa-home', routerLink:'/' },
             {
-                label: 'CRM', icon: 'fa fa-fw fa-cogs',
+                label: 'CRM', icon: 'fa fa-fw fa-cogs' ,
                 items: [
-                    { label: 'Clientes', icon: 'fa fa-fw fa-user-circle-o', routerLink: ['/clientes'] }
+                    { label: 'Clientes', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/clientes' }
                 ]
             },
-            { label: 'Facturación', icon: 'fa fa-fw fa-pencil-square-o', routerLink: ['/factura'] }
+            { label: 'Facturación', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/factura' },
+            { label: 'Pre Alerta', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/prealerta' },
+            { 
+                label: 'Menu Colors', icon: 'fa fa-fw fa-paint-brush',
+                items: [
+                    { label: 'Light', icon: 'fa fa-fw fa-paint-brush', command: event => this.app.lightMenu = true },
+                    { label: 'Dark', icon: 'fa fa-fw fa-paint-brush', command: event => this.app.lightMenu = false }
+                ]
+            },
+            {
+                label: 'Layouts', icon: 'fa fa-fw fa-cog',
+                items: [
+                    { label: 'Static', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'static' },
+                    { label: 'Overlay', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'overlay' },
+                    { label: 'Slim', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'slim' },
+                    { label: 'Horizontal', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'horizontal' }
+                ]
+            },
+            
             /*{
+                label: 'Components', icon: 'fa fa-fw fa-bars', routerLink: ['/components'],
+                items: [
+                    { label: 'Sample Page', icon: 'fa fa-fw fa-columns', routerLink: ['/components/sample'] },
+                    { label: 'Forms', icon: 'fa fa-fw fa-code', routerLink: ['/components/forms'] },
+                    { label: 'Data', icon: 'fa fa-fw fa-table', routerLink: ['/components/data'] },
+                    { label: 'Panels', icon: 'fa fa-fw fa-list-alt', routerLink: ['/components/panels'] },
+                    { label: 'Overlays', icon: 'fa fa-fw fa-square', routerLink: ['/components/overlays'] },
+                    { label: 'Menus', icon: 'fa fa-fw fa-minus-square-o', routerLink: ['/components/menus'] },
+                    { label: 'Messages', icon: 'fa fa-fw fa-circle-o-notch', routerLink: ['/components/messages'] },
+                    { label: 'Charts', icon: 'fa fa-fw fa-area-chart', routerLink: ['/components/charts'] },
+                    { label: 'File', icon: 'fa fa-fw fa-arrow-circle-o-up', routerLink: ['/components/file'] },
+                    { label: 'Misc', icon: 'fa fa-fw fa-user-secret', routerLink: ['/components/misc'] }
+                ]
+            },
+            { 
                 label: 'Menu Colors', icon: 'fa fa-fw fa-paint-brush',
                 items: [
                     { label: 'Light', icon: 'fa fa-fw fa-paint-brush', command: event => this.app.lightMenu = true },
@@ -240,7 +274,7 @@ export class MenuComponent implements OnInit {
                         ]
                     }
                 ]
-            },*/
+            },
             , {
                 label: 'Components', icon: 'fa fa-fw fa-bars', routerLink: ['/components'],
                 items: [
@@ -314,17 +348,35 @@ export class MenuComponent implements OnInit {
                         ]
                     }
                 ]
-            },*/
+            },
             {
                 label: 'Documentation', icon: 'fa fa-fw fa-file-code-o', routerLink: ['/documentation']
-            },
-            /*{
-                label: 'Buy Now', icon: 'fa fa-fw fa-credit-card-alt', url: ['https://www.primefaces.org/store']
-            }*/
+            },*/
+           
         ];
 
         console.log('Consultando los MENUS...');
         console.log(this.model);
+
+    }
+
+    select(model: any) {
+        console.log('MODEL');
+        console.log(model);
+        console.log('Selecciono lo siguiente');
+        console.log(model.label);
+        this.selectItem = model.label;
+    }
+
+    selectSubItem(model: any) {
+        console.log('Seleccionar sub item');
+        console.log(model);
+        if (model.command != null) {
+            this.app.lightMenu = model.command;
+        }
+        if (model.position != null) {
+            this.app.menuMode = model.position;
+        }
 
     }
 

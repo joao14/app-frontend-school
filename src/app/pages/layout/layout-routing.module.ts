@@ -13,6 +13,7 @@ const routes: Routes = [
             { path: 'factura', loadChildren: () => import('./factura/factura.module').then(m => m.FacturaModule) },
             { path: 'miperfil', loadChildren: () => import('./miperfil/miperfil.module').then(m => m.MiperfilModule) },
             { path: 'edit', loadChildren: () => import('./crm/clientes/edit/edit.module').then(m => m.EditModule) },
+            { path: 'prealerta', loadChildren: () => import('./prealerta/prealerta.module').then(m => m.PrealertaModule) },
         ]
     }
 ];

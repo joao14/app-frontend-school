@@ -12,7 +12,6 @@ export class BreadcrumbComponent implements OnInit {
 
 
     ngOnInit(): void {
-        console.log('BreadCrumb onit..');
     }
 
     subscription: Subscription;
@@ -20,6 +19,9 @@ export class BreadcrumbComponent implements OnInit {
     items: MenuItem[];
 
     constructor(public breadcrumbService: BreadcrumbService) {
+        console.log('CONSULTA BREADCRUMB');
+        console.log(breadcrumbService);
+        console.log('DATA');
         this.subscription = breadcrumbService.itemsHandler.subscribe(response => {
             console.log('RESPUESTA BREADCRUMB');
             console.log(response);

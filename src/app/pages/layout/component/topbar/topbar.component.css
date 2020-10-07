@@ -13,5 +13,22 @@ select {
     line-height: 1.2em;
     font-size: 12pt;
     margin-top: 15px;
+}
 
+.languajes {
+    display: inline;
+}
+
+.languajes_menu {
+    display: none;
+}
+
+@media only screen and (max-width: 40rem) {
+    .languajes {
+        display: none;
+    }
+
+    .languajes_menu {
+        display: inline;
+    }
 }

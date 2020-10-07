@@ -14,7 +14,7 @@
         <img src="assets/layout/images/ecuador-logo.png" alt="ecuador-layout" />
     </a>
 
-    <div class="search-input">
+    <div class="search-input languajes">
         <i class="fa fa-language" aria-hidden="true" style="color: white;"></i> &nbsp;
         <select name="miselect" (change)="onChange($event)" class="fixed">
             <option value="es" selected="selected">Español</option>
@@ -31,7 +31,7 @@
 
     <ul id="topbar-usermenu" class="fadeInDown animated" [ngClass]="{'usermenu-active': app.topbarMenuActive}">
         <li #miperfil [ngClass]="{'menuitem-active':app.activeTopbarItem === miperfil}">
-            <a href="#" (click)="app.onTopbarItemClick($event, miperfil)" >
+            <a href="#" (click)="app.onTopbarItemClick($event, miperfil)">
                 <i class="fa fa-fw fa-user"></i>
                 <span class="topbar-item-name">{{ 'Perfil' | translate }}</span>
             </a>
@@ -81,22 +81,31 @@
                         <span>Give me a call</span>
                     </a>
                 </li>
+            </ul>
+        </li>
+        <li #languajes [ngClass]="{'menuitem-active':app.activeTopbarItem === languajes}" class="languajes_menu">
+            <a href="#" (click)="app.onTopbarItemClickLanguajes($event, languajes)">
+                <i class="fa fa-fw fa-globe"></i>
+                <span class="topbar-item-name">Languajes</span>
+            </a>
+            <ul>
                 <li role="menuitem">
-                    <a href="#" class="topbar-message" (click)="app.onTopbarSubItemClick($event)">
-                        <img src="assets/layout/images/avatar-tom.png" alt="ecuador-layout" width="25" />
-                        <span>Reports attached</span>
+                    <a href="#" class="topbar-message" (click)="app.onTopbarSubItemClickLanguajes($event)">
+                        <span>Español</span>
                     </a>
                 </li>
+            </ul>   
+            <ul>
                 <li role="menuitem">
-                    <a href="#" class="topbar-message" (click)="app.onTopbarSubItemClick($event)">
-                        <img src="assets/layout/images/avatar-maggie.png" alt="ecuador-layout" width="25" />
-                        <span>About your invoice</span>
+                    <a href="#" class="topbar-message" (click)="app.onTopbarSubItemClickLanguajes($event)">
+                        <span>English</span>
                     </a>
                 </li>
+            </ul>
+            <ul>
                 <li role="menuitem">
-                    <a href="#" class="topbar-message" (click)="app.onTopbarSubItemClick($event)">
-                        <img src="assets/layout/images/avatar-lucas.png" alt="ecuador-layout" width="25" />
-                        <span>Meeting today</span>
+                    <a href="#" class="topbar-message" (click)="app.onTopbarSubItemClickLanguajes($event)">
+                        <span>日本人</span>
                     </a>
                 </li>
             </ul>

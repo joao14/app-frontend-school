@@ -7,6 +7,7 @@
                 </a>
             </li>
             <li>/</li>
+            {{items}}
             <ng-template ngFor let-item let-last="last" [ngForOf]="items">
                 <li>
                     <a [routerLink]="item.routerLink" *ngIf="item.routerLink">{{item.label}}</a>
