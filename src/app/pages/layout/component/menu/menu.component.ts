@@ -22,7 +22,11 @@ export class MenuComponent implements OnInit {
             {
                 label: 'CRM', icon: 'fa fa-fw fa-cogs' ,
                 items: [
-                    { label: 'Clientes', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/clientes' }
+                    { label: 'Clientes', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/clientes' },
+                    { label: 'Flores', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/flores' },
+                    { label: 'Fincas', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/fincas' },
+                    { label: 'E. Carga', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/delivery' },
+                    { label: 'Marcación', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/marcas' }
                 ]
             },
             { label: 'Facturación', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/factura' },

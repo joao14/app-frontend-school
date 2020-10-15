@@ -91,25 +91,15 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
     key: string;
 
     constructor(public app: LayoutComponent, public router: Router, private cd: ChangeDetectorRef, private menuService: MenuService) {
-        console.log('MENU SERVICE');
+       
         this.menuSourceSubscription = this.menuService.menuSource$.subscribe(key => {
-            console.log('ACTIVE UNO');
-            console.log(key);
-            console.log(this.active);
-            console.log(this.key);
-            console.log(key.indexOf(this.key));
-            console.log('*******');
             // deactivate current active menu
             if (this.active && this.key !== key && key.indexOf(this.key) !== 0) {
-                console.log('INDEX');
-                console.log('TRUE');
                 this.active = false;
             }
         });
 
         this.menuResetSubscription = this.menuService.resetSource$.subscribe(() => {
-            console.log('ACTIVE DOS');
-
             this.active = false;
         });
 

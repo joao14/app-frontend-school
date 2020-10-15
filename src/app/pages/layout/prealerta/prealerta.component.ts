@@ -1,27 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng';
 import * as XLSX from "xlsx";
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ApisService } from 'src/services/apis.service';
+import { Flower } from '../crm/flores/flores.component';
+import { Route } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
+import { client } from 'src/models/client';
+import { finca } from 'src/models/finca';
+import { flower } from 'src/models/flower';
+import { delivery } from 'src/models/delivery';
+import { mark } from 'src/models/mark';
 
 export interface Item {
-  embarque: string;
-  HBBQ: string;
-  cliente: string;
-  rosamistica: string;
-  finca: string;
+  cliente: client;
+  finca: finca;
   marca: string;
-  freightforwader: string;
-  variedad: string;
-  CM: string;
-  tallos: string;
-  total: string;
-  compra: string;
-  venta: string;
+  HBBQ: string;
+  rosamistica: flower;
+  tamanio: string;
+  caja: number;
+  tallos: number;
+  precio: number;
+  carga: string;
   status: string;
 }
 
 export interface Prealert {
   items: Item[];
-  total: number;
+  cajas: number;
   tallos: number;
 }
 
@@ -42,36 +49,62 @@ export class PrealertaComponent implements OnInit {
   status: any[] = [];
   optionSelect: string;
   files: any = [];
+  selectitem: number;
+  prealertForm: FormGroup;
+  submitted = false;
+  flores: Array<Flower> = [];
+  fincas: Array<finca> = [];
+  clientes: Array<client> = [];
+  deliveries: Array<delivery>=[];
+  marks: Array<mark>=[];
+  selectClient: client;
 
-  constructor() { }
+  test: string[] = [];
+
+  constructor(private messageService: MessageService, private formBuilder: FormBuilder, private confirmationService: ConfirmationService,
+    private api: ApisService, private router: Router) {
+    this.prealertForm = this.formBuilder.group({
+      cliente: ['', Validators.required],
+      finca: ['', Validators.required],
+      marca: ['', Validators.required],
+      HBBQ: ['', [Validators.required]],
+      rosamistica: ['', [Validators.required]],
+      tamanio: ['', Validators.required],
+      caja: ['', Validators.required],
+      tallos: ['', Validators.required],
+      precio: ['', Validators.required],
+      carga: ['', Validators.required],
+      estado: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
-    this.inicializate()
+    this.inicializate();
+    this.getServicios();
+
   }
 
   inicializate() {
+    this.selectitem = -1;
     this.expanded = false;
     this.item = {
-      embarque: "",
-      HBBQ: "",
-      cliente: "",
-      rosamistica: "",
-      finca: "",
+      cliente: null,
+      finca: null,
       marca: "",
-      freightforwader: "",
-      variedad: "",
-      CM: "",
-      tallos: "",
-      total: "",
-      compra: "",
-      venta: "",
+      HBBQ: "",
+      rosamistica: "",
+      tamanio: "",
+      caja: 0,
+      tallos: 0,
+      precio: 0,
+      carga: "",
       status: ""
     }
 
     this.prealert = {
       items: null,
       tallos: 0,
-      total: 0
+      cajas: 0
     }
 
     this.items = [];
@@ -84,78 +117,70 @@ export class PrealertaComponent implements OnInit {
   }
 
   deleteItem(prealert: any) {
-    console.log('PREALERTA');
-    console.log(prealert);
-    this.prealert.total = 0;
+    this.prealert.cajas = 0;
     this.prealert.tallos = 0;
     this.prealert.items = this.items;
     this.items = this.items.filter((element) => element != prealert);
     this.items.forEach(item => {
-      this.prealert.total += parseFloat(item.total);
-      this.prealert.tallos += parseInt(item.tallos);
+      this.prealert.cajas += parseInt(item.caja + "");
+      this.prealert.tallos += parseInt(item.tallos + "");
     });
 
   }
 
   save() {
-    console.log('ARRAY HASTA EL MOMENTO');
-    console.log(this.items);
-    console.log('LONGITUD =[' + this.items.length + "]");
-    console.log('Se agrega una nueva fila');
-    console.log(this.item);
-    this.items.push(this.item);
-    console.log('ARRAY NEXT');
-    console.log(this.items);
-    console.log('LONGITUD PUSH =[ ' + this.items.length);
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.prealertForm.invalid) {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios' });
+      return;
+    }
 
-    this.prealert.total = 0;
+    this.item = {
+      cliente: this.prealertForm.get('cliente').value,
+      finca: this.prealertForm.get('finca').value,
+      marca: this.prealertForm.get('marca').value,
+      HBBQ: this.prealertForm.get('HBBQ').value,
+      rosamistica: this.prealertForm.get('rosamistica').value,
+      tamanio: this.prealertForm.get('tamanio').value,
+      caja: this.prealertForm.get('caja').value,
+      tallos: this.prealertForm.get('tallos').value,
+      precio: this.prealertForm.get('precio').value,
+      carga: this.prealertForm.get('carga').value,
+      status: this.prealertForm.get('estado').value.code
+    }
+
+    this.items.push(this.item);
+    this.prealert.cajas = 0;
     this.prealert.tallos = 0;
     this.prealert.items = this.items;
     this.items.forEach(item => {
-      this.prealert.total += parseFloat(item.total);
-      this.prealert.tallos += parseInt(item.tallos);
+      this.prealert.cajas += parseInt(item.caja + "");
+      this.prealert.tallos += parseInt(item.tallos + "");
     });
-    this.item = {
-      embarque: "",
-      HBBQ: "",
-      cliente: "",
-      rosamistica: "",
-      finca: "",
-      marca: "",
-      freightforwader: "",
-      variedad: "",
-      CM: "",
-      tallos: "",
-      total: "",
-      compra: "",
-      venta: "",
-      status: ""
-    }
-    console.log('PREALERTA FINAL');
-    console.log(this.prealert);
 
+    this.submitted = false;
+    this.prealertForm.reset();
   }
 
-  rowexpasion(item: any) {
-    console.log('ITEM');
-    console.log(item);
-    this.selectrow = item;
-    if (this.expanded) {
-      this.expanded = false;
-    } else {
-      this.expanded = true;
-    }
+  rowexpasion(indice: number) {
+    if (this.selectitem == indice)
+      this.selectitem = -1;
+    else
+      this.selectitem = indice;
 
   }
 
   selectOption(texto: string) {
-    console.log('Opcion seleccionado');
+    this.submitted = false;
+    this.prealertForm.reset();
     this.optionSelect = texto;
-    this.items=[];
-    this.prealert={
+    this.files = [];
+    this.items = [];
+    this.prealert = {
       items: null,
       tallos: 0,
-      total: 0
+      cajas: 0
     }
   }
 
@@ -170,8 +195,7 @@ export class PrealertaComponent implements OnInit {
     }
     const reader: FileReader = new FileReader();
     reader.readAsBinaryString(target.files[0]);
-    console.log("Este es el nombre");
-    console.log(target.files[0].name);
+    this.items = [];
 
     reader.onload = (e: any) => {
       /* create workbook */
@@ -182,55 +206,32 @@ export class PrealertaComponent implements OnInit {
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
       /* save data */
       const data = XLSX.utils.sheet_to_json(ws, { raw: true }); // to get 2d array pass 2nd parameter as object {header: 1}
-      //console.log(data); // Data will be logged in array format containing objects
+      console.log(data); // Data will be logged in array format containing objects
 
-      /*for (var i = 7; i < data.length; i++) {
-          if (data[i]["__EMPTY_2"] != undefined) {
-              var floower_length = "";
-              if (data[i]["__EMPTY_5"] != undefined) {
-                  floower_length = "40";
-              }
-              if (data[i]["__EMPTY_6"] != undefined) {
-                  floower_length = "50";
-              }
-              if (data[i]["__EMPTY_7"] != undefined) {
-                  floower_length = "60";
-              }
-              if (data[i]["__EMPTY_8"] != undefined) {
-                  floower_length = "70";
-              }
-              if (data[i]["__EMPTY_9"] != undefined) {
-                  floower_length = "80";
-              }
-              if (data[i]["__EMPTY_10"] != undefined) {
-                  floower_length = "90";
-              }
-              if (data[i]["__EMPTY_11"] != undefined) {
-                  floower_length = "100";
-              }
-              if (data[i]["__EMPTY_12"] != undefined) {
-                  floower_length = "110";
-              }
+      data.forEach(element => {
+        let item = {
+          cliente: element['CLIENTE'],
+          finca: element['FINCA'],
+          marca: element['MARCACION'],
+          HBBQ: element['HB/QB'],
+          rosamistica: element['VARIEDAD'],
+          tamanio: element['T/TALLOS'],
+          caja: element['CM'],
+          tallos: element['TALLOS'],
+          precio: element['PRECIO COMPRA'],
+          carga: element['CARGUERA'],
+          status: element['STATUS']
+        }
+        this.items.push(item);
+        this.prealert.cajas = 0;
+        this.prealert.tallos = 0;
+        this.prealert.items = this.items;
+        this.items.forEach(item => {
+          this.prealert.cajas += parseInt(item.caja + "");
+          this.prealert.tallos += parseInt(item.tallos + "");
+        });
 
-              let item = {
-                  pieza: data[i]["__EMPTY_1"],
-                  farmacia: data[i]["__EMPTY_2"],
-                  flor:
-                      data[i][
-                          "                                       ROSA MISTICA"
-                      ],
-                  baucher: data[i]["__EMPTY_13"],
-                  claves: "",
-                  tamanio: floower_length,
-                  stems: data[i]["__EMPTY_13"],
-                  price: data[i]["__EMPTY_14"],
-                  subtotal: data[i]["__EMPTY_15"],
-              };
-              this.factura.tallos += item.stems;
-              this.factura.total += item.subtotal;
-              this.items.push(item);
-          }
-      }*/
+      });
 
       console.log("ARRAY DE LISTA");
       console.log(this.items);
@@ -242,8 +243,99 @@ export class PrealertaComponent implements OnInit {
   deleteAttachment(index) {
     this.files.splice(index, 1);
     this.items = [];
-    this.prealert.total = 0;
+    this.prealert.cajas = 0;
     this.prealert.tallos = 0;
   }
+
+  get f() {
+    return this.prealertForm.controls;
+  }
+
+
+  send() {
+    this.confirmationService.confirm({
+      message: "Are you sure to send the prealert?",
+      accept: () => {
+        //Actual logic to perform a confirmation
+        console.log('Esta todo bien..');
+
+      },
+    });
+  }
+  
+
+
+  getServicios() {
+    this.api.getclients(localStorage.getItem("token")).then(cliente => {
+      if (cliente.headerApp.code === 200) {
+        this.clientes = cliente.data.clientes;
+      }
+
+    }).catch(err => {
+      console.log(err);
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+
+    this.api.getfinca(localStorage.getItem("token")).then(finca => {
+      if (finca.headerApp.code === 200) {
+        this.fincas = finca.data.farms;
+      }
+
+    }).catch(err => {
+      console.log(err);
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+
+    this.api.getflowers(localStorage.getItem("token")).then(flor => {
+      if (flor.headerApp.code === 200) {
+        this.flores = flor.data.flowers;
+      }
+    }).catch(err => {
+      console.log(err);
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+
+    this.api.getdeliveries(localStorage.getItem("token")).then(delivery => {
+      if (delivery.headerApp.code === 200) {
+        this.deliveries = delivery.data.cargocompanies;
+      }
+    }).catch(err => {
+      console.log(err);
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+  }
+
+  onOptionsSelected() {
+    console.log('Consultando las marcas de los clientes');
+    console.log(this.prealertForm.get('cliente'));    this.marks=[];
+    this.api.getmarks(this.prealertForm.get('cliente').value.entiId, localStorage.getItem("token")).then(mark => {
+      console.log(mark);
+      if (mark.headerApp.code == 200) {
+        this.marks = mark.data.marks;
+        console.log('MARCAS..');
+        console.log(this.marks);
+        
+      }
+    }).catch(err => {
+      console.log(err);
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+  }
+
 
 }

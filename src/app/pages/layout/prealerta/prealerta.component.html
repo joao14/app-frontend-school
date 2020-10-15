@@ -19,77 +19,127 @@
             <div *ngIf="optionSelect=='manual'">
                 <p-accordion>
                     <p-accordionTab header="Datos de la Prealerta" [selected]="true">
-                        <div class="ui-g form-group ui-fluid">
-                            <div class="ui-g-12 ui-md-3">
-                                <label for="embarque" class="lbl">Embarque</label>
-                                <input type="text" id="embarque" pInputText [(ngModel)]="item.embarque">
-                            </div>
-                            <div class="ui-g-12 ui-md-3">
-                                <label for="hbbq" class="lbl">HB/QB</label>
-                                <input type="text" id="hbbq" pInputText [(ngModel)]="item.HBBQ">
-                            </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label for="cliente" class="lbl">Cliente</label>
-                                <input type="text" id="cliente" pInputText [(ngModel)]="item.cliente">
-                            </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label for="rosamistica" class="lbl">Rosa Mística</label>
-                                <input type="text" id="rosamistica" pInputText [(ngModel)]="item.rosamistica">
-                            </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label for="finca" class="lbl">Finca</label>
-                                <input type="text" id="finca" pInputText [(ngModel)]="item.finca">
-                            </div>
+                        <form [formGroup]="prealertForm" (ngSubmit)="save()">
+                            <div class="ui-g form-group ui-fluid">
+                                <div class="ui-g-12 ui-md-6">
+                                    <label for="cliente" class="lbl">Cliente</label>
+                                    <p-dropdown [options]="clientes" formControlName="cliente" optionLabel="nombres" 
+                                        class="form-control" (onChange)='onOptionsSelected()'
+                                        [filter]="true" placeholder="Seleccione"></p-dropdown>
+                                    <div *ngIf="submitted && f.cliente.errors" class="invalid-feedback">
+                                        <div *ngIf="f.cliente.errors.required">Cliente es requerido</div>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-md-6">
+                                    <label class="lbl">Finca</label>
+                                    <p-dropdown [options]="fincas" formControlName="finca" optionLabel="nombres"
+                                        [filter]="true" placeholder="Seleccione" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.finca.errors }"></p-dropdown>
+                                    <div *ngIf="submitted && f.finca.errors" class="invalid-feedback">
+                                        <div *ngIf="f.finca.errors.required">Finca es requerido</div>
+                                    </div>
+                                </div>
 
-                            <div class="ui-g-12 ui-md-6">
-                                <label for="marca" class="lbl">Marca</label>
-                                <input type="text" id="marca" pInputText [(ngModel)]="item.marca">
-                            </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label for="freightforwader" class="lbl">Freightforwader</label>
-                                <input type="text" id="freightforwader" pInputText [(ngModel)]="item.freightforwader">
-                            </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label for="variedad" class="lbl">Variedad</label>
-                                <input type="text" id="variedad" pInputText [(ngModel)]="item.variedad">
-                            </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label for="cm" class="lbl">CM</label>
-                                <input type="text" id="cm" pInputText [(ngModel)]="item.CM">
-                            </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label for="tallos" class="lbl">Tallos</label>
-                                <input type="text" id="tallos" pInputText [(ngModel)]="item.tallos">
-                            </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label for="total" class="lbl">Total</label>
-                                <input type="text" id="total" pInputText [(ngModel)]="item.total">
-                            </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label for="compra" class="lbl">Compra</label>
-                                <input type="text" id="compra" pInputText [(ngModel)]="item.compra">
-                            </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label for="venta" class="lbl">Venta</label>
-                                <input type="text" id="venta" pInputText [(ngModel)]="item.venta">
-                            </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label for="state" class="lbl">Estado</label>
-                                <p-dropdown [options]="status" placeholder="Seleccione" optionLabel="name" id="state"
-                                    [(ngModel)]="item.status">
-                                </p-dropdown>
-                            </div>
+                                <div class="ui-g-12 ui-md-3">
+                                    <label for="marca" class="lbl">Marca</label>
+                                    <p-dropdown [ngClass]="{ 'is-invalid': submitted && f.marca.errors }"
+                                                [options]="marks"  optionLabel="nombre" 
+                                                class="form-control" formControlName="marca"
+                                                [filter]="true" placeholder="Seleccione">
+                                    </p-dropdown>
+                                    <div *ngIf="submitted && f.marca.errors" class="invalid-feedback">
+                                        <div *ngIf="f.marca.errors.required">Marca es requerido</div>
+                                    </div>
+                                </div>
 
-                            <div class="ui-g-12 ui-md-6">
-                                <br>
-                                <div class="ui-g-12 ui-md-5">
-                                    <button pButton type="button" icon="pi pi-save"
-                                        class="ui-button-primary ouput_btn_table" label="Agregar"
-                                        (click)="save()"></button>
+                                <div class="ui-g-12 ui-md-3">
+                                    <label for="hbbq" class="lbl">HB/QB</label>
+                                    <input type="text" id="hbbq" pInputText class="form-control" formControlName="HBBQ"
+                                        pKeyFilter="int" [ngClass]="{ 'is-invalid': submitted && f.HBBQ.errors }">
+                                    <div *ngIf="submitted && f.HBBQ.errors" class="invalid-feedback">
+                                        <div *ngIf="f.HBBQ.errors.required">HB/QB es requerido</div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-6">
+                                    <label for="rosamistica" class="lbl">Rosa Mística</label>
+                                    <p-dropdown [options]="flores" formControlName="rosamistica" optionLabel="nombre"
+                                        [filter]="true" placeholder="Seleccione" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.rosamistica.errors }"></p-dropdown>
+                                    <div *ngIf="submitted && f.rosamistica.errors" class="invalid-feedback">
+                                        <div *ngIf="f.rosamistica.errors.required">Rosa Mística es requerido</div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-3">
+                                    <label for="tamanio" class="lbl">Tamaño</label>
+                                    <input type="text" id="tamanio" pInputText class="form-control"
+                                        formControlName="tamanio"
+                                        [ngClass]="{ 'is-invalid': submitted && f.tamanio.errors }">
+                                    <div *ngIf="submitted && f.tamanio.errors" class="invalid-feedback">
+                                        <div *ngIf="f.tamanio.errors.required">Tamaño es requerido</div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-3">
+                                    <label for="caja" class="lbl">Caja</label>
+                                    <input type="text" id="caja" pInputText class="form-control" formControlName="caja"
+                                        pKeyFilter="int" [ngClass]="{ 'is-invalid': submitted && f.caja.errors }">
+                                    <div *ngIf="submitted && f.caja.errors" class="invalid-feedback">
+                                        <div *ngIf="f.caja.errors.required">Caja es requerido</div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-3">
+                                    <label for="tallos" class="lbl">Tallos</label>
+                                    <input type="text" id="tallos" pInputText class="form-control"
+                                        formControlName="tallos" pKeyFilter="int"
+                                        [ngClass]="{ 'is-invalid': submitted && f.tallos.errors }">
+                                    <div *ngIf="submitted && f.tallos.errors" class="invalid-feedback">
+                                        <div *ngIf="f.tallos.errors.required">Tallos es requerido</div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-3">
+                                    <label for="precio" class="lbl">Precio</label>
+                                    <input type="text" id="precio" pInputText class="form-control"
+                                        formControlName="precio" pKeyFilter="pnum"
+                                        [ngClass]="{ 'is-invalid': submitted && f.precio.errors }">
+                                    <div *ngIf="submitted && f.precio.errors" class="invalid-feedback">
+                                        <div *ngIf="f.precio.errors.required">Precio es requerido</div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-6">
+                                    <label for="carga" class="lbl">Empresa de carga</label>
+                                    <p-dropdown [options]="deliveries" formControlName="carga" optionLabel="nombres"
+                                        [filter]="true" placeholder="Seleccione" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.carga.errors }"></p-dropdown>
+                                    <div *ngIf="submitted && f.carga.errors" class="invalid-feedback">
+                                        <div *ngIf="f.carga.errors.required">Carga es requerido</div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-6">
+                                    <label class="lbl">Estado</label>
+                                    <p-dropdown [options]="status" placeholder="Seleccione" class="form-control"
+                                        optionLabel="name" formControlName="estado"
+                                        [ngClass]="{ 'is-invalid': submitted && f.estado.errors }">
+                                    </p-dropdown>
+                                    <div *ngIf="submitted && f.estado.errors" class="invalid-feedback">
+                                        <div *ngIf="f.estado.errors.required">Estado es requerido</div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-12">
+                                    <div class="ui-g-12 ui-md-9"></div>
+                                    <div class="ui-g-12 ui-md-3">
+                                        <button pButton icon="pi pi-plus" class="ui-button-primary ouput_btn_table"
+                                            label="Agregar"></button>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
+                        </form>
                     </p-accordionTab>
                 </p-accordion>
             </div>
@@ -115,65 +165,60 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 4em;"></th>
-                        <th>Embarque</th>
-                        <th>HBQB</th>
-                        <th>Cliente</th>
+                        <th style="width: 4em;"></th>
+                        <th style="width: 15em;">Cliente</th>
                         <th>Finca</th>
                         <th>Marca</th>
+                        <th>HB/QB</th>
+                        <th>Flor</th>
                         <th>Tallos</th>
-                        <th>Total</th>
+                        <th>Caja</th>
 
                 </ng-template>
-                <ng-template pTemplate="body" let-data>
+                <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
                     <tr>
                         <td><span class="p-column-title">
                                 <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
                                     (click)="deleteItem(data)"></button>
                             </span>
                         </td>
-                        <td>
-                            <button type="button" pButton class="p-button-text p-button-rounded p-button-plain"
-                                [label]="data.embarque" (click)="rowexpasion(data)"
-                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
-                            </button>
+                        <td><span class="p-column-title">
+                                <button pButton type="button" class="ui-button-primary"
+                                    [icon]="selectitem==rowIndex ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+                                    (click)="rowexpasion(rowIndex)"></button>
+                            </span>
                         </td>
-                        <td><span class="p-column-title">{{data.HBBQ }}</span></td>
-                        <td><span class="p-column-title">{{data.cliente }}</span></td>
-                        <td><span class="p-column-title">{{data.finca}}</span></td>
-                        <td><span class="p-column-title">{{data.marca}}</span></td>
+                        <td><span class="p-column-title">{{data.cliente.nombres }}</span></td>
+                        <td><span class="p-column-title">{{data.finca.nombres }}</span></td>
+                        <td><span class="p-column-title">{{data.marca }}</span></td>
+                        <td><span class="p-column-title">{{data.HBBQ}}</span></td>
+                        <td><span class="p-column-title">{{data.rosamistica.nombre}}</span></td>
                         <td><span class="p-column-title">{{data.tallos}}</span></td>
-                        <td><span class="p-column-title">{{data.total}}</span></td>
+                        <td><span class="p-column-title">{{data.caja}}</span></td>
                     </tr>
-                    <tr *ngIf="expanded">
-                        <td colspan="8">
+                    <tr *ngIf="selectitem==rowIndex " class="detalle_table">
+                        <td colspan="9">
                             <div class="ui-g form-group ui-fluid">
                                 <div class="ui-g-12 ui-md-6">
-                                    <label for="marca" class="lbl">Rosa Mística</label>
-                                    <span>{{data.rosamistica}}</span>
+                                    <label for="rosamistica" class="lbl">Rosa Mística</label>
+                                    <input type="text" id="rosamistica" pInputText [(ngModel)]="data.rosamistica.nombre"
+                                        readonly>
                                 </div>
                                 <div class="ui-g-12 ui-md-6">
-                                    <label for="marca" class="lbl">Freightforwader</label>
-                                    <span>{{data.freightforwader}}</span>
+                                    <label for="tamanio" class="lbl">Tamaño</label>
+                                    <input type="text" id="tamanio" pInputText [(ngModel)]="data.tamanio" readonly>
                                 </div>
                                 <div class="ui-g-12 ui-md-6">
-                                    <label for="marca" class="lbl">Variedad</label>
-                                    <span>{{data.variedad}}</span>
+                                    <label for="precio" class="lbl">Precio</label>
+                                    <input type="text" id="precio" pInputText [(ngModel)]="data.precio" readonly>
                                 </div>
                                 <div class="ui-g-12 ui-md-6">
-                                    <label for="marca" class="lbl">CM</label>
-                                    <span>{{data.CM}}</span>
+                                    <label for="carga" class="lbl">Carga</label>
+                                    <input type="text" id="carga" pInputText [(ngModel)]="data.carga" readonly>
                                 </div>
                                 <div class="ui-g-12 ui-md-6">
-                                    <label for="marca" class="lbl">Compra</label>
-                                    <span>{{data.compra}}</span>
-                                </div>
-                                <div class="ui-g-12 ui-md-6">
-                                    <label for="marca" class="lbl">Venta</label>
-                                    <span>{{data.venta}}</span>
-                                </div>
-                                <div class="ui-g-12 ui-md-6">
-                                    <label for="marca" class="lbl">Status</label>
-                                    <span>{{data.status}}</span>
+                                    <label for="status" class="lbl">Estado</label>
+                                    <input type="text" id="status" pInputText [(ngModel)]="data.status" readonly>
                                 </div>
                             </div>
                         </td>
@@ -181,9 +226,9 @@
                 </ng-template>
                 <ng-template pTemplate="footer">
                     <tr>
-                        <td colspan="6" class="total_table">Totales</td>
+                        <td colspan="7" class="total_table">Totales</td>
                         <td><span class="total_tallos">{{ prealert.tallos}}</span></td>
-                        <td><span class="total_valor">{{ prealert.total | currency: 'USD'}}</span></td>
+                        <td><span class="total_valor">{{ prealert.cajas}}</span></td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -192,7 +237,7 @@
                 <div class="ui-grid-col-10"></div>
                 <div class="ui-grid-col-2">
                     <button pButton type="button" icon="pi pi-arrow-right" class="ui-button-help btn_enviar"
-                        label="Enviar" (click)="save()" [disabled]="items.length <= 0"></button>
+                        label="Enviar" (click)="send()" [disabled]="items.length <= 0"></button>
                 </div>
             </div>
             <!--Resumen totales-->
@@ -202,21 +247,21 @@
                         Total:
                     </div>
                     <div class="ui-grid-col-8" style="text-align: center;"><span
-                            class="total_valor_resumen">{{prealert.total | currency: 'USD'}}</span></div>
+                            class="total_valor_resumen">{{prealert.tallos}}</span></div>
                 </div>
                 <br>
                 <div class="ui-grid ui-grid-responsive ui-fluid">
                     <div class="ui-grid-row">
                         <div class="ui-grid-col-10"></div>
                         <div class="ui-grid-col-2">
-                            <button pButton icon="pi pi-arrow-right"
-                                class="ui-button-help btn_enviar_responsive" label="Enviar" (click)="save()"></button>
+                            <button pButton icon="pi pi-arrow-right" class="ui-button-help btn_enviar_responsive"
+                                label="Enviar" (click)="send()"></button>
                         </div>
                     </div>
                 </div>
             </div>
             <!--Table responsive-->
-            <div class="ui-grid ui-grid-responsive ui-fluid" class="data" *ngFor="let item of items">                
+            <div class="ui-grid ui-grid-responsive ui-fluid" class="data" *ngFor="let item of items">
                 <div class="card card-w-title">
                     <div class="ui-grid-row">
                         <div class="ui-grid-col-12">
@@ -226,19 +271,10 @@
                     </div>
 
                     <div class="ui-grid-row">
-                        <div class="ui-grid-col-4"><span class="label">Embarque</span></div>
-                        <div class="ui-grid-col-8"><span class="value">{{item.embarque }}</span></div>
-                    </div>
-
-                    <div class="ui-grid-row">
-                        <div class="ui-grid-col-4"><span class="label">HBQB</span></div>
-                        <div class="ui-grid-col-8"><span class="value">{{item.HBBQ}}</span></div>
-                    </div>
-
-                    <div class="ui-grid-row">
                         <div class="ui-grid-col-4"><span class="label">Cliente</span></div>
                         <div class="ui-grid-col-8"><span class="value">{{item.cliente}}</span></div>
                     </div>
+
 
                     <div class="ui-grid-row">
                         <div class="ui-grid-col-4"><span class="label">Finca</span></div>
@@ -251,18 +287,36 @@
                     </div>
 
                     <div class="ui-grid-row">
-                        <div class="ui-grid-col-4"><span class="label">Total</span></div>
-                        <div class="ui-grid-col-8"><span class="value">{{item.total | currency}}</span></div>
+                        <div class="ui-grid-col-4"><span class="label">HBQB</span></div>
+                        <div class="ui-grid-col-8"><span class="value">{{item.HBBQ}}</span></div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-4"><span class="label">Flor</span></div>
+                        <div class="ui-grid-col-8"><span class="value">{{item.rosamistica}}</span></div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-4"><span class="label">Cajas</span></div>
+                        <div class="ui-grid-col-8"><span class="value">{{item.caja}}</span></div>
+                    </div>
+
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-4"><span class="label">Tallos</span></div>
+                        <div class="ui-grid-col-8"><span class="value">{{item.tallos}}</span></div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
 
         <!--Confirmar cuadro de dialogo confirm-->
         <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
             <p-footer>
-                <button type="button" pButton icon="pi pi-times" class="ui-button-danger" label="No"></button>
-                <button type="button" pButton icon="pi pi-check" class="ui-button-success" label="Yes"></button>
+                <button type="button" pButton icon="pi pi-times" class="ui-button-danger" label="No"
+                    (click)="cd.reject()"></button>
+                <button type="button" pButton icon="pi pi-check" class="ui-button-success" label="Yes"
+                    (click)="cd.accept()"></button>
             </p-footer>
         </p-confirmDialog>
 

@@ -116,21 +116,204 @@ export class ApisService {
         });
     }
 
-    /*public information(type: string): Promise<any> {
-      let opt = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem("token")
-        })
-      }
-      return this.http
-        .get<any>(
-          environment.information + type + "/33",
-          opt
-        )
-        .pipe(retry(2), catchError(this.handleError)).toPromise();
 
-    }*/
+    public getflowers(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.flowers, opt).toPromise().then(flowers => {
+                resolve(flowers);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public addflowers(flower: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.addflowers, flower, opt).toPromise().then(flower => {
+                resolve(flower);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public updateflower(flower: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.put<any>(environment.updateflowers, flower, opt).toPromise().then(flower => {
+                resolve(flower);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+
+    public getfinca(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.finca, opt).toPromise().then(finca => {
+                resolve(finca);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public addfinca(finca: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.addfinca, finca, opt).toPromise().then(finca => {
+                resolve(finca);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public updatefinca(finca: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.put<any>(environment.updatefinca, finca, opt).toPromise().then(finca => {
+                resolve(finca);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public getdeliveries(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.empresaCargo, opt).toPromise().then(delivery => {
+                resolve(delivery);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public adddelivery(delivery: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.addempresaCargo, delivery, opt).toPromise().then(delivery => {
+                resolve(delivery);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public updatedelivery(delivery: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.put<any>(environment.updateempresaCargo, delivery, opt).toPromise().then(delivery => {
+                resolve(delivery);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public getmarks(idCliente: number, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.marcaciones + idCliente, opt).toPromise().then(mark => {
+                resolve(mark);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public addmark(mark: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.addmarcaciones, mark, opt).toPromise().then(mark => {
+                resolve(mark);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public updatemark(mark: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.put<any>(environment.updatemarcaciones, mark, opt).toPromise().then(mark => {
+                resolve(mark);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
 
 
 

@@ -1,0 +1,31 @@
+.active-badge{
+    background-color: #c8e6c9;
+    color: #256029;
+    height: 25px;
+    width: 50%;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    letter-spacing: .3px;
+}
+
+.inactive-badge{
+    background-color: #ffcdd2;
+    color: #c63737;
+    height: 25px;
+    width: 50%;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    letter-spacing: .3px;
+}

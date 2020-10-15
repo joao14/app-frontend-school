@@ -65,8 +65,12 @@ export class ClientesComponent implements OnInit {
 
             }
         }).catch(error => {
-            console.log('Error consulta de usuarios');
-            console.log(error);
+            console.log('consultando los errores de la aplicación');
+            console.log(error.error);
+            if(error.error.code==401){
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
         })
 
 
@@ -135,7 +139,10 @@ export class ClientesComponent implements OnInit {
         }).catch(err => {
             console.log('consultando los errores');
             console.log(err);
-
+            if(err.code==401){
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
         })
 
     }

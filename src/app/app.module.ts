@@ -14,16 +14,8 @@ import { AppRoutes } from './app.routes';
 // Application Components
 import { AppComponent } from './app.component';
 
-// Demo services
-import { CarService } from './demo/service/carservice';
-import { CountryService } from './demo/service/countryservice';
-import { EventService } from './demo/service/eventservice';
-import { NodeService } from './demo/service/nodeservice';
-
-
 //Para traducir
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { DragdropDirective } from './directive/dragdrop.directive';
 
 @NgModule({
     imports: [

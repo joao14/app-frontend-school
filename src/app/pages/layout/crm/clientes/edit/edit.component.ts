@@ -17,7 +17,7 @@ export interface client {
     tipo: string;
     email: string;
     phone: string;
-    isclient: string;
+    tipoenti: string;
 }
 
 export interface Tipo {
@@ -72,6 +72,10 @@ export class EditComponent implements OnInit {
 
         }).catch(err => {
             console.log(err);
+            if(err.error.code==401){
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
         })
 
     }
@@ -97,7 +101,7 @@ export class EditComponent implements OnInit {
             tipo: this.client_ != null ? this.client_['tipo'] : "",
             email: this.client_ != null ? this.client_['email'] : "",
             phone: this.client_ != null ? this.client_['phone'] : "",
-            isclient: "S"
+            tipoenti: "C"
         };
         this.options = [{ label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];
         this.tipos = [

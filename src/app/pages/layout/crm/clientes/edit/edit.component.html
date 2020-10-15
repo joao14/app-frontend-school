@@ -1,4 +1,5 @@
 <div class="ui-g">
+    <div class="ui-g-12 ui-lg-3"></div>
     <div class="ui-g-12 ui-lg-6">
         <p-blockUI [blocked]="blockedPanel">
             <i class="pi pi-lock" style="font-size: 3rem"></i>
@@ -40,7 +41,7 @@
 
             <h1 *ngIf="!edit">Agregar nuevo cliente</h1>
             <h1 *ngIf="edit">Editar Cliente</h1>
-            <div class="ui-g form-group">
+            <div class="ui-g form-group">                
                 <div class="ui-g-12 ui-md-6">
                     <label for="identification">Identificación</label>
                     <input type="text" name="identification" pInputText autocomplete="off" maxlength="100"
@@ -97,4 +98,5 @@
             </div>
         </div>
     </div>
+    <div class="ui-g-12 ui-lg-3"></div>
 </div>

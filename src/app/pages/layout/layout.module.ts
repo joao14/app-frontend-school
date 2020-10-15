@@ -28,10 +28,8 @@ import { RouterModule } from '@angular/router';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { MessageModule, AutoCompleteModule, CardModule, SplitButtonModule, SelectButtonModule, ConfirmDialogModule } from 'primeng';
-import { PrealertaComponent } from './prealerta/prealerta.component';
-
-
-
+import { DeliveryComponent } from './crm/delivery/delivery.component';
+import { MarkingComponent } from './crm/marking/marking.component';
 
 @NgModule({
     imports: [
@@ -66,7 +64,7 @@ import { PrealertaComponent } from './prealerta/prealerta.component';
         BreadcrumbComponent,
         MenuComponent,
         TopbarComponent,
-        PanelComponent,
+        PanelComponent      
     ], providers: [
         MenuService,
         BreadcrumbService
