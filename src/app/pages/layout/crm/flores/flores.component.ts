@@ -23,18 +23,27 @@ export class FloresComponent implements OnInit {
   selecteFlowers: Flower[] = [];
   options: SelectItem[];
   selectoptions: any;
+  selectFlor: Flower;
+  dialogVisible: boolean;
+  sortField: string;
+  sortOrder: string;
+  loading: boolean;
 
-
-  constructor(private apis: ApisService, private router: Router) { }
+  constructor(private apis: ApisService, private router: Router) {
+  }
 
   ngOnInit(): void {
-    console.log('INICIALIZATE');
+    console.log('INICIALIZATE');   
+    this.sortField="";
+    this.sortOrder="";
     this.inicializate();
   }
 
   inicializate() {
     this.options = [{ label: 'Todos', value: null }, { label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];
+    this.dialogVisible=false;
     console.log(localStorage.getItem("token"));
+    this.loading=true;
     this.apis.getflowers(localStorage.getItem("token")).then(data => {
       console.log(data);
       if (data.headerApp.code == 200) {
@@ -53,10 +62,11 @@ export class FloresComponent implements OnInit {
           }
           this.flowers.push(flower);
         });
-
+        this.loading=false;
       }
     }).catch(err => {
       console.log(err);
+      this.loading=false;
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -79,6 +89,13 @@ export class FloresComponent implements OnInit {
     console.log('Editando...');
     this.router.navigate(['/editFlower'], { state: { flower: JSON.stringify(flower) } });
     
+  }
+
+  viewFlor(flower: Flower){
+    console.log('Esta es la flor');
+    console.log(flower);
+    this.selectFlor=flower;
+    this.dialogVisible=true;
   }
 
 }

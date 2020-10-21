@@ -2,77 +2,71 @@
     <div class="ui-g-12">
         <div class="card no-margin">
             <h1>Lista de Flores</h1>
-            <p-toast></p-toast>
-            <p-toolbar>
-                <div class="p-toolbar-group-left">
-                    <button pButton label="Nuevo" icon="pi pi-plus" class="ui-button-success" (click)="addFlor()"
-                        ></button>
-                </div>
-            </p-toolbar>  
+            <p-toast></p-toast>            
+            <p-dataView #dv [value]="flowers" [paginator]="true" [rows]="9" filterBy="name"
+                [loading]="loading" [lazy]="true"
+                [sortField]="sortField"
+                [sortOrder]="sortOrder" layout="grid">
+                <p-header>
+                    <div class="ui-helper-clearfix">
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-md-9">
+                                <button pButton label="Nuevo" icon="pi pi-plus" class="ui-button-success"
+                                        (click)="addFlor()"></button>
+                            </div>
+                            <div class="ui-g-6 ui-md-3 filter-container">
+                                <div style="position:relative">
+                                    <div class="ui-inputgroup">
+                                        <button type="button" pButton pRipple icon="pi pi-search"></button>
+                                        <input type="search" pInputText placeholder="Search by name"
+                                            (keyup)="dv.filter($event.target.value)">
+                                    </div>
 
-            <p-table #dt styleClass="ui-table-cars" [value]="flowers" [paginator]="true" [rows]="10"
-                [showCurrentPageReport]="true"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [rowsPerPageOptions]="[10,25,50,100]" selectionMode="single" [(selection)]="selecteFlowers">
- 
-                <ng-template pTemplate="caption">
-                    <div class="table-header">
-                        {{'Lista de Flores' | translate}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p-header>
+                <ng-template let-flower pTemplate="gridItem">
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="card">
+                            <div class="flower-grid-item-top">
+                                <div class="ui-g-12 ui-md-7">
+                                </div>
+                                <!--<div>
+                                        <i class="pi pi-tag product-category-icon"></i>
+                                        <span class="product-category">{{flower.name}}</span>
+                                    </div>-->
+                                <div class="ui-g-12 ui-md-5">
+                                    <div [class]="flower.state=='Activo'?'active-badge':'inactive-badge'">
+                                        <i class="pi pi-tag flower-category-icon"></i>&nbsp;
+                                        <span>{{flower.state}}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br>
+                            <div class="flower-grid-item-content">
+                                <div class="galery">
+                                    <p-carousel [value]="flower.images">
+                                        <ng-template let-image pTemplate="item">
+                                            <img [src]="image" />
+                                        </ng-template>
+                                    </p-carousel>
+                                </div>
+                                <div class="flower-name">{{flower.name | titlecase}}</div>
+                                <!--<div class="product-description">{{flower.state}}</div>-->
+                                <!--<p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>-->
+                            </div>
+                            <div class="flower-grid-item-bottom">
+                                <!--<span class="product-price">$56</span>-->
+                                <button pButton class="ui-button-warning" icon="fa fa-pencil"
+                                    (click)="edit(flower)"></button>
+                            </div>
+                        </div>
                     </div>
                 </ng-template>
-                <ng-template pTemplate="header" let-columns>
-                    <tr>
-                        <th style="width: 10%;"> {{'Foto' | translate}}</th>                        
-                        <th> {{'Nombre' | translate}}</th>
-                        <th> {{'Estado' | translate}}</th>
-                        <th style="width: 8em; text-align: center;">
-                            <button pButton type="button" icon="pi pi-cog"></button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                        </th>
-                        <th>
-                            <div class="ui-fluid">
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'name', 'startsWith')"
-                                    placeholder="Search by Name" class="p-column-filter">
-                            </div>
-                        </th>                        
-                        <th>
-                            <div class="ui-fluid">
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'state', 'startsWith')"
-                                    placeholder="Search by State" class="p-column-filter">
-                            </div>
-                        </th>
-                        <th style="width: 8em;">
-
-                        </th>   
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-flower let-columns="columns">
-                    <tr [pSelectableRow]="flower" [pEditableRow]="flower">   
-                        <td>
-                            <img [src]="flower.images[0]" height="50" width="50" />
-                        </td>                     
-                        <td>{{flower.name}}</td>
-                        <td style="text-align: center;">
-                            <div [class]="flower.state=='Activo'?'active-badge':'inactive-badge'">
-                                <span>{{flower.state}}</span>
-                            </div>
-                        </td>
-                        <td>
-                            <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil" (click)="edit(flower)"></button>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="4">No flowers found.</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+            </p-dataView>
+        </div>        
     </div>
 </div>

@@ -31,6 +31,13 @@ export class MenuComponent implements OnInit {
             },
             { label: 'Facturación', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/factura' },
             { label: 'Pre Alerta', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/prealerta' },
+            {
+                label: 'Reportes', icon: 'fa fa-fw fa-cogs' ,
+                items: [
+                    { label: 'Saldo del Cliente', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/balance' },
+                    { label: 'Documentos del Cliente', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/documento' },
+                ]  
+            },
             { 
                 label: 'Menu Colors', icon: 'fa fa-fw fa-paint-brush',
                 items: [

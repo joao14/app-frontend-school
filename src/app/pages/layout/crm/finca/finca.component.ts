@@ -4,6 +4,7 @@ import { ApisService } from 'src/services/apis.service';
 import { finca } from 'src/models/finca';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng';
+import { ShareReplayConfig } from 'rxjs/internal/operators/shareReplay';
 
 @Component({
   selector: 'app-finca',
@@ -13,15 +14,23 @@ import { MessageService } from 'primeng';
 })
 export class FincaComponent implements OnInit {
 
-  fincas: Array<finca>=[];
+  fincas: Array<finca> = [];
+  name: string;
+  loading: boolean;
 
   constructor(private apis: ApisService, private router: Router) { }
 
   ngOnInit(): void {
+    this.name = "";
     this.inicializate();
   }
 
-  inicializate() {   
+  inicializate() {
+    this.getFinca();
+  }
+
+  getFinca() {
+    this.loading = true;
     this.apis.getfinca(localStorage.getItem("token")).then(data => {
       console.log(data);
       if (data.headerApp.code == 200) {
@@ -35,7 +44,7 @@ export class FincaComponent implements OnInit {
             email: element.email,
             entiDni: element.entiDni,
             entiId: element.entiId,
-            estado:element.estado=='A'? 'Activo': 'Inactivo',
+            estado: element.estado == 'A' ? 'Activo' : 'Inactivo',
             fechregi: element.fechregi,
             nombres: element.nombres,
             pais: element.pais,
@@ -46,14 +55,15 @@ export class FincaComponent implements OnInit {
           }
           this.fincas.push(finca);
         });
-
+        this.loading = false;
         console.log('FINCAS..');
         console.log(this.fincas);
-        
+
 
       }
     }).catch(err => {
       console.log(err);
+      this.loading = false;
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -67,10 +77,26 @@ export class FincaComponent implements OnInit {
     this.router.navigate(['/editFinca']);
   }
 
-  edit(finca: finca){
+  edit(finca: finca) {
     console.log('Editando finca...');
     this.router.navigate(['/editFinca'], { state: { finca: JSON.stringify(finca) } });
-    
+  }
+
+  consultarMobile() {
+    if (this.name == undefined || this.name == '') {
+      this.fincas = [];
+      this.getFinca();
+      return;
+    }
+
+    this.fincas.filter(finca => {
+      if (finca.nombres.toLowerCase().indexOf(this.name.toLowerCase()) > -1) {
+        this.fincas = [];
+        this.fincas.push(finca)
+      }
+    });
+    console.log('Fincas finales');
+    console.log(this.fincas);
   }
 
 }

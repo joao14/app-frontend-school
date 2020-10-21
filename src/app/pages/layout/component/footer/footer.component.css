@@ -1,0 +1,25 @@
+.layout-footer{
+    bottom: 0;
+    position: relative;
+    left: 0;
+    width: 100%;
+    height: 100px;
+}
+.logo-container img{
+    height: 60px !important;
+}
+
+@media only screen and (max-width: 40rem) {
+
+    .layout-footer{
+        bottom: 0;
+        position: relative;
+        left: 0;
+        width: 100%;
+        height: 100px;
+    }
+
+    .logo-container img{
+        height: 60px !important;
+    }
+}

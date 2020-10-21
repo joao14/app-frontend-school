@@ -11,13 +11,13 @@
             </p-toolbar>
 
             <p-table #dt styleClass="ui-table-cars" [value]="users" [paginator]="true" [rows]="10"
-                [showCurrentPageReport]="true"
+                [showCurrentPageReport]="true" class="p-datatable-responsive-demo" [loading]="loading" [lazy]="true"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 [rowsPerPageOptions]="[10,25,50,100]" selectionMode="single" [(selection)]="selectedUsers">
 
                 <ng-template pTemplate="caption">
                     <div class="table-header">
-                        {{'Lista de Usuarios' | translate}}
+                        {{'Lista de Usuarios' | translate}} [{{users.length}}]
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
@@ -37,33 +37,36 @@
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'identification', 'startsWith')"
-                                    placeholder="Search by Name" class="p-column-filter">
+                                    (input)="dt.filter($event.target.value, 'identification', 'contains')"
+                                    placeholder="Search by identification" class="p-column-filter">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
-                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'name','contains')"
-                                    placeholder="Search by Country">
+                                <input pInputText type="text"
+                                    (input)="dt.filter($event.target.value, 'name','contains')"
+                                    placeholder="Search by name">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
                                     (input)="dt.filter($event.target.value, 'lastname', 'contains')"
-                                    placeholder="Search by Country">
+                                    placeholder="Search by lastname">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
-                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'email','contains')"
-                                    placeholder="Search by Country">
+                                <input pInputText type="text"
+                                    (input)="dt.filter($event.target.value, 'email','contains')"
+                                    placeholder="Search by email">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
-                                <p-dropdown [options]="options" [(ngModel)]="selectoptions"
-                                    (onChange)="onRepresentativeChange($event)"></p-dropdown>
+                                <input pInputText type="text"
+                                    (input)="dt.filter($event.target.value, 'status','startsWith')"
+                                    placeholder="Search by status">
                             </div>
                         </th>
                         <th style="width: 8em;">
@@ -79,14 +82,15 @@
                         <td>{{user.identification}}</td>
                         <td>{{user.name}}</td>
                         <td>{{user.lastname}}</td>
-                        <td>{{user.email}}</td>
+                        <td style="word-wrap: break-word;">{{user.email}}</td>
                         <td style="text-align: center;">
-                            <div [class]="user.status?'active-badge':'inactive-badge'">
-                                <span>{{user.status?'Activo':'Inactivo'}}</span>
+                            <div [class]="user.status=='Activo'?'active-badge':'inactive-badge'">
+                                <span>{{user.status}}</span>
                             </div>
                         </td>
                         <td>
-                            <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil" (click)="desactivate(user)"></button>
+                            <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil"
+                                (click)="desactivate(user)"></button>
                         </td>
                     </tr>
                 </ng-template>
@@ -96,6 +100,63 @@
                     </tr>
                 </ng-template>
             </p-table>
+            <!--Table responsive-->
+            <div class="tbl_responsive">
+                <p-accordion>
+                    <p-accordionTab header="Filtros de búsqueda" [selected]="true">
+                        <div class="ui-g form-group ui-fluid">   
+                            <div class="ui-g-12 ui-md-4">
+                                <label for="client" class="lbl">{{'Indetificación' | translate}}</label>
+                                <input type="text" pInputText [(ngModel)]="identificacion" placeholder="9999999999"
+                                    required pKeyFilter="int" />
+                            </div>
+                            <div class="ui-g-12 ui-md-4">
+                                <button pButton type="button" [label]="'Consultar' | translate" icon="fa fa-search"
+                                    iconPos="left" class="ui-button-success" (click)="consultarMobile()"></button>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>                
+                <div *ngIf="users.length <=0" style="text-align: center;">
+                    <br>
+                    <label class="messageData">{{'Información no encontrada' | translate}}</label>
+                </div>
+                <div class="ui-grid ui-grid-responsive ui-fluid" class="data" *ngFor="let user of users">
+                    <div class="card card-w-title">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-12">
+                                <button pButton type="button" class="ui-button-info btn_card" icon="pi pi-pencil"
+                                    (click)="desactivate(user)"></button>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Identificación' | translate}}</span></div>
+                            <div class="ui-grid-col-6"><span class="value">{{user.identification}}</span></div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Nombres' | translate}}</span></div>
+                            <div class="ui-grid-col-6"><span class="value">{{user.name}}</span></div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Apellidos' | translate}}</span></div>
+                            <div class="ui-grid-col-6"><span class="value">{{user.lastname}}</span></div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Email' | translate}}</span></div>
+                            <div class="ui-grid-col-6"><span class="value"
+                                    style="word-break: break-all;">{{user.email}}</span></div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Estado' | translate}}</span></div>
+                            <div class="ui-grid-col-6"><span class="value"
+                                    [class]="user.status=='Activo'?'active-badge':'inactive-badge'">
+                                    {{user.status}}
+                                </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

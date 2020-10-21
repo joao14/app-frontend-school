@@ -27,9 +27,11 @@ import { RouterModule } from '@angular/router';
 
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
-import { MessageModule, AutoCompleteModule, CardModule, SplitButtonModule, SelectButtonModule, ConfirmDialogModule } from 'primeng';
+import { MessageModule, AutoCompleteModule, CardModule, SplitButtonModule, SelectButtonModule, ConfirmDialogModule, CalendarModule, DynamicDialogModule, DialogModule, VirtualScrollerModule, CarouselModule, DataViewModule } from 'primeng';
 import { DeliveryComponent } from './crm/delivery/delivery.component';
 import { MarkingComponent } from './crm/marking/marking.component';
+import { BalanceComponent } from './reporte/balance/balance.component';
+import { DocumentoComponent } from './reporte/documento/documento.component';
 
 @NgModule({
     imports: [
@@ -48,6 +50,7 @@ import { MarkingComponent } from './crm/marking/marking.component';
         PanelModule,
         CheckboxModule,
         FullCalendarModule,
+        CalendarModule,
         TranslateModule,
         InputTextModule,
         ReactiveFormsModule,
@@ -55,7 +58,12 @@ import { MarkingComponent } from './crm/marking/marking.component';
         CardModule,
         SplitButtonModule,
         SelectButtonModule,
-        ConfirmDialogModule
+        ConfirmDialogModule,
+        DynamicDialogModule,
+        DialogModule,
+        VirtualScrollerModule,
+        CarouselModule,
+        DataViewModule
     ], 
     declarations: [
         LayoutComponent,
@@ -64,7 +72,7 @@ import { MarkingComponent } from './crm/marking/marking.component';
         BreadcrumbComponent,
         MenuComponent,
         TopbarComponent,
-        PanelComponent      
+        PanelComponent, 
     ], providers: [
         MenuService,
         BreadcrumbService

@@ -3,31 +3,33 @@
         <div class="card no-margin">
             <h1>Lista de marcas por Cliente</h1>
             <p-toast></p-toast>
-            <p-toolbar>
-                <div class="p-toolbar-group-left">
-                    <button pButton label="Nuevo" icon="pi pi-plus" class="ui-button-success"
-                        (click)="addMark()"></button>
+            <div class="ui-g form-group ui-fluid">
+                <div class="ui-g-12 ui-md-2">
+                    <button pButton type="button" label="Nuevo" icon="fa fa-search" iconPos="left"
+                        class="ui-button-success" (click)="addMark()"></button>
                 </div>
-            </p-toolbar>
-            <br>
-
-            <div class="ui-g-12 ui-md-6">
-                <label for="cliente" class="lbl">Clientes</label>
-                <p-dropdown [options]="clients"  optionLabel="nombres" class="form-control" [(ngModel)]="selectClient"
-                    (onChange)='onOptionsSelected()'
-                    [filter]="true" placeholder="Seleccione"></p-dropdown>                
             </div>
-
+            <p-accordion>
+                <p-accordionTab header="Datos de la búsqueda" [selected]="true">
+                    <div class="ui-g form-group ui-fluid">
+                        <div class="ui-g-12 ui-md-4">
+                            <label for="client" class="lbl">{{'Cliente' | translate}}</label>
+                            <p-dropdown [options]="clients" optionLabel="nombres" [(ngModel)]="selectClient" (onChange)='onOptionsSelected()'
+                                class="form-control" [filter]="true" [placeholder]="'Seleccione' | translate">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </p-accordionTab>
+            </p-accordion>           
             <br>
-            <br>
-            <p-table #dt styleClass="ui-table-cars" [value]="marks" [paginator]="true" [rows]="10"
-                [showCurrentPageReport]="true"
+            <p-table #dt [value]="marks" [paginator]="true" [rows]="10"
+                [showCurrentPageReport]="true" class="p-datatable-responsive-demo" [loading]="loading" [lazy]="true"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 [rowsPerPageOptions]="[10,25,50,100]" selectionMode="single">
 
                 <ng-template pTemplate="caption">
                     <div class="table-header">
-                        {{'Lista de marcas' | translate}}
+                        {{'Lista de marcas' | translate}} [{{marks.length}}]
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
@@ -42,15 +44,15 @@
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'nombre', 'startsWith')"
-                                    placeholder="Search by Name" class="p-column-filter">
+                                    (input)="dt.filter($event.target.value, 'nombre', 'constains')"
+                                    placeholder="Buscar por nombre" class="p-column-filter">
                             </div>
                         </th>                        
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
                                     (input)="dt.filter($event.target.value, 'estado', 'startsWith')"
-                                    placeholder="Search by State" class="p-column-filter">
+                                    placeholder="Buscar por estado" class="p-column-filter">
                             </div>
                         </th>
                         <th style="width: 8em;">
@@ -78,6 +80,52 @@
                     </tr>
                 </ng-template>
             </p-table>
+            <!--Table responsive-->
+            <div class="tbl_responsive" *ngIf="selectClient">
+                <p-accordion>
+                    <p-accordionTab header="Filtros de búsqueda" [selected]="true">
+                        <div class="ui-g form-group ui-fluid">   
+                            <div class="ui-g-12 ui-md-4">
+                                <label for="client" class="lbl">{{'Nombres' | translate}}</label>
+                                <input type="text" pInputText [(ngModel)]="name" placeholder="Nombre de marca"
+                                    required pKeyFilter="int" />
+                            </div>
+                            <div class="ui-g-12 ui-md-4">
+                                <button pButton type="button" [label]="'Consultar' | translate" icon="fa fa-search"
+                                    iconPos="left" class="ui-button-success" (click)="consultarMobile()"></button>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>                
+                <div *ngIf="marks.length <=0" style="text-align: center;">
+                    <br>
+                    <label class="messageData">{{'Información no encontrada' | translate}}</label>
+                </div>
+                <div class="ui-grid ui-grid-responsive ui-fluid" class="data" *ngFor="let mark of marks">
+                    <div class="card card-w-title">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-12">
+                                <button pButton type="button" class="ui-button-info btn_card" icon="pi pi-pencil"
+                                    (click)="edit(mark)"></button>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Nombres' | translate}}</span></div>
+                            <div class="ui-grid-col-6"><span class="value" style="word-break: break-all;">{{mark.nombre | titlecase}}</span></div>
+                        </div>
+                       
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Estado' | translate}}</span></div>
+                            <div class="ui-grid-col-6"><span class="value"
+                                    [class]="mark.estado=='A'?'active-badge':'inactive-badge'">
+                                    {{mark.estado=='A'?'Activo':'Inactivo'}}
+                                </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

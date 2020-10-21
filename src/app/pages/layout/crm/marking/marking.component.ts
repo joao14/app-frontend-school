@@ -17,6 +17,8 @@ export class MarkingComponent implements OnInit {
   marks: Array<mark> = [];
   clients: Array<client> = [];
   selectClient: client;
+  name: string;
+  loading: boolean;
 
   constructor(private apis: ApisService, private router: Router) { }
 
@@ -45,18 +47,22 @@ export class MarkingComponent implements OnInit {
  onOptionsSelected() {
     console.log('Consultando las marcas de los clientes');
     this.marks=[];
+    this.loading=true;
     this.apis.getmarks(this.selectClient.entiId, localStorage.getItem("token")).then(mark => {
       console.log(mark);
       if (mark.headerApp.code == 200) {
         this.marks = mark.data.marks;
+        this.loading=false;
+      }else{
+        this.loading=false;
       }
     }).catch(err => {
       console.log(err);
+      this.loading=false;
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
       }
-
     })
   }
 
@@ -69,6 +75,24 @@ export class MarkingComponent implements OnInit {
     console.log('Editando las marcaciones');
     console.log(mark);
     this.router.navigate(['/editMarca'], { state: { mark: JSON.stringify(mark) } });
+  }
+
+  consultarMobile(){
+    console.log('Consultando las marcas mobile');
+    if (this.name == undefined || this.name == '') {
+      this.marks = [];
+      this.onOptionsSelected();
+      return;
+    }
+
+    this.marks.filter(mark => {
+      if (mark.nombre.toLowerCase().indexOf(this.name.toLowerCase()) > -1) {
+        this.marks = [];
+        this.marks.push(mark)
+      } 
+    });
+    console.log('Fincas finales');
+    console.log(this.marks);
   }
 
 

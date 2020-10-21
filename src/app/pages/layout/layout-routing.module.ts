@@ -22,6 +22,8 @@ const routes: Routes = [
             { path: 'editDelivery', loadChildren: () => import('./crm/delivery/edit/edit.module').then(m => m.EditModule) },
             { path: 'marcas', loadChildren: () => import('./crm/marking/marking.module').then(m => m.MarkingModule) },
             { path: 'editMarca', loadChildren: () => import('./crm/marking/edit/edit.module').then(m => m.EditModule) },
+            { path: 'balance', loadChildren: () => import('./reporte/balance/balance.module').then(m => m.BalanceModule) },
+            { path: 'documento', loadChildren: () => import('./reporte/documento/documento.module').then(m => m.DocumentoModule) },
         ]
     }
 ];

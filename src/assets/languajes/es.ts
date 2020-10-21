@@ -8,5 +8,26 @@ export const es={
     "Apellidos":"Apellidos",
     "Foto":"Foto",
     "Email":"Email",
-    "Estado":"Estado"
+    "Estado":"Estado",
+    "Saldo del Cliente":"Saldo del Cliente",
+    "Cliente":"Cliente",
+    "Fecha":"Fecha",
+    "Saldo inicial":"Saldo inicial",
+    "Datos de la búsqueda":"Datos de la búsqueda",
+    "Seleccione": "Seleccione",
+    "Número de documentos": "Número de documentos",
+    "Número de registros": "Número de registros",
+    "Documento": "Documento",
+    "Tipo documento": "Tipo documento",
+    "Débito": "Débito",
+    "Crédito": "Crédito",
+    "Saldo": "Saldo",
+    "Buscar": "Buscar",
+    "Totales": "Totales",
+    "Total": "Total",
+    "Consultar": "Consultar",
+    "N. de documento":"N. de documento",
+    "T. de documento":"T. de documento",
+    "No hay información encontrada":"No hay información encontrada"
+
 };

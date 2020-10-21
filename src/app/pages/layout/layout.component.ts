@@ -132,6 +132,8 @@ export class LayoutComponent implements OnInit {
     }
 
     onTopbarSubItemClickLanguajes(event) {
+        console.log('Validar lenguaje..');
+        console.log(event.target.text);        
         let languajes = "";
         if (event.target.text == "Español") {
             languajes = "es";

@@ -15,7 +15,7 @@ export interface User {
     city: string;
     photo: string;
     email: string;
-    status: boolean;
+    status: string;
     razosoci: string;
     tipo: string;
 }
@@ -34,11 +34,17 @@ export class ClientesComponent implements OnInit {
     loading: boolean;
     options: SelectItem[];
     selectoptions: any;
+    identificacion: string;
 
-    constructor(private api: ApisService, private router: Router) { }
+    constructor(private api: ApisService, private router: Router, private messageService: MessageService) { }
 
     ngOnInit(): void {
-        this.options = [{ label: 'Todos', value: null }, { label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];
+        this.options = [{ label: 'Todos', value: null }, { label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];        
+        this.getClients();
+    }
+
+    getClients() {
+        this.loading=true;
         this.api.getclients(localStorage.getItem('token')).then(users => {
             console.log('Data');
             console.log(users);
@@ -54,7 +60,7 @@ export class ClientesComponent implements OnInit {
                         city: element.ciudad,
                         photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
                         email: element.email,
-                        status: element.estado === 'A' ? true : false,
+                        status: element.estado === 'A' ? 'Activo' : 'Inactivo',
                         razosoci: element.razosoci,
                         tipo: element.tipo
                     }
@@ -62,19 +68,18 @@ export class ClientesComponent implements OnInit {
                 });
                 console.log('LISTA DE USUARIOS');
                 console.log(this.users);
-
+                this.loading=false;
             }
         }).catch(error => {
             console.log('consultando los errores de la aplicación');
             console.log(error.error);
-            if(error.error.code==401){
+            this.loading=false;
+            if (error.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
             }
         })
 
-
-        this.loading = false;
     }
 
     addClient() {
@@ -88,63 +93,30 @@ export class ClientesComponent implements OnInit {
         this.router.navigate(['/edit'], { state: { user: JSON.stringify(user) } });
     }
 
-    onRepresentativeChange(event) {
-        console.log('Se selecciono otro evento');
-        console.log(event);
-        console.log(event.value);
+    consultarMobile() {
+        console.log('Consultar los datos');
+        console.log(this.identificacion);
+        
+        if (this.identificacion == undefined || this.identificacion == '') {
+            this.users = [];
+            console.log('Consultar');
+            this.getClients();
+            return;
+        }
+
+        this.users.filter(user => {
+            console.log('Este es el usuario');
+            console.log(user);
+            console.log(this.identificacion);
+            if (user.identification == this.identificacion) {
+                this.users = [];
+                console.log('Son iguales');
+                this.users.push(user)
+            }
+        });
+        console.log('Usuarios finales');
         console.log(this.users);
-        this.users = [];
-        this.api.getclients(localStorage.getItem('token')).then(users => {
-            if (users.headerApp.code === 200) {
-                users.data.clientes.forEach(element => {
-                    if (event.value == null) {
-                        let userTemp = {
-                            id: element.entiId,
-                            identification: element.entiDni,
-                            name: element.nombres,
-                            lastname: element.apellidos,
-                            phone: element.phone,
-                            direction: element.direccion,
-                            city: element.ciudad,
-                            photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                            email: element.email,
-                            status: element.estado === 'A' ? true : false,
-                            razosoci: element.razosoci,
-                            tipo: element.tipo
-                        }
-                        this.users.push(userTemp);
-                    } else
-                        if (element.estado === event.value) {
-                            let userTemp = {
-                                id: element.entiId,
-                                identification: element.entiDni,
-                                name: element.nombres,
-                                lastname: element.apellidos,
-                                phone: element.phone,
-                                direction: element.direccion,
-                                city: element.ciudad,
-                                photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
-                                email: element.email,
-                                status: element.estado === 'A' ? true : false,
-                                razosoci: element.razosoci,
-                                tipo: element.tipo
-                            }
-                            this.users.push(userTemp);
-                        }
-                });
-                console.log('LISTA DE USUARIOS');
-                console.log(this.users);
-
-            }
-        }).catch(err => {
-            console.log('consultando los errores');
-            console.log(err);
-            if(err.code==401){
-                localStorage.clear();
-                this.router.navigate(['/login']);
-            }
-        })
-
     }
+
 
 }

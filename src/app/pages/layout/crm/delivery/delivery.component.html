@@ -10,8 +10,8 @@
                 </div>
             </p-toolbar>
 
-            <p-table #dt styleClass="ui-table-cars" [value]="deliveries" [paginator]="true" [rows]="10"
-                [showCurrentPageReport]="true"
+            <p-table #dt [value]="deliveries" [paginator]="true" [rows]="10"
+                [showCurrentPageReport]="true" class="p-datatable-responsive-demo" [loading]="loading" [lazy]="true"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 [rowsPerPageOptions]="[10,25,50,100]" selectionMode="single">
 
@@ -95,6 +95,63 @@
                     </tr>
                 </ng-template>
             </p-table>
+            <!--Table responsive-->
+            <div class="tbl_responsive">
+                <p-accordion>
+                    <p-accordionTab header="Filtros de búsqueda" [selected]="true">
+                        <div class="ui-g form-group ui-fluid">   
+                            <div class="ui-g-12 ui-md-4">
+                                <label for="client" class="lbl">{{'Nombres' | translate}}</label>
+                                <input type="text" pInputText [(ngModel)]="name" placeholder="Nombre de empresa de carga"
+                                    required pKeyFilter="int" />
+                            </div>
+                            <div class="ui-g-12 ui-md-4">
+                                <button pButton type="button" [label]="'Consultar' | translate" icon="fa fa-search"
+                                    iconPos="left" class="ui-button-success" (click)="consultarMobile()"></button>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>                
+                <div *ngIf="deliveries.length <=0" style="text-align: center;">
+                    <br>
+                    <label class="messageData">{{'Información no encontrada' | translate}}</label>
+                </div>
+                <div class="ui-grid ui-grid-responsive ui-fluid" class="data" *ngFor="let delivery of deliveries">
+                    <div class="card card-w-title">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-12">
+                                <button pButton type="button" class="ui-button-info btn_card" icon="pi pi-pencil"
+                                    (click)="edit(delivery)"></button>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Nombres' | translate}}</span></div>
+                            <div class="ui-grid-col-6"><span class="value" style="word-break: break-all;">{{delivery.nombres | titlecase}}</span></div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Teléfono' | translate}}</span></div>
+                            <div class="ui-grid-col-6"><span class="value">{{delivery.phone}}</span></div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'País' | translate}}</span></div>
+                            <div class="ui-grid-col-6"><span class="value">{{delivery.pais}}</span></div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Ciudad' | translate}}</span></div>
+                            <div class="ui-grid-col-6"><span class="value"
+                                    style="word-break: break-all;">{{delivery.ciudad}}</span></div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Estado' | translate}}</span></div>
+                            <div class="ui-grid-col-6"><span class="value"
+                                    [class]="delivery.estado=='A'?'active-badge':'inactive-badge'">
+                                    {{delivery.estado=='A'?'Activo':'Inactivo'}}
+                                </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

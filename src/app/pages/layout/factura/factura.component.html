@@ -8,7 +8,9 @@
                     <div class="ui-g form-group ui-fluid">
                         <div class="ui-g-12 ui-md-6">
                             <label for="client" class="lbl">Cliente</label>
-                            <input type="text" id="client" pInputText [(ngModel)]="factura.client">
+                            <p-dropdown [options]="clientes" [(ngModel)]="factura.client" optionLabel="nombres" 
+                                        class="form-control" (onChange)='onOptionsSelected()'
+                                        [filter]="true" placeholder="Seleccione"></p-dropdown>
                         </div>
                         <div class="ui-g-12 ui-md-6">
                             <label for="city" class="lbl">Ciudad</label>
@@ -16,15 +18,19 @@
                         </div>
                         <div class="ui-g-12 ui-md-3">
                             <label for="mark" class="lbl">Marca</label>
-                            <input type="text" id="mark" pInputText [(ngModel)]="factura.mark">
+                            <p-dropdown [options]="marks" [(ngModel)]="factura.mark" optionLabel="nombre" 
+                                        class="form-control"
+                                        [filter]="true" placeholder="Seleccione"></p-dropdown>
                         </div>
                         <div class="ui-g-12 ui-md-3">
                             <label for="mawba" class="lbl">Mawba</label>
                             <input type="text" id="mawba" pInputText [(ngModel)]="factura.mawba">
                         </div>
                         <div class="ui-g-12 ui-md-6">
-                            <label for="freightforwarder" class="lbl">Freightforwarder</label>
-                            <input type="text" id="freightforwarder" pInputText [(ngModel)]="factura.freightforwarder">
+                            <label for="freightforwarder" class="lbl">Empresa de carga</label>
+                            <p-dropdown [options]="deliveries"  [(ngModel)]="factura.freightforwarder" optionLabel="nombres" 
+                                        class="form-control" (onChange)='onOptionsSelected()'
+                                        [filter]="true" placeholder="Seleccione"></p-dropdown>
                         </div>
 
                         <div class="ui-g-12 ui-md-6">
@@ -85,12 +91,17 @@
                         </div>
                         <div class="ui-g-12 ui-md-3">
                             <label class="lbl">Finca</label>
-                            <input type="text" pInputText placeholder="Nombre finca" [(ngModel)]="temp.finca">
+                            <p-dropdown [options]="fincas" [(ngModel)]="temp.finca" optionLabel="nombres" 
+                                        class="form-control" 
+                                        [filter]="true" placeholder="Seleccione">
+                            </p-dropdown>
                         </div>
                         <div class="ui-g-12 ui-md-3">
                             <label class="lbl">Flores</label>
-                            <p-autoComplete [suggestions]="flowers" (completeMethod)="search($event)"
-                                [(ngModel)]="temp.flores" placeholder="Nombre flor"></p-autoComplete>
+                            <p-dropdown [options]="flores" [(ngModel)]="temp.flores" optionLabel="nombre" 
+                                        class="form-control" 
+                                        [filter]="true" placeholder="Seleccione">
+                            </p-dropdown>                           
                         </div>
 
                         <div class="ui-g-12 ui-md-1">

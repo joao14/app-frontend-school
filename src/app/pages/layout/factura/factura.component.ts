@@ -2,6 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import * as XLSX from "xlsx";
 import { SelectItem } from "primeng";
 import { MessageService, ConfirmationService } from "primeng/api";
+import { client } from 'src/models/client';
+import { delivery } from 'src/models/delivery';
+import { mark } from 'src/models/mark';
+import { finca } from 'src/models/finca';
+import { flower } from 'src/models/flower';
+import { Router } from '@angular/router';
+import { ApisService } from 'src/services/apis.service';
 
 export interface Item {
     pieza: string;
@@ -16,7 +23,7 @@ export interface Item {
 }
 
 export interface Factura {
-    client: string;
+    client: client;
     city: string;
     mark: string;
     mawba: string;
@@ -49,14 +56,21 @@ export class FacturaComponent implements OnInit {
     addrow: boolean;
     optionsFactura: SelectItem[];
     select: string;
+    flores: Array<flower> = [];
+    fincas: Array<finca> = [];
+    clientes: Array<client> = [];
+    deliveries: Array<delivery>=[];
+    marks: Array<mark>=[];
 
     constructor(
         private messageService: MessageService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private router: Router, private api : ApisService
     ) {}
 
     ngOnInit(): void {
         this.inicilizate();
+        this.getServicios();
     }
 
     add() {
@@ -89,7 +103,7 @@ export class FacturaComponent implements OnInit {
         this.addrow = false;
         this.select = "MN";
         this.factura = {
-            client: "",
+            client: null,
             city: "",
             mark: "",
             mawba: "",
@@ -311,4 +325,79 @@ export class FacturaComponent implements OnInit {
             this.factura.tallos += item.stems;
         });
     }
+
+    onOptionsSelected() {
+        console.log('Consultando las marcas de los clientes');
+        console.log(this.factura.client);    
+        this.marks=[];
+        this.api.getmarks(this.factura.client.entiId, localStorage.getItem("token")).then(mark => {
+          console.log(mark);
+          if (mark.headerApp.code == 200) {
+            this.marks = mark.data.marks;
+            console.log('MARCAS..');
+            console.log(this.marks);
+            
+          }
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+      }
+    
+
+    getServicios() {
+        this.api.getclients(localStorage.getItem("token")).then(cliente => {
+          if (cliente.headerApp.code === 200) {
+            this.clientes = cliente.data.clientes;
+          }
+    
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+    
+        this.api.getfinca(localStorage.getItem("token")).then(finca => {
+          if (finca.headerApp.code === 200) {
+            this.fincas = finca.data.farms;
+          }
+    
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+    
+        this.api.getflowers(localStorage.getItem("token")).then(flor => {
+          if (flor.headerApp.code === 200) {
+            this.flores = flor.data.flowers;
+          }
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+    
+        this.api.getdeliveries(localStorage.getItem("token")).then(delivery => {
+          if (delivery.headerApp.code === 200) {
+            this.deliveries = delivery.data.cargocompanies;
+          }
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+      }
+    
 }

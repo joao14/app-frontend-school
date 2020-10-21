@@ -12,7 +12,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { TranslateModule } from '@ngx-translate/core';
-import { MessageModule, SelectButtonModule, InputTextareaModule, BlockUIModule } from 'primeng';
+import { MessageModule, SelectButtonModule, InputTextareaModule, BlockUIModule, AccordionModule, KeyFilterModule } from 'primeng';
 import { ToolbarModule } from 'primeng/toolbar';
 
 @NgModule({
@@ -34,7 +34,9 @@ import { ToolbarModule } from 'primeng/toolbar';
         InputTextareaModule,
         ButtonModule,
         DropdownModule,
-        BlockUIModule
+        BlockUIModule,
+        AccordionModule,   
+        KeyFilterModule     
     ]
 })
 export class ClientesModule { }
