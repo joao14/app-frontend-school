@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FloresRoutingModule } from './flores-routing.module';
 import { FloresComponent } from './flores.component';
-import { TableModule, InputSwitchModule, ToastModule, MessagesModule, MessageModule, ToolbarModule, SelectButtonModule, InputTextModule, InputTextareaModule, ButtonModule, DropdownModule, BlockUIModule, CarouselModule, GalleriaModule, DialogModule, DataViewModule } from 'primeng';
+import { TableModule, InputSwitchModule, ToastModule, MessagesModule, MessageModule, ToolbarModule, SelectButtonModule, InputTextModule, InputTextareaModule, ButtonModule, DropdownModule, BlockUIModule, CarouselModule, GalleriaModule, DialogModule, DataViewModule, DragDropModule } from 'primeng';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DragdropDirective } from 'src/app/directive/dragdrop.directive';
 
 
 
@@ -13,7 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FloresRoutingModule,
-    TableModule,
+    TableModule, 
     InputSwitchModule,
     TranslateModule,
     ToastModule,

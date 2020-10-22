@@ -28,10 +28,10 @@ import { RouterModule } from '@angular/router';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { MessageModule, AutoCompleteModule, CardModule, SplitButtonModule, SelectButtonModule, ConfirmDialogModule, CalendarModule, DynamicDialogModule, DialogModule, VirtualScrollerModule, CarouselModule, DataViewModule } from 'primeng';
-import { DeliveryComponent } from './crm/delivery/delivery.component';
-import { MarkingComponent } from './crm/marking/marking.component';
-import { BalanceComponent } from './reporte/balance/balance.component';
-import { DocumentoComponent } from './reporte/documento/documento.component';
+import { DragdropDirective } from 'src/app/directive/dragdrop.directive';
+
+// in app.module.ts
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
     imports: [
@@ -63,8 +63,10 @@ import { DocumentoComponent } from './reporte/documento/documento.component';
         DialogModule,
         VirtualScrollerModule,
         CarouselModule,
-        DataViewModule
-    ], 
+        DataViewModule,
+        NgxDropzoneModule
+        
+    ],   
     declarations: [
         LayoutComponent,
         AppMenuitemComponent,
@@ -72,7 +74,9 @@ import { DocumentoComponent } from './reporte/documento/documento.component';
         BreadcrumbComponent,
         MenuComponent,
         TopbarComponent,
-        PanelComponent, 
+        PanelComponent,
+        DragdropDirective
+        
     ], providers: [
         MenuService,
         BreadcrumbService

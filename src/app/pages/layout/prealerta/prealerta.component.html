@@ -73,9 +73,9 @@
 
                                 <div class="ui-g-12 ui-md-3">
                                     <label for="tamanio" class="lbl">Tamaño</label>
-                                    <input type="text" id="tamanio" pInputText class="form-control"
-                                        formControlName="tamanio"
-                                        [ngClass]="{ 'is-invalid': submitted && f.tamanio.errors }">
+                                    <p-dropdown [options]="tamanios" formControlName="tamanio" class="form-control" optionLabel="name"
+                                    [filter]="true" placeholder="Seleccione" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.tamanio.errors }"></p-dropdown>
                                     <div *ngIf="submitted && f.tamanio.errors" class="invalid-feedback">
                                         <div *ngIf="f.tamanio.errors.required">Tamaño es requerido</div>
                                     </div>
@@ -190,7 +190,7 @@
                         </td>
                         <td><span class="p-column-title">{{data.cliente.nombres }}</span></td>
                         <td><span class="p-column-title">{{data.finca.nombres }}</span></td>
-                        <td><span class="p-column-title">{{data.marca }}</span></td>
+                        <td><span class="p-column-title">{{data.marca.nombre }}</span></td>
                         <td><span class="p-column-title">{{data.HBBQ}}</span></td>
                         <td><span class="p-column-title">{{data.rosamistica.nombre}}</span></td>
                         <td><span class="p-column-title">{{data.tallos}}</span></td>
@@ -206,15 +206,15 @@
                                 </div>
                                 <div class="ui-g-12 ui-md-6">
                                     <label for="tamanio" class="lbl">Tamaño</label>
-                                    <input type="text" id="tamanio" pInputText [(ngModel)]="data.tamanio" readonly>
+                                    <input type="text" id="tamanio" pInputText [(ngModel)]="data.tamanio.code" readonly>
                                 </div>
                                 <div class="ui-g-12 ui-md-6">
                                     <label for="precio" class="lbl">Precio</label>
                                     <input type="text" id="precio" pInputText [(ngModel)]="data.precio" readonly>
                                 </div>
                                 <div class="ui-g-12 ui-md-6">
-                                    <label for="carga" class="lbl">Carga</label>
-                                    <input type="text" id="carga" pInputText [(ngModel)]="data.carga" readonly>
+                                    <label for="carga" class="lbl">Empresa de Carga</label>
+                                    <input type="text" id="carga" pInputText [(ngModel)]="data.carga.nombres" readonly>
                                 </div>
                                 <div class="ui-g-12 ui-md-6">
                                     <label for="status" class="lbl">Estado</label>

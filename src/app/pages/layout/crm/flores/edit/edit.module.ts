@@ -4,8 +4,7 @@ import { EditRoutingModule } from './edit-routing.module';
 import { EditComponent } from './edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputSwitchModule, SelectButtonModule, DropdownModule, InputTextModule, InputTextareaModule, ButtonModule, ToolbarModule, ToastModule, BlockUIModule } from 'primeng';
-
-
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [EditComponent],
@@ -22,7 +21,9 @@ import { InputSwitchModule, SelectButtonModule, DropdownModule, InputTextModule,
     ButtonModule,
     ToolbarModule,
     ToastModule,
-    BlockUIModule
+    BlockUIModule,
+    ButtonModule,
+    NgxDropzoneModule
   ]
 })
 export class EditModule { }

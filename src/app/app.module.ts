@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 
 //Para traducir
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
         SharedModule,
         BrowserAnimationsModule,
         RegisterModule,
+        NgxDropzoneModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

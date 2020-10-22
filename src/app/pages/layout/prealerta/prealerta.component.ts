@@ -55,10 +55,10 @@ export class PrealertaComponent implements OnInit {
   flores: Array<Flower> = [];
   fincas: Array<finca> = [];
   clientes: Array<client> = [];
-  deliveries: Array<delivery>=[];
-  marks: Array<mark>=[];
+  deliveries: Array<delivery> = [];
+  marks: Array<mark> = [];
   selectClient: client;
-
+  tamanios: any[] = [];
   test: string[] = [];
 
   constructor(private messageService: MessageService, private formBuilder: FormBuilder, private confirmationService: ConfirmationService,
@@ -92,7 +92,7 @@ export class PrealertaComponent implements OnInit {
       finca: null,
       marca: "",
       HBBQ: "",
-      rosamistica: "",
+      rosamistica: null,
       tamanio: "",
       caja: 0,
       tallos: 0,
@@ -113,7 +113,21 @@ export class PrealertaComponent implements OnInit {
       { name: "Fixed", code: "Fixed" },
       { name: "Confirmed", code: "Confirmed" }];
 
+    this.tamanios = [
+      { name: '40', code: '40' },
+      { name: '50', code: '50' },
+      { name: '60', code: '60' },
+      { name: '70', code: '70' },
+      { name: '80', code: '80' },
+      { name: '90', code: '90' },
+      { name: '100', code: '100' },
+      { name: '110', code: '110' }
+    ]
+
     this.optionSelect = "manual";
+
+    console.log(this.tamanios);
+
   }
 
   deleteItem(prealert: any) {
@@ -149,6 +163,8 @@ export class PrealertaComponent implements OnInit {
       carga: this.prealertForm.get('carga').value,
       status: this.prealertForm.get('estado').value.code
     }
+
+    console.log(this.item);
 
     this.items.push(this.item);
     this.prealert.cajas = 0;
@@ -207,10 +223,17 @@ export class PrealertaComponent implements OnInit {
       /* save data */
       const data = XLSX.utils.sheet_to_json(ws, { raw: true }); // to get 2d array pass 2nd parameter as object {header: 1}
       console.log(data); // Data will be logged in array format containing objects
-
+      let read: boolean = false;
       data.forEach(element => {
+        let client = this.searchclient(element['CLIENTE']);
+        let farm=this.searchfinca(element['FINCA']);
+        if (client == null || farm ==null) {
+          read = false;
+          return;
+        }       
+
         let item = {
-          cliente: element['CLIENTE'],
+          cliente: client,
           finca: element['FINCA'],
           marca: element['MARCACION'],
           HBBQ: element['HB/QB'],
@@ -233,11 +256,44 @@ export class PrealertaComponent implements OnInit {
 
       });
 
+      if (!read) {
+        this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'El archivo no tiene el formato adecuado o tiene valores en los campos que no han sido ingresado en el sistema.' });
+        return;
+      }
+
       console.log("ARRAY DE LISTA");
       console.log(this.items);
     };
 
     this.files.push(target.files[0]);
+  }
+
+  /**
+   * Search a client an array list of client's
+   * @param name 
+   */
+  searchclient(name: string): client {
+    let clientTemp: client = null;
+    this.clientes.filter(client => {
+     if (client.nombres.toLocaleLowerCase().indexOf(name.toLocaleLowerCase()) > -1) {
+        clientTemp = client;
+      }
+    })
+    return clientTemp;
+  }
+
+  /**
+   * Search a farm an array list of farms
+   * @param name 
+   */
+  searchfinca(name: string):finca{
+    let fincaTemp: finca = null;
+    this.fincas.filter(finca=>{
+      if(finca.nombres.toLocaleLowerCase().indexOf(name.toLocaleLowerCase()) > -1){
+        fincaTemp=finca;
+      }
+    })
+    return fincaTemp;
   }
 
   deleteAttachment(index) {
@@ -262,7 +318,7 @@ export class PrealertaComponent implements OnInit {
       },
     });
   }
-  
+
 
 
   getServicios() {
@@ -319,14 +375,14 @@ export class PrealertaComponent implements OnInit {
 
   onOptionsSelected() {
     console.log('Consultando las marcas de los clientes');
-    console.log(this.prealertForm.get('cliente'));    this.marks=[];
+    console.log(this.prealertForm.get('cliente')); this.marks = [];
     this.api.getmarks(this.prealertForm.get('cliente').value.entiId, localStorage.getItem("token")).then(mark => {
       console.log(mark);
       if (mark.headerApp.code == 200) {
         this.marks = mark.data.marks;
         console.log('MARCAS..');
         console.log(this.marks);
-        
+
       }
     }).catch(err => {
       console.log(err);
@@ -336,6 +392,8 @@ export class PrealertaComponent implements OnInit {
       }
     })
   }
+
+
 
 
 }

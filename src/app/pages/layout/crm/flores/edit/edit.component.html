@@ -18,17 +18,29 @@
 
             <h1 *ngIf="!edit">Agregar nueva flor</h1>
             <h1 *ngIf="edit">Editar Flor</h1>
-            <div class="ui-g form-group">                
+            <div class="ui-g form-group">
                 <div class="ui-g-12 ui-md-6">
                     <label for="nombre">Nombre</label>
                     <input type="text" name="nombre" pInputText autocomplete="off" maxlength="100"
-                        [(ngModel)]="flower.nombre" />
+                        [(ngModel)]="flower.name" />
                 </div>
                 <div class="ui-g-12 ui-md-6">
                     <label for="estado">Estado</label>
-                    <p-selectButton [options]="options" [(ngModel)]="flower.estado"></p-selectButton>
+                    <p-selectButton [options]="options" [(ngModel)]="flower.state"></p-selectButton>
                 </div>
-                
+                <div class="ui-g-12 ui-md-12">
+                    <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" [expandable]="true" (change)="onSelect($event)">
+                        <ngx-dropzone-label>
+                            <div>
+                                <h2>My custom dropzone of images</h2>
+                            </div>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                            [file]="f" [removable]="true" (removed)="onRemove(f)">
+                            <ngx-dropzone-label class="text">{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-image-preview>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -64,7 +64,7 @@ export class FloresComponent implements OnInit {
         });
         this.loading=false;
       }
-    }).catch(err => {
+    }).catch(err => {  
       console.log(err);
       this.loading=false;
       if (err.error.code == 401) {
