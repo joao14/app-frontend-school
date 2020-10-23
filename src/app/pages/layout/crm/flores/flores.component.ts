@@ -8,7 +8,7 @@ export interface Flower {
   id: number;
   name: string;
   state: string;
-  images: Array<string>
+  images: any[]
 }
 
 @Component({
@@ -33,40 +33,44 @@ export class FloresComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('INICIALIZATE');   
-    this.sortField="";
-    this.sortOrder="";
+    console.log('INICIALIZATE');
+    this.sortField = "";
+    this.sortOrder = "";
     this.inicializate();
   }
 
   inicializate() {
     this.options = [{ label: 'Todos', value: null }, { label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];
-    this.dialogVisible=false;
+    this.dialogVisible = false;
     console.log(localStorage.getItem("token"));
-    this.loading=true;
+    this.loading = true;
+    console.log('FLORES');
     this.apis.getflowers(localStorage.getItem("token")).then(data => {
       console.log(data);
       if (data.headerApp.code == 200) {
         data.data.flowers.forEach(element => {
-          let images = ['https://c.pxhere.com/photos/55/4e/red_flower_red_flower_rose_macro_bloom-1370874.jpg!d',
-            'https://i.pinimg.com/originals/b6/93/86/b69386593df381cfc0b10831a22f0102.jpg',
-            'https://i.pinimg.com/originals/03/3e/70/033e706ea5af0ec6c32f938bf5794e47.jpg',
-            'https://www.jardineriaon.com/wp-content/uploads/2015/07/flor.jpg',
-            'https://image.freepik.com/foto-gratis/flor-blanca-planta-flor-tropical_33755-6252.jpg',
-            'https://i.pinimg.com/736x/cc/ef/61/ccef61c496ad39f3a85373e9988cf256.jpg']
+          let images_: any[] = [];
+          element.recursos.forEach(recurso => {
+            let images = {
+              atributo: recurso.atributo,
+              descripcion: recurso.descripcion
+            }
+            images_.push(images);
+          });
+
           let flower = {
-            id: element.florId,
-            name: element.nombre,
-            state: element.estado=='A'? 'Activo': 'Inactivo',
-            images: images
+            id: element.flor.florId,
+            name: element.flor.nombre,
+            state: element.flor.estado == 'A' ? 'Activo' : 'Inactivo',
+            images: images_
           }
           this.flowers.push(flower);
         });
-        this.loading=false;
+        this.loading = false;
       }
-    }).catch(err => {  
+    }).catch(err => {
       console.log(err);
-      this.loading=false;
+      this.loading = false;
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -85,17 +89,17 @@ export class FloresComponent implements OnInit {
     this.router.navigate(['/editFlower']);
   }
 
-  edit(flower: Flower){
+  edit(flower: Flower) {
     console.log('Editando...');
     this.router.navigate(['/editFlower'], { state: { flower: JSON.stringify(flower) } });
-    
+
   }
 
-  viewFlor(flower: Flower){
+  viewFlor(flower: Flower) {
     console.log('Esta es la flor');
     console.log(flower);
-    this.selectFlor=flower;
-    this.dialogVisible=true;
+    this.selectFlor = flower;
+    this.dialogVisible = true;
   }
 
 }

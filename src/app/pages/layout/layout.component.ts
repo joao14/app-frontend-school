@@ -20,7 +20,7 @@ export class LayoutComponent implements OnInit {
 
     staticMenuMobileActive: boolean;
 
-    lightMenu = false;
+    lightMenu = true;
 
     menuClick: boolean;
 

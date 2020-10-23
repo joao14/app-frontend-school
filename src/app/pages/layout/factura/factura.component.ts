@@ -11,12 +11,13 @@ import { Router } from '@angular/router';
 import { ApisService } from 'src/services/apis.service';
 
 export interface Item {
+    caja: string;
     pieza: string;
-    farmacia: string;
+    finca: string;
     flor: string;
-    baucher: number;
-    claves: string;
+    numtallos: number;
     tamanio: string;
+    totaltallos: number;
     stems: number;
     price: number;
     subtotal: number;
@@ -59,14 +60,16 @@ export class FacturaComponent implements OnInit {
     flores: Array<flower> = [];
     fincas: Array<finca> = [];
     clientes: Array<client> = [];
-    deliveries: Array<delivery>=[];
-    marks: Array<mark>=[];
+    deliveries: Array<delivery> = [];
+    marks: Array<mark> = [];
+    cajas: any[] = [];
+
 
     constructor(
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
-        private router: Router, private api : ApisService
-    ) {}
+        private router: Router, private api: ApisService
+    ) { }
 
     ngOnInit(): void {
         this.inicilizate();
@@ -75,25 +78,6 @@ export class FacturaComponent implements OnInit {
 
     add() {
         this.addrow = true;
-    }
-
-    search(event) {
-        this.flowers = [
-            "Alex",
-            "Barcelona",
-            "Buenos Aires",
-            "Bogota",
-            "Ecuador",
-            "Escudo",
-            "Loja",
-        ];
-        console.log(this.flowers);
-        console.log("Data de busqueda en el input");
-        console.log(event);
-        this.flowers = this.flowers.filter(
-            (data) => data.toLocaleUpperCase().indexOf(event.query) > -1
-        );
-        console.log(this.flowers);
     }
 
     inicilizate() {
@@ -115,24 +99,31 @@ export class FacturaComponent implements OnInit {
             total: 0.0,
         };
         this.temp = {
-            caja: "",
+            caja: null,
             pieza: "",
-            finca: "",
-            flores: "",
+            finca: null,
+            flores: null,
+            stem: null,
             tallos: "",
-            tamanio: "",
+            tamanio: null,
             cantidad: "",
+            precio: null
         };
         this.tamanios = [
-            { name: "40 mm", code: "40" },
-            { name: "50 mm", code: "50" },
-            { name: "60 mm", code: "60" },
-            { name: "70 mm", code: "70" },
-            { name: "80 mm", code: "80" },
-            { name: "90 mm", code: "90" },
-            { name: "100 mm", code: "100" },
-            { name: "110 mm", code: "110" },
+            { name: "40", code: "40" },
+            { name: "50", code: "50" },
+            { name: "60", code: "60" },
+            { name: "70", code: "70" },
+            { name: "80", code: "80" },
+            { name: "90", code: "90" },
+            { name: "100", code: "100" },
+            { name: "110", code: "110" },
+            { name: "150", code: "150" }
         ];
+        this.cajas = [
+            { name: "HB", code: "HB" },
+            { name: "QB", code: "QB" },
+        ]
     }
 
     selectOptions(type: string) {
@@ -209,14 +200,16 @@ export class FacturaComponent implements OnInit {
                     }
 
                     let item = {
+                        caja: '',
                         pieza: data[i]["__EMPTY_1"],
-                        farmacia: data[i]["__EMPTY_2"],
+                        finca: data[i]["__EMPTY_2"],
                         flor:
                             data[i][
-                                "                                       ROSA MISTICA"
+                            "                                       ROSA MISTICA"
                             ],
-                        baucher: data[i]["__EMPTY_13"],
+                        numtallos: data[i]["__EMPTY_13"],
                         claves: "",
+                        totaltallos: 0,
                         tamanio: floower_length,
                         stems: data[i]["__EMPTY_13"],
                         price: data[i]["__EMPTY_14"],
@@ -252,7 +245,7 @@ export class FacturaComponent implements OnInit {
             accept: () => {
                 //Actual logic to perform a confirmation
                 console.log('Esta todo bien');
-                
+
             },
         });
     }
@@ -272,13 +265,17 @@ export class FacturaComponent implements OnInit {
     }
 
     saverow() {
+        console.log('ELEMENTO TEMPORAL');
+        console.log(this.temp);
         if (
             this.temp.pieza == "" ||
             this.temp.finca == "" ||
             this.temp.flores == "" ||
             this.temp.tallos == "" ||
             this.temp.tallos == "" ||
-            this.temp.tamanio == ""
+            this.temp.tamanio == "" ||
+            this.temp.stem == "" ||
+            this.temp.precio == ""
         ) {
             this.messageService.add({
                 severity: "error",
@@ -288,16 +285,18 @@ export class FacturaComponent implements OnInit {
             });
             return false;
         }
+
         this.items.push({
+            caja: this.temp.caja,
             pieza: this.temp.pieza,
-            farmacia: this.temp.finca,
+            finca: this.temp.finca,
             flor: this.temp.flores,
-            baucher: this.temp.tallos,
-            claves: this.temp.tallos,
+            stems: this.temp.stem,
             tamanio: this.temp.tamanio,
-            stems: this.temp.tallos * this.temp.cantidad,
-            price: 0.4,
-            subtotal: this.temp.tallos * this.temp.cantidad * 0.4,
+            numtallos: this.temp.tallos,
+            totaltallos: this.temp.tallos * this.temp.stem,
+            price: this.temp.precio,
+            subtotal: (this.temp.tallos * this.temp.stem) * this.temp.precio,
         });
 
         this.factura.total = 0;
@@ -327,77 +326,96 @@ export class FacturaComponent implements OnInit {
     }
 
     onOptionsSelected() {
-        console.log('Consultando las marcas de los clientes');
-        console.log(this.factura.client);    
-        this.marks=[];
+        this.marks = [];
         this.api.getmarks(this.factura.client.entiId, localStorage.getItem("token")).then(mark => {
-          console.log(mark);
-          if (mark.headerApp.code == 200) {
-            this.marks = mark.data.marks;
-            console.log('MARCAS..');
-            console.log(this.marks);
-            
-          }
+            console.log(mark);
+            if (mark.headerApp.code == 200) {
+                this.marks = mark.data.marks;
+            }
         }).catch(err => {
-          console.log(err);
-          if (err.error.code == 401) {
-            localStorage.clear();
-            this.router.navigate(['/login']);
-          }
+            console.log(err);
+            if (err.error.code == 401) {
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
         })
-      }
-    
+    }
+
 
     getServicios() {
         this.api.getclients(localStorage.getItem("token")).then(cliente => {
-          if (cliente.headerApp.code === 200) {
-            this.clientes = cliente.data.clientes;
-          }
-    
+            console.log('CLIENTES');
+            console.log(cliente);
+            this.clientes = [];
+            if (cliente.headerApp.code === 200) {
+                cliente.data.clientes.forEach(cliente => {
+                    if (cliente.estado == 'A') {
+                        this.clientes.push(cliente);
+                    }
+                });
+            }
+
         }).catch(err => {
-          console.log(err);
-          if (err.error.code == 401) {
-            localStorage.clear();
-            this.router.navigate(['/login']);
-          }
+            console.log(err);
+            if (err.error.code == 401) {
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
         })
-    
+
         this.api.getfinca(localStorage.getItem("token")).then(finca => {
-          if (finca.headerApp.code === 200) {
-            this.fincas = finca.data.farms;
-          }
-    
+            if (finca.headerApp.code === 200) {
+                this.fincas = finca.data.farms;
+            }
+
         }).catch(err => {
-          console.log(err);
-          if (err.error.code == 401) {
-            localStorage.clear();
-            this.router.navigate(['/login']);
-          }
+            console.log(err);
+            if (err.error.code == 401) {
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
         })
-    
+
         this.api.getflowers(localStorage.getItem("token")).then(flor => {
-          if (flor.headerApp.code === 200) {
-            this.flores = flor.data.flowers;
-          }
+            console.log('FLORES');
+            console.log(flor);
+            this.flores = [];
+            if (flor.headerApp.code === 200) {
+                flor.data.flowers.forEach(flor => {
+                    if (flor.flor.estado == 'A') {
+                        this.flores.push(flor);
+                    }
+                });
+            }
         }).catch(err => {
-          console.log(err);
-          if (err.error.code == 401) {
-            localStorage.clear();
-            this.router.navigate(['/login']);
-          }
+            console.log('ERROR');
+            console.log(err);
+            if (err.error.code == 401) {
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
         })
-    
+
         this.api.getdeliveries(localStorage.getItem("token")).then(delivery => {
-          if (delivery.headerApp.code === 200) {
-            this.deliveries = delivery.data.cargocompanies;
-          }
+            console.log('DELIVERIES');
+            console.log(delivery);
+            this.deliveries = [];
+            if (delivery.headerApp.code === 200) {
+                delivery.data.cargocompanies.forEach(delivery => {
+                    if (delivery.estado == 'A') {
+                        console.log('ESTE SI');
+                        console.log(delivery);
+                        this.deliveries.push(delivery);
+                    }
+                });
+            }
         }).catch(err => {
-          console.log(err);
-          if (err.error.code == 401) {
-            localStorage.clear();
-            this.router.navigate(['/login']);
-          }
+            console.log(err);
+            if (err.error.code == 401) {
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
         })
-      }
-    
+    }
+
 }

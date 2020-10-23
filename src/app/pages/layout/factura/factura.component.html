@@ -6,38 +6,57 @@
             <p-accordion>
                 <p-accordionTab header="Datos del Cliente" [selected]="true">
                     <div class="ui-g form-group ui-fluid">
-                        <div class="ui-g-12 ui-md-6">
+                        <div class="ui-g-12 ui-md-3">
                             <label for="client" class="lbl">Cliente</label>
-                            <p-dropdown [options]="clientes" [(ngModel)]="factura.client" optionLabel="nombres" 
-                                        class="form-control" (onChange)='onOptionsSelected()'
-                                        [filter]="true" placeholder="Seleccione"></p-dropdown>
-                        </div>
-                        <div class="ui-g-12 ui-md-6">
-                            <label for="city" class="lbl">Ciudad</label>
-                            <input type="text" id="city" pInputText [(ngModel)]="factura.city">
+                            <p-dropdown [options]="clientes" [(ngModel)]="factura.client" optionLabel="nombres"
+                                class="form-control" (onChange)='onOptionsSelected()' [filter]="true"
+                                placeholder="Seleccione"></p-dropdown>
                         </div>
                         <div class="ui-g-12 ui-md-3">
                             <label for="mark" class="lbl">Marca</label>
-                            <p-dropdown [options]="marks" [(ngModel)]="factura.mark" optionLabel="nombre" 
-                                        class="form-control"
-                                        [filter]="true" placeholder="Seleccione"></p-dropdown>
+                            <p-dropdown [options]="marks" [(ngModel)]="factura.mark" optionLabel="nombre"
+                                class="form-control" [filter]="true" placeholder="Seleccione"></p-dropdown>
                         </div>
                         <div class="ui-g-12 ui-md-3">
-                            <label for="mawba" class="lbl">Mawba</label>
+                            <label for="mawba" class="lbl"># Mawba</label>
                             <input type="text" id="mawba" pInputText [(ngModel)]="factura.mawba">
                         </div>
-                        <div class="ui-g-12 ui-md-6">
+
+                        <div class="ui-g-12 ui-md-3">
                             <label for="freightforwarder" class="lbl">Empresa de carga</label>
-                            <p-dropdown [options]="deliveries"  [(ngModel)]="factura.freightforwarder" optionLabel="nombres" 
-                                        class="form-control" (onChange)='onOptionsSelected()'
-                                        [filter]="true" placeholder="Seleccione"></p-dropdown>
+                            <p-dropdown [options]="deliveries" [(ngModel)]="factura.freightforwarder"
+                                optionLabel="nombres" class="form-control" (onChange)='onOptionsSelected()'
+                                [filter]="true" placeholder="Seleccione"></p-dropdown>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-3">
+                            <label for="city" class="lbl">Teléfono</label>
+                            <input type="text" id="city" pInputText [value]="factura.client?.phone" readonly>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-3">
+                            <label for="city" class="lbl">Email</label>
+                            <input type="text" id="city" pInputText [value]="factura.client?.email" readonly>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-3">
+                            <label for="city" class="lbl">Razón Social</label>
+                            <input type="text" id="city" pInputText [value]="factura.client?.razosoci" readonly>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-3">
+                            <label for="city" class="lbl">Ciudad</label>
+                            <input type="text" id="city" pInputText [value]="factura.client?.ciudad" readonly>
                         </div>
 
                         <div class="ui-g-12 ui-md-6">
-                            <label for="bounch" class="lbl">Bounch</label>
-                            <input type="text" id="bounch" pInputText [(ngModel)]="factura.bounch">
+                            <label for="address" class="lbl">Address</label>
+                            <textarea pInputTextarea id="address" [value]="factura.client?.direccion"
+                                readonly></textarea>
                         </div>
-                        <div class="ui-g-12 ui-md-4">
+
+
+                        <div class="ui-g-12 ui-md-6">
                             <label for="address" class="lbl">Carga de datos</label>
                             <div class="ui-grid-row">
                                 <div class="ui-grid-col-6">
@@ -50,11 +69,6 @@
                                         style="height: 40px;"></button>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="ui-g-12 ui-md-12">
-                            <label for="address" class="lbl">Address</label>
-                            <textarea pInputTextarea id="address" [(ngModel)]="factura.address"></textarea>
                         </div>
 
                     </div>
@@ -81,32 +95,41 @@
                 <div class="card row" *ngIf="addrow">
                     <div class="ui-g form-group ui-fluid">
 
-                        <div class="ui-g-12 ui-md-1">
+                        <div class="ui-g-12 ui-md-2">
                             <label class="lbl">Caja</label>
-                            <input type="text" pInputText placeholder="HB" [(ngModel)]="temp.caja">
-                        </div>
-                        <div class="ui-g-12 ui-md-1">
-                            <label class="lbl">Piezas</label>
-                            <input type="text" pInputText placeholder="0" [(ngModel)]="temp.pieza">
-                        </div>
-                        <div class="ui-g-12 ui-md-3">
-                            <label class="lbl">Finca</label>
-                            <p-dropdown [options]="fincas" [(ngModel)]="temp.finca" optionLabel="nombres" 
-                                        class="form-control" 
-                                        [filter]="true" placeholder="Seleccione">
+                            <p-dropdown [options]="cajas" optionLabel="name" [(ngModel)]="temp.caja"
+                                placeholder="Seleccione">
                             </p-dropdown>
                         </div>
-                        <div class="ui-g-12 ui-md-3">
-                            <label class="lbl">Flores</label>
-                            <p-dropdown [options]="flores" [(ngModel)]="temp.flores" optionLabel="nombre" 
-                                        class="form-control" 
-                                        [filter]="true" placeholder="Seleccione">
-                            </p-dropdown>                           
+                        <div class="ui-g-12 ui-md-2">
+                            <label class="lbl">Piezas</label>
+                            <input type="text" pInputText pKeyFilter="int" placeholder="0" [(ngModel)]="temp.pieza">
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <label class="lbl">Finca</label>
+                            <p-dropdown [options]="fincas" [(ngModel)]="temp.finca" optionLabel="nombres"
+                                class="form-control" [filter]="true" placeholder="Seleccione">
+                            </p-dropdown>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <label class="lbl">Variedad</label>
+                            <p-dropdown [options]="flores" [(ngModel)]="temp.flores" optionLabel="flor.nombre"
+                                class="form-control" [filter]="true" placeholder="Seleccione">                                
+                                <ng-template let-flor pTemplate="item">
+                                    <div class="ui-grid-row ui-g-12">
+                                        <div class="ui-grid-col-2">
+                                            <img style="width: 30px;height: 30px;border-radius: 7px;"
+                                                [src]="flor.value.recursos[0] == undefined ?'https://e1.pngegg.com/pngimages/1012/881/png-clipart-flowers-gray-flower.png':flor.value.recursos[0].atributo" />
+                                        </div>
+                                        <div class="ui-grid-col-10">{{flor.value.flor.nombre}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
                         </div>
 
-                        <div class="ui-g-12 ui-md-1">
-                            <label class="lbl">Tallos</label>
-                            <input type="text" pInputText placeholder="0" [(ngModel)]="temp.tallos">
+                        <div class="ui-g-12 ui-md-2">
+                            <label class="lbl">Stem</label>
+                            <input type="text" pInputText pKeyFilter="int" placeholder="0" [(ngModel)]="temp.stem">
                         </div>
 
                         <div class="ui-g-12 ui-md-2">
@@ -116,9 +139,14 @@
                             </p-dropdown>
                         </div>
 
-                        <div class="ui-g-12 ui-md-1">
-                            <label class="lbl">Cantidad</label>
-                            <input type="text" pInputText placeholder="0" [(ngModel)]="temp.cantidad">
+                        <div class="ui-g-12 ui-md-2">
+                            <label class="lbl"># Tallos</label>
+                            <input type="text" pInputText pKeyFilter="int" placeholder="0" [(ngModel)]="temp.tallos">
+                        </div>
+
+                        <div class="ui-g-12 ui-md-2">
+                            <label class="lbl">Precio</label>
+                            <input type="text" pInputText placeholder="0" pKeyFilter="money" [(ngModel)]="temp.precio">
                         </div>
 
                         <div class="ui-g-12 ui-md-12">
@@ -136,16 +164,20 @@
                 <p-table [value]="items" class="p-datatable-responsive-demo">
                     <ng-template pTemplate="caption">
                         <div class="p-d-flex p-ai-center p-jc-between">
-                            Items de la factura  [ {{items.length}} ]              
+                            Items de la factura [ {{items.length}} ]
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="width: 4em;"></th>
+                            <th>Caja</th>
                             <th>Finca</th>
-                            <th>Flor</th>
+                            <th>Variedad</th>
+                            <th>Stem</th>
+                            <th>Tamaño</th>
+                            <th>#Tallos</th>
+                            <th>Total Tallos</th>
                             <th>Precio</th>
-                            <th>Tallos</th>
                             <th>Total</th>
 
                         </tr>
@@ -157,17 +189,21 @@
                                         (click)="deleteItem(item)"></button>
                                 </span>
                             </td>
-                            <td><span class="p-column-title">{{item.farmacia}}</span></td>
-                            <td><span class="p-column-title">{{item.flor }}</span></td>
-                            <td><span class="p-column-title">{{item.price | currency}}</span></td>
+                            <td><span class="p-column-title">{{item.caja.code}}</span></td>
+                            <td><span class="p-column-title">{{item.finca.nombres}}</span></td>
+                            <td><span class="p-column-title">{{item.flor.flor.nombre }}</span></td>
                             <td><span class="p-column-title">{{item.stems }}</span></td>
+                            <td><span class="p-column-title">{{item.tamanio.code }}</span></td>
+                            <td><span class="p-column-title">{{item.numtallos }}</span></td>
+                            <td><span class="p-column-title">{{item.totaltallos }}</span></td>
+                            <td><span class="p-column-title">{{item.price | currency}}</span></td>
                             <td><span class="p-column-title">{{item.subtotal | currency}}</span></td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="footer">
                         <tr>
-                            <td colspan="4" class="total_table">Totales</td>
-                            <td><span class="total_tallos">{{factura.tallos }}</span></td>
+                            <td colspan="9" class="total_table">Totales</td>
+                            <!--<td><span class="total_tallos">{{factura.tallos }}</span></td>-->
                             <td><span class="total_valor">{{factura.total | currency: 'USD'}}</span></td>
                         </tr>
                     </ng-template>
@@ -196,24 +232,30 @@
                 <p-table [value]="items" *ngIf="files.length > 0" class="p-datatable-responsive-demo">
                     <ng-template pTemplate="caption">
                         <div class="p-d-flex p-ai-center p-jc-between">
-                            Items de la factura   [{{items.length}}]                  
+                            Items de la factura [{{items.length}}]
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>Farmacia</th>
-                            <th>Flor</th>
+                            <th>Finca</th>
+                            <th>Variedad</th>
+                            <th>Stem</th>
+                            <th>Tamaño</th>
+                            <th>#Tallos</th>
+                            <th>Total Tallos</th>
                             <th>Precio</th>
-                            <th>Tallos</th>
                             <th>Total</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-item>
                         <tr>
-                            <td>{{item.farmacia}}</td>
+                            <td>{{item.finca}}</td>
                             <td>{{item.flor }}</td>
-                            <td>{{item.price | currency}}</td>
                             <td>{{item.stems }}</td>
+                            <td>{{item.stems }}</td>
+                            <td>{{item.tallos }}</td>
+                            <td>{{item.totaltallos }}</td>
+                            <td>{{item.price | currency}}</td>
                             <td>{{item.subtotal | currency}}</td>
                         </tr>
                     </ng-template>
@@ -247,7 +289,7 @@
 
                     <div class="ui-grid-row">
                         <div class="ui-grid-col-4"><span class="label">Finca</span></div>
-                        <div class="ui-grid-col-8"><span class="value">{{item.farmacia}}</span></div>
+                        <div class="ui-grid-col-8"><span class="value">{{item.finca}}</span></div>
                     </div>
 
                     <div class="ui-grid-row">
@@ -285,8 +327,8 @@
                     <div class="ui-grid-row">
                         <div class="ui-grid-col-10"></div>
                         <div class="ui-grid-col-2">
-                            <button pButton icon="pi pi-arrow-right"
-                                class="ui-button-help btn_enviar_responsive" label="Enviar" (click)="save()"></button>
+                            <button pButton icon="pi pi-arrow-right" class="ui-button-help btn_enviar_responsive"
+                                label="Enviar" (click)="save()"></button>
                         </div>
                     </div>
                 </div>
@@ -297,8 +339,10 @@
         <!--Confirmar cuadro de dialogo confirm-->
         <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
             <p-footer>
-                <button type="button" pButton icon="pi pi-times" class="ui-button-danger" label="No" (click)="cd.reject()"></button>
-                <button type="button" pButton icon="pi pi-check" class="ui-button-success" label="Yes" (click)="cd.accept()"></button>
+                <button type="button" pButton icon="pi pi-times" class="ui-button-danger" label="No"
+                    (click)="cd.reject()"></button>
+                <button type="button" pButton icon="pi pi-check" class="ui-button-success" label="Yes"
+                    (click)="cd.accept()"></button>
             </p-footer>
         </p-confirmDialog>
 

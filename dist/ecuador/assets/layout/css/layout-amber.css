@@ -1017,18 +1017,11 @@ body .layout-wrapper .layout-main .layout-content {
   transition: margin-left 0.3s;
 }
 .layout-wrapper .layout-main .layout-footer {
-  /*background-color: #F3F3F3;
+  background-color: #F3F3F3;
   padding: 16px 38px;
   color: #1F1F1F;
   bottom: 0;
-  position: relative;*/
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: red;
-  color: white;
-  text-align: center;
+  position: relative;
 }
 .layout-wrapper .layout-main .layout-footer .logo-container {
   text-decoration: none;

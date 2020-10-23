@@ -18,33 +18,47 @@ export class MenuComponent implements OnInit {
     ngOnInit() {
 
         this.model = [
-            { label: 'Dashboard', icon: 'fa fa-fw fa-home', routerLink:'/' },
+            { label: 'Dashboard', icon: 'fa fa-fw fa-tachometer', routerLink: '/' },
             {
-                label: 'CRM', icon: 'fa fa-fw fa-cogs' ,
+                label: 'Seguridad', icon: 'fa fa-fw fa-cogs',
                 items: [
-                    { label: 'Clientes', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/clientes' },
-                    { label: 'Flores', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/flores' },
-                    { label: 'Fincas', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/fincas' },
-                    { label: 'E. Carga', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/delivery' },
-                    { label: 'Marcación', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/marcas' }
+                    { label: 'Roles', icon: 'fa fa-fw fa-users', routerLink: '/roles' },
+                    { label: 'Usuario', icon: 'fa fa-fw fa-users', routerLink: '/user' }
                 ]
             },
-            { label: 'Facturación', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/factura' },
-            { label: 'Pre Alerta', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/prealerta' },
             {
-                label: 'Reportes', icon: 'fa fa-fw fa-cogs' ,
+                label: 'Catálogos', icon: 'fa fa-fw fa-table',
                 items: [
-                    { label: 'Saldo del Cliente', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/balance' },
-                    { label: 'Documentos del Cliente', icon: 'fa fa-fw fa-user-circle-o', routerLink:'/documento' },
-                ]  
+                    { label: 'Flores', icon: 'fa fa-fw fa-cubes', routerLink: '/flores' },
+                    { label: 'Fincas', icon: 'fa fa-fw fa-building-o', routerLink: '/fincas' },
+                    { label: 'E. Carga', icon: 'fa fa-fw fa-truck', routerLink: '/delivery' },
+                    { label: 'Marcación', icon: 'fa fa-fw fa-user-circle-o', routerLink: '/marcas' }
+                ]
             },
-            { 
+            {
+                label: 'Ventas', icon: 'fa fa-money',
+                items: [
+                    { label: 'Clientes', icon: 'fa fa-fw fa-user-circle-o', routerLink: '/clientes' },
+                    { label: 'Facturación', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/factura' },
+                    { label: 'Pagos/Reclamos', icon: 'fa fa-fw fa-ticket', routerLink: '/fincas' },
+                ]
+            },
+            { label: 'Generar Prealertas', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/prealerta' },
+            {
+                label: 'Reportes', icon: 'fa fa-fw fa-wpforms',
+                items: [
+                    { label: 'Venta diaria de flores', icon: 'fa fa-fw fa-file-text-o', routerLink: '/balance' },
+                    { label: 'Documentos clientes', icon: 'fa fa-fw fa-file-text-o', routerLink: '/balance' },
+                    { label: 'Reporte prealerta', icon: 'fa fa-fw fa-file-text-o', routerLink: '/documento' },
+                ]
+            },
+            /*{
                 label: 'Menu Colors', icon: 'fa fa-fw fa-paint-brush',
                 items: [
                     { label: 'Light', icon: 'fa fa-fw fa-paint-brush', command: event => this.app.lightMenu = true },
                     { label: 'Dark', icon: 'fa fa-fw fa-paint-brush', command: event => this.app.lightMenu = false }
                 ]
-            },
+            },*/
             {
                 label: 'Layouts', icon: 'fa fa-fw fa-cog',
                 items: [
@@ -54,7 +68,38 @@ export class MenuComponent implements OnInit {
                     { label: 'Horizontal', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'horizontal' }
                 ]
             },
-            
+            {
+                label: 'Themes', icon: 'fa fa-fw fa-paint-brush', badge: 2,
+                items: [
+                    {
+                        label: 'Pink', icon: 'fa fa-fw fa-paint-brush',
+                        items: [
+                            {
+                                label: 'Light', icon: 'fa fa-fw fa-paint-brush',
+                                command: (event) => this.changeTheme('pink', 'light')
+                            },
+                            {
+                                label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
+                                command: (event) => this.changeTheme('pink', 'dark')
+                            }
+                        ]
+                    },
+                    {
+                        label: 'Cyan', icon: 'fa fa-fw fa-paint-brush',
+                        items: [
+                            {
+                                label: 'Light', icon: 'fa fa-fw fa-paint-brush',
+                                command: (event) => this.changeTheme('cyan', 'light')
+                            },
+                            {
+                                label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
+                                command: (event) => this.changeTheme('cyan', 'dark')
+                            }
+                        ]
+                    }
+                ]
+            },
+
             /*{
                 label: 'Components', icon: 'fa fa-fw fa-bars', routerLink: ['/components'],
                 items: [
@@ -363,7 +408,7 @@ export class MenuComponent implements OnInit {
             {
                 label: 'Documentation', icon: 'fa fa-fw fa-file-code-o', routerLink: ['/documentation']
             },*/
-           
+
         ];
 
         console.log('Consultando los MENUS...');
@@ -431,8 +476,6 @@ export class MenuComponent implements OnInit {
     }
 
     change(url: string) {
-        console.log('Cambiando la página' + url);
-        console.log('DATA..');
         this.router.navigate([url]);
     }
 

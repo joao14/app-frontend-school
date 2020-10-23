@@ -265,7 +265,7 @@ export class ApisService {
         });
     }
 
-    public getmarks(idCliente: number, token: string): Promise<any> {
+    async getmarks(idCliente: number, token: string): Promise<any> {        
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',

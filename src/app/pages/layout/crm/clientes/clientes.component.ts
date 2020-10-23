@@ -44,9 +44,9 @@ export class ClientesComponent implements OnInit {
     }
 
     getClients() {
-        this.loading=true;
+        this.loading=true;   
         this.api.getclients(localStorage.getItem('token')).then(users => {
-            console.log('Data');
+            console.log('Clientes');
             console.log(users);
             if (users.headerApp.code === 200) {
                 users.data.clientes.forEach(element => {

@@ -15,7 +15,7 @@ import { mark } from 'src/models/mark';
 export interface Item {
   cliente: client;
   finca: finca;
-  marca: string;
+  marca: mark;
   HBBQ: string;
   rosamistica: flower;
   tamanio: string;
@@ -90,7 +90,7 @@ export class PrealertaComponent implements OnInit {
     this.item = {
       cliente: null,
       finca: null,
-      marca: "",
+      marca: null,
       HBBQ: "",
       rosamistica: null,
       tamanio: "",
@@ -200,7 +200,7 @@ export class PrealertaComponent implements OnInit {
     }
   }
 
-  uploadFile(event) {
+  async uploadFile(event) {
     console.log("UPLOAD");
     console.log(event);
     const target: DataTransfer = <DataTransfer>event.target;
@@ -213,7 +213,7 @@ export class PrealertaComponent implements OnInit {
     reader.readAsBinaryString(target.files[0]);
     this.items = [];
 
-    reader.onload = (e: any) => {
+    reader.onload = async (e: any) => {
       /* create workbook */
       const binarystr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: "binary" });
@@ -221,21 +221,33 @@ export class PrealertaComponent implements OnInit {
       const wsname: string = wb.SheetNames[0];
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
       /* save data */
-      const data = XLSX.utils.sheet_to_json(ws, { raw: true }); // to get 2d array pass 2nd parameter as object {header: 1}
-      console.log(data); // Data will be logged in array format containing objects
-      let read: boolean = false;
-      data.forEach(element => {
-        let client = this.searchclient(element['CLIENTE']);
-        let farm=this.searchfinca(element['FINCA']);
-        if (client == null || farm ==null) {
+      const data = XLSX.utils.sheet_to_json(ws, { raw: true }); // to get 2d array pass 2nd parameter as object {header: 1}      
+      const read = await this.readAllrowsfile(data);
+      console.log('****DOCUMENTOS FINALES****');
+      console.log(read);
+      if (read) {
+        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Todos los registros han sido cargos satisfactoriamente' });
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'El archivo no tiene el formato adecuado o tiene valores en los campos que no han sido ingresado en el sistema.' });
+      }
+
+      /*data.forEach(element => {
+        console.log(element);
+        let client = await this.searchclient(element['CLIENTE']);
+        let farm = await this.searchfinca(element['FINCA']);
+        console.log('DATA');
+        console.log(element['MARCACION']);
+        console.log(client);
+        console.log('???');
+        let mark = await this.searchMark(element['MARCACION'], client);
+        if (client == null || farm == null || mark == null) {
           read = false;
           return;
-        }       
-
+        }
         let item = {
           cliente: client,
-          finca: element['FINCA'],
-          marca: element['MARCACION'],
+          finca: farm,
+          marca: mark,
           HBBQ: element['HB/QB'],
           rosamistica: element['VARIEDAD'],
           tamanio: element['T/TALLOS'],
@@ -254,31 +266,96 @@ export class PrealertaComponent implements OnInit {
           this.prealert.tallos += parseInt(item.tallos + "");
         });
 
-      });
+      });*/
 
-      if (!read) {
+      /*if (!read) {
         this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'El archivo no tiene el formato adecuado o tiene valores en los campos que no han sido ingresado en el sistema.' });
         return;
-      }
+      }*/
 
-      console.log("ARRAY DE LISTA");
-      console.log(this.items);
     };
 
     this.files.push(target.files[0]);
   }
 
-  /**
+  async readAllrowsfile(data: any) {
+    console.log('READ SHEETS [i]');
+    data.forEach(async element => {
+      await this.readColumforRow(element);
+      /*if (client == null || farm == null || mark == null) {
+        return false;
+      }
+      let item = {
+        cliente: client,
+        finca: farm,
+        marca: mark,
+        HBBQ: element['HB/QB'],
+        rosamistica: element['VARIEDAD'],
+        tamanio: element['T/TALLOS'],
+        caja: element['CM'],
+        tallos: element['TALLOS'],
+        precio: element['PRECIO COMPRA'],
+        carga: element['CARGUERA'],
+        status: element['STATUS']
+      }
+      this.items.push(item);
+      this.prealert.cajas = 0;
+      this.prealert.tallos = 0;
+      this.prealert.items = this.items;
+      this.items.forEach(item => {
+        this.prealert.cajas += parseInt(item.caja + "");
+        this.prealert.tallos += parseInt(item.tallos + "");
+      });*/
+
+    });
+    return true;
+  }
+
+  async readColumforRow(element: any) {
+    console.log('NEXT');
+    console.log(element);
+    //console.log('[ ' + element['CLIENTE'] + ' ] [' + element['FINCA'] + ' ] [' + element['MARCACION'] + ' ]');
+    console.log('[CLIENTE]');
+    let client = this.searchclient(element['CLIENTE']);
+    console.log(client);
+    /*console.log('[FINCA]');
+    var farm = this.searchfinca(element['FINCA']);
+    console.log(farm);
+    console.log('MARCA');
+    var mark = await this.searchMark(element['MARCACION'], client).then(dato => {
+      console.log('DATO');
+      console.log(dato);
+    });
+    console.log(mark);*/
+    console.log('*** ITERACION ***');
+
+  }
+
+  /**   
    * Search a client an array list of client's
    * @param name 
    */
-  searchclient(name: string): client {
+  async searchclient(name: string) {
     let clientTemp: client = null;
-    this.clientes.filter(client => {
-     if (client.nombres.toLocaleLowerCase().indexOf(name.toLocaleLowerCase()) > -1) {
+    this.clientes.filter(async client => {
+      console.log('LEX');
+      if (client.nombres.toLocaleLowerCase().indexOf(name.toLocaleLowerCase()) > -1) {
         clientTemp = client;
+        console.log('Consultando las marcas del cliente'+ client.entiId);        
+        await this.api.getmarks(client.entiId, localStorage.getItem("token")).then(mark => {
+          console.log('Mira las marcas del cliente ' + client.entiId);
+          console.log(mark);
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
       }
     })
+    console.log('MIRA VE ... ');
+    console.log(clientTemp);
     return clientTemp;
   }
 
@@ -286,14 +363,49 @@ export class PrealertaComponent implements OnInit {
    * Search a farm an array list of farms
    * @param name 
    */
-  searchfinca(name: string):finca{
+  searchfinca(name: string) {
     let fincaTemp: finca = null;
-    this.fincas.filter(finca=>{
-      if(finca.nombres.toLocaleLowerCase().indexOf(name.toLocaleLowerCase()) > -1){
-        fincaTemp=finca;
+    this.fincas.filter(finca => {
+      //console.log('FINCA => ' + finca.nombres.toLocaleLowerCase() + '=' + name.toLocaleLowerCase());
+      if (finca.nombres.toLocaleLowerCase().indexOf(name.toLocaleLowerCase()) > -1) {
+        fincaTemp = finca;
       }
     })
     return fincaTemp;
+  }
+
+  /**
+   * Search a mark of client
+   * @param name 
+   * @param client 
+   */
+  async searchMark(name: string, client: client): Promise<any> {
+    console.log('¿¿ESTE CLIENTE???');
+    console.log(client);
+    //let markTemp: mark = null;
+    let markTemp = await this.api.getmarks(client.entiId, localStorage.getItem('token')).then(mark => {
+      console.log('MARCAS CONSULTADAS');
+      console.log(mark);
+      console.log('NAME MARK: ' + name);
+      if (mark.headerApp.code == 200) {
+        console.log(mark.data.marks);
+        /*mark.data.mark.filter(mark => {
+          console.log('MARCA => ' + mark.nombre.toLocaleLowerCase() + '=' + name.toLocaleLowerCase());
+          if (mark.nombre.toLocaleLowerCase().indexOf(name.toLocaleLowerCase()) > -1) {
+            return mark;
+          }
+        })*/
+      }
+    }).catch(err => {
+      console.log(err);
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    console.log('CONSULTA FINAL');
+    console.log(markTemp);
+    return markTemp;
   }
 
   deleteAttachment(index) {
