@@ -1,9 +1,8 @@
 import { LayoutComponent } from './../../layout.component';
 import { user } from './../../../../../models/user';
 import { TranslateService } from '@ngx-translate/core';
-import { SelectItem } from 'primeng/primeng';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     selector: 'app-topbar',
@@ -15,8 +14,10 @@ export class TopbarComponent implements OnInit {
 
     user: user;
     name: string;
+    @Input() state: boolean;
 
-    constructor(public app: LayoutComponent, private translate: TranslateService) { }
+    constructor(public app: LayoutComponent, private translate: TranslateService) {
+    }
 
     ngOnInit(): void {
 
@@ -34,9 +35,9 @@ export class TopbarComponent implements OnInit {
         this.translate.use(event.target.value);
     }
 
-    onselectlanguajes(languajes: string){
+    onselectlanguajes(languajes: string) {
         console.log('Esta cambiando el lenguaje');
-        
+
     }
 
 

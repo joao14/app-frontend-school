@@ -15,6 +15,7 @@ import { MessageService } from 'primeng/api';
 export class LoginComponent implements OnInit {
 
     checkoutForm: FormGroup;
+    estado:string="determinate";
 
     constructor(private formBuilder: FormBuilder, private messageService: MessageService, private api: ApisService, private router: Router) {
         this.checkoutForm = this.formBuilder.group({
@@ -28,11 +29,12 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
+        this.estado="indeterminate";
         console.log('Your order has been submitted 2.....');
         console.log(this.checkoutForm.get("username").value);
         
-        //this.api.login(this.checkoutForm.get("username").value, this.checkoutForm.get("password").value).then(data => {
-        this.api.login('admin', 'admin').then(data => {
+        this.api.login(this.checkoutForm.get("username").value, this.checkoutForm.get("password").value).then(data => {
+        //this.api.login('test5', 'abc123').then(data => {
             console.log("Data response");
             console.log(data);
             if (data.headerApp.code === 200) {
@@ -56,9 +58,11 @@ export class LoginComponent implements OnInit {
                                 }
                 localStorage.setItem("user", JSON.stringify(user));
                 localStorage.setItem("token", data.data.usuario.token);
+                this.estado="determinate";
                 this.router.navigate(['/dashboard']);
 
             } else {
+                this.estado="determinate";
                 console.log('No se puede loguear');
                 this.messageService.add({
                     severity: 'error',
@@ -67,6 +71,7 @@ export class LoginComponent implements OnInit {
                 });
             }
         }).catch(err => {
+            this.estado="determinate";
             this.messageService.add({
                 severity: 'error',
                 summary: 'Rosa Mística',
@@ -76,6 +81,11 @@ export class LoginComponent implements OnInit {
             console.log(err);
         })
 
+    }
+
+    forgot(){
+        console.log('Olvido ..');
+        this.router.navigate(['/forgot']);
     }
 
 

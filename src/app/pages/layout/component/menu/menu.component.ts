@@ -1,29 +1,101 @@
 import { LayoutComponent } from './../../layout.component';
 import { Router } from '@angular/router';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.css']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnChanges {
 
     model: any[];
     selectItem: string = '';
+    @Input() rol: string;
+    nameRol: string;
 
-    constructor(public app: LayoutComponent, public router: Router) { }
+    constructor(public app: LayoutComponent, public router: Router) {
+
+    }
 
     ngOnInit() {
+        this.nameRol=JSON.parse(localStorage.getItem('user')).roles[0].rol;
 
+        switch ((JSON.parse(localStorage.getItem('user')).roles[0].rol).toUpperCase()) {
+            case 'ADMINISTRADOR':
+                this.getAdministrador();
+                break;
+            case 'CLIENTE':
+                this.getCliente();
+                break;
+            default:
+                console.log('No se encuentra el perfil');
+                break;
+        }
+    }
+
+
+    ngOnChanges() {
+        console.log('SE HA GENERADO UN CAMBIO');
+        if (this.rol == undefined) {
+            return
+        }
+
+        this.nameRol=this.rol;
+        switch (this.rol.toUpperCase()) {
+            case 'ADMINISTRADOR':
+                this.getAdministrador();
+                break;
+            case 'CLIENTE':
+                this.getCliente();
+                break;
+            default:
+                console.log('No se encuentra el perfil');
+
+                break;
+        }
+
+    }
+
+    getCliente() {
+        this.model = [
+            { label: 'Dashboard', icon: 'fa fa-fw fa-tachometer', routerLink: '/' },
+            {
+                label: 'Catálogos', icon: 'fa fa-fw fa-table',
+                items: [
+                    { label: 'Flores', icon: 'fa fa-fw fa-cubes', routerLink: '/flores' },
+                ]
+            },
+            {
+                label: 'Reportes', icon: 'fa fa-fw fa-wpforms',
+                items: [
+                    { label: 'Venta diaria de flores', icon: 'fa fa-fw fa-file-text-o', routerLink: '/balance' },
+                    { label: 'Documentos clientes', icon: 'fa fa-fw fa-file-text-o', routerLink: '/balance' },
+                    { label: 'Reporte prealerta', icon: 'fa fa-fw fa-file-text-o', routerLink: '/documento' },
+                ]
+            },
+            {
+                label: 'Layouts', icon: 'fa fa-fw fa-cog',
+                items: [
+                    { label: 'Static', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'static' },
+                    { label: 'Overlay', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'overlay' },
+                    { label: 'Slim', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'slim' },
+                    { label: 'Horizontal', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'horizontal' }
+                ]
+            },
+        ];
+
+    }
+
+    getAdministrador() {
         this.model = [
             { label: 'Dashboard', icon: 'fa fa-fw fa-tachometer', routerLink: '/' },
             {
                 label: 'Seguridad', icon: 'fa fa-fw fa-cogs',
                 items: [
-                    { label: 'Roles', icon: 'fa fa-fw fa-users', routerLink: '/roles' },
-                    { label: 'Usuario', icon: 'fa fa-fw fa-users', routerLink: '/user' }
+                    //{ label: 'Roles', icon: 'fa fa-fw fa-users', routerLink: '/roles' },
+                    { label: 'Usuario', icon: 'fa fa-fw fa-users', routerLink: '/usuario' }
                 ]
             },
             {
@@ -31,8 +103,7 @@ export class MenuComponent implements OnInit {
                 items: [
                     { label: 'Flores', icon: 'fa fa-fw fa-cubes', routerLink: '/flores' },
                     { label: 'Fincas', icon: 'fa fa-fw fa-building-o', routerLink: '/fincas' },
-                    { label: 'E. Carga', icon: 'fa fa-fw fa-truck', routerLink: '/delivery' },
-                    { label: 'Marcación', icon: 'fa fa-fw fa-user-circle-o', routerLink: '/marcas' }
+                    { label: 'E. Carga', icon: 'fa fa-fw fa-truck', routerLink: '/delivery' }
                 ]
             },
             {
@@ -40,7 +111,7 @@ export class MenuComponent implements OnInit {
                 items: [
                     { label: 'Clientes', icon: 'fa fa-fw fa-user-circle-o', routerLink: '/clientes' },
                     { label: 'Facturación', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/factura' },
-                    { label: 'Pagos/Reclamos', icon: 'fa fa-fw fa-ticket', routerLink: '/fincas' },
+                    { label: 'Pagos/Reclamos', icon: 'fa fa-fw fa-ticket', routerLink: '/pagoreclamo' },
                 ]
             },
             { label: 'Generar Prealertas', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/prealerta' },
@@ -404,16 +475,9 @@ export class MenuComponent implements OnInit {
                         ]
                     }
                 ]
-            },
-            {
-                label: 'Documentation', icon: 'fa fa-fw fa-file-code-o', routerLink: ['/documentation']
-            },*/
+            }*/
 
         ];
-
-        console.log('Consultando los MENUS...');
-        console.log(this.model);
-
     }
 
     select(model: any) {

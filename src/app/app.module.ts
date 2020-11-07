@@ -35,7 +35,6 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
                 useClass: CustomTranslateLoader
             }
         })
-
     ],
     declarations: [
         AppComponent,

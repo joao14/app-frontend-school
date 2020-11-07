@@ -2,15 +2,17 @@ import { AppMenuitemComponent } from './app.menuitem.component';
 import { MenuComponent } from './menu.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     declarations: [
         MenuComponent,
-        AppMenuitemComponent,
+        AppMenuitemComponent,       
 
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        TranslateModule
     ],
     exports: [MenuComponent]
 })

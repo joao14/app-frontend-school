@@ -11,9 +11,9 @@
             </p-toolbar>
 
             <p-table #dt [value]="deliveries" [paginator]="true" [rows]="10"
-                [showCurrentPageReport]="true" class="p-datatable-responsive-demo" [loading]="loading" [lazy]="true"
+                [showCurrentPageReport]="true" class="p-datatable-responsive-demo"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [rowsPerPageOptions]="[10,25,50,100]" selectionMode="single">
+                [rowsPerPageOptions]="[10,25,50,100]">
 
                 <ng-template pTemplate="caption">
                     <div class="table-header">
@@ -35,28 +35,28 @@
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'nombres', 'startsWith')"
+                                    (input)="dt.filter($event.target.value, 'nombres', 'contains')"
                                     placeholder="Search by Name" class="p-column-filter">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'phone', 'startsWith')"
+                                    (input)="dt.filter($event.target.value, 'phone', 'contains')"
                                     placeholder="Search by Phone" class="p-column-filter">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'pais', 'startsWith')"
+                                    (input)="dt.filter($event.target.value, 'pais', 'contains')"
                                     placeholder="Search by Country" class="p-column-filter">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'ciudad', 'startsWith')"
+                                    (input)="dt.filter($event.target.value, 'ciudad', 'contains')"
                                     placeholder="Search by City" class="p-column-filter">
                             </div>
                         </th>
@@ -74,10 +74,10 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-delivery let-columns="columns">
                     <tr [pSelectableRow]="delivery" [pEditableRow]="delivery">
-                        <td>{{delivery.nombres}}</td>
+                        <td>{{delivery.nombres | titlecase}}</td>
                         <td>{{delivery.phone}}</td>
-                        <td>{{delivery.pais}}</td>
-                        <td>{{delivery.ciudad}}</td>
+                        <td>{{delivery.pais | titlecase}}</td>
+                        <td>{{delivery.ciudad | titlecase}}</td>
                         <td style="text-align: center;">
                             <div [class]="delivery.estado=='A'?'active-badge':'inactive-badge'">
                                 <span>{{delivery.estado=='A'?'Activo':'Inactivo'}}</span>

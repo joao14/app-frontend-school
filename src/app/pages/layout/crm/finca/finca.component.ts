@@ -5,6 +5,7 @@ import { finca } from 'src/models/finca';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng';
 import { ShareReplayConfig } from 'rxjs/internal/operators/shareReplay';
+import { UtilService } from 'src/services/util.service';
 
 @Component({
   selector: 'app-finca',
@@ -16,9 +17,8 @@ export class FincaComponent implements OnInit {
 
   fincas: Array<finca> = [];
   name: string;
-  loading: boolean;
 
-  constructor(private apis: ApisService, private router: Router) { }
+  constructor(private apis: ApisService, private router: Router, private utilservice: UtilService) { }
 
   ngOnInit(): void {
     this.name = "";
@@ -30,7 +30,7 @@ export class FincaComponent implements OnInit {
   }
 
   getFinca() {
-    this.loading = true;
+    this.utilservice.isLoading.next(true);
     this.apis.getfinca(localStorage.getItem("token")).then(data => {
       console.log(data);
       if (data.headerApp.code == 200) {
@@ -55,7 +55,7 @@ export class FincaComponent implements OnInit {
           }
           this.fincas.push(finca);
         });
-        this.loading = false;
+         this.utilservice.isLoading.next(false);
         console.log('FINCAS..');
         console.log(this.fincas);
 
@@ -63,7 +63,7 @@ export class FincaComponent implements OnInit {
       }
     }).catch(err => {
       console.log(err);
-      this.loading = false;
+      this.utilservice.isLoading.next(false);
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);

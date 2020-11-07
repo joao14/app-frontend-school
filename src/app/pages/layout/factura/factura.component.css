@@ -8,14 +8,6 @@
         0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
 }
 
-:host ::ng-deep .p-dropdown {
-    width: 14rem;
-}
-
-.country-item-value img.flag {
-    width: 17px;
-}
-
 .box-stretched {
     height: 100%;
 }
@@ -179,6 +171,27 @@
 .btn_enviar_responsive {
     display: none;
 }
+
+.form-control {
+    border: 1px solid #c4c4c4 !important;
+}
+.is-invalid {
+    border: 1px solid #dc3545 !important;
+}
+.invalid-feedback {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #42a948; /* green */
+}
+
+.ng-invalid:not(form) {
+    border-left: 5px solid #a94442; /* red */
+}
+
 
 @media only screen and (max-width: 40rem) {
     .p-datatable-responsive-demo {

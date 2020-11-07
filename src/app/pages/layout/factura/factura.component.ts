@@ -9,6 +9,7 @@ import { finca } from 'src/models/finca';
 import { flower } from 'src/models/flower';
 import { Router } from '@angular/router';
 import { ApisService } from 'src/services/apis.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 export interface Item {
     caja: string;
@@ -43,6 +44,10 @@ export interface Factura {
     providers: [MessageService, ConfirmationService],
 })
 export class FacturaComponent implements OnInit {
+
+
+    itemForm: FormGroup;
+    facturaForm: FormGroup;
     factura: Factura;
     flowers: string[];
     tamanios: any[];
@@ -53,7 +58,6 @@ export class FacturaComponent implements OnInit {
     rows: any = [];
     options: boolean;
     itemSelect: number = 0;
-    temp: any;
     addrow: boolean;
     optionsFactura: SelectItem[];
     select: string;
@@ -63,13 +67,36 @@ export class FacturaComponent implements OnInit {
     deliveries: Array<delivery> = [];
     marks: Array<mark> = [];
     cajas: any[] = [];
+    submitted = false;
+    submittedFactura = false;
+    selectclient: client;
 
 
     constructor(
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
-        private router: Router, private api: ApisService
-    ) { }
+        private router: Router, private api: ApisService,
+        private formBuilder: FormBuilder
+    ) {
+        this.itemForm = this.formBuilder.group({
+            caja: [null],
+            pieza: [''],
+            finca: [null, Validators.required],
+            flores: [null, [Validators.required]],
+            stem: ['', [Validators.required]],
+            tamanio: [null, Validators.required],
+            tallos: ['', Validators.required],
+            precio: ['', Validators.required]
+        });
+
+        this.facturaForm = this.formBuilder.group({
+            cliente: [null, Validators.required],
+            marca: [null, Validators.required],
+            mawba: ['', Validators.required],
+            empresacargo: [null, Validators.required]
+        });
+
+    }
 
     ngOnInit(): void {
         this.inicilizate();
@@ -85,6 +112,8 @@ export class FacturaComponent implements OnInit {
         this.automatico = false;
         this.options = false;
         this.addrow = false;
+        this.submitted = false;
+        this.submittedFactura = false;
         this.select = "MN";
         this.factura = {
             client: null,
@@ -98,18 +127,8 @@ export class FacturaComponent implements OnInit {
             tallos: 0,
             total: 0.0,
         };
-        this.temp = {
-            caja: null,
-            pieza: "",
-            finca: null,
-            flores: null,
-            stem: null,
-            tallos: "",
-            tamanio: null,
-            cantidad: "",
-            precio: null
-        };
         this.tamanios = [
+            { name: "CL", code: "CL" },
             { name: "40", code: "40" },
             { name: "50", code: "50" },
             { name: "60", code: "60" },
@@ -235,7 +254,58 @@ export class FacturaComponent implements OnInit {
         this.factura.tallos = 0;
     }
 
+    saverow() {
+        console.log('Validando Row...');
+
+        this.submitted = true;
+
+        if (this.itemForm.invalid) {
+            this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios' });
+            return;
+        }
+
+        this.items.push({
+            caja: this.itemForm.get('caja').value,
+            pieza: this.itemForm.get('pieza').value,
+            finca: this.itemForm.get('finca').value,
+            flor: this.itemForm.get('flores').value,
+            stems: this.itemForm.get('stem').value,
+            tamanio: this.itemForm.get('tamanio').value,
+            numtallos: this.itemForm.get('tallos').value,
+            totaltallos: this.itemForm.get('stem').value * this.itemForm.get('tallos').value,
+            price: this.itemForm.get('precio').value,
+            subtotal: (this.itemForm.get('stem').value * this.itemForm.get('tallos').value) * this.itemForm.get('precio').value,
+        });
+
+        this.factura.total = 0;
+        this.factura.tallos = 0;
+        this.items.forEach((item) => {
+            this.factura.total += item.subtotal;
+            this.factura.tallos += item.stems;
+            console.log(this.factura.total);
+        });
+
+        this.addrow = false;
+        this.submitted = false;
+        this.itemForm.reset();
+
+    }
+
+    get f() {
+        return this.itemForm.controls;
+    }
+    get fr() {
+        return this.facturaForm.controls;
+    }
+
     save() {
+        console.log('Save factura...');
+
+        this.submittedFactura = true;
+        if (this.facturaForm.invalid) {
+            this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos para generar la factura son obligatorios.' });
+            return;
+        }
         console.log("Va a guardar los registros");
         console.log("FACTURA");
         this.factura.items = this.items;
@@ -264,55 +334,12 @@ export class FacturaComponent implements OnInit {
         return state;
     }
 
-    saverow() {
-        console.log('ELEMENTO TEMPORAL');
-        console.log(this.temp);
-        if (
-            this.temp.pieza == "" ||
-            this.temp.finca == "" ||
-            this.temp.flores == "" ||
-            this.temp.tallos == "" ||
-            this.temp.tallos == "" ||
-            this.temp.tamanio == "" ||
-            this.temp.stem == "" ||
-            this.temp.precio == ""
-        ) {
-            this.messageService.add({
-                severity: "error",
-                summary: "Rosa Mística",
-                detail:
-                    "Todos los campos son obligatorios para agregar un nuevo item a la factura",
-            });
-            return false;
-        }
 
-        this.items.push({
-            caja: this.temp.caja,
-            pieza: this.temp.pieza,
-            finca: this.temp.finca,
-            flor: this.temp.flores,
-            stems: this.temp.stem,
-            tamanio: this.temp.tamanio,
-            numtallos: this.temp.tallos,
-            totaltallos: this.temp.tallos * this.temp.stem,
-            price: this.temp.precio,
-            subtotal: (this.temp.tallos * this.temp.stem) * this.temp.precio,
-        });
-
-        this.factura.total = 0;
-        this.factura.tallos = 0;
-        this.items.forEach((item) => {
-            this.factura.total += item.subtotal;
-            this.factura.tallos += item.stems;
-            console.log(this.factura.total);
-        });
-
-        this.addrow = false;
-        this.temp = [];
-    }
 
     cancelrow() {
         this.addrow = false;
+        this.itemForm.reset();
+        this.submitted = false;
     }
 
     deleteItem(item: Item) {
@@ -327,10 +354,16 @@ export class FacturaComponent implements OnInit {
 
     onOptionsSelected() {
         this.marks = [];
-        this.api.getmarks(this.factura.client.entiId, localStorage.getItem("token")).then(mark => {
+        this.selectclient = this.facturaForm.get('cliente').value;
+        this.api.getmarks(this.facturaForm.get('cliente').value.entiId, localStorage.getItem("token")).then(mark => {
             console.log(mark);
             if (mark.headerApp.code == 200) {
-                this.marks = mark.data.marks;
+                let temp: mark[] = [];
+                mark.data.marks.forEach(element => {
+                    if (element.estado == 'A')
+                        temp.push(element);
+                });
+                this.marks = temp;
             }
         }).catch(err => {
             console.log(err);
@@ -339,13 +372,13 @@ export class FacturaComponent implements OnInit {
                 this.router.navigate(['/login']);
             }
         })
+        console.log('Inicializando los valores');
+
     }
 
 
     getServicios() {
         this.api.getclients(localStorage.getItem("token")).then(cliente => {
-            console.log('CLIENTES');
-            console.log(cliente);
             this.clientes = [];
             if (cliente.headerApp.code === 200) {
                 cliente.data.clientes.forEach(cliente => {
@@ -364,8 +397,13 @@ export class FacturaComponent implements OnInit {
         })
 
         this.api.getfinca(localStorage.getItem("token")).then(finca => {
+            this.fincas = [];
             if (finca.headerApp.code === 200) {
-                this.fincas = finca.data.farms;
+                finca.data.farms.forEach(finca => {
+                    if (finca.estado == 'A') {
+                        this.fincas.push(finca);
+                    }
+                });
             }
 
         }).catch(err => {
@@ -377,8 +415,6 @@ export class FacturaComponent implements OnInit {
         })
 
         this.api.getflowers(localStorage.getItem("token")).then(flor => {
-            console.log('FLORES');
-            console.log(flor);
             this.flores = [];
             if (flor.headerApp.code === 200) {
                 flor.data.flowers.forEach(flor => {
@@ -397,8 +433,6 @@ export class FacturaComponent implements OnInit {
         })
 
         this.api.getdeliveries(localStorage.getItem("token")).then(delivery => {
-            console.log('DELIVERIES');
-            console.log(delivery);
             this.deliveries = [];
             if (delivery.headerApp.code === 200) {
                 delivery.data.cargocompanies.forEach(delivery => {

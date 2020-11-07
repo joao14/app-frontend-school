@@ -67,6 +67,107 @@ export class ApisService {
             .pipe(retry(2), catchError(this.handleError)).toPromise();
     }
 
+    public getUsers(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.users, opt).toPromise().then(users => {
+                resolve(users);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public addUser(user: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.adduser, user, opt).toPromise().then(users => {
+                resolve(users);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public updateUser(user: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.put<any>(environment.updateuser, user, opt).toPromise().then(users => {
+                resolve(users);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public getRoles(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.roles, opt).toPromise().then(roles => {
+                resolve(roles);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public addRolesByUser(rol: any,token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.rolesbyuser, rol, opt).toPromise().then(roles => {
+                resolve(roles);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public removeRolesByUser(rol: any,token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.removeroles, rol, opt).toPromise().then(roles => {
+                resolve(roles);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+
+
     public getclients(token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
@@ -265,7 +366,7 @@ export class ApisService {
         });
     }
 
-    async getmarks(idCliente: number, token: string): Promise<any> {        
+    async getmarks(idCliente: number, token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',

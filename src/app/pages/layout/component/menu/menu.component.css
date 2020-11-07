@@ -1,9 +1,10 @@
 .subitem{
     margin-left: 15px;
+    font-size: 18px;
 }
 
 
 .collapsed {
     width: 50px;
-    
+    font-size: 18px;
 }

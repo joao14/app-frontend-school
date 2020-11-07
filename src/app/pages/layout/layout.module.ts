@@ -27,7 +27,7 @@ import { RouterModule } from '@angular/router';
 
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
-import { MessageModule, AutoCompleteModule, CardModule, SplitButtonModule, SelectButtonModule, ConfirmDialogModule, CalendarModule, DynamicDialogModule, DialogModule, VirtualScrollerModule, CarouselModule, DataViewModule } from 'primeng';
+import { MessageModule, AutoCompleteModule, CardModule, SplitButtonModule, SelectButtonModule, ConfirmDialogModule, CalendarModule, DynamicDialogModule, DialogModule, VirtualScrollerModule, CarouselModule, DataViewModule, FieldsetModule, ProgressBarModule } from 'primeng';
 import { DragdropDirective } from 'src/app/directive/dragdrop.directive';
 
 // in app.module.ts
@@ -38,7 +38,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
         CommonModule,
         LayoutRoutingModule,
         DropdownModule,
-        AccordionModule,
+        AccordionModule,   
         FormsModule,
         RouterModule,
         TableModule,
@@ -64,7 +64,9 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
         VirtualScrollerModule,
         CarouselModule,
         DataViewModule,
-        NgxDropzoneModule
+        NgxDropzoneModule,
+        FieldsetModule,
+        ProgressBarModule
         
     ],   
     declarations: [
@@ -75,8 +77,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
         MenuComponent,
         TopbarComponent,
         PanelComponent,
-        DragdropDirective
-        
+        DragdropDirective,
     ], providers: [
         MenuService,
         BreadcrumbService

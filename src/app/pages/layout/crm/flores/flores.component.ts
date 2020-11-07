@@ -3,6 +3,7 @@ import { ApisService } from 'src/services/apis.service';
 import { Router } from '@angular/router';
 import { SelectItem, MessageService } from 'primeng';
 import { TranslateService } from '@ngx-translate/core';
+import { flower } from 'src/models/flower';
 
 export interface Flower {
   id: number;
@@ -48,6 +49,7 @@ export class FloresComponent implements OnInit {
     this.apis.getflowers(localStorage.getItem("token")).then(data => {
       console.log(data);
       if (data.headerApp.code == 200) {
+      let temp: Array<flower>=[];
         data.data.flowers.forEach(element => {
           let images_: any[] = [];
           element.recursos.forEach(recurso => {
@@ -64,10 +66,15 @@ export class FloresComponent implements OnInit {
             state: element.flor.estado == 'A' ? 'Activo' : 'Inactivo',
             images: images_
           }
-          this.flowers.push(flower);
+          temp.push(flower);
         });
         this.loading = false;
+        this.flowers=temp;
       }
+      console.log('Finalizando los documentos');     
+      console.log('FLORES');
+      console.log(this.flowers);
+      
     }).catch(err => {
       console.log(err);
       this.loading = false;

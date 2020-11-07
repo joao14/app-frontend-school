@@ -3,6 +3,7 @@ import { TranslateLoader } from '@ngx-translate/core';
 import { en } from '../assets/languajes/en';
 import { es } from '../assets/languajes/es';
 import { ch } from '../assets/languajes/ch';
+import {ru} from '../assets/languajes/ru';
 
 export class CustomTranslateLoader implements TranslateLoader {
 
@@ -18,9 +19,12 @@ export class CustomTranslateLoader implements TranslateLoader {
                 case 'es':
                     observer.next(es);
                     break;
-                default:
-                    observer.next(es);
+                case 'ru':
+                    observer.next(ru);
                     break;
+                /*default:
+                    observer.next(es);
+                    break;*/
             }
             observer.complete();
         })

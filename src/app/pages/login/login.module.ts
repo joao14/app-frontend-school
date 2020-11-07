@@ -9,7 +9,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import { InputTextModule } from 'primeng';
+import { InputTextModule, ButtonModule, ProgressBarModule } from 'primeng';
 
 
 @NgModule({
@@ -22,7 +22,9 @@ import { InputTextModule } from 'primeng';
         MessageModule,
         ProgressSpinnerModule,
         ToolbarModule,
-        InputTextModule
+        InputTextModule,
+        ButtonModule,
+        ProgressBarModule
         ],
     declarations: [LoginComponent]
 })

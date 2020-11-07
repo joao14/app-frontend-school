@@ -1,5 +1,5 @@
 export interface mark{
-    marcId: number;
+    marcId?: number;
     nombre: string;
     estado: string;
     entiId: number;

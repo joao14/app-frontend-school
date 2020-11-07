@@ -1,7 +1,7 @@
 <div class="ui-g">
     <div class="ui-g-12">
         <div class="card no-margin">
-            <h1>Lista de Fincas</h1>
+            <h1>{{'Lista de Fincas' | translate}}</h1>
             <p-toast></p-toast>
             <p-toolbar>
                 <div class="p-toolbar-group-left">
@@ -10,10 +10,10 @@
                 </div>
             </p-toolbar>
 
-            <p-table #dt  [value]="fincas" [paginator]="true" [rows]="10"
-                [showCurrentPageReport]="true" class="p-datatable-responsive-demo" [loading]="loading" [lazy]="true"
+            <p-table #dt [value]="fincas" [paginator]="true" [rows]="10"
+                [showCurrentPageReport]="true" class="p-datatable-responsive-demo"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [rowsPerPageOptions]="[10,25,50,100]" selectionMode="single">
+                [rowsPerPageOptions]="[10,25,50,100]">
 
                 <ng-template pTemplate="caption">
                     <div class="table-header">
@@ -21,7 +21,7 @@
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
-                    <tr>
+                    <tr> 
                         <th> {{'Nombre' | translate}}</th>
                         <th> {{'Teléfono' | translate}}</th>
                         <th> {{'País' | translate}}</th>
@@ -35,28 +35,28 @@
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'nombres', 'startsWith')"
+                                    (input)="dt.filter($event.target.value, 'nombres', 'contains')"
                                     placeholder="Search by Name" class="p-column-filter">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'phone', 'startsWith')"
+                                    (input)="dt.filter($event.target.value, 'phone', 'contains')"
                                     placeholder="Search by Phone" class="p-column-filter">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'pais', 'startsWith')"
+                                    (input)="dt.filter($event.target.value, 'pais', 'contains')"
                                     placeholder="Search by Country" class="p-column-filter">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'ciudad', 'startsWith')"
+                                    (input)="dt.filter($event.target.value, 'ciudad', 'contains')"
                                     placeholder="Search by City" class="p-column-filter">
                             </div>
                         </th>
@@ -74,10 +74,10 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-finca let-columns="columns">
                     <tr [pSelectableRow]="finca" [pEditableRow]="finca">
-                        <td>{{finca.nombres}}</td>
+                        <td>{{finca.nombres | titlecase}}</td>
                         <td>{{finca.phone}}</td>
-                        <td>{{finca.pais}}</td>
-                        <td>{{finca.ciudad}}</td>
+                        <td>{{finca.pais | titlecase }}</td>
+                        <td>{{finca.ciudad | titlecase }}</td>
                         <td style="text-align: center;">
                             <div [class]="finca.estado=='Activo'?'active-badge':'inactive-badge'">
                                 <span>{{finca.estado}}</span>

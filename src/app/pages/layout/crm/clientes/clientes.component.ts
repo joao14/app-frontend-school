@@ -13,11 +13,15 @@ export interface User {
     phone: string;
     direction: string;
     city: string;
-    photo: string;
     email: string;
     status: string;
     razosoci: string;
     tipo: string;
+}
+
+export interface Test {
+    identification: string;
+    name: string;
 }
 
 @Component({
@@ -29,26 +33,27 @@ export interface User {
 export class ClientesComponent implements OnInit {
 
     users: Array<User> = [];
+    userstemp: Array<User> = [];
     selectedUsers: Array<User> = [];
     flag: boolean = true;
     loading: boolean;
     options: SelectItem[];
     selectoptions: any;
     identificacion: string;
+    tests: Array<Test> = [];
 
     constructor(private api: ApisService, private router: Router, private messageService: MessageService) { }
 
     ngOnInit(): void {
-        this.options = [{ label: 'Todos', value: null }, { label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];        
+        this.options = [{ label: 'Todos', value: null }, { label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];
         this.getClients();
     }
 
     getClients() {
-        this.loading=true;   
+        this.loading = true;
         this.api.getclients(localStorage.getItem('token')).then(users => {
-            console.log('Clientes');
-            console.log(users);
             if (users.headerApp.code === 200) {
+                let temp: User[] = [];
                 users.data.clientes.forEach(element => {
                     let userTemp = {
                         id: element.entiId,
@@ -58,22 +63,18 @@ export class ClientesComponent implements OnInit {
                         phone: element.phone,
                         direction: element.direccion,
                         city: element.ciudad,
-                        photo: 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png',
                         email: element.email,
                         status: element.estado === 'A' ? 'Activo' : 'Inactivo',
                         razosoci: element.razosoci,
                         tipo: element.tipo
                     }
-                    this.users.push(userTemp);
+                    temp.push(userTemp);
                 });
-                console.log('LISTA DE USUARIOS');
-                console.log(this.users);
-                this.loading=false;
+                this.users = temp;
             }
         }).catch(error => {
-            console.log('consultando los errores de la aplicación');
             console.log(error.error);
-            this.loading=false;
+            this.loading = false;
             if (error.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -96,7 +97,7 @@ export class ClientesComponent implements OnInit {
     consultarMobile() {
         console.log('Consultar los datos');
         console.log(this.identificacion);
-        
+
         if (this.identificacion == undefined || this.identificacion == '') {
             this.users = [];
             console.log('Consultar');

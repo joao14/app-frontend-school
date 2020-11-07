@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 
 const routes: Routes = [
@@ -13,6 +13,7 @@ const routes: Routes = [
             { path: 'flores', loadChildren: () => import('./crm/flores/flores.module').then(m => m.FloresModule) },
             { path: 'fincas', loadChildren: () => import('./crm/finca/finca.module').then(m => m.FincaModule) },
             { path: 'factura', loadChildren: () => import('./factura/factura.module').then(m => m.FacturaModule) },
+            { path: 'pagoreclamo', loadChildren: () => import('./pagoreclamo/pagoreclamo.module').then(m => m.PagoreclamoModule) },
             { path: 'miperfil', loadChildren: () => import('./miperfil/miperfil.module').then(m => m.MiperfilModule) },
             { path: 'edit', loadChildren: () => import('./crm/clientes/edit/edit.module').then(m => m.EditModule) },
             { path: 'editFlower', loadChildren: () => import('./crm/flores/edit/edit.module').then(m => m.EditModule) },
@@ -24,6 +25,9 @@ const routes: Routes = [
             { path: 'editMarca', loadChildren: () => import('./crm/marking/edit/edit.module').then(m => m.EditModule) },
             { path: 'balance', loadChildren: () => import('./reporte/balance/balance.module').then(m => m.BalanceModule) },
             { path: 'documento', loadChildren: () => import('./reporte/documento/documento.module').then(m => m.DocumentoModule) },
+            { path: 'usuario', loadChildren: () => import('./security/usuario/usuario.module').then(m => m.UsuarioModule) },
+            { path: 'edituser', loadChildren: () => import('./security/usuario/edit/edit.module').then(m => m.EditModule) },
+            { path: 'roles', loadChildren: () => import('./security/roles/roles.module').then(m => m.RolesModule) } 
         ]
     }
 ];

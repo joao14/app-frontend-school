@@ -1,14 +1,15 @@
 <div class="layout-topbar">
+    <p-progressBar [mode]="state?'indeterminate':'determinate'" [style]="{'height': '6px'}"></p-progressBar>
 
     <a href="#" id="topbar-menu-button" (click)="app.onMenuButtonClick($event)">
         <i class="fa fa-angle-left arrow"></i>
         <i class="fa fa-angle-up mobile"></i>
     </a>
 
-    <div class="search-input">
+    <!--<div class="search-input">
         <i class="fa fa-search icon-search"></i>
         <input type="text" />
-    </div>
+    </div>-->
 
     <a href="/" class="logo-container">
         <!--<img src="assets/layout/images/ecuador-logo.png" alt="ecuador-layout" />-->
@@ -20,6 +21,7 @@
         <select name="miselect" (change)="onChange($event)" class="fixed">
             <option value="es" selected="selected">Español</option>
             <option value="en">English</option>
+            <option value="ru">Rusia</option>
             <option value="ch">日本人</option>
         </select>
     </div>
@@ -37,7 +39,7 @@
                 <span class="topbar-item-name">{{ 'Perfil' | translate }}</span>
             </a>
         </li>
-        <li #settings [ngClass]="{'menuitem-active':app.activeTopbarItem === settings}">
+        <!--<li #settings [ngClass]="{'menuitem-active':app.activeTopbarItem === settings}">
             <a href="#" (click)="app.onTopbarItemClick($event, settings)">
                 <i class="fa fa-fw fa-cog"></i>
                 <span class="topbar-item-name">Settings</span>
@@ -69,8 +71,8 @@
                     </a>
                 </li>
             </ul>
-        </li>
-        <li #messages [ngClass]="{'menuitem-active':app.activeTopbarItem === messages}">
+        </li>-->
+        <!--<li #messages [ngClass]="{'menuitem-active':app.activeTopbarItem === messages}">
             <a href="#" (click)="app.onTopbarItemClick($event, messages)">
                 <i class="fa fa-fw fa-envelope-o"></i>
                 <span class="topbar-item-name">Messages</span>
@@ -80,6 +82,19 @@
                     <a href="#" class="topbar-message" (click)="app.onTopbarSubItemClick($event)">
                         <img src="assets/layout/images/avatar-brooke.png" alt="ecuador-layout" width="25" />
                         <span>Give me a call</span>
+                    </a>
+                </li>
+            </ul>
+        </li>-->
+        <li #roles [ngClass]="{'menuitem-active':app.activeTopbarItem === roles}" *ngIf="user.roles.length > 1">
+            <a href="#" (click)="app.onTopbarItemClickRoles($event, roles)">
+                <i class="fa fa-chain-broken"></i>
+                <span class="topbar-item-name">Roles </span>
+            </a>
+            <ul *ngFor="let rol of user.roles">
+                <li role="menuitem">
+                    <a href="#" class="topbar-message" (click)="app.onTopbarSubItemClickRoles($event)">
+                        <span>{{rol.rol}}</span>
                     </a>
                 </li>
             </ul>
@@ -95,7 +110,7 @@
                         <span>Español</span>
                     </a>
                 </li>
-            </ul>   
+            </ul>
             <ul>
                 <li role="menuitem">
                     <a href="#" class="topbar-message" (click)="app.onTopbarSubItemClickLanguajes($event)">
@@ -111,7 +126,7 @@
                 </li>
             </ul>
         </li>
-        <li #notifications [ngClass]="{'menuitem-active':app.activeTopbarItem === notifications}">
+        <!--<li #notifications [ngClass]="{'menuitem-active':app.activeTopbarItem === notifications}">
             <a href="#" (click)="app.onTopbarItemClick($event, notifications)">
                 <i class="fa fa-fw fa-bell-o"></i>
                 <span class="topbar-item-name">Notifications</span>
@@ -142,7 +157,7 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li>-->
         <li>
             <a href="#" (click)="app.singout()">
                 <i class="fa fa-fw fa-sign-out"></i>

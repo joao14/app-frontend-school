@@ -19,6 +19,8 @@ export class ForgotComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log('Validando el correo');
+        
     }
 
     onSubmit(){

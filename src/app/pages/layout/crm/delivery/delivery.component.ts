@@ -4,6 +4,7 @@ import { ApisService } from 'src/services/apis.service';
 import { MessageService } from 'primeng';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { UtilService } from 'src/services/util.service';
 
 @Component({
   selector: 'app-delivery',
@@ -15,25 +16,24 @@ export class DeliveryComponent implements OnInit {
 
   deliveries: Array<delivery> = [];
   name: string;
-  loading: boolean;
 
-  constructor(private api: ApisService, private router: Router) { }
+  constructor(private api: ApisService, private router: Router, private utilservice: UtilService) { }
 
   ngOnInit(): void {
     this.getDelivery();
   }
 
-  getDelivery(){
-    this.loading=true;
+  getDelivery(){ 
+    this.utilservice.isLoading.next(true);
     this.api.getdeliveries(localStorage.getItem("token")).then(data => {
       console.log(data);
       if (data.headerApp.code == 200) {
         this.deliveries = data.data.cargocompanies;
-        this.loading=false;
+        this.utilservice.isLoading.next(false);
       }
     }).catch(err => {
       console.log(err);
-      this.loading=false;
+      this.utilservice.isLoading.next(false);
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);

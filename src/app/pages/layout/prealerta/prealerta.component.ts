@@ -84,6 +84,7 @@ export class PrealertaComponent implements OnInit {
 
   }
 
+
   inicializate() {
     this.selectitem = -1;
     this.expanded = false;
@@ -128,6 +129,15 @@ export class PrealertaComponent implements OnInit {
 
     console.log(this.tamanios);
 
+  }
+
+
+  delay(number) {
+    console.log('PARAMETRO : ' + number);
+    setTimeout(() => {
+      console.log('NUMERO: ' + number);
+      return number * 10;
+    }, 5000)
   }
 
   deleteItem(prealert: any) {
@@ -341,7 +351,7 @@ export class PrealertaComponent implements OnInit {
       console.log('LEX');
       if (client.nombres.toLocaleLowerCase().indexOf(name.toLocaleLowerCase()) > -1) {
         clientTemp = client;
-        console.log('Consultando las marcas del cliente'+ client.entiId);        
+        console.log('Consultando las marcas del cliente' + client.entiId);
         await this.api.getmarks(client.entiId, localStorage.getItem("token")).then(mark => {
           console.log('Mira las marcas del cliente ' + client.entiId);
           console.log(mark);
@@ -485,16 +495,19 @@ export class PrealertaComponent implements OnInit {
     })
   }
 
-  onOptionsSelected() {
-    console.log('Consultando las marcas de los clientes');
-    console.log(this.prealertForm.get('cliente')); this.marks = [];
-    this.api.getmarks(this.prealertForm.get('cliente').value.entiId, localStorage.getItem("token")).then(mark => {
+
+  async onOptionsSelected() {
+    console.log(this.prealertForm.get('cliente'));
+    this.marks = [];
+    await this.api.getmarks(this.prealertForm.get('cliente').value.entiId, localStorage.getItem("token")).then(mark => {
       console.log(mark);
       if (mark.headerApp.code == 200) {
-        this.marks = mark.data.marks;
-        console.log('MARCAS..');
-        console.log(this.marks);
-
+        let temp: mark[] = [];
+        mark.data.marks.forEach(element => {
+          if (element.estado == 'A')
+            temp.push(element);
+        });
+        this.marks = temp;
       }
     }).catch(err => {
       console.log(err);

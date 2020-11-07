@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FacturaRoutingModule } from './factura-routing.module';
 import { InputTextModule, PanelModule, AccordionModule, InputTextareaModule, RadioButtonModule, ButtonModule, AutoCompleteModule, DropdownModule, TableModule, ToolbarModule, CardModule, SplitButtonModule, SelectButtonModule, ToastModule, ConfirmDialogModule, KeyFilter, KeyFilterModule } from 'primeng';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
         TableModule,
         ToolbarModule,
         CardModule,
+        ReactiveFormsModule,
         SplitButtonModule,
         SelectButtonModule,
         ToastModule,

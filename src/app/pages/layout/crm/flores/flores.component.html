@@ -1,7 +1,7 @@
 <div class="ui-g">
     <div class="ui-g-12">
         <div class="card no-margin">
-            <h1>Lista de Flores</h1>
+            <h1>{{ 'Lista de Flores' | translate }}</h1>
             <p-toast></p-toast>            
             <p-dataView #dv [value]="flowers" [paginator]="true" [rows]="9" filterBy="name"
                 [loading]="loading" [lazy]="true"

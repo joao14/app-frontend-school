@@ -1,7 +1,8 @@
 import { Router } from "@angular/router";
 import { MenuService } from "./../../../services/app.menu.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
+import { UtilService } from 'src/services/util.service';
 
 @Component({
     selector: "app-layout",
@@ -34,14 +35,34 @@ export class LayoutComponent implements OnInit {
 
     rightPanelClick: boolean;
 
+    loading: boolean;
+
+    rolselected: string;
+
     constructor(
         private menuService: MenuService,
         private router: Router,
-        private translate: TranslateService
-    ) { }
+        private translate: TranslateService, private utilservice: UtilService
+    ) {
+        this.utilservice.isLoading.subscribe(data => {
+            console.log('Vamos a ejecutar la ejecucion de estados V5');
+            console.log(data);
+            this.loading = data;
+            console.log(this.loading);
+            console.log('FINAL V5');
+        })
+
+        this.utilservice.rolselected.subscribe(data=>{
+            console.log('CAMBIO EL ROL');
+            this.rolselected=data;
+        })
+
+    }
 
     ngOnInit(): void {
     }
+
+
 
     onLayoutClick() {
         if (!this.topbarItemClick) {
@@ -99,7 +120,24 @@ export class LayoutComponent implements OnInit {
         event.preventDefault();
     }
 
-    onTopbarItemClickLanguajes(event, item) {        
+    onTopbarItemClickRoles(event, item) {
+        this.topbarItemClick = true;
+        if (this.activeTopbarItem === item) {
+            this.activeTopbarItem = null;
+        } else {
+            this.activeTopbarItem = item;
+        }
+        event.preventDefault();
+    }
+
+    onTopbarSubItemClickRoles(event) {
+        console.log('ROL');
+        console.log(event.target.textContent);
+        this.utilservice.rolselected.next(event.target.textContent);
+        event.preventDefault();
+    }
+
+    onTopbarItemClickLanguajes(event, item) {
         this.topbarItemClick = true;
         if (this.activeTopbarItem === item) {
             this.activeTopbarItem = null;
@@ -133,7 +171,7 @@ export class LayoutComponent implements OnInit {
 
     onTopbarSubItemClickLanguajes(event) {
         console.log('Validar lenguaje..');
-        console.log(event.target.text);        
+        console.log(event.target.text);
         let languajes = "";
         if (event.target.text == "Español") {
             languajes = "es";

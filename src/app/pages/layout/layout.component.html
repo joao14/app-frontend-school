@@ -5,12 +5,14 @@
                                         'layout-menu-light': lightMenu === true,
                                         'layout-menu-overlay-active': overlayMenuActive,
                                         'layout-menu-mobile-active': staticMenuMobileActive,
-                                        'layout-menu-static-inactive': staticMenuDesktopInactive}" (click)="onLayoutClick()">
-    <app-topbar></app-topbar>
+                                        'layout-menu-static-inactive': staticMenuDesktopInactive}"
+    (click)="onLayoutClick()">
+
+    <app-topbar [state]="loading"></app-topbar>
 
     <app-panel></app-panel>
 
-    <app-menu></app-menu>
+    <app-menu [rol]="rolselected"></app-menu>
 
     <div class="layout-main">
         <app-breadcrumb></app-breadcrumb>
@@ -19,7 +21,6 @@
             <router-outlet></router-outlet>
         </div>
 
-        <app-footer></app-footer>
+        <!--<app-footer></app-footer>-->
     </div>
 </div>
-
