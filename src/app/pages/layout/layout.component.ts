@@ -1,6 +1,6 @@
 import { Router } from "@angular/router";
 import { MenuService } from "./../../../services/app.menu.service";
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, AfterViewInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { UtilService } from 'src/services/util.service';
 
@@ -35,33 +35,23 @@ export class LayoutComponent implements OnInit {
 
     rightPanelClick: boolean;
 
-    loading: boolean;
+    loading: boolean = false;
 
     rolselected: string;
 
     constructor(
         private menuService: MenuService,
         private router: Router,
-        private translate: TranslateService, private utilservice: UtilService
+        private translate: TranslateService, public utilservice: UtilService
     ) {
-        this.utilservice.isLoading.subscribe(data => {
-            console.log('Vamos a ejecutar la ejecucion de estados V5');
-            console.log(data);
-            this.loading = data;
-            console.log(this.loading);
-            console.log('FINAL V5');
-        })
 
-        this.utilservice.rolselected.subscribe(data=>{
-            console.log('CAMBIO EL ROL');
-            this.rolselected=data;
+        this.utilservice.rolselected.subscribe(data => {
+            this.rolselected = data;
         })
-
     }
 
-    ngOnInit(): void {
+    ngOnInit() {
     }
-
 
 
     onLayoutClick() {
@@ -131,8 +121,6 @@ export class LayoutComponent implements OnInit {
     }
 
     onTopbarSubItemClickRoles(event) {
-        console.log('ROL');
-        console.log(event.target.textContent);
         this.utilservice.rolselected.next(event.target.textContent);
         event.preventDefault();
     }

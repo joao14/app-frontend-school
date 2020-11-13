@@ -4,6 +4,7 @@ import { ApisService } from './../../../../../services/apis.service';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
+import { UtilService } from 'src/services/util.service';
 
 export interface User {
     id: string;
@@ -42,31 +43,33 @@ export class ClientesComponent implements OnInit {
     identificacion: string;
     tests: Array<Test> = [];
 
-    constructor(private api: ApisService, private router: Router, private messageService: MessageService) { }
+    constructor(private api: ApisService, private router: Router, private messageService: MessageService, private utilservice: UtilService) { }
 
     ngOnInit(): void {
         this.options = [{ label: 'Todos', value: null }, { label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];
         this.getClients();
     }
 
-    getClients() {
-        this.loading = true;
-        this.api.getclients(localStorage.getItem('token')).then(users => {
-            if (users.headerApp.code === 200) {
+    async getClients() {
+        this.utilservice.isLoading.next(true);
+        await this.api.getclients(localStorage.getItem('token')).then(clientes => {
+            console.log(clientes);
+            
+            if (clientes.headerApp.code === 200) {
                 let temp: User[] = [];
-                users.data.clientes.forEach(element => {
+                clientes.data.clientes.forEach(element => {
                     let userTemp = {
-                        id: element.entiId,
-                        identification: element.entiDni,
-                        name: element.nombres,
-                        lastname: element.apellidos,
-                        phone: element.phone,
-                        direction: element.direccion,
-                        city: element.ciudad,
-                        email: element.email,
-                        status: element.estado === 'A' ? 'Activo' : 'Inactivo',
-                        razosoci: element.razosoci,
-                        tipo: element.tipo
+                        id: element.cliente.entiId,
+                        identification: element.cliente.entiDni,
+                        name: element.cliente.nombres,
+                        lastname: element.cliente.apellidos,
+                        phone: element.cliente.phone,
+                        direction: element.cliente.direccion,
+                        city: element.cliente.ciudad,
+                        email: element.cliente.email,
+                        status: element.cliente.estado === 'A' ? 'Activo' : 'Inactivo',
+                        razosoci: element.cliente.razosoci,
+                        tipo: element.cliente.tipo
                     }
                     temp.push(userTemp);
                 });
@@ -80,6 +83,8 @@ export class ClientesComponent implements OnInit {
                 this.router.navigate(['/login']);
             }
         })
+
+        this.utilservice.isLoading.next(false);
 
     }
 

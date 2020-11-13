@@ -5,6 +5,7 @@ export const ru={
     "Lista de Usuarios":"Список пользователей",
     "Lista de Flores":"Список цветов",
     "Lista de Fincas":"список ферм",
+    "Pagos y reclamos": "Платежи и претензии",
     "Identificación":"МНЕ БЫ",
     "Nombres":"Имена",
     "Apellidos":"Фамилии",
@@ -29,6 +30,7 @@ export const ru={
     "Totales": "Итоги",
     "Total": "Общее",
     "Consultar": "Проконсультируйтесь",
+    "N°. Factura":"Нет. выставленный счет",
     "N. de documento":"Документ №.",
     "T. de documento":"Размер документа",
     "No hay información encontrada":"Информация не найдена"

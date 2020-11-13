@@ -26,26 +26,24 @@ export class DashboardComponent implements OnInit {
 
     constructor(private api: ApisService, private router: Router, private utilservice: UtilService) { }
 
-    ngOnInit(): void {
+    async ngOnInit() {
+        console.log('Crgando...');        
         this.utilservice.isLoading.next(true);
-        this.api.getclients(localStorage.getItem("token")).then(cliente => {
+        await this.api.getclients(localStorage.getItem("token")).then(cliente => {
             if (cliente.headerApp.code === 200) {
                 this.clientes = cliente.data.clientes.length;
             }
-            this.utilservice.isLoading.next(false);
         }).catch(err => {
             console.log(err);
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
             }
-        })
-        this.utilservice.isLoading.next(true);
-        this.api.getfinca(localStorage.getItem("token")).then(finca => {
+        })       
+        await this.api.getfinca(localStorage.getItem("token")).then(finca => {
             if (finca.headerApp.code === 200) {
                 this.fincas = finca.data.farms.length;
-            }
-            this.utilservice.isLoading.next(false);
+            }            
         }).catch(err => {
             console.log(err);
             if (err.error.code == 401) {
@@ -53,13 +51,10 @@ export class DashboardComponent implements OnInit {
                 this.router.navigate(['/login']);
             }
         })
-
-        this.utilservice.isLoading.next(true);
-        this.api.getdeliveries(localStorage.getItem("token")).then(delivery => {
+        await this.api.getdeliveries(localStorage.getItem("token")).then(delivery => {
             if (delivery.headerApp.code === 200) {
                 this.deliveries = delivery.data.cargocompanies.length;
-            }
-            this.utilservice.isLoading.next(false);
+            }            
         }).catch(err => {
             console.log(err);
             if (err.error.code == 401) {
@@ -67,8 +62,7 @@ export class DashboardComponent implements OnInit {
                 this.router.navigate(['/login']);
             }
         })
-        this.utilservice.isLoading.next(true);
-        this.api.getflowers(localStorage.getItem("token")).then(flor => {            
+        await this.api.getflowers(localStorage.getItem("token")).then(flor => {            
             if (flor.headerApp.code === 200) {
                 this.flores = flor.data.flowers.length;
                 flor.data.flowers.forEach(element => {
@@ -89,8 +83,6 @@ export class DashboardComponent implements OnInit {
 
                 console.log(this.listaflores);
             }
-            this.utilservice.isLoading.next(false);
-
         }).catch(err => {
             console.log(err);
             if (err.error.code == 401) {
@@ -98,6 +90,8 @@ export class DashboardComponent implements OnInit {
                 this.router.navigate(['/login']);
             }
         })
+        console.log('END FINAL v5');        
+        this.utilservice.isLoading.next(false);
     }
 
 

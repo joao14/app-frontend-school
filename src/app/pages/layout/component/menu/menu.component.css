@@ -3,6 +3,12 @@
     font-size: 18px;
 }
 
+.layout-menu-title{
+    font-size: 18px !important;
+    font-weight: bold;
+    text-align: center;
+}
+
 
 .collapsed {
     width: 50px;

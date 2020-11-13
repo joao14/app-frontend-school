@@ -5,6 +5,7 @@ export const ch={
     "Lista de Usuarios":"ユーザーリスト",
     "Lista de Flores":"花清單",
     "Lista de Fincas":"農場清單",
+    "Pagos y reclamos": "付款和索償",
     "Identificación":"識別",
     "Nombres":"名前",
     "Apellidos":"苗字",
@@ -29,6 +30,7 @@ export const ch={
     "Totales": "總數",
     "Total": "總",
     "Consultar": "請教",
+    "N°. Factura":"沒有。 發票",
     "N. de documento":"文件編號",
     "T. de documento":"文件類型",
     "No hay información encontrada":"找不到信息"

@@ -5,16 +5,52 @@ import { ApisService } from 'src/services/apis.service';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { client } from 'src/models/client';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { UtilService } from 'src/services/util.service';
 
 
-export interface Document {
-  tipoTransaccion: string;
-  fechaTransaccion: Date;
-  valor: number;
-  numDocum: string;
-  numFactura: string;
-  descripcion: string;
+export interface Head {
+  fecha: string;
+  pdf: string;
+  pralCerrado: string;
+  pralId: number;
 }
+
+export interface Information {
+  clieId: number;
+  email: string;
+  nombres: string;
+  pdf: string;
+}
+
+export interface Item {
+  /*pdf:string;
+  nombreCliente: string;
+  clieId: number;*/
+  cargname: string;
+  cm: string;
+  farm: string;
+  fincapropia: string;
+  flower: string;
+  hbqb: number;
+  mark: string;
+  pcomp: string;
+  pvp: string;
+  shippingdate: string;
+  status: string;
+  tallos: number;
+  totaltallos: number;
+} 
+export interface Client {
+  info: Information;
+  items: Array<Item>;
+}
+
+export interface Report {
+  clients: Array<Client>;
+  head: Head;
+}
+
 
 @Component({
   selector: 'app-documento',
@@ -25,37 +61,75 @@ export interface Document {
 export class DocumentoComponent implements OnInit {
 
   documentos: Array<Document> = [];
-  clientes: Array<client>=[];
+  clientes: Array<client> = [];
   selectDocument: Document;
   numDocument: string;
   date: Date;
   filterMobile: Date;
   dialogVisible: boolean;
   selectClient: client;
+  prealerts: Array<Report> = [];
+  url: string;
+  titledialog: string;
+  row: number;
 
-  constructor(private api: ApisService, private router: Router, public dialogService: DialogService, private messageService: MessageService) { }
+  constructor(private api: ApisService, private router: Router, public dialogService: DialogService,
+    private messageService: MessageService, private spinner: NgxSpinnerService, private utilService: UtilService) { }
 
   ngOnInit(): void {
-    this.date= new Date();   
+    this.date = new Date();
     this.numDocument = "";
     this.filterMobile = new Date();
-    this.getClient();
+    this.getData();
+  }
+
+  async getData() {
+    console.log('DATA...');
+    
+    this.utilService.isLoading.next(true);
+    await this.api.getPrealertActive(localStorage.getItem("token")).then(data => {
+      console.log(data);
+      if (data.headerApp.code == 200) {
+        this.prealerts = data.data.prealerts;
+        console.log('Ejecutando...');
+        console.log(this.prealerts);
+      }
+    }).catch(err => {
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    this.utilService.isLoading.next(false);
+
+  }
+
+  selectItem(information: Information) {
+    this.url = 'https://addsoft-tech.com:8443/rmi/' + information.pdf;
+    this.dialogVisible = true;
+    this.titledialog = information.nombres;
+  }
+
+  sendEmail(information: Information) {
+    console.log('Se enviara el correo electrónico');
+    console.log(information.email);
+  }
+
+  sendGeneral(head: Head) {
+    console.log('Se enviara el correo electrónico general');
+    
+  }
+
+  downlaodTotal(head: Head) {
+    this.url = 'https://addsoft-tech.com:8443/rmi/' + head.pdf;
+    this.dialogVisible = true;
+    this.titledialog = 'Prealerta ID [' + head.pralId+']'
   }
 
   consultar() {
     console.log('Consultar..');
     this.documentos = [];
-    for (var i = 1; i < 20; i++) {
-      let documento = {
-        tipoTransaccion: 'Document ' + i,
-        fechaTransaccion: new Date(),
-        valor: i * 2.2,
-        numDocum: i + 'DOC',
-        numFactura: i + 'FACT',
-        descripcion: 'Descripcion ' + i
-      }
-      this.documentos.push(documento);
-    }
+
   }
 
   onDateSelect(event) {
@@ -64,29 +138,13 @@ export class DocumentoComponent implements OnInit {
     //Debe volver a consultar
     console.log(this.documentos);
     console.log('TEST');
-    this.documentos = this.documentos.filter(documento => this.getFormatDate(documento.fechaTransaccion) == this.getFormatDate(event));
+    //this.documentos = this.documentos.filter(documento => this.getFormatDate(documento.fechaTransaccion) == this.getFormatDate(event));
     console.log('RESULTADO FINAL');
     console.log(this.documentos);
   }
 
   getFormatDate(date: Date): string {
     return (moment(date)).format('DD-MMM-YYYY');
-  }
-
-  close() {
-    console.log('Cerrar..');
-    this.documentos = [];
-    for (var i = 1; i < 20; i++) {
-      let documento = {
-        tipoTransaccion: 'Document ' + i,
-        fechaTransaccion: new Date(),
-        valor: i * 2.2,
-        numDocum: 3 * i + 'DOC',
-        numFactura: i * 5 + 'FACT',
-        descripcion: 'Descripcion ' + i
-      }
-      this.documentos.push(documento);
-    }
   }
 
   view(document: Document) {
@@ -104,6 +162,15 @@ export class DocumentoComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Debe ingresar datos en el filtro de consulta.' });
       return;
     }
+  }
+
+  selectRow(info: Information){
+    if(this.row==info.clieId){
+      this.row=null;
+    }else{
+      this.row= info.clieId
+    }
+     
   }
 
   exportExcel() {

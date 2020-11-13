@@ -19,6 +19,7 @@ export const environment = {
     flowers: URL + '/romi/api/crm/flowers',
     addflowers: URL + '/romi/api/crm/flower/add',
     updateflowers: URL + '/romi/api/crm/flower/update',
+    searchflower: URL +'/romi/api/crm/flower/',
     finca: URL + '/romi/api/crm/farms',
     addfinca: URL + '/romi/api/crm/farm/add',
     updatefinca: URL + '/romi/api/crm/farm/update',
@@ -28,6 +29,13 @@ export const environment = {
     marcaciones: URL + '/romi/api/crm/marks/',
     addmarcaciones: URL + '/romi/api/crm/mark/add',
     updatemarcaciones: URL + '/romi/api/crm/mark/update',
-
+    registerinvoice: URL + '/romi/api/invoice/register',
+    searchtype: URL +'/romi/api/crm/entity/',
+    registerpaymentandclaim: URL +'/romi/api/trx/register',
+    registerprealert: URL +'/romi/api/prealert/register',
+    getsales: URL + '/romi/api/invoice/find/date/',
+    getinvoicesbyclient: URL + '/romi/api/trx/find/cliedate/',
+    getmarcsbyname: URL + '/romi/api/crm/mark/find/',
+    getprealertactive: URL + '/romi/api/prealert/actives'
 
 };

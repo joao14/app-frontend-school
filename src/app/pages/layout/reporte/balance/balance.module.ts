@@ -5,6 +5,8 @@ import { BalanceRoutingModule } from './balance-routing.module';
 import { InputTextModule, PanelModule, AccordionModule, InputTextareaModule, RadioButtonModule, ButtonModule, AutoCompleteModule, DropdownModule, TableModule, ToolbarModule, CardModule, SplitButtonModule, SelectButtonModule, ConfirmDialogModule, ToastModule, CalendarModule, DynamicDialogModule, DialogModule, VirtualScrollerModule } from 'primeng';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from 'src/app/shared.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -33,7 +35,9 @@ import { TranslateModule } from '@ngx-translate/core';
     DynamicDialogModule,
     DialogModule,
     VirtualScrollerModule,
-    TranslateModule
+    TranslateModule,
+    SharedModule,
+    NgxSpinnerModule
   ]
 })
 export class BalanceModule { }

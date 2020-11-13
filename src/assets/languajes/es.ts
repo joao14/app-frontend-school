@@ -5,7 +5,8 @@ export const es={
     "Lista de Usuarios":"Lista de Usuarios",
     "Lista de Flores":"Lista de Flores",
     "Lista de Fincas":"Lista de Fincas",
-    "Identificación":"Identificación",
+    "Pagos y reclamos": "Pagos y reclamos",
+    "Identificación":"Identificación",    
     "Nombres":"Nombres",
     "Apellidos":"Apellidos",
     "Foto":"Foto",
@@ -29,6 +30,7 @@ export const es={
     "Totales": "Totales",
     "Total": "Total",
     "Consultar": "Consultar",
+    "N°. Factura":"N°. Factura",
     "N. de documento":"N. de documento",
     "T. de documento":"T. de documento",
     "No hay información encontrada":"No hay información encontrada"

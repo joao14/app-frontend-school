@@ -15,7 +15,7 @@ import { filter } from 'rxjs/operators';
     template: `
 		<ng-container>
 			<a [attr.href]="item.url" (click)="itemClick($event)" *ngIf="!item.routerLink || item.items"
-			   (mouseenter)="onMouseEnter()" (keydown.enter)="itemClick($event)"
+			   (mouseenter)="onMouseEnter()" (keydown.enter)="itemClick($event)" style="font-size: 14px;"
 			   [attr.target]="item.target" [attr.tabindex]="0">
 				<i [ngClass]="item.icon"></i>
 				<span>{{item.label}}</span>
@@ -23,7 +23,7 @@ import { filter } from 'rxjs/operators';
 				<span class="menuitem-badge" *ngIf="item.badge">{{item.badge}}</span>
 			</a>
 			<a (click)="itemClick($event)" (mouseenter)="onMouseEnter()" *ngIf="item.routerLink && !item.items"
-			   [routerLink]="item.routerLink" routerLinkActive="active-menuitem-routerlink"
+			   [routerLink]="item.routerLink" routerLinkActive="active-menuitem-routerlink" style="font-size: 14px;"
 			   [routerLinkActiveOptions]="{exact: true}" [attr.target]="item.target" [attr.tabindex]="0">
 				<i [ngClass]="item.icon"></i>
 				<span>{{item.label}}</span>
@@ -144,8 +144,7 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
 
         // notify other items
         this.menuService.onMenuStateChange(this.key);
-        console.log(this.menuService);
-
+        
         // execute command
         if (this.item.command) {
             this.item.command({ originalEvent: event, item: this.item });
@@ -153,10 +152,9 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
 
         // toggle active state
         if (this.item.items) {
-            console.log('1.1');
+            
             this.active = !this.active;
         } else {
-            console.log('1.2');
             // activate item
             this.active = true;
             // reset horizontal menu

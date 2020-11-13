@@ -1,15 +1,19 @@
 <div class="ui-g">
     <div class="ui-g-12">
         <div class="card card-w-title">
-            <h1>Pagos y reclamos</h1>
+            <h1>{{'Pagos y reclamos' | translate }}</h1>
             <p-toast></p-toast>
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                [fullScreen]="true">
+                <p style="color: white"> Loading... </p>
+            </ngx-spinner>
             <p-fieldset legend="Detalles del reclamo">
                 <div class="ui-g form-group ui-fluid">
                     <div class="ui-g-12 ui-md-6">
                         <form [formGroup]="formGroup" (ngSubmit)="save()">
                             <div class="ui-g-12 ui-md-6">
-                                <label class="lbl">Cliente</label>
-                                <p-dropdown [options]="clientes" optionLabel="nombres" class="form-control"
+                                <label class="lbl">{{'Cliente' | translate }}</label>
+                                <p-dropdown [options]="clientes" optionLabel="cliente.nombres" class="form-control"
                                     formControlName="cliente" [ngClass]="{ 'is-invalid': submit && f.cliente.errors }"
                                     class="form-control" (onChange)='onOptionsSelected()' [filter]="true"
                                     placeholder="Seleccione"></p-dropdown>
@@ -18,7 +22,7 @@
                                 </div>
                             </div>
                             <div class="ui-g-12 ui-md-6">
-                                <label class="lbl">Tipo de documento</label>
+                                <label class="lbl">{{'Tipo de documento' | translate }}</label>
                                 <p-dropdown [options]="tipodocumentos" optionLabel="name"
                                     [ngClass]="{ 'is-invalid': submit && f.tipodocumento.errors }" class="form-control"
                                     formControlName="tipodocumento" class="form-control" [filter]="true"
@@ -28,8 +32,8 @@
                                 </div>
                             </div>
                             <div class="ui-g-12 ui-md-6">
-                                <label class="lbl">N°. Factura</label>
-                                <p-dropdown [options]="facturas" optionLabel="number" formControlName="numfactura"
+                                <label class="lbl">{{'N°. Factura' | translate }}</label>
+                                <p-dropdown [options]="facturas" optionLabel="secuencial" formControlName="numfactura"
                                     [ngClass]="{ 'is-invalid': submit && f.numfactura.errors }"
                                     (onChange)='onOptionsSelectedFactura()' class="form-control" [filter]="true"
                                     placeholder="Seleccione"></p-dropdown>
@@ -37,24 +41,7 @@
                                     <div *ngIf="f.numfactura.errors.required">Número de factura es requerido</div>
                                 </div>
                             </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label class="lbl">Valor</label>
-                                <input type="text" pInputText placeholder="0.0" pKeyFilter="money"
-                                    formControlName="valor" [ngClass]="{ 'is-invalid': submit && f.valor.errors }"
-                                    class="form-control" />
-                                <div *ngIf="submit && f.valor.errors" class="invalid-feedback">
-                                    <div *ngIf="f.valor.errors.required">Valor es requerido</div>
-                                </div>
-                            </div>
-                            <div class="ui-g-12 ui-md-6">
-                                <label class="lbl">Fecha</label>
-                                <p-calendar [readonlyInput]="true" formControlName="fecha"
-                                    [ngClass]="{ 'is-invalid': submit && f.fecha.errors }" class="form-control">
-                                </p-calendar>
-                                <div *ngIf="submit && f.fecha.errors" class="invalid-feedback">
-                                    <div *ngIf="f.fecha.errors.required">Fecha es requerido</div>
-                                </div>
-                            </div>
+
                             <div class="ui-g-12 ui-md-6">
                                 <label class="lbl">N°. Documento</label>
                                 <input type="text" pInputText formControlName="numdocumento"
@@ -64,6 +51,28 @@
                                     <div *ngIf="f.numdocumento.errors.required">N° Documento es requerido</div>
                                 </div>
                             </div>
+
+                            <div class="ui-g-12 ui-md-6">
+                                <label class="lbl">Fecha</label>
+                                <p-calendar [readonlyInput]="true" formControlName="fecha"
+                                    [ngClass]="{ 'is-invalid': submit && f.fecha.errors }" class="form-control">
+                                </p-calendar>
+                                <div *ngIf="submit && f.fecha.errors" class="invalid-feedback">
+                                    <div *ngIf="f.fecha.errors.required">Fecha es requerido</div>
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6">
+                                <label class="lbl">Valor</label>
+                                <input type="text" pInputText placeholder="0.0" pKeyFilter="money"
+                                    formControlName="valor" [ngClass]="{ 'is-invalid': submit && f.valor.errors }"
+                                    class="form-control" />
+                                <div *ngIf="submit && f.valor.errors" class="invalid-feedback">
+                                    <div *ngIf="f.valor.errors.required">Valor es requerido</div>
+                                </div>
+                            </div>
+
+
 
                             <div class="ui-g-12 ui-md-12">
                                 <label class="lbl">Descripción</label>
@@ -75,19 +84,26 @@
                                 </div>
                             </div>
 
+                            <div class="ui-g-12 ui-md-12" *ngIf="files.length > 0">
+                                <label class="lbl">Nombre del documento</label>
+                                <input type="text" pInputText readonly
+                                    [value]="files[0].name"  class="form-control" />
+                            </div>
+
+
                             <div class="ui-g-12 ui-md-12">
-                                <div class="custom-dropzone" ngx-dropzone [accept]="'.pdf, .xls, .xlsx'"
+                                <div class="custom-dropzone" ngx-dropzone [accept]="'.pdf, .png, .jpeg, .jpg'"
                                     [expandable]="true" (change)="onSelect($event)">
                                     <ngx-dropzone-label>
                                         <div>
                                             <h2>My custom dropzone of documentos</h2>
                                         </div>
                                     </ngx-dropzone-label>
-                                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
-                                        *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                                    <ngx-dropzone-preview *ngFor="let f of files" [file]="f" [removable]="true"
+                                        (removed)="onRemove(f)">
                                         <ngx-dropzone-label class="text">{{ f.name }} ({{ f.type }})
                                         </ngx-dropzone-label>
-                                    </ngx-dropzone-image-preview>
+                                    </ngx-dropzone-preview>
                                 </div>
                             </div>
                             <div class="ui-grid ui-grid-responsive ui-fluid">
@@ -135,15 +151,28 @@
                                     </div>
                                 </div>
                             </p-accordionTab>
-                            <p-accordionTab header="Datos de la factura" [selected]="true">
+                            <p-accordionTab header="Balance General" [selected]="true">
                                 <div class="ui-g form-group ui-fluid">
-                                    <div class="ui-g-12 ui-md-6">
-                                        <label class="lbl">Número de factura</label>
-                                        <input type="text" pInputText [value]="selectfactura?.number" readonly />
+                                    <div class="ui-g-12 ui-md-4">
+                                        <label class="lbl">Débitos</label>
                                     </div>
-                                    <div class="ui-g-12 ui-md-6">
-                                        <label class="lbl">Valor</label>
-                                        <input type="text" pInputText [value]="selectfactura?.valor" readonly />
+                                    <div class="ui-g-12 ui-md-8">
+                                        <input type="text" pInputText [value]="selectclient?.debito | currency:'USD'"
+                                            readonly />
+                                    </div>
+                                    <div class="ui-g-12 ui-md-4">
+                                        <label class="lbl">Créditos</label>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-8">
+                                        <input type="text" pInputText [value]="selectclient?.credito | currency:'USD'"
+                                            readonly />
+                                    </div>
+                                    <div class="ui-g-12 ui-md-4">
+                                        <label class="lbl">Balance</label>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-8">
+                                        <input type="text" pInputText [value]="selectclient?.balance | currency:'USD'"
+                                            readonly />
                                     </div>
                                 </div>
                             </p-accordionTab>
@@ -152,5 +181,14 @@
                 </div>
             </p-fieldset>
         </div>
+         <!--Confirmar cuadro de dialogo confirm-->
+         <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+            <p-footer>
+                <button type="button" pButton icon="pi pi-times" class="ui-button-danger" label="No"
+                    (click)="cd.reject()"></button>
+                <button type="button" pButton icon="pi pi-check" class="ui-button-success" label="Yes"
+                    (click)="cd.accept()"></button>
+            </p-footer>
+        </p-confirmDialog>
     </div>
 </div>

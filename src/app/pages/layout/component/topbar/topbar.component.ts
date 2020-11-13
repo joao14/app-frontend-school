@@ -2,7 +2,7 @@ import { LayoutComponent } from './../../layout.component';
 import { user } from './../../../../../models/user';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
 
 @Component({
     selector: 'app-topbar',
@@ -11,16 +11,18 @@ import { Component, OnInit, Input } from '@angular/core';
     providers: [TranslateService],
 })
 export class TopbarComponent implements OnInit {
-
     user: user;
     name: string;
-    @Input() state: boolean;
+    estado: boolean;
 
     constructor(public app: LayoutComponent, private translate: TranslateService) {
+        this.app.utilservice.isLoading.subscribe(data => {
+            this.estado=data;
+        })
     }
 
-    ngOnInit(): void {
 
+    ngOnInit(): void {
         this.user = JSON.parse(localStorage.getItem('user'));
         this.name = this.user.name + ' ' + this.user.lastname;
         console.log('Usuario seleccionado');

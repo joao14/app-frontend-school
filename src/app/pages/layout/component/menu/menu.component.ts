@@ -69,8 +69,8 @@ export class MenuComponent implements OnInit, OnChanges {
             },
             {
                 label: 'Reportes', icon: 'fa fa-fw fa-wpforms',
-                items: [
-                    { label: 'Venta diaria de flores', icon: 'fa fa-fw fa-file-text-o', routerLink: '/balance' },
+                items: [  
+                    { label: 'Venta diaria de flores', icon: 'fa fa-fw fa-file-text-o', routerLink: '/sales' },
                     { label: 'Documentos clientes', icon: 'fa fa-fw fa-file-text-o', routerLink: '/balance' },
                     { label: 'Reporte prealerta', icon: 'fa fa-fw fa-file-text-o', routerLink: '/documento' },
                 ]
@@ -111,14 +111,14 @@ export class MenuComponent implements OnInit, OnChanges {
                 items: [
                     { label: 'Clientes', icon: 'fa fa-fw fa-user-circle-o', routerLink: '/clientes' },
                     { label: 'Facturación', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/factura' },
-                    { label: 'Pagos/Reclamos', icon: 'fa fa-fw fa-ticket', routerLink: '/pagoreclamo' },
+                    { label: 'Registro asientos', icon: 'fa fa-fw fa-ticket', routerLink: '/pagoreclamo' },
                 ]
             },
             { label: 'Generar Prealertas', icon: 'fa fa-fw fa-pencil-square-o', routerLink: '/prealerta' },
             {
                 label: 'Reportes', icon: 'fa fa-fw fa-wpforms',
                 items: [
-                    { label: 'Venta diaria de flores', icon: 'fa fa-fw fa-file-text-o', routerLink: '/balance' },
+                    { label: 'Venta diaria de flores', icon: 'fa fa-fw fa-file-text-o', routerLink: '/sales' },
                     { label: 'Documentos clientes', icon: 'fa fa-fw fa-file-text-o', routerLink: '/balance' },
                     { label: 'Reporte prealerta', icon: 'fa fa-fw fa-file-text-o', routerLink: '/documento' },
                 ]

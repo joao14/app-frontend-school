@@ -10,10 +10,15 @@ import { flower } from 'src/models/flower';
 import { Router } from '@angular/router';
 import { ApisService } from 'src/services/apis.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { detail } from 'src/models/detail';
+import { invoice } from 'src/models/invoice';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { UtilService } from 'src/services/util.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface Item {
     caja: string;
-    pieza: string;
+    pieza: number;
     finca: string;
     flor: string;
     numtallos: number;
@@ -35,6 +40,7 @@ export interface Factura {
     items: Item[];
     tallos: number;
     total: number;
+    boxes: number;
 }
 
 @Component({
@@ -51,6 +57,7 @@ export class FacturaComponent implements OnInit {
     factura: Factura;
     flowers: string[];
     tamanios: any[];
+    selectedtamanio: any;
     manual: boolean;
     automatico: boolean;
     items: Array<Item> = [];
@@ -70,13 +77,17 @@ export class FacturaComponent implements OnInit {
     submitted = false;
     submittedFactura = false;
     selectclient: client;
-
-
+    invoice: invoice;
+    dialogVisible: boolean;
+    url: string;
+    validate: boolean;
+    smsvalidate: string;
     constructor(
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private router: Router, private api: ApisService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder, private utilService: UtilService,
+        private spinner: NgxSpinnerService
     ) {
         this.itemForm = this.formBuilder.group({
             caja: [null],
@@ -99,6 +110,7 @@ export class FacturaComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.dialogVisible = false;
         this.inicilizate();
         this.getServicios();
     }
@@ -115,6 +127,8 @@ export class FacturaComponent implements OnInit {
         this.submitted = false;
         this.submittedFactura = false;
         this.select = "MN";
+        this.validate = false;
+        this.selectedtamanio = null;
         this.factura = {
             client: null,
             city: "",
@@ -126,6 +140,7 @@ export class FacturaComponent implements OnInit {
             items: null,
             tallos: 0,
             total: 0.0,
+            boxes: 0
         };
         this.tamanios = [
             { name: "CL", code: "CL" },
@@ -156,21 +171,22 @@ export class FacturaComponent implements OnInit {
             this.items = [];
             this.factura.total = 0.0;
             this.factura.tallos = 0;
+            this.validate = false;
+            this.smsvalidate = "";
         } else {
             this.automatico = true;
             this.manual = false;
             this.items = [];
             this.factura.total = 0.0;
             this.factura.tallos = 0;
+            this.validate = false;
+            this.smsvalidate = "";
         }
     }
 
     uploadFile(event) {
-        console.log("UPLOAD");
-        console.log(event);
         const target: DataTransfer = <DataTransfer>event.target;
-        console.log(target);
-        console.log("NEXT ANALISIS");
+        
         if (target.files.length !== 1) {
             throw new Error("Cannot use multiple files");
         }
@@ -178,8 +194,8 @@ export class FacturaComponent implements OnInit {
         reader.readAsBinaryString(target.files[0]);
         console.log("Este es el nombre");
         console.log(target.files[0].name);
-
-        reader.onload = (e: any) => {
+        this.spinner.show();
+        reader.onload = async (e: any) => {
             /* create workbook */
             const binarystr: string = e.target.result;
             const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: "binary" });
@@ -190,61 +206,163 @@ export class FacturaComponent implements OnInit {
             const data = XLSX.utils.sheet_to_json(ws, { raw: true }); // to get 2d array pass 2nd parameter as object {header: 1}
             //console.log(data); // Data will be logged in array format containing objects
             //console.log('ARRAY DATA');
+            this.utilService.isLoading.next(true);
             for (var i = 7; i < data.length; i++) {
                 if (data[i]["__EMPTY_2"] != undefined) {
-                    var floower_length = "";
-                    if (data[i]["__EMPTY_5"] != undefined) {
-                        floower_length = "40";
-                    }
-                    if (data[i]["__EMPTY_6"] != undefined) {
-                        floower_length = "50";
-                    }
-                    if (data[i]["__EMPTY_7"] != undefined) {
-                        floower_length = "60";
-                    }
-                    if (data[i]["__EMPTY_8"] != undefined) {
-                        floower_length = "70";
-                    }
-                    if (data[i]["__EMPTY_9"] != undefined) {
-                        floower_length = "80";
-                    }
-                    if (data[i]["__EMPTY_10"] != undefined) {
-                        floower_length = "90";
-                    }
-                    if (data[i]["__EMPTY_11"] != undefined) {
-                        floower_length = "100";
-                    }
-                    if (data[i]["__EMPTY_12"] != undefined) {
-                        floower_length = "110";
+
+                    const fincaTemp = await this.getFincabyName(data[i]["__EMPTY_2"]);
+                    if (fincaTemp == null) {
+                        this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'La finca ' + data[i]["__EMPTY_2"] + ' no se encuentra ingresada en el sistema.' });
+                        this.validate = true;
+                        this.smsvalidate = 'La finca ' + data[i]["__EMPTY_2"] + ' no se encuentra registrada en el sistema.'
+                        return
                     }
 
-                    let item = {
-                        caja: '',
-                        pieza: data[i]["__EMPTY_1"],
-                        finca: data[i]["__EMPTY_2"],
-                        flor:
-                            data[i][
+                    const flowerTemp = await this.getFlowerbyName(
+                        data[i][
+                        "                                       ROSA MISTICA"
+                        ]);
+                    if (flowerTemp == null) {
+                        this.messageService.add({
+                            severity: 'error', summary: 'Rosa Mística', detail: 'La flor ' + data[i][
+                                "                                       ROSA MISTICA"
+                            ] + ' no se encuentra en el sistema.'
+                        });
+                        this.validate = true;
+
+                        this.smsvalidate = 'La flor ' + data[i][
                             "                                       ROSA MISTICA"
-                            ],
-                        numtallos: data[i]["__EMPTY_13"],
+                        ] + ' no se encuentra registrada en el sistema.'
+                        return
+                    }
+                    let numtallos = this.getvalueCelda(data[i]["__EMPTY_4"], data[i]["__EMPTY_5"], data[i]["__EMPTY_6"], data[i]["__EMPTY_7"], data[i]["__EMPTY_8"],
+                        data[i]["__EMPTY_9"], data[i]["__EMPTY_10"], data[i]["__EMPTY_11"], data[i]["__EMPTY_12"]);
+
+                    let item = {
+                        caja: data[i]["__EMPTY"] == '' ? { name: "HB", code: "HB" } : this.getTypeBox(data[i]["__EMPTY"]),
+                        pieza: data[i]["__EMPTY_1"],
+                        finca: fincaTemp,
+                        flor: flowerTemp,
+                        numtallos: parseInt(numtallos),
                         claves: "",
-                        totaltallos: 0,
-                        tamanio: floower_length,
-                        stems: data[i]["__EMPTY_13"],
+                        totaltallos: data[i]["__EMPTY_3"] * parseInt(numtallos),
+                        tamanio: this.selectedtamanio,
+                        stems: data[i]["__EMPTY_3"],
                         price: data[i]["__EMPTY_14"],
                         subtotal: data[i]["__EMPTY_15"],
                     };
-                    this.factura.tallos += item.stems;
+                    this.factura.tallos += parseInt(item.stems);
                     this.factura.total += item.subtotal;
+                    this.factura.boxes += parseInt(item.pieza == null || item.pieza == undefined ? 1 : item.pieza);
                     this.items.push(item);
                 }
             }
-
-            console.log("ARRAY DE LISTA");
+            this.utilService.isLoading.next(false);
+            this.spinner.hide();
+            this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se ha cargado todo el archivo correctamente.' });
+            console.log("LITA FINAL DE ITEMS DE FACTURAS");
             console.log(this.items);
         };
 
         this.files.push(target.files[0]);
+    }
+
+    getTypeBox(name: string): any {
+        let box: any;
+        if (name == undefined) {
+            box = { name: "HB", code: "HB" };
+        } else {
+            switch (name.trim()) {
+                case 'HB':
+                    box = { name: "HB", code: "HB" };
+                    break;
+                case 'QB':
+                    box = { name: "QB", code: "QB" };
+                    break;
+                default:
+                    console.log('No se encuentra la domensión de la caja');
+                    break;
+            }
+        }
+
+
+    }
+
+    getvalueCelda(clave: string, cuare_: string, cincue_: string, sesen_: string, seten_: string, ochen_: string, noven_: string,
+        cien_: string, ciendiez_: string): string {
+       
+        if (clave != undefined) {
+            this.tamanios.filter(tamanio => {
+                if (tamanio.code == 'CL') {
+                    this.selectedtamanio = tamanio;
+                }
+            });
+            return clave;
+        }
+        if (cuare_ != undefined) {
+            this.tamanios.filter(tamanio => {
+                if (tamanio.code == '40') {
+                    this.selectedtamanio = tamanio;
+                }
+            });
+            return cuare_;
+        }
+        if (cincue_ != undefined) {
+            this.tamanios.filter(tamanio => {
+                if (tamanio.code == '50') {
+                    this.selectedtamanio = tamanio;
+                }
+            });
+            return cincue_;
+        }
+        if (sesen_ != undefined) {
+            this.tamanios.filter(tamanio => {
+                if (tamanio.code == '60') {
+                    this.selectedtamanio = tamanio;
+                }
+            });
+            return sesen_;
+        }
+        if (seten_ != undefined) {
+            this.tamanios.filter(tamanio => {
+                if (tamanio.code == '70') {
+                    this.selectedtamanio = tamanio;
+                }
+            });
+            return seten_;
+        }
+        if (ochen_ != undefined) {
+            this.tamanios.filter(tamanio => {
+                if (tamanio.code == '80') {
+                    this.selectedtamanio = tamanio;
+                }
+            });
+            return ochen_;
+        }
+        if (noven_ != undefined) {
+            this.tamanios.filter(tamanio => {
+                if (tamanio.code == '90') {
+                    this.selectedtamanio = tamanio;
+                }
+            });
+            return noven_;
+        }
+        if (cien_ != undefined) {
+            this.tamanios.filter(tamanio => {
+                if (tamanio.code == '100') {
+                    this.selectedtamanio = tamanio;
+                }
+            });
+            return cien_;
+        }
+        if (ciendiez_ != undefined) {
+            this.tamanios.filter(tamanio => {
+                if (tamanio.code == '110') {
+                    this.selectedtamanio = tamanio;
+                }
+            });
+            return ciendiez_;
+        }
     }
 
     deleteAttachment(index) {
@@ -252,11 +370,14 @@ export class FacturaComponent implements OnInit {
         this.items = [];
         this.factura.total = 0;
         this.factura.tallos = 0;
+        this.validate = false;
+        this.smsvalidate = "";
     }
 
+    /**
+     * Function the save row of load item manual
+     */
     saverow() {
-        console.log('Validando Row...');
-
         this.submitted = true;
 
         if (this.itemForm.invalid) {
@@ -279,9 +400,14 @@ export class FacturaComponent implements OnInit {
 
         this.factura.total = 0;
         this.factura.tallos = 0;
+        this.factura.boxes = 0;
+
         this.items.forEach((item) => {
+            console.log(item);
+
             this.factura.total += item.subtotal;
-            this.factura.tallos += item.stems;
+            this.factura.tallos += parseInt(item.stems.toString());
+            this.factura.boxes += parseInt(item.pieza.toString());
             console.log(this.factura.total);
         });
 
@@ -291,34 +417,6 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    get f() {
-        return this.itemForm.controls;
-    }
-    get fr() {
-        return this.facturaForm.controls;
-    }
-
-    save() {
-        console.log('Save factura...');
-
-        this.submittedFactura = true;
-        if (this.facturaForm.invalid) {
-            this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos para generar la factura son obligatorios.' });
-            return;
-        }
-        console.log("Va a guardar los registros");
-        console.log("FACTURA");
-        this.factura.items = this.items;
-        console.log(this.factura);
-        this.confirmationService.confirm({
-            message: "Are you sure to send the invoice?",
-            accept: () => {
-                //Actual logic to perform a confirmation
-                console.log('Esta todo bien');
-
-            },
-        });
-    }
 
     cancel() {
         console.log("Va a cancelar los registros");
@@ -335,7 +433,6 @@ export class FacturaComponent implements OnInit {
     }
 
 
-
     cancelrow() {
         this.addrow = false;
         this.itemForm.reset();
@@ -345,11 +442,14 @@ export class FacturaComponent implements OnInit {
     deleteItem(item: Item) {
         this.factura.total = 0;
         this.factura.tallos = 0;
+        this.factura.boxes = 0;
         this.items = this.items.filter((element) => element != item);
         this.items.forEach((item) => {
             this.factura.total += item.subtotal;
-            this.factura.tallos += item.stems;
+            this.factura.tallos += parseInt(item.stems.toString());
+            this.factura.boxes += parseInt(item.pieza.toString())
         });
+
     }
 
     onOptionsSelected() {
@@ -376,14 +476,137 @@ export class FacturaComponent implements OnInit {
 
     }
 
+    /**
+     * Function the save the invoice
+     */
+    save() {
 
-    getServicios() {
-        this.api.getclients(localStorage.getItem("token")).then(cliente => {
+        this.submittedFactura = true;
+        if (this.facturaForm.invalid) {
+            this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos para generar la factura son obligatorios.' });
+            return;
+        }
+
+        this.factura.items = this.items;
+        console.log(this.factura);
+        let head = {
+            codiesta: '001',
+            puntemis: '001',
+            clieId: this.facturaForm.get('cliente').value.entiId,
+            cargcompId: this.facturaForm.get('empresacargo').value.entiId,
+            marcId: this.facturaForm.get('marca').value.marcId,
+            mawb: this.facturaForm.get('mawba').value,
+            subtotal0: 0,
+            descuento: 0,
+            subtotal1: 0,
+            ice: 0.00,
+            iva: 0.00,
+            total: this.factura.total,
+            observacion: '-',
+            numetallos: this.factura.tallos,
+            numeboxes: this.factura.boxes
+        }
+
+        let detail: detail[] = [];
+        this.factura.items.forEach(data => {
+            detail.push({
+                tipoempaque: data.caja == undefined ? "HB" : data.caja['code'],
+                cantidadcajas: data.pieza == undefined ? 1 : data.pieza,
+                tallosxbch: data.stems,
+                medidatallo: data.tamanio['code'],
+                cantidadbch: data.numtallos,
+                cantidad: data.totaltallos,
+                preciounitario: data.price,
+                total: data.subtotal,
+                farmId: data.finca['entiId'],
+                florId: data.flor['florId'] == undefined ? data.flor['flor'].florId : data.flor['florId']
+            })
+        })
+
+        console.log('INVOICE');
+        this.invoice = {
+            cabecera: head,
+            detalles: detail
+        };
+        console.log(this.invoice);
+        this.confirmationService.confirm({
+            message: "Are you sure to send the invoice?",
+            accept: async () => {
+                this.spinner.show();
+                await this.api.registerInvoice(this.invoice, localStorage.getItem("token")).then(data => {
+                    this.spinner.hide();
+                    console.log('Registro exitoso');
+                    console.log(data);
+                    if (data.headerApp.code == 200) {
+                        this.dialogVisible = true;
+                        this.url = 'https://addsoft-tech.com:8443/rmi/invoices/' + data.data.invoice.pdf;                        
+                        this.inicilizate();
+                        this.invoice = null;
+                        this.facturaForm.reset();
+                        this.itemForm.reset();
+                        this.selectclient = null;
+                        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'La factura se ha registrado correctamente' });
+
+
+                    }
+                }).catch(err => {
+                    console.log(err);
+                    if (err.error.code == 401) {
+                        localStorage.clear();
+                        this.router.navigate(['/login']);
+                    }
+
+                });
+            },
+        });
+    }
+
+    async getFlowerbyName(name: string): Promise<any> {
+        let flower: flower = null;
+        await this.api.getflowerbyname(name, localStorage.getItem("token")).then(data => {
+            console.log(data);
+            if (data.headerApp.code == 200) {
+                flower = data.data.flower;
+            }
+        }).catch(err => {
+            console.log(err);
+            if (err.error.code == 401) {
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
+        })
+        return flower;
+    }
+
+    async getFincabyName(name: string): Promise<any> {
+        let finca: finca = null;
+        await this.api.getObjectbyName('F', name.toUpperCase(), localStorage.getItem("token")).then(data => {
+            console.log(data);
+            if (data.headerApp.code == 200) {
+                finca = data.data.farm;
+            }
+        }).catch(err => {
+            console.log(err);
+            if (err.error.code == 401) {
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
+        })
+        return finca;
+    }
+
+
+    /**
+     * Function the search services client, flowers, deliveries, fincas
+     */
+    async getServicios() {
+        await this.api.getclients(localStorage.getItem("token")).then(cliente => {
+            console.log(cliente);
             this.clientes = [];
             if (cliente.headerApp.code === 200) {
-                cliente.data.clientes.forEach(cliente => {
-                    if (cliente.estado == 'A') {
-                        this.clientes.push(cliente);
+                cliente.data.clientes.forEach(data => {
+                    if (data.cliente.estado == 'A') {
+                        this.clientes.push(data.cliente);
                     }
                 });
             }
@@ -396,7 +619,7 @@ export class FacturaComponent implements OnInit {
             }
         })
 
-        this.api.getfinca(localStorage.getItem("token")).then(finca => {
+        await this.api.getfinca(localStorage.getItem("token")).then(finca => {
             this.fincas = [];
             if (finca.headerApp.code === 200) {
                 finca.data.farms.forEach(finca => {
@@ -414,7 +637,7 @@ export class FacturaComponent implements OnInit {
             }
         })
 
-        this.api.getflowers(localStorage.getItem("token")).then(flor => {
+        await this.api.getflowers(localStorage.getItem("token")).then(flor => {
             this.flores = [];
             if (flor.headerApp.code === 200) {
                 flor.data.flowers.forEach(flor => {
@@ -424,7 +647,6 @@ export class FacturaComponent implements OnInit {
                 });
             }
         }).catch(err => {
-            console.log('ERROR');
             console.log(err);
             if (err.error.code == 401) {
                 localStorage.clear();
@@ -432,13 +654,13 @@ export class FacturaComponent implements OnInit {
             }
         })
 
-        this.api.getdeliveries(localStorage.getItem("token")).then(delivery => {
+        
+        await this.api.getdeliveries(localStorage.getItem("token")).then(delivery => {
+            console.log(delivery);
             this.deliveries = [];
             if (delivery.headerApp.code === 200) {
                 delivery.data.cargocompanies.forEach(delivery => {
-                    if (delivery.estado == 'A') {
-                        console.log('ESTE SI');
-                        console.log(delivery);
+                    if (delivery.estado == 'A') {                       
                         this.deliveries.push(delivery);
                     }
                 });
@@ -450,6 +672,13 @@ export class FacturaComponent implements OnInit {
                 this.router.navigate(['/login']);
             }
         })
+    }
+
+    get f() {
+        return this.itemForm.controls;
+    }
+    get fr() {
+        return this.facturaForm.controls;
     }
 
 }

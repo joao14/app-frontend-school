@@ -27,7 +27,8 @@ const routes: Routes = [
             { path: 'documento', loadChildren: () => import('./reporte/documento/documento.module').then(m => m.DocumentoModule) },
             { path: 'usuario', loadChildren: () => import('./security/usuario/usuario.module').then(m => m.UsuarioModule) },
             { path: 'edituser', loadChildren: () => import('./security/usuario/edit/edit.module').then(m => m.EditModule) },
-            { path: 'roles', loadChildren: () => import('./security/roles/roles.module').then(m => m.RolesModule) } 
+            { path: 'roles', loadChildren: () => import('./security/roles/roles.module').then(m => m.RolesModule) },
+            { path: 'sales', loadChildren: () => import('./reporte/sale/sale.module').then(m => m.SaleModule) } 
         ]
     }
 ];

@@ -5,6 +5,8 @@ import { PagoreclamoRoutingModule } from './pagoreclamo-routing.module';
 import { InputTextModule, PanelModule, AccordionModule, InputTextareaModule, RadioButtonModule, ButtonModule, AutoCompleteModule, DropdownModule, TableModule, ToolbarModule, CardModule, SplitButtonModule, SelectButtonModule, ToastModule, ConfirmDialogModule, KeyFilterModule, CalendarModule, FieldsetModule } from 'primeng';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -33,7 +35,9 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     KeyFilterModule,  
     CalendarModule,
     NgxDropzoneModule,
-    FieldsetModule
+    FieldsetModule,
+    TranslateModule,
+    NgxSpinnerModule
   ]
 })
 export class PagoreclamoModule { }

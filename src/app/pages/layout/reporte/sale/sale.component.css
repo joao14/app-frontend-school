@@ -157,9 +157,4 @@ body .ui-table .ui-table-summary {
     .tbl_responsive {
         display: inline;
     }
-
-    .nametitle{
-        font-size: 18px;
-        font-weight: bold;
-    }
 }

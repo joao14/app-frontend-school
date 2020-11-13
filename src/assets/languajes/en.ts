@@ -5,6 +5,7 @@ export const en={
     "Lista de Usuarios":"List of Users",
     "Lista de Flores":"List of Flowers",
     "Lista de Fincas":"Lista of Farms",
+    "Pagos y reclamos": "Payments and claims",
     "Identificación":"Identification",
     "Nombres":"Names",
     "Apellidos":"Lastname",
@@ -29,6 +30,7 @@ export const en={
     "Totales": "Totals",
     "Total": "Total",
     "Consultar": "Consult",
+    "N°. Factura":"No. invoice",
     "N. de documento":"N. of document",
     "T. de documento":"Document type",
     "No hay información encontrada":"No data found"

@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
                     roles_.push(rol);
                 });
                 let user: user = {
+                    usuaid: data.data.usuario.usuaid,
                     dni: data.data.usuario.dni,
                     email: data.data.usuario.email,
                     state: data.data.usuario.estado,

@@ -2,6 +2,10 @@
     <div class="ui-g-12">
         <div class="card card-w-title">
             <h1>Facturación Cliente</h1>
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                [fullScreen]="true">
+                <p style="color: white"> Loading... </p>
+            </ngx-spinner>
             <p-toast></p-toast>
             <form [formGroup]="facturaForm" (ngSubmit)="save()">
                 <p-accordion>
@@ -9,8 +13,7 @@
                         <div class="ui-g form-group ui-fluid">
                             <div class="ui-g-12 ui-md-2">
                                 <label for="client" class="lbl">Cliente</label>
-                                <p-dropdown [options]="clientes" optionLabel="nombres"
-                                    formControlName="cliente"
+                                <p-dropdown [options]="clientes" optionLabel="nombres" formControlName="cliente"
                                     [ngClass]="{ 'is-invalid': submittedFactura && fr.cliente.errors }"
                                     class="form-control" class="form-control" (onChange)='onOptionsSelected()'
                                     [filter]="true" placeholder="Seleccione"></p-dropdown>
@@ -157,15 +160,6 @@
                                     <p-dropdown [options]="flores" formControlName="flores" optionLabel="flor.nombre"
                                         [ngClass]="{ 'is-invalid': submitted && f.flores.errors }" class="form-control"
                                         [filter]="true" placeholder="Seleccione">
-                                        <ng-template let-flor pTemplate="item">
-                                            <div class="ui-grid-row ui-g-12">
-                                                <div class="ui-grid-col-3">
-                                                    <img style="width: 30px;height: 30px;border-radius: 7px;"
-                                                        [src]="flor.value.recursos[0] == undefined ?'https://e1.pngegg.com/pngimages/1012/881/png-clipart-flowers-gray-flower.png':flor.value.recursos[0].atributo" />
-                                                </div>
-                                                <div class="ui-grid-col-9">{{flor.value.flor.nombre}}</div>
-                                            </div>
-                                        </ng-template>
                                     </p-dropdown>
                                     <div *ngIf="submitted && f.flores.errors" class="invalid-feedback">
                                         <div *ngIf="f.flores.errors.required">Variedad es requerido</div>
@@ -295,6 +289,9 @@
                             <img src="../../../../assets/images/recicler.jpeg">
                         </button>
                     </div>
+                    <div class="error" *ngIf="validate">El archivo tiene errores validar con el administrador</div>
+                    <p class="detalle" *ngIf="validate"><i class="pi pi-bell"></i>&nbsp;{{smsvalidate}}</p>
+                    <br>
                     <p-table [value]="items" *ngIf="files.length > 0" class="p-datatable-responsive-demo">
                         <ng-template pTemplate="caption">
                             <div class="p-d-flex p-ai-center p-jc-between">
@@ -303,6 +300,7 @@
                         </ng-template>
                         <ng-template pTemplate="header">
                             <tr>
+                                <th>Caja</th>
                                 <th>Finca</th>
                                 <th>Variedad</th>
                                 <th>Stem</th>
@@ -315,11 +313,12 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-item>
                             <tr>
-                                <td>{{item.finca}}</td>
-                                <td>{{item.flor }}</td>
+                                <td>{{item.caja==null?'HB':item.caja}}</td>
+                                <td>{{item.finca.nombres}}</td>
+                                <td>{{item.flor.nombre }}</td>
                                 <td>{{item.stems }}</td>
-                                <td>{{item.stems }}</td>
-                                <td>{{item.tallos }}</td>
+                                <td>{{item.tamanio.code }}</td>
+                                <td>{{item.numtallos }}</td>
                                 <td>{{item.totaltallos }}</td>
                                 <td>{{item.price | currency}}</td>
                                 <td>{{item.subtotal | currency}}</td>
@@ -327,8 +326,7 @@
                         </ng-template>
                         <ng-template pTemplate="footer">
                             <tr>
-                                <td colspan="3" class="total_table">Totales</td>
-                                <td><span class="total_tallos">{{factura.tallos }}</span></td>
+                                <td colspan="8" class="total_table">Totales</td>
                                 <td><span class="total_valor">{{factura.total | currency: 'USD'}}</span></td>
                             </tr>
                         </ng-template>
@@ -337,8 +335,9 @@
                     <div class="ui-g form-group ui-fluid" *ngIf="items.length > 0">
                         <div class="ui-grid-col-10"></div>
                         <div class="ui-grid-col-2">
-                            <button pButton type="button" icon="pi pi-arrow-right" class="ui-button-help btn_enviar"
-                                label="Enviar"></button>
+                            <button pButton type="button" icon="pi pi-arrow-right" class="ui-button-help btn_enviar" 
+                                [disabled]="validate"
+                                label="Enviar" type="submit"></button>
                         </div>
                     </div>
                 </div>
@@ -366,7 +365,7 @@
 
                         <div class="ui-grid-row">
                             <div class="ui-grid-col-4"><span class="label">Variedad</span></div>
-                            <div class="ui-grid-col-8"><span class="value">{{item.flor.flor.nombre}}</span></div>
+                            <div class="ui-grid-col-8"><span class="value">{{item.flor.nombre}}</span></div>
                         </div>
 
                         <div class="ui-grid-row">
@@ -433,6 +432,12 @@
                     (click)="cd.accept()"></button>
             </p-footer>
         </p-confirmDialog>
+
+        <p-dialog header="Factura correcta" [(visible)]="dialogVisible" [style]="{width: '50vw'}" [baseZIndex]="10000"
+            [maximizable]="true" [modal]="true" [resizable]="true">
+            <iframe [src]="url | safe" *ngIf="dialogVisible" width="100%" height="500px" style="border-width: 0PX;">
+            </iframe>
+        </p-dialog>
 
     </div>
 

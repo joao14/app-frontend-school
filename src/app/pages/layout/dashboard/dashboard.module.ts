@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { CarouselModule, ButtonModule } from 'primeng';
+import { CarouselModule, ButtonModule, InputTextModule } from 'primeng';
 
 
 @NgModule({
@@ -23,7 +23,8 @@ import { CarouselModule, ButtonModule } from 'primeng';
         TableModule,
         FullCalendarModule,
         CarouselModule,
-        ButtonModule
+        ButtonModule,
+        InputTextModule
     ],
     declarations: [
         DashboardComponent

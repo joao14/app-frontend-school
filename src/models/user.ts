@@ -1,6 +1,7 @@
 import { roles } from './roles';
 
 export interface user {
+    usuaid: number;
     dni: string;
     email: string;
     state: string;

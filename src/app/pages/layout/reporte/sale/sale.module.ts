@@ -1,21 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DocumentoComponent } from './documento.component';
-import { DocumentoRoutingModule } from './documento-routing.module';
-import { InputTextModule, PanelModule, AccordionModule, InputTextareaModule, RadioButtonModule, ButtonModule, AutoCompleteModule, DropdownModule, TableModule, ToolbarModule, CardModule, SplitButtonModule, SelectButtonModule, ToastModule, ConfirmDialogModule, CalendarModule, DynamicDialogModule, DialogModule, VirtualScrollerModule, FieldsetModule } from 'primeng';
+import { SaleRoutingModule } from './sale-routing.module';
+import { SaleComponent } from './sale.component';
+import { InputTextModule, PanelModule, AccordionModule, InputTextareaModule, RadioButtonModule, ButtonModule, AutoCompleteModule, DropdownModule, TableModule, ToolbarModule, VirtualScrollerModule, DialogModule, DynamicDialogModule, CalendarModule, ConfirmDialogModule, ToastModule, CardModule, SplitButtonModule, SelectButtonModule } from 'primeng';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { SharedModule } from 'src/app/shared.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
-@NgModule({
-  declarations: [DocumentoComponent],
+@NgModule({  
+  declarations: [SaleComponent],
   imports: [
     CommonModule,
-    DocumentoRoutingModule,
-    SharedModule,
+    SaleRoutingModule,
     InputTextModule,
     PanelModule,
     AccordionModule,
@@ -37,8 +36,8 @@ import { SharedModule } from 'src/app/shared.module';
     DialogModule,
     VirtualScrollerModule,
     TranslateModule,
-    NgxSpinnerModule,
-    FieldsetModule
+    SharedModule,
+    NgxSpinnerModule
   ]
 })
-export class DocumentoModule { }
+export class SaleModule { }

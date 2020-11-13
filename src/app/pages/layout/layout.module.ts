@@ -32,6 +32,8 @@ import { DragdropDirective } from 'src/app/directive/dragdrop.directive';
 
 // in app.module.ts
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { SaleComponent } from './reporte/sale/sale.component';
+import { SafePipe } from 'src/app/pipes/safe.pipe';
 
 @NgModule({
     imports: [
@@ -78,6 +80,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
         TopbarComponent,
         PanelComponent,
         DragdropDirective,
+        
     ], providers: [
         MenuService,
         BreadcrumbService

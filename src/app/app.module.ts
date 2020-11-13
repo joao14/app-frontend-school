@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 //Para traducir
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { SafePipe } from './pipes/safe.pipe';
 
 @NgModule({
     imports: [

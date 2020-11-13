@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PrealertaRoutingModule } from './prealerta-routing.module';
 import { PrealertaComponent } from './prealerta.component';
-import { InputTextModule, PanelModule, AccordionModule, InputTextareaModule, RadioButtonModule, ButtonModule, AutoCompleteModule, DropdownModule, TableModule, ToolbarModule, CardModule, SplitButtonModule, SelectButtonModule, ToastModule, ConfirmDialogModule, KeyFilterModule } from 'primeng';
+import { InputTextModule, PanelModule, AccordionModule, InputTextareaModule, RadioButtonModule, ButtonModule, AutoCompleteModule, DropdownModule, TableModule, ToolbarModule, CardModule, SplitButtonModule, SelectButtonModule, ToastModule, ConfirmDialogModule, KeyFilterModule, CalendarModule, FieldsetModule, CheckboxModule, DialogModule } from 'primeng';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 
@@ -29,7 +30,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ToastModule,
     ConfirmDialogModule,
     ReactiveFormsModule,
-    KeyFilterModule
+    KeyFilterModule,
+    CalendarModule,
+    FieldsetModule,
+    CheckboxModule,
+    NgxSpinnerModule,
+    DialogModule
   ]
 })
 export class PrealertaModule { }
+ 

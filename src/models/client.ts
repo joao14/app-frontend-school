@@ -15,4 +15,7 @@ export interface client {
     razosoci: string;
     tipo: string;
     tipoenti: string;
+    credito: number;
+    debito: number;
+    balance:number;
 }

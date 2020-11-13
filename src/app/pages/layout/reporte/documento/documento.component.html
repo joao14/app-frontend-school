@@ -1,216 +1,118 @@
 <div class="ui-g">
     <div class="ui-g-12">
         <div class="card card-w-title">
-            <h1>{{'Documentos del Cliente' | translate}}</h1>
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                [fullScreen]="true">
+                <p style="color: white"> Loading... </p>
+            </ngx-spinner>
             <p-toast></p-toast>
             <div class="ui-g form-group ui-fluid">
-                <div class="ui-g-12 ui-md-2">
-                    <button pButton type="button" [label]="'Consultar' | translate" icon="fa fa-search" iconPos="left"
-                        class="ui-button-success" (click)="consultar()"></button>
-                </div>
-            </div>
-            <p-accordion>
-                <p-accordionTab [header]="'Datos de la búsqueda' | translate" [selected]="true">
-                    <div class="ui-g form-group ui-fluid">
-                        <div class="ui-g-12 ui-md-4">
-                            <label for="client" class="lbl">{{'Cliente' | translate}}</label>
-                            <p-dropdown [options]="clientes" optionLabel="nombres" [(ngModel)]="selectClient"
-                                class="form-control" [filter]="true" [placeholder]="'Seleccione' | translate">
-                            </p-dropdown>
-                        </div>
-                        <div class="ui-g-12 ui-md-4">
-                            <label class="lbl">{{'Fecha' | translate }}</label>
-                            <p-calendar [(ngModel)]="date" [showIcon]="true" inputId="icon" [readonlyInput]="true"
-                                [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-calendar>
-                        </div>
+                <div class="ui-g-12 ui-md-8">
+                    <div>
+                        <h1 style="font-weight: bold;">{{'Pre-alerta' | translate}} &nbsp;<span>{{prealerts[0]?.head.pralId}}</span></h1>
                     </div>
-                </p-accordionTab>
-            </p-accordion>
-            <br>
-            <p-table #dt [value]="documentos" class="p-datatable-responsive-demo" [paginator]="true" [rows]="10"
-                [showCurrentPageReport]="true"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [rowsPerPageOptions]="[10,25,50,100]">
+                    <div>
+                        <h1 style="font-weight: bold;">{{'Fecha' | translate}} &nbsp;<span>{{prealerts[0]?.head.fecha}}</span></h1>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                    <button pButton type="button" [label]="'Descargar reporte' | translate" icon="pi pi-download" iconPos="left"
+                        class="ui-button-danger" (click)="downlaodTotal(prealerts[0]?.head)"
+                        style="border-radius: 7px;"></button>
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                    <button pButton type="button" [label]="'Enviar email' | translate" icon="pi pi-envelope"
+                        iconPos="left" class="ui-button-info" (click)="downlaodTotal(prealerts[0]?.head)"
+                        style="border-radius: 7px;"></button>
+                </div>
+
+            </div>
+            <p-table #dt [value]="prealerts[0]?.clients" class="p-datatable-responsive-demo">
                 <ng-template pTemplate="caption">
                     <div class="ui-g form-group ui-fluid">
                         <div class="ui-g-12 ui-md-11">
-                            <div style="margin-top: 5px;">
-                                {{'Número de documentos' | translate }} [ {{documentos.length}} ]
+                            <div>
+                                {{'Número de clientes para la prealerta' | translate }} [ {{prealerts[0]?.clients.length}} ]
                             </div>
-                        </div>
-                        <div class="ui-g-12 ui-md-1">
-                            <button type="button" pButton pRipple (click)="exportExcel()" 
-                                [disabled]="documentos.length <= 0" class="ui-button-success btn_table">
-                                <i class="fa fa-file-excel-o icon"></i>
-                            </button>&nbsp;
-                            <button type="button" pButton pRipple 
-                                [disabled]="documentos.length <= 0" class="ui-button-danger btn_table">
-                                <i class="fa fa-file-pdf-o icon"></i>
-                            </button>
                         </div>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
                     <tr>
-                        <th style="width: 5em;"></th>
-                        <th>{{'Tipo de transacción' | translate }}</th>
-                        <th>{{'Fecha de transacción' | translate}}</th>
-                        <th>{{'Valor' | translate}}</th>
-                        <th>{{'N°. Documento' | translate}}</th>
-                        <th>{{'N°. Factura' | translate}}</th>
-                        <th>{{'Descripción' | translate}}</th>
+                        <th>{{'Fecha de envío' | translate}}</th>
+                        <th>{{'Variedad' | translate}}</th>
+                        <th>{{'Finca' | translate}}</th>
+                        <th>{{'Marca' | translate}}</th>
+                        <th>{{'Empresa carga' | translate}}</th>
+                        <th>{{'HQ/QB' | translate}}</th>
+                        <th>{{'CM' | translate}}</th>
+                        <th>{{'Stem' | translate}}</th>
+                        <th>{{'T. Stem' | translate}}</th>
+                        <th>{{'Precio Venta' | translate}}</th>
+                        <th>{{'Precio Compra' | translate}}</th>
+                        <th>{{'Estados' | translate}}</th>
                     </tr>
-                    <tr>
-                        <th></th>
-                        <th>
-                            <div class="ui-fluid">
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'tipoTransaccion', 'contains')"
-                                    [placeholder]="'Buscar' | translate" class="p-column-filter">
-                            </div>
-                        </th>                        
-                        <th>
-                            <div class="ui-fluid">
-                                <p-calendar (onSelect)="onDateSelect($event)" [readonlyInput]="true"
-                                    (onClearClick)="close()" (onClearClick)="dt.filter('', 'fecha', 'equals')"
-                                    [showButtonBar]="true" styleClass="p-column-filter"
-                                    [placeholder]="'Seleccione' | translate" [readonlyInput]="true"
-                                    dateFormat="yy-mm-dd">
-                                </p-calendar>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="ui-fluid">
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'valor', 'contains')"
-                                    [placeholder]="'Buscar' | translate" class="p-column-filter">
-                            </div>
-                        </th>
-                        <th>
-                            <div class="ui-fluid">
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'numDocum', 'contains')"
-                                    [placeholder]="'Buscar' | translate" class="p-column-filter">
-                            </div>
-                        </th>
-                        <th>
-                            <div class="ui-fluid">
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'numFactura', 'contains')"
-                                    [placeholder]="'Buscar' | translate" class="p-column-filter">
-                            </div>
-                        </th>
-                        <th>
-                            <div class="ui-fluid">
-                                <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'descripcion', 'contains')"
-                                    [placeholder]="'Buscar' | translate" class="p-column-filter">
-                            </div>
-                        </th>
 
-                    </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-item>
                     <tr>
-                        <td>
-                            <button type="button" pButton icon="fa fa-eye" (click)="view(item)"
-                                style="border-radius: 8px;" class="ui-button-info"></button>
-                        </td>
-                        <td><span class="p-column-title">{{item.tipoTransaccion}}</span></td>
-                        <td><span class="p-column-title">{{item.fechaTransaccion | date :'dd-MMM-yy h:mm:ss'  }}</span>
-                        </td>
-                        <td><span class="p-column-title">{{item.valor | currency }}</span></td>
-                        <td style="text-align: right;"><span class="p-column-title">{{item.numDocum }}</span>
-                        </td>
-                        <td style="text-align: right;"><span class="p-column-title">{{item.numFactura }}</span>
-                        </td>
-                        <td style="text-align: right;"><span class="p-column-title">{{item.descripcion }}</span>
+                        <td colspan="12"
+                            style="font-size: 16px;font-weight: bold;text-align: center;background-color: #efefef;">
+                            <div class="ui-g form-group ui-fluid">
+                                <div class="ui-g-12 ui-md-11">
+                                    <span class="p-column-title"
+                                        class="nametitle">{{item.info.nombres | titlecase}}</span>
+                                </div>
+                                <div class="ui-g-12 ui-md-1">
+                                    <div class="ui-grid">
+                                        <div class="ui-grid-col-6">
+                                            <button pButton type="button" icon="pi pi-download" iconPos="left"
+                                                class="ui-button-success" style="border: 1px solid;border-radius: 7px;"
+                                                (click)="selectItem(item.info)"></button>
+                                        </div>
+                                        <div class="ui-grid-col-6">
+                                            <button pButton type="button" icon="pi pi-envelope" iconPos="left"
+                                                class="ui-button-info" style="border: 1px solid;border-radius: 7px;"
+                                                (click)="sendEmail(item.info)"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
+                    <tr *ngFor="let item of item.items" style="background-color: white;">
+                        <td><span class="p-column-title">{{item.shippingdate | date :'dd/MM/yyyy'  }}</span>
+                        </td>
+                        <td><span class="p-column-title">{{item.flower}}</span></td>
+                        <td style="text-align: right;"><span class="p-column-title">{{item.farm | titlecase }}</span>
+                        </td>
+                        <td style="text-align: right;"><span class="p-column-title">{{item.mark | titlecase }}</span>
+                        </td>
+                        <td style="text-align: right;"><span
+                                class="p-column-title">{{item.cargname | titlecase }}</span>
+                        </td>
+                        <td style="text-align: right;"><span class="p-column-title">{{item.hbqb }}</span>
+                        </td>
+                        <td style="text-align: right;"><span class="p-column-title">{{item.cm }}</span>
+                        </td>
+                        <td style="text-align: right;"><span class="p-column-title">{{item.tallos }}</span>
+                        </td>
+                        <td style="text-align: right;"><span class="p-column-title">{{item.totaltallos }}</span>
+                        </td>
+                        <td style="text-align: right;"><span class="p-column-title">{{item.pvp }}</span>
+                        </td>
+                        <td style="text-align: right;"><span class="p-column-title">{{item.pcomp}}</span>
+                        </td>
+                        <td style="text-align: right;"><span class="p-column-title">{{item.status | titlecase }}</span>
+                        </td>
+                    </tr>
+
                 </ng-template>
             </p-table>
         </div>
-
-        <!--Table responsive-->
-        <div class="tbl_responsive">
-            <p-accordion *ngIf="documentos.length > 0">
-                <p-accordionTab header="Filtros de búsqueda" [selected]="true">
-                    <div class="ui-g form-group ui-fluid">
-                        <div class="ui-g-12 ui-md-4">
-                            <label for="client" class="lbl">{{'Número de documentos' | translate}}</label>
-                            <input type="text" pInputText [(ngModel)]="numDocument" />
-                        </div>
-                        <div class="ui-g-12 ui-md-4">
-                            <label for="client" class="lbl">{{'Fecha' | translate}}</label>
-                            <p-calendar [showIcon]="true" inputId="icon" [readonlyInput]="true"
-                                [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"
-                                [(ngModel)]="filterMobile"></p-calendar>
-                        </div>
-                        <div class="ui-g-12 ui-md-4">
-                            <button pButton type="button" [label]="'Consultar' | translate" icon="fa fa-search"
-                                iconPos="left" class="ui-button-success" (click)="consultarMobile()"></button>
-                        </div>
-                    </div>
-                </p-accordionTab>
-            </p-accordion>
-            <div class="header" *ngIf="documentos.length > 0">
-                {{ 'Número de registros' | translate }} [<span>{{documentos.length}}</span>]
-            </div>
-            <div style="overflow-y: scroll; height: 500px;width: 100%;" *ngIf="documentos.length > 0">
-                <div class="ui-grid ui-grid-responsive ui-fluid" class="data" *ngFor="let documento of documentos">
-                    <div class="target">
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-12">
-                                <button pButton type="button" class="ui-button-info btn_card" icon="fa fa-eye"
-                                    (click)="view(documento)"></button>
-                            </div>
-                        </div>
-
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-6"><span class="label">{{'Tipo de transacción' | translate}}</span>
-                            </div>
-                            <div class="ui-grid-col-6"><span class="value">{{documento.tipoTransaccion}}</span></div>
-                        </div>
-
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-6"><span class="label">{{'Fecha de transacción' | translate}}</span>
-                            </div>
-                            <div class="ui-grid-col-6"><span
-                                    class="value">{{documento.fechaTransaccion | date :'dd-MMM-yy h:mm:ss'}}</span>
-                            </div>
-                        </div>
-
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-6"><span class="label">{{'Valor' | translate }}</span></div>
-                            <div class="ui-grid-col-6"><span class="value">{{documento.valor | currency }}</span></div>
-                        </div> 
-
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-6"><span class="label">{{'N°. Documento' | translate }}</span></div>
-                            <div class="ui-grid-col-6"><span class="value">{{documento.numDocum}}</span>
-                            </div>
-                        </div>
-
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-6"><span class="label">{{'N°. Factura' | translate}}</span></div>
-                            <div class="ui-grid-col-6"><span class="value">{{documento.numFactura }}</span>
-                            </div>
-                        </div>
-
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-6"><span class="label">{{'Descripción' | translate}}</span></div>
-                            <div class="ui-grid-col-6"><span
-                                    class="total_value">{{documento.descripcion}}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <p-dialog [header]="selectDocument?.numDocum" [(visible)]="dialogVisible" [style]="{width: '50vw'}"
-            [baseZIndex]="10000" [maximizable]="true" [modal]="true" [resizable]="true">
-            <iframe src="https://books.ninja-squad.com/public/samples/Become_a_ninja_with_Angular_sample.pdf"
-                width="100%" height="500px" style="border-width: 0PX;">
+        <p-dialog [header]="titledialog" [(visible)]="dialogVisible" [style]="{width: '50vw'}" [baseZIndex]="10000"
+            [maximizable]="true" [modal]="true" [resizable]="true">
+            <iframe [src]="url | safe" width="100%" height="500px" style="border-width: 0PX;">
             </iframe>
         </p-dialog>
     </div>

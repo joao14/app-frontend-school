@@ -4,28 +4,18 @@ import { ApisService } from 'src/services/apis.service';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, DialogService, DynamicDialogRef, Table } from 'primeng';
 import * as moment from 'moment';
-/*import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import { UserOptions } from 'jspdf-autotable'
-
-interface jsPDFWithPlugin extends jsPDF{
-  autoTable:(options: UserOptions) => jsPDF;
-}*/
-/*import * as faker from 'faker';
-declare var jsPDF: any;*/
-
-import * as jsPDF from 'jspdf';
-import 'jspdf-autotable';
 import { TranslateService } from '@ngx-translate/core';
+import { UtilService } from 'src/services/util.service';
 
-
-export interface Document {
-  numDocument: string;
-  tipoDocument: string;
-  fecha: Date;
-  debito: number;
-  credito: number;
-  saldo: number;
+export interface Invoice {
+  tranId: string;
+  fecha: string;
+  tipo: string;
+  monto: number;
+  balance: number;
+  numedocu: string;
+  tipotran: string;
+  documento: string;
 }
 
 @Component({
@@ -37,49 +27,38 @@ export interface Document {
 export class BalanceComponent implements OnInit {
 
   selectClient: client;
-  date: Date;
-  filterMobile: Date;
   clientes: Array<client> = [];
-  documentos: Array<Document> = [];
-  cols: any[];
-  exportColumns: any[];
-  totalcredito: number;
-  totaldebito: number;
-  total: number;
-  saldoinicial: number;
-  ref: DynamicDialogRef;
   dialogVisible: boolean;
-  selectDocument: Document;
-  numDocument: string;
+  dateIni: Date = new Date();
+  dateFin: Date = new Date();
+  invoices: Array<Invoice> = [];
+  url: string;
+  numedocu: string;
 
-  constructor(private api: ApisService, private router: Router, public dialogService: DialogService,private messageService: MessageService) { }
+  constructor(private api: ApisService, private router: Router, public dialogService: DialogService, private messageService: MessageService,
+    private utilService: UtilService) { }
 
-  ngOnInit(): void {
-    this.numDocument="";
+  ngOnInit(){
     this.dialogVisible = false;
-    this.date=new Date();
-    this.total = 0;
-    this.totalcredito = 0;
-    this.totaldebito = 0;
-    this.saldoinicial = 0;
-    this.cols = [
-      { field: 'documento', header: 'Documento' },
-      { field: 'tipo documento', header: 'Tipo Documento' },
-      { field: 'fecha', header: 'Fecha' },
-      { field: 'debito', header: 'Débito' },
-      { field: 'credito', header: 'Crédito' },
-      { field: 'saldo', header: 'Saldo' }
-    ];
-
-    this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
+    this.selectClient = null;
     this.getClient();
   }
 
-  getClient() {
-    this.api.getclients(localStorage.getItem("token")).then(cliente => {
+  async getClient() {
+    this.utilService.isLoading.next(true);
+    this.clientes = [];
+    await this.api.getclients(localStorage.getItem("token")).then(cliente => {
+      console.log(cliente);
+      let temp: client[] = [];
       if (cliente.headerApp.code === 200) {
-        this.clientes = cliente.data.clientes;
+        cliente.data.clientes.forEach(element => {
+          if (element.cliente.estado == 'A') {
+            temp.push(element.cliente);
+          }
+        });
       }
+      this.clientes = temp;
+
     }).catch(err => {
       console.log(err);
       if (err.error.code == 401) {
@@ -87,122 +66,45 @@ export class BalanceComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     })
+    this.utilService.isLoading.next(false);
   }
 
   onDateSelect(event) {
     console.log('Seleccionar');
     console.log(event);
-    //Debe volver a consultar
-    console.log(this.documentos);
-    console.log('TEST');
-    this.documentos = this.documentos.filter(documento => this.getFormatDate(documento.fecha) == this.getFormatDate(event));
+    /*this.documentos = this.documentos.filter(documento => this.getFormatDate(documento.fecha) == this.getFormatDate(event));
     console.log('RESULTADO FINAL');
-    console.log(this.documentos);
+    console.log(this.documentos);*/
   }
 
-  close(){
+  close() {
     console.log('Cerrar..');
-    this.total = 0;
-    this.totalcredito = 0;
-    this.totaldebito = 0;
-    this.documentos = [];
-    for (var i = 1; i < 20; i++) {
-      let documento = {
-        numDocument: 'Document ' + i,
-        tipoDocument: 'Variable ' + i,
-        fecha: new Date(),
-        debito: i * 2.2,
-        credito: i * 3.6,
-        saldo: i * 3.2
-      }
-      this.documentos.push(documento);
-      this.totalcredito += documento.credito;
-      this.totaldebito += documento.debito;
-      this.total += documento.saldo;
-    }
-    this.saldoinicial = this.total * this.totalcredito;
+    this.consultar();
   }
 
-  consultar() {
-    console.log('Consultar..');
-    console.log(this.selectClient);
-    console.log(this.date);
-    this.total = 0;
-    this.totalcredito = 0;
-    this.totaldebito = 0;
-    this.documentos = [];
-    for (var i = 1; i < 20; i++) {
-      let documento = {
-        numDocument: 'Document ' + i,
-        tipoDocument: 'Variable ' + i,
-        fecha: new Date(),
-        debito: i * 2.2,
-        credito: i * 3.6,
-        saldo: i * 3.2
+  async consultar() {
+    this.utilService.isLoading.next(true);
+    this.invoices=[];
+    await this.api.getInvoicesbyClient(this.selectClient.entiId, this.getFormatDate(this.dateIni).replace(/-/g, ''), this.getFormatDate(this.dateFin).replace(/-/g, ''), localStorage.getItem("token")).then(data => {
+      console.log(data);
+      if (data.headerApp.code == 200) {
+        this.invoices = data.data.transacciones;
       }
-      this.documentos.push(documento);
-      this.totalcredito += documento.credito;
-      this.totaldebito += documento.debito;
-      this.total += documento.saldo;
-    }
-    this.saldoinicial = this.total * this.totalcredito;
-  }
 
+    }).catch(err => {
+      console.log(err);
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
 
-  exportPdf() {
-    /*var doc = new jsPDF('p','pt','a4');
-
-    doc.setFontSize(18);
-    doc.text('With content', 14, 22);
-    doc.setFontSize(11);
-    doc.setTextColor(100);
-
-    // jsPDF 1.4+ uses getWidth, <1.4 uses .width
-    /*var pageSize = doc.internal.pageSize;
-    var pageWidth = pageSize.width ? pageSize.width : pageSize.getWidth();
-    var text = doc.splitTextToSize(faker.lorem.sentence(45), pageWidth - 35, {});
-    doc.text(text, 14, 30);*/
-
-    /*(doc as any).autoTable({
-      head: this.cols,
-      body: this.documentos,
-      them: 'plain'
-    });
-
-    //doc.text(text, 14, doc.autoTable.previous.finalY + 10);
-
-     // Open PDF document in new tab
-     doc.output('dataurlnewwindow')
-
-     // Download PDF document  
-     doc.save('table.pdf');
-    /*let doc: any = new jsPDF('l', 'pt');
-    doc.autoTable(this.cols, this.documentos)
-    doc.save('table.pdf')*/
-    /*var doc= new jsPDF();   
-    doc.autoTable(this.cols,this.documentos,{ startY: 10 });
-    doc.save("Inici.pdf");*/
-    /*const doc = new jsPDF.default(0, 0);
-    doc.autoTable(this.exportColumns, this.documentos);
-    doc.save('balance_export_' + new Date().getTime() + '.pdf');*/
-    //var doc = new jsPDF.default('p','pt');
-    //const doc = new jspdf('p','px','a4') as jsPDFWithPlugin;
-    /*doc.autoTable(
-      head: [['Name','Hola','apellidos']], 
-      body:[
-        ['ojo','cien','123'],
-        ['ojo','cien','123']
-      ]);
-
-    doc.save('table.pdf')*/
-
-    /*autoTable(this.cols, this.documentos);
-    doc.save('balance_export_' + new Date().getTime() + '.pdf');*/
+    })
+    this.utilService.isLoading.next(false);
   }
 
   exportExcel() {
     import("xlsx").then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(this.documentos);
+      const worksheet = xlsx.utils.json_to_sheet(this.invoices);
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
       this.saveAsExcelFile(excelBuffer, "balance");
@@ -220,27 +122,16 @@ export class BalanceComponent implements OnInit {
     });
   }
 
-  view(document: Document) {
-    console.log('Esta es la interface');
-    console.log(document);
-    this.selectDocument = document;
+  view(invoice: Invoice) {
+    console.log('Seleccionar');
+    this.url = 'https://addsoft-tech.com:8443/rmi/' + invoice.documento;
+    console.log(this.url);
+    this.numedocu= invoice.numedocu;
     this.dialogVisible = true;
   }
 
   getFormatDate(date: Date): string {
-    return (moment(date)).format('DD-MMM-YYYY');
-  }
-
-  consultarMobile(){
-    console.log('Consultando las facturas..');
-    console.log(this.filterMobile);
-    console.log(this.numDocument);
-    if(this.filterMobile == undefined && this.numDocument == ""){
-      this.messageService.add({severity:'error', summary:'Rosa Mística', detail:'Debe ingresar datos en el filtro de consulta.'});
-      return;
-    }
-    //Llamamos nuevamente a la api de consulta
-
+    return (moment(date)).format('YYYY-MM-DD');
   }
 
 }

@@ -132,7 +132,7 @@ export class ApisService {
 
     }
 
-    public addRolesByUser(rol: any,token: string): Promise<any> {
+    public addRolesByUser(rol: any, token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ export class ApisService {
 
     }
 
-    public removeRolesByUser(rol: any,token: string): Promise<any> {
+    public removeRolesByUser(rol: any, token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -165,7 +165,6 @@ export class ApisService {
         });
 
     }
-
 
 
     public getclients(token: string): Promise<any> {
@@ -265,6 +264,23 @@ export class ApisService {
                 reject(error);
             })
         });
+    }
+
+    public getflowerbyname(name: string, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.searchflower + name, opt).toPromise().then(flowers => {
+                resolve(flowers);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
     }
 
 
@@ -415,6 +431,137 @@ export class ApisService {
         });
     }
 
+    public registerInvoice(invoice: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.registerinvoice, invoice, opt).toPromise().then(invoice => {
+                resolve(invoice);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public registerPaymentClaim(payment: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.registerpaymentandclaim, payment, opt).toPromise().then(invoice => {
+                resolve(invoice);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public registerPrealert(prealert: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.registerprealert, prealert, opt).toPromise().then(prealert => {
+                resolve(prealert);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public getObjectbyName(type: string, name: string, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.searchtype + type + '/' + name, opt).toPromise().then(invoice => {
+                resolve(invoice);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public getsales(dateIni: string, dateFin: string, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.getsales + dateIni + '/' + dateFin, opt).toPromise().then(sales => {
+                resolve(sales);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public getInvoicesbyClient(idClient: number, dateIni: string, dateFin: string, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.getinvoicesbyclient + idClient + '/' + dateIni + '/' + dateFin, opt).toPromise().then(sales => {
+                resolve(sales);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public getMarcbyName(idClient: number, name: string, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.getmarcsbyname + idClient + '/' + name, opt).toPromise().then(marc => {
+                resolve(marc);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public getPrealertActive(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.getprealertactive, opt).toPromise().then(marc => {
+                resolve(marc);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
 
 
 
