@@ -9,7 +9,6 @@
                         (click)="addUser()"></button>
                 </div>
             </p-toolbar>
-            <br>
             <p-table #dt styleClass="ui-table-cars" [value]="users" [paginator]="true" [rows]="10"
                 [showCurrentPageReport]="true" class="p-datatable-responsive-demo"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -89,7 +88,7 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-user let-columns="columns">
-                    <tr [pSelectableRow]="user" [pEditableRow]="user">
+                    <tr [pSelectableRow]="user" [pEditableRow]="user" style="background-color: white;">
                         <td>{{user.dni}}</td>
                         <td>{{user.nombres | titlecase }}</td>
                         <td>{{user.apellidos | titlecase }}</td>

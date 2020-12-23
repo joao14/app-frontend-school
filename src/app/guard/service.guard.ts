@@ -8,12 +8,10 @@ import { Observable } from 'rxjs';
 export class ServiceGuard implements CanActivate {
 
   constructor(private router: Router) {
-    console.log('MIRA EL CONSTRUCTOR');
     
    }
   
   canActivate() {   
-    console.log('Validando otas url');
     return true;
   }
   

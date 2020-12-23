@@ -6,6 +6,162 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["crm-finca-edit-edit-module-ngfactory"], {
   /***/
+  "./node_modules/primeng/fesm2015/primeng-blockui.js":
+  /*!**********************************************************!*\
+    !*** ./node_modules/primeng/fesm2015/primeng-blockui.js ***!
+    \**********************************************************/
+
+  /*! exports provided: BlockUI, BlockUIModule */
+
+  /***/
+  function node_modulesPrimengFesm2015PrimengBlockuiJs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "BlockUI", function () {
+      return BlockUI;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "BlockUIModule", function () {
+      return BlockUIModule;
+    });
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/common */
+    "./node_modules/@angular/common/fesm2015/common.js");
+    /* harmony import */
+
+
+    var primeng_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! primeng/dom */
+    "./node_modules/primeng/fesm2015/primeng-dom.js");
+
+    var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
+      var c = arguments.length,
+          r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+          d;
+      if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
+        if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+      }
+      return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+
+    var BlockUI =
+    /*#__PURE__*/
+    function () {
+      function BlockUI(el) {
+        _classCallCheck(this, BlockUI);
+
+        this.el = el;
+        this.autoZIndex = true;
+        this.baseZIndex = 0;
+      }
+
+      _createClass(BlockUI, [{
+        key: "ngAfterViewInit",
+        value: function ngAfterViewInit() {
+          if (this.target && !this.target.getBlockableElement) {
+            throw 'Target of BlockUI must implement BlockableUI interface';
+          }
+        }
+      }, {
+        key: "block",
+        value: function block() {
+          if (this.target) {
+            this.target.getBlockableElement().appendChild(this.mask.nativeElement);
+            var style = this.target.style || {};
+            style.position = 'relative';
+            this.target.style = style;
+          } else {
+            document.body.appendChild(this.mask.nativeElement);
+          }
+
+          if (this.autoZIndex) {
+            this.mask.nativeElement.style.zIndex = String(this.baseZIndex + ++primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].zindex);
+          }
+        }
+      }, {
+        key: "unblock",
+        value: function unblock() {
+          this.el.nativeElement.appendChild(this.mask.nativeElement);
+        }
+      }, {
+        key: "ngOnDestroy",
+        value: function ngOnDestroy() {
+          this.unblock();
+        }
+      }, {
+        key: "blocked",
+        get: function get() {
+          return this._blocked;
+        },
+        set: function set(val) {
+          this._blocked = val;
+
+          if (this.mask && this.mask.nativeElement) {
+            if (this._blocked) this.block();else this.unblock();
+          }
+        }
+      }]);
+
+      return BlockUI;
+    }();
+
+    BlockUI.ctorParameters = function () {
+      return [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]
+      }];
+    };
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], BlockUI.prototype, "target", void 0);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], BlockUI.prototype, "autoZIndex", void 0);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], BlockUI.prototype, "baseZIndex", void 0);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], BlockUI.prototype, "styleClass", void 0);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('mask')], BlockUI.prototype, "mask", void 0);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], BlockUI.prototype, "blocked", null);
+
+    BlockUI = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+      selector: 'p-blockUI',
+      template: "\n        <div #mask [class]=\"styleClass\" [ngClass]=\"{'ui-blockui-document':!target, 'ui-blockui ui-widget-overlay': true}\" [ngStyle]=\"{display: blocked ? 'block' : 'none'}\">\n            <ng-content></ng-content>\n        </div>\n    ",
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].Default
+    })], BlockUI);
+
+    var BlockUIModule = function BlockUIModule() {
+      _classCallCheck(this, BlockUIModule);
+    };
+
+    BlockUIModule = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]],
+      exports: [BlockUI],
+      declarations: [BlockUI]
+    })], BlockUIModule);
+    /**
+     * Generated bundle index. Do not edit.
+     */
+    //# sourceMappingURL=primeng-blockui.js.map
+
+    /***/
+  },
+
+  /***/
   "./node_modules/primeng/fesm2015/primeng-inputtextarea.js":
   /*!****************************************************************!*\
     !*** ./node_modules/primeng/fesm2015/primeng-inputtextarea.js ***!
@@ -182,6 +338,371 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     //# sourceMappingURL=primeng-inputtextarea.js.map
 
     /***/
+  },
+
+  /***/
+  "./node_modules/primeng/selectbutton/primeng-selectbutton.ngfactory.js":
+  /*!*****************************************************************************!*\
+    !*** ./node_modules/primeng/selectbutton/primeng-selectbutton.ngfactory.js ***!
+    \*****************************************************************************/
+
+  /*! exports provided: SelectButtonModuleNgFactory, RenderType_SelectButton, View_SelectButton_0, View_SelectButton_Host_0, SelectButtonNgFactory */
+
+  /***/
+  function node_modulesPrimengSelectbuttonPrimengSelectbuttonNgfactoryJs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "SelectButtonModuleNgFactory", function () {
+      return SelectButtonModuleNgFactory;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RenderType_SelectButton", function () {
+      return RenderType_SelectButton;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "View_SelectButton_0", function () {
+      return View_SelectButton_0;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "View_SelectButton_Host_0", function () {
+      return View_SelectButton_Host_0;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "SelectButtonNgFactory", function () {
+      return SelectButtonNgFactory;
+    });
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! primeng/selectbutton */
+    "./node_modules/primeng/fesm2015/primeng-selectbutton.js");
+    /* harmony import */
+
+
+    var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/common */
+    "./node_modules/@angular/common/fesm2015/common.js");
+    /* harmony import */
+
+
+    var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @angular/forms */
+    "./node_modules/@angular/forms/fesm2015/forms.js");
+    /**
+     * @fileoverview This file was generated by the Angular template compiler. Do not edit.
+     *
+     * @suppress {suspiciousCode,uselessCode,missingProperties,missingOverride,checkTypes}
+     * tslint:disable
+     */
+
+
+    var SelectButtonModuleNgFactory = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵcmf"](primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__["SelectButtonModule"], [], function (_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmod"]([_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵCodegenComponentFactoryResolver"], [[8, []], [3, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]], _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModuleRef"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](4608, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgLocalization"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgLocaleLocalization"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["LOCALE_ID"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__["SelectButtonModule"], primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__["SelectButtonModule"], [])]);
+    });
+
+    var styles_SelectButton = [];
+
+    var RenderType_SelectButton = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵcrt"]({
+      encapsulation: 2,
+      styles: styles_SelectButton,
+      data: {}
+    });
+
+    function View_SelectButton_3(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 2, "span", [], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
+        klass: [0, "klass"],
+        ngClass: [1, "ngClass"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵpad"](2, 2)], function (_ck, _v) {
+        var currVal_0 = _v.parent.parent.context.$implicit.icon;
+
+        var currVal_1 = _ck(_v, 2, 0, "ui-clickable", "ui-button-icon-left");
+
+        _ck(_v, 1, 0, currVal_0, currVal_1);
+      }, null);
+    }
+
+    function View_SelectButton_2(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](16777216, null, null, 1, null, View_SelectButton_3)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](2, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"]], {
+        ngIf: [0, "ngIf"]
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](3, 0, null, null, 1, "span", [["class", "ui-button-text ui-clickable"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵted"](4, null, ["", ""]))], function (_ck, _v) {
+        var currVal_0 = _v.parent.context.$implicit.icon;
+
+        _ck(_v, 2, 0, currVal_0);
+      }, function (_ck, _v) {
+        var currVal_1 = _v.parent.context.$implicit.label || "ui-btn";
+
+        _ck(_v, 4, 0, currVal_1);
+      });
+    }
+
+    function View_SelectButton_5(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 0, null, null, null, null, null, null, null))], null, null);
+    }
+
+    function View_SelectButton_4(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](16777216, null, null, 2, null, View_SelectButton_5)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 540672, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgTemplateOutlet"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"]], {
+        ngTemplateOutletContext: [0, "ngTemplateOutletContext"],
+        ngTemplateOutlet: [1, "ngTemplateOutlet"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵpod"](2, {
+        $implicit: 0,
+        index: 1
+      }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](0, null, null, 0))], function (_ck, _v) {
+        var _co = _v.component;
+
+        var currVal_0 = _ck(_v, 2, 0, _v.parent.context.$implicit, _v.parent.context.index);
+
+        var currVal_1 = _co.itemTemplate;
+
+        _ck(_v, 1, 0, currVal_0, currVal_1);
+      }, null);
+    }
+
+    function View_SelectButton_1(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, [["btn", 1]], null, 5, "div", [["role", "button"]], [[1, "aria-pressed", 0], [1, "title", 0], [1, "aria-label", 0], [1, "tabindex", 0], [1, "aria-labelledby", 0]], [[null, "click"], [null, "keydown.enter"], [null, "focus"], [null, "blur"]], function (_v, en, $event) {
+        var ad = true;
+        var _co = _v.component;
+
+        if ("click" === en) {
+          var pd_0 = _co.onItemClick($event, _v.context.$implicit, _v.context.index) !== false;
+          ad = pd_0 && ad;
+        }
+
+        if ("keydown.enter" === en) {
+          var pd_1 = _co.onItemClick($event, _v.context.$implicit, _v.context.index) !== false;
+          ad = pd_1 && ad;
+        }
+
+        if ("focus" === en) {
+          var pd_2 = _co.onFocus($event) !== false;
+          ad = pd_2 && ad;
+        }
+
+        if ("blur" === en) {
+          var pd_3 = _co.onBlur($event) !== false;
+          ad = pd_3 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
+        klass: [0, "klass"],
+        ngClass: [1, "ngClass"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵpod"](2, {
+        "ui-state-active": 0,
+        "ui-state-disabled": 1,
+        "ui-state-focus": 2,
+        "ui-button-text-icon-left": 3,
+        "ui-button-icon-only": 4
+      }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](16777216, null, null, 1, null, View_SelectButton_2)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](4, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"]], {
+        ngIf: [0, "ngIf"],
+        ngIfElse: [1, "ngIfElse"]
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](0, [["customcontent", 2]], null, 0, null, View_SelectButton_4))], function (_ck, _v) {
+        var _co = _v.component;
+
+        var currVal_5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵinlineInterpolate"](1, "ui-button ui-widget ui-state-default ui-button-text-only ", _v.context.$implicit.styleClass, "");
+
+        var currVal_6 = _ck(_v, 2, 0, _co.isSelected(_v.context.$implicit), _co.disabled || _v.context.$implicit.disabled, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵnov"](_v, 0) == _co.focusedItem, _v.context.$implicit.icon != null, _v.context.$implicit.icon && !_v.context.$implicit.label);
+
+        _ck(_v, 1, 0, currVal_5, currVal_6);
+
+        var currVal_7 = !_co.itemTemplate;
+
+        var currVal_8 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵnov"](_v, 5);
+
+        _ck(_v, 4, 0, currVal_7, currVal_8);
+      }, function (_ck, _v) {
+        var _co = _v.component;
+
+        var currVal_0 = _co.isSelected(_v.context.$implicit);
+
+        var currVal_1 = _v.context.$implicit.title;
+        var currVal_2 = _v.context.$implicit.label;
+        var currVal_3 = _co.tabindex;
+        var currVal_4 = _co.ariaLabelledBy;
+
+        _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4);
+      });
+    }
+
+    function View_SelectButton_0(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 4, "div", [["role", "group"]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
+        klass: [0, "klass"],
+        ngClass: [1, "ngClass"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](2, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgStyle"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
+        ngStyle: [0, "ngStyle"]
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](16777216, null, null, 1, null, View_SelectButton_1)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](4, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgForOf"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"]], {
+        ngForOf: [0, "ngForOf"]
+      }, null)], function (_ck, _v) {
+        var _co = _v.component;
+        var currVal_0 = _co.styleClass;
+        var currVal_1 = "ui-selectbutton ui-buttonset ui-widget ui-corner-all ui-buttonset-" + (_co.options ? _co.options.length : 0);
+
+        _ck(_v, 1, 0, currVal_0, currVal_1);
+
+        var currVal_2 = _co.style;
+
+        _ck(_v, 2, 0, currVal_2);
+
+        var currVal_3 = _co.options;
+
+        _ck(_v, 4, 0, currVal_3);
+      }, null);
+    }
+
+    function View_SelectButton_Host_0(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 3, "p-selectButton", [], null, null, null, View_SelectButton_0, RenderType_SelectButton)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵprd"](5120, null, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["NG_VALUE_ACCESSOR"], function (p0_0) {
+        return [p0_0];
+      }, [primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__["SelectButton"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](2, 573440, null, 1, primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__["SelectButton"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵqud"](603979776, 1, {
+        itemTemplate: 0
+      })], null, null);
+    }
+
+    var SelectButtonNgFactory = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵccf"]("p-selectButton", primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__["SelectButton"], View_SelectButton_Host_0, {
+      tabindex: "tabindex",
+      multiple: "multiple",
+      style: "style",
+      styleClass: "styleClass",
+      ariaLabelledBy: "ariaLabelledBy",
+      disabled: "disabled",
+      dataKey: "dataKey",
+      optionLabel: "optionLabel",
+      options: "options"
+    }, {
+      onOptionClick: "onOptionClick",
+      onChange: "onChange"
+    }, []);
+    /***/
+
+  },
+
+  /***/
+  "./node_modules/primeng/toolbar/primeng-toolbar.ngfactory.js":
+  /*!*******************************************************************!*\
+    !*** ./node_modules/primeng/toolbar/primeng-toolbar.ngfactory.js ***!
+    \*******************************************************************/
+
+  /*! exports provided: ToolbarModuleNgFactory, RenderType_Toolbar, View_Toolbar_0, View_Toolbar_Host_0, ToolbarNgFactory */
+
+  /***/
+  function node_modulesPrimengToolbarPrimengToolbarNgfactoryJs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ToolbarModuleNgFactory", function () {
+      return ToolbarModuleNgFactory;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RenderType_Toolbar", function () {
+      return RenderType_Toolbar;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "View_Toolbar_0", function () {
+      return View_Toolbar_0;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "View_Toolbar_Host_0", function () {
+      return View_Toolbar_Host_0;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ToolbarNgFactory", function () {
+      return ToolbarNgFactory;
+    });
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var primeng_toolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! primeng/toolbar */
+    "./node_modules/primeng/fesm2015/primeng-toolbar.js");
+    /* harmony import */
+
+
+    var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/common */
+    "./node_modules/@angular/common/fesm2015/common.js");
+    /**
+     * @fileoverview This file was generated by the Angular template compiler. Do not edit.
+     *
+     * @suppress {suspiciousCode,uselessCode,missingProperties,missingOverride,checkTypes}
+     * tslint:disable
+     */
+
+
+    var ToolbarModuleNgFactory = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵcmf"](primeng_toolbar__WEBPACK_IMPORTED_MODULE_1__["ToolbarModule"], [], function (_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmod"]([_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵCodegenComponentFactoryResolver"], [[8, []], [3, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]], _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModuleRef"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](4608, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgLocalization"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgLocaleLocalization"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["LOCALE_ID"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, primeng_toolbar__WEBPACK_IMPORTED_MODULE_1__["ToolbarModule"], primeng_toolbar__WEBPACK_IMPORTED_MODULE_1__["ToolbarModule"], [])]);
+    });
+
+    var styles_Toolbar = [];
+
+    var RenderType_Toolbar = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵcrt"]({
+      encapsulation: 2,
+      styles: styles_Toolbar,
+      data: {}
+    });
+
+    function View_Toolbar_0(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 3, "div", [["role", "toolbar"]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
+        klass: [0, "klass"],
+        ngClass: [1, "ngClass"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](2, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgStyle"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
+        ngStyle: [0, "ngStyle"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵncd"](null, 0)], function (_ck, _v) {
+        var _co = _v.component;
+        var currVal_0 = _co.styleClass;
+        var currVal_1 = "ui-toolbar ui-widget ui-widget-header ui-corner-all ui-helper-clearfix";
+
+        _ck(_v, 1, 0, currVal_0, currVal_1);
+
+        var currVal_2 = _co.style;
+
+        _ck(_v, 2, 0, currVal_2);
+      }, null);
+    }
+
+    function View_Toolbar_Host_0(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 1, "p-toolbar", [], null, null, null, View_Toolbar_0, RenderType_Toolbar)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 49152, null, 0, primeng_toolbar__WEBPACK_IMPORTED_MODULE_1__["Toolbar"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]], null, null)], null, null);
+    }
+
+    var ToolbarNgFactory = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵccf"]("p-toolbar", primeng_toolbar__WEBPACK_IMPORTED_MODULE_1__["Toolbar"], View_Toolbar_Host_0, {
+      style: "style",
+      styleClass: "styleClass"
+    }, {}, ["*"]);
+    /***/
+
   },
 
   /***/
@@ -419,7 +940,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }
 
     function View_EditComponent_2(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 1, "button", [["class", "ui-button-primary"], ["icon", "pi pi-pencil"], ["label", "Modificar"], ["pButton", ""]], null, [[null, "click"]], function (_v, en, $event) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 1, "button", [["class", "ui-button-success"], ["icon", "pi pi-save"], ["label", "Actualizar"], ["pButton", ""]], null, [[null, "click"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
 
@@ -433,8 +954,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         label: [0, "label"],
         icon: [1, "icon"]
       }, null)], function (_ck, _v) {
-        var currVal_0 = "Modificar";
-        var currVal_1 = "pi pi-pencil";
+        var currVal_0 = "Actualizar";
+        var currVal_1 = "pi pi-save";
 
         _ck(_v, 1, 0, currVal_0, currVal_1);
       }, null);
@@ -449,7 +970,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }
 
     function View_EditComponent_0(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 115, "div", [["class", "ui-g"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 0, "div", [["class", "ui-g-12 ui-lg-1"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](2, 0, null, null, 112, "div", [["class", "ui-g-12 ui-lg-10"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](3, 0, null, null, 11, "p-toolbar", [], null, null, null, _node_modules_primeng_toolbar_primeng_toolbar_ngfactory__WEBPACK_IMPORTED_MODULE_3__["View_Toolbar_0"], _node_modules_primeng_toolbar_primeng_toolbar_ngfactory__WEBPACK_IMPORTED_MODULE_3__["RenderType_Toolbar"])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](4, 49152, null, 0, primeng_toolbar__WEBPACK_IMPORTED_MODULE_4__["Toolbar"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](5, 0, null, 0, 9, "div", [["class", "p-toolbar-group-left"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_EditComponent_1)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 127, "div", [["class", "ui-g"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 0, "div", [["class", "ui-g-12 ui-lg-1"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](2, 0, null, null, 124, "div", [["class", "ui-g-12 ui-lg-10"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](3, 0, null, null, 11, "p-toolbar", [], null, null, null, _node_modules_primeng_toolbar_primeng_toolbar_ngfactory__WEBPACK_IMPORTED_MODULE_3__["View_Toolbar_0"], _node_modules_primeng_toolbar_primeng_toolbar_ngfactory__WEBPACK_IMPORTED_MODULE_3__["RenderType_Toolbar"])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](4, 49152, null, 0, primeng_toolbar__WEBPACK_IMPORTED_MODULE_4__["Toolbar"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](5, 0, null, 0, 9, "div", [["class", "p-toolbar-group-left"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_EditComponent_1)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
       }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, [" \xA0 "])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_EditComponent_2)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](10, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
@@ -466,11 +987,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](13, 4341760, null, 0, primeng_button__WEBPACK_IMPORTED_MODULE_2__["ButtonDirective"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]], {
         label: [0, "label"],
         icon: [1, "icon"]
-      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, [" \xA0 "])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](15, 0, null, null, 99, "div", [["class", "card card-w-title ui-fluid"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_EditComponent_3)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](17, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, [" \xA0 "])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](15, 0, null, null, 111, "div", [["class", "card card-w-title ui-fluid"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_EditComponent_3)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](17, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
       }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_EditComponent_4)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](19, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
-      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](20, 0, null, null, 94, "div", [["class", "ui-g form-group"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](21, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](22, 0, null, null, 1, "label", [["for", "nombre"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Nombre"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](24, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "nombre"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](20, 0, null, null, 106, "div", [["class", "ui-g form-group"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](21, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](22, 0, null, null, 1, "label", [["for", "nombre"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Nombre"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](24, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "nombre"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
 
@@ -516,7 +1037,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         model: [1, "model"]
       }, {
         update: "ngModelChange"
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](31, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](32, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](33, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](34, 0, null, null, 1, "label", [["for", "contacto"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Contacto"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](36, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "contacto"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](31, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](32, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](33, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](34, 0, null, null, 1, "label", [["for", "razosoci"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Raz\xF3n Social"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](36, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "razosoci"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
 
@@ -546,7 +1067,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         if ("ngModelChange" === en) {
-          var pd_5 = (_co.finca.contacto = $event) !== false;
+          var pd_5 = (_co.finca.razosoci = $event) !== false;
           ad = pd_5 && ad;
         }
 
@@ -562,7 +1083,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         model: [1, "model"]
       }, {
         update: "ngModelChange"
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](43, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](44, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](45, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](46, 0, null, null, 1, "label", [["for", "pais"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Pa\xEDs"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](48, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "pais"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](43, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](44, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](45, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](46, 0, null, null, 1, "label", [["for", "contacto"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Contacto"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](48, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "contacto"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
 
@@ -592,7 +1113,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         if ("ngModelChange" === en) {
-          var pd_5 = (_co.finca.pais = $event) !== false;
+          var pd_5 = (_co.finca.contacto = $event) !== false;
           ad = pd_5 && ad;
         }
 
@@ -608,7 +1129,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         model: [1, "model"]
       }, {
         update: "ngModelChange"
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](55, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](56, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](57, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](58, 0, null, null, 1, "label", [["for", "ciudad"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Ciudad"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](60, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "ciudad"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](55, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](56, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](57, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](58, 0, null, null, 1, "label", [["for", "pais"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Pa\xEDs"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](60, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "pais"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
 
@@ -638,7 +1159,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         if ("ngModelChange" === en) {
-          var pd_5 = (_co.finca.ciudad = $event) !== false;
+          var pd_5 = (_co.finca.pais = $event) !== false;
           ad = pd_5 && ad;
         }
 
@@ -654,7 +1175,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         model: [1, "model"]
       }, {
         update: "ngModelChange"
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](67, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](68, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](69, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](70, 0, null, null, 1, "label", [["for", "email"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Email"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](72, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "email"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](67, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](68, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](69, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](70, 0, null, null, 1, "label", [["for", "ciudad"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Ciudad"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](72, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "ciudad"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
 
@@ -684,7 +1205,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         if ("ngModelChange" === en) {
-          var pd_5 = (_co.finca.email = $event) !== false;
+          var pd_5 = (_co.finca.ciudad = $event) !== false;
           ad = pd_5 && ad;
         }
 
@@ -700,7 +1221,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         model: [1, "model"]
       }, {
         update: "ngModelChange"
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](79, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](80, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](81, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](82, 0, null, null, 1, "label", [["for", "phone"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Tel\xE9fono"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](84, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "phone"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](79, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](80, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](81, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](82, 0, null, null, 1, "label", [["for", "email"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Email"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](84, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "email"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
 
@@ -730,7 +1251,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         if ("ngModelChange" === en) {
-          var pd_5 = (_co.finca.phone = $event) !== false;
+          var pd_5 = (_co.finca.email = $event) !== false;
           ad = pd_5 && ad;
         }
 
@@ -746,7 +1267,53 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         model: [1, "model"]
       }, {
         update: "ngModelChange"
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](91, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](92, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](93, 0, null, null, 9, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](94, 0, null, null, 1, "label", [["for", "estado"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Estado"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](96, 0, null, null, 6, "p-selectButton", [], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"]], function (_v, en, $event) {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](91, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](92, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](93, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](94, 0, null, null, 1, "label", [["for", "phone"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Tel\xE9fono"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](96, 0, null, null, 8, "input", [["autocomplete", "off"], ["maxlength", "100"], ["name", "phone"], ["pInputText", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
+        var ad = true;
+        var _co = _v.component;
+
+        if ("input" === en) {
+          var pd_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 97)._handleInput($event.target.value) !== false;
+          ad = pd_0 && ad;
+        }
+
+        if ("blur" === en) {
+          var pd_1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 97).onTouched() !== false;
+          ad = pd_1 && ad;
+        }
+
+        if ("compositionstart" === en) {
+          var pd_2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 97)._compositionStart() !== false;
+          ad = pd_2 && ad;
+        }
+
+        if ("compositionend" === en) {
+          var pd_3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 97)._compositionEnd($event.target.value) !== false;
+          ad = pd_3 && ad;
+        }
+
+        if ("input" === en) {
+          var pd_4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 104).onInput($event) !== false;
+          ad = pd_4 && ad;
+        }
+
+        if ("ngModelChange" === en) {
+          var pd_5 = (_co.finca.phone = $event) !== false;
+          ad = pd_5 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](97, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["DefaultValueAccessor"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["COMPOSITION_BUFFER_MODE"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](98, 540672, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["MaxLengthValidator"], [], {
+        maxlength: [0, "maxlength"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](1024, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALIDATORS"], function (p0_0) {
+        return [p0_0];
+      }, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["MaxLengthValidator"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](1024, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALUE_ACCESSOR"], function (p0_0) {
+        return [p0_0];
+      }, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["DefaultValueAccessor"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](101, 671744, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"], [[8, null], [6, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALIDATORS"]], [8, null], [6, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALUE_ACCESSOR"]]], {
+        name: [0, "name"],
+        model: [1, "model"]
+      }, {
+        update: "ngModelChange"
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](103, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](104, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_7__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](105, 0, null, null, 9, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](106, 0, null, null, 1, "label", [["for", "estado"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Estado"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](108, 0, null, null, 6, "p-selectButton", [], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
 
@@ -756,52 +1323,52 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         return ad;
-      }, _node_modules_primeng_selectbutton_primeng_selectbutton_ngfactory__WEBPACK_IMPORTED_MODULE_8__["View_SelectButton_0"], _node_modules_primeng_selectbutton_primeng_selectbutton_ngfactory__WEBPACK_IMPORTED_MODULE_8__["RenderType_SelectButton"])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](97, 573440, null, 1, primeng_selectbutton__WEBPACK_IMPORTED_MODULE_9__["SelectButton"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]], {
+      }, _node_modules_primeng_selectbutton_primeng_selectbutton_ngfactory__WEBPACK_IMPORTED_MODULE_8__["View_SelectButton_0"], _node_modules_primeng_selectbutton_primeng_selectbutton_ngfactory__WEBPACK_IMPORTED_MODULE_8__["RenderType_SelectButton"])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](109, 573440, null, 1, primeng_selectbutton__WEBPACK_IMPORTED_MODULE_9__["SelectButton"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]], {
         options: [0, "options"]
       }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 1, {
         itemTemplate: 0
       }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](1024, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALUE_ACCESSOR"], function (p0_0) {
         return [p0_0];
-      }, [primeng_selectbutton__WEBPACK_IMPORTED_MODULE_9__["SelectButton"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](100, 671744, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"], [[8, null], [8, null], [8, null], [6, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALUE_ACCESSOR"]]], {
+      }, [primeng_selectbutton__WEBPACK_IMPORTED_MODULE_9__["SelectButton"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](112, 671744, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"], [[8, null], [8, null], [8, null], [6, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALUE_ACCESSOR"]]], {
         model: [0, "model"]
       }, {
         update: "ngModelChange"
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](102, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](103, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](104, 0, null, null, 1, "label", [["for", "direccion"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Direcci\xF3n"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](106, 0, null, null, 8, "textarea", [["autocomplete", "off"], ["maxlength", "100"], ["name", "direccion"], ["pInputTextarea", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-inputtextarea-resizable", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"], [null, "focus"]], function (_v, en, $event) {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](114, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](115, 0, null, null, 11, "div", [["class", "ui-g-12 ui-md-6"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](116, 0, null, null, 1, "label", [["for", "direccion"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Direcci\xF3n"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](118, 0, null, null, 8, "textarea", [["autocomplete", "off"], ["maxlength", "100"], ["name", "direccion"], ["pInputTextarea", ""], ["type", "text"]], [[1, "maxlength", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-inputtextarea-resizable", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"], [null, "focus"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
 
         if ("input" === en) {
-          var pd_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 107)._handleInput($event.target.value) !== false;
+          var pd_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 119)._handleInput($event.target.value) !== false;
           ad = pd_0 && ad;
         }
 
         if ("blur" === en) {
-          var pd_1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 107).onTouched() !== false;
+          var pd_1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 119).onTouched() !== false;
           ad = pd_1 && ad;
         }
 
         if ("compositionstart" === en) {
-          var pd_2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 107)._compositionStart() !== false;
+          var pd_2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 119)._compositionStart() !== false;
           ad = pd_2 && ad;
         }
 
         if ("compositionend" === en) {
-          var pd_3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 107)._compositionEnd($event.target.value) !== false;
+          var pd_3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 119)._compositionEnd($event.target.value) !== false;
           ad = pd_3 && ad;
         }
 
         if ("input" === en) {
-          var pd_4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 114).onInput($event) !== false;
+          var pd_4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 126).onInput($event) !== false;
           ad = pd_4 && ad;
         }
 
         if ("focus" === en) {
-          var pd_5 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 114).onFocus($event) !== false;
+          var pd_5 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 126).onFocus($event) !== false;
           ad = pd_5 && ad;
         }
 
         if ("blur" === en) {
-          var pd_6 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 114).onBlur($event) !== false;
+          var pd_6 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 126).onBlur($event) !== false;
           ad = pd_6 && ad;
         }
 
@@ -811,18 +1378,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         return ad;
-      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](107, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["DefaultValueAccessor"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["COMPOSITION_BUFFER_MODE"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](108, 540672, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["MaxLengthValidator"], [], {
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](119, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["DefaultValueAccessor"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["COMPOSITION_BUFFER_MODE"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](120, 540672, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["MaxLengthValidator"], [], {
         maxlength: [0, "maxlength"]
       }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](1024, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALIDATORS"], function (p0_0) {
         return [p0_0];
       }, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["MaxLengthValidator"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](1024, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALUE_ACCESSOR"], function (p0_0) {
         return [p0_0];
-      }, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["DefaultValueAccessor"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](111, 671744, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"], [[8, null], [6, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALIDATORS"]], [8, null], [6, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALUE_ACCESSOR"]]], {
+      }, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["DefaultValueAccessor"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](123, 671744, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"], [[8, null], [6, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALIDATORS"]], [8, null], [6, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALUE_ACCESSOR"]]], {
         name: [0, "name"],
         model: [1, "model"]
       }, {
         update: "ngModelChange"
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](113, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](114, 278528, null, 0, primeng_inputtextarea__WEBPACK_IMPORTED_MODULE_10__["InputTextarea"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](115, 0, null, null, 0, "div", [["class", "ui-g-12 ui-lg-1"]], null, null, null, null, null))], function (_ck, _v) {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵprd"](2048, null, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"], null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](125, 16384, null, 0, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControlStatus"], [[4, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgControl"]]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](126, 278528, null, 0, primeng_inputtextarea__WEBPACK_IMPORTED_MODULE_10__["InputTextarea"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](127, 0, null, null, 0, "div", [["class", "ui-g-12 ui-lg-1"]], null, null, null, null, null))], function (_ck, _v) {
         var _co = _v.component;
         var currVal_0 = !_co.edit;
 
@@ -860,8 +1427,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _ck(_v, 38, 0, currVal_35);
 
-        var currVal_36 = "contacto";
-        var currVal_37 = _co.finca.contacto;
+        var currVal_36 = "razosoci";
+        var currVal_37 = _co.finca.razosoci;
 
         _ck(_v, 41, 0, currVal_36, currVal_37);
 
@@ -871,8 +1438,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _ck(_v, 50, 0, currVal_51);
 
-        var currVal_52 = "pais";
-        var currVal_53 = _co.finca.pais;
+        var currVal_52 = "contacto";
+        var currVal_53 = _co.finca.contacto;
 
         _ck(_v, 53, 0, currVal_52, currVal_53);
 
@@ -882,8 +1449,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _ck(_v, 62, 0, currVal_67);
 
-        var currVal_68 = "ciudad";
-        var currVal_69 = _co.finca.ciudad;
+        var currVal_68 = "pais";
+        var currVal_69 = _co.finca.pais;
 
         _ck(_v, 65, 0, currVal_68, currVal_69);
 
@@ -893,8 +1460,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _ck(_v, 74, 0, currVal_83);
 
-        var currVal_84 = "email";
-        var currVal_85 = _co.finca.email;
+        var currVal_84 = "ciudad";
+        var currVal_85 = _co.finca.ciudad;
 
         _ck(_v, 77, 0, currVal_84, currVal_85);
 
@@ -904,31 +1471,42 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _ck(_v, 86, 0, currVal_99);
 
-        var currVal_100 = "phone";
-        var currVal_101 = _co.finca.phone;
+        var currVal_100 = "email";
+        var currVal_101 = _co.finca.email;
 
         _ck(_v, 89, 0, currVal_100, currVal_101);
 
         _ck(_v, 92, 0);
 
-        var currVal_109 = _co.options;
+        var currVal_115 = "100";
 
-        _ck(_v, 97, 0, currVal_109);
+        _ck(_v, 98, 0, currVal_115);
 
-        var currVal_110 = _co.finca.estado;
+        var currVal_116 = "phone";
+        var currVal_117 = _co.finca.phone;
 
-        _ck(_v, 100, 0, currVal_110);
+        _ck(_v, 101, 0, currVal_116, currVal_117);
 
-        var currVal_125 = "100";
+        _ck(_v, 104, 0);
 
-        _ck(_v, 108, 0, currVal_125);
+        var currVal_125 = _co.options;
 
-        var currVal_126 = "direccion";
-        var currVal_127 = _co.finca.direccion;
+        _ck(_v, 109, 0, currVal_125);
 
-        _ck(_v, 111, 0, currVal_126, currVal_127);
+        var currVal_126 = _co.finca.estado;
 
-        _ck(_v, 114, 0);
+        _ck(_v, 112, 0, currVal_126);
+
+        var currVal_141 = "100";
+
+        _ck(_v, 120, 0, currVal_141);
+
+        var currVal_142 = "direccion";
+        var currVal_143 = _co.finca.direccion;
+
+        _ck(_v, 123, 0, currVal_142, currVal_143);
+
+        _ck(_v, 126, 0);
       }, function (_ck, _v) {
         var currVal_6 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 26).maxlength ? _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 26).maxlength : null;
 
@@ -1080,49 +1658,74 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _ck(_v, 84, 1, [currVal_86, currVal_87, currVal_88, currVal_89, currVal_90, currVal_91, currVal_92, currVal_93, currVal_94, currVal_95, currVal_96, currVal_97, currVal_98]);
 
-        var currVal_102 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 102).ngClassUntouched;
+        var currVal_102 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 98).maxlength ? _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 98).maxlength : null;
 
-        var currVal_103 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 102).ngClassTouched;
+        var currVal_103 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 103).ngClassUntouched;
 
-        var currVal_104 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 102).ngClassPristine;
+        var currVal_104 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 103).ngClassTouched;
 
-        var currVal_105 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 102).ngClassDirty;
+        var currVal_105 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 103).ngClassPristine;
 
-        var currVal_106 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 102).ngClassValid;
+        var currVal_106 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 103).ngClassDirty;
 
-        var currVal_107 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 102).ngClassInvalid;
+        var currVal_107 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 103).ngClassValid;
 
-        var currVal_108 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 102).ngClassPending;
+        var currVal_108 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 103).ngClassInvalid;
 
-        _ck(_v, 96, 0, currVal_102, currVal_103, currVal_104, currVal_105, currVal_106, currVal_107, currVal_108);
+        var currVal_109 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 103).ngClassPending;
 
-        var currVal_111 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 108).maxlength ? _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 108).maxlength : null;
+        var currVal_110 = true;
+        var currVal_111 = true;
+        var currVal_112 = true;
+        var currVal_113 = true;
 
-        var currVal_112 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 113).ngClassUntouched;
+        var currVal_114 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 104).filled;
 
-        var currVal_113 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 113).ngClassTouched;
+        _ck(_v, 96, 1, [currVal_102, currVal_103, currVal_104, currVal_105, currVal_106, currVal_107, currVal_108, currVal_109, currVal_110, currVal_111, currVal_112, currVal_113, currVal_114]);
 
-        var currVal_114 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 113).ngClassPristine;
+        var currVal_118 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 114).ngClassUntouched;
 
-        var currVal_115 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 113).ngClassDirty;
+        var currVal_119 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 114).ngClassTouched;
 
-        var currVal_116 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 113).ngClassValid;
+        var currVal_120 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 114).ngClassPristine;
 
-        var currVal_117 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 113).ngClassInvalid;
+        var currVal_121 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 114).ngClassDirty;
 
-        var currVal_118 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 113).ngClassPending;
+        var currVal_122 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 114).ngClassValid;
 
-        var currVal_119 = true;
-        var currVal_120 = true;
+        var currVal_123 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 114).ngClassInvalid;
 
-        var currVal_121 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 114).autoResize;
+        var currVal_124 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 114).ngClassPending;
 
-        var currVal_122 = true;
-        var currVal_123 = true;
+        _ck(_v, 108, 0, currVal_118, currVal_119, currVal_120, currVal_121, currVal_122, currVal_123, currVal_124);
 
-        var currVal_124 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 114).filled;
+        var currVal_127 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 120).maxlength ? _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 120).maxlength : null;
 
-        _ck(_v, 106, 1, [currVal_111, currVal_112, currVal_113, currVal_114, currVal_115, currVal_116, currVal_117, currVal_118, currVal_119, currVal_120, currVal_121, currVal_122, currVal_123, currVal_124]);
+        var currVal_128 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 125).ngClassUntouched;
+
+        var currVal_129 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 125).ngClassTouched;
+
+        var currVal_130 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 125).ngClassPristine;
+
+        var currVal_131 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 125).ngClassDirty;
+
+        var currVal_132 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 125).ngClassValid;
+
+        var currVal_133 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 125).ngClassInvalid;
+
+        var currVal_134 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 125).ngClassPending;
+
+        var currVal_135 = true;
+        var currVal_136 = true;
+
+        var currVal_137 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 126).autoResize;
+
+        var currVal_138 = true;
+        var currVal_139 = true;
+
+        var currVal_140 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 126).filled;
+
+        _ck(_v, 118, 1, [currVal_127, currVal_128, currVal_129, currVal_130, currVal_131, currVal_132, currVal_133, currVal_134, currVal_135, currVal_136, currVal_137, currVal_138, currVal_139, currVal_140]);
       });
     }
 
@@ -1169,7 +1772,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         if (this.router.getCurrentNavigation().extras.state != null) {
           this.fincaTemp = JSON.parse(this.router.getCurrentNavigation().extras.state.finca);
-          console.log(this.fincaTemp);
           this.edit = true;
         } else {
           this.edit = false;
@@ -1184,7 +1786,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "inicializateValores",
         value: function inicializateValores() {
-          console.log('Inicializando los valores');
           this.finca = {
             apellidos: this.fincaTemp != null ? this.fincaTemp['apellidos'] : "",
             auxcodi: this.fincaTemp != null ? this.fincaTemp['auxcodi'] : "",
@@ -1203,7 +1804,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             tipo: this.fincaTemp != null ? this.fincaTemp['tipo'] : "J",
             tipoenti: this.fincaTemp != null ? this.fincaTemp['tipoenti'] : "F"
           };
-          console.log(this.finca);
           this.options = [{
             label: 'Activo',
             value: 'A'
@@ -1217,19 +1817,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function save() {
           var _this = this;
 
-          console.log('[Guardando una finca]');
-          console.log(this.finca);
           this.api.addfinca(this.finca, localStorage.getItem("token")).then(function (data) {
-            console.log(data);
-
             if (data.headerApp.code === 200) {
               _this.router.navigate(['fincas']);
 
               _this.inicializateValores();
             }
           }).catch(function (err) {
-            console.log(err);
-
             if (err.error.code == 401) {
               localStorage.clear();
 
@@ -1247,19 +1841,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function modificar() {
           var _this2 = this;
 
-          console.log('[Modificando una finca]');
-          console.log(this.finca);
           this.api.updatefinca(this.finca, localStorage.getItem("token")).then(function (data) {
-            console.log(data);
-
             if (data.headerApp.code === 200) {
               _this2.router.navigate(['fincas']);
 
               _this2.inicializateValores();
             }
           }).catch(function (err) {
-            console.log(err);
-
             if (err.error.code == 401) {
               localStorage.clear();
 

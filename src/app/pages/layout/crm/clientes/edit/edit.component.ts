@@ -5,15 +5,16 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ShareReplayConfig } from 'rxjs/internal/operators/shareReplay';
 import { MessageService } from 'primeng/api';
 import { mark } from 'src/models/mark';
+import { UtilService } from 'src/services/util.service';
 
 export interface client {
     entiId: string;
     entiDni: string;
     estado: string;
+    pais: string;
     ciudad: string;
     direccion: string;
     nombres: string;
-    apellidos: string;
     razosoci: string;
     tipo: any;
     email: string;
@@ -44,16 +45,15 @@ export class EditComponent implements OnInit {
     marksdisabled: mark[] = [];
     selectmark: mark;
     name: string;
+    city: string;
+    direction: string;
 
-    constructor(private api: ApisService, private router: Router, private messageService: MessageService) {
+    constructor(private api: ApisService, private router: Router, private messageService: MessageService, private util: UtilService) {
         if (this.router.getCurrentNavigation().extras.state != null) {
-            console.log('EDITAR..');
             this.client_ = JSON.parse(this.router.getCurrentNavigation().extras.state.user);
-            console.log(this.client_);
             this.edit = true;
             this.getMarcks();
         } else {
-            console.log('CREATE');
             this.edit = false;
         }
         this.inicializateValores();
@@ -64,20 +64,14 @@ export class EditComponent implements OnInit {
     }
 
     modificarclient() {
-        console.log('[Modificar el cliente]');
-        console.log(this.client);
         this.client.tipo = this.client.tipo.code;
-        this.client.tipo == 'J' ? this.client.nombres = this.client.razosoci : '';
         this.api.updateclient(this.client, localStorage.getItem("token")).then(data => {
-            console.log("Modificando el cliente");
             if (data.headerApp.code === 200) {
                 this.router.navigate(['clientes']);
                 this.inicializateValores();
             }
-            console.log(data);
 
         }).catch(err => {
-            console.log(err);
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -87,11 +81,11 @@ export class EditComponent implements OnInit {
     }
 
     saveclient() {
-        console.log('[Guardando el usuario]');
+
         this.client.tipo = this.client.tipo.code;
         this.client.tipo == 'J' ? this.client.nombres = this.client.razosoci : '';
         this.api.addclient(this.client, localStorage.getItem("token")).then(data => {
-            console.log("Guardar cliente");
+
             if (data.headerApp.code === 200) {
                 this.router.navigate(['clientes']);
                 this.inicializateValores();
@@ -120,19 +114,16 @@ export class EditComponent implements OnInit {
             entiId: this.client_ != null ? this.client_['id'] : "",
             entiDni: this.client_ != null ? this.client_['identification'] : "",
             estado: this.client_ != null ? this.client_['status'] == 'Activo' ? "A" : "I" : "A",
+            pais: this.client_ != null ? this.client_['pais'] : "",
             ciudad: this.client_ != null ? this.client_['city'] : "",
             direccion: this.client_ != null ? this.client_['direction'] : "",
             nombres: this.client_ != null ? this.client_['name'] : "",
-            apellidos: this.client_ != null ? this.client_['lastname'] : "",
             razosoci: this.client_ != null ? this.client_['razosoci'] : "",
             tipo: this.client_ != null ? this.getType(this.client_['tipo'])[0] : { name: 'Persona Natural', code: 'N' },
             email: this.client_ != null ? this.client_['email'] : "",
             phone: this.client_ != null ? this.client_['phone'] : "",
             tipoenti: "C"
         };
-
-        console.log('ESTE ES EL CLIENTE');
-        console.log(this.client);
 
         this.options = [{ label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];
         this.tipos = [
@@ -153,8 +144,7 @@ export class EditComponent implements OnInit {
 
     onConfirm() {
         this.blockedPanel = false;
-        console.log('[Modificando el usuario]');
-        console.log(this.client);
+
         this.api.updateclient(this.client, localStorage.getItem("token")).then(data => {
             console.log("Actualizar cliente");
             if (data.headerApp.code === 200) {
@@ -201,15 +191,20 @@ export class EditComponent implements OnInit {
     guardar() {
         let mark: mark = {
             nombre: this.name,
+            ciudad: this.city,
+            direccion: this.direction,
             estado: 'A',
             entiId: this.client_['id']
         }
+
         this.api.addmark(mark, localStorage.getItem("token")).then(data => {
             console.log(data);
             if (data.headerApp.code === 200) {
                 this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se ha agregado una nueva marca al cliente' });
                 this.getMarcks();
                 this.name = "";
+                this.city = "";
+                this.direction = "";
 
             }
         }).catch(err => {
@@ -221,15 +216,18 @@ export class EditComponent implements OnInit {
         })
     }
 
-    async enabled(event: any) {
-        await event.items.forEach(async element => {
+    async enabled(event: any) {        
+        this.util.isLoading.next(true);
+        await Promise.all(event.items.map(async (element) => {
             let mark = {
                 entiId: element.entiId,
                 marcId: element.marcId,
                 nombre: element.nombre,
-                estado: 'A'
+                estado: 'A',
+                ciudad: element.ciudad,
+                direccion: element.direccion
             }
-            await this.api.updatemark(mark, localStorage.getItem("token")).then((data) => {
+            await this.api.updatemark(mark, localStorage.getItem("token")).then((data) => {                
                 if (data.headerApp.code === 200) {
                     console.log('Actualizado correctamente');
                 }
@@ -241,21 +239,25 @@ export class EditComponent implements OnInit {
                 }
             })
 
-        });
+        })
+        );        
+        this.util.isLoading.next(false);
         await this.getMarcks();
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se han habilitado algunas marcas ' });
     }
 
-    async disabled(event: any) {
-
-        await event.items.forEach(async element => {
+    async disabled(event: any) {        
+        this.util.isLoading.next(true);
+        await Promise.all(event.items.map(async (element) => {
             let mark = {
                 entiId: element.entiId,
                 marcId: element.marcId,
                 nombre: element.nombre,
-                estado: 'I'
+                estado: 'I',
+                ciudad: element.ciudad,
+                direccion: element.direccion 
             }
-            this.api.updatemark(mark, localStorage.getItem("token")).then((data) => {
+            await this.api.updatemark(mark, localStorage.getItem("token")).then((data) => {                
                 if (data.headerApp.code === 200) {
                     console.log('Actualizado correctamente');
                 }
@@ -267,8 +269,9 @@ export class EditComponent implements OnInit {
                 }
             })
 
-        });
-
+        })
+        );        
+        this.util.isLoading.next(false);
         await this.getMarcks();
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se han desabilitado algunas marcas ' });
     }
@@ -277,15 +280,24 @@ export class EditComponent implements OnInit {
      * Function update name this mark of client
      */
     async modificar() {
+        console.log('SELECT MARK');
+        console.log(this.selectmark);
         let mark = {
             entiId: this.selectmark.entiId,
             marcId: this.selectmark.marcId,
             nombre: this.name,
+            ciudad: this.city,
+            direccion: this.direction,
             estado: this.selectmark.estado
         }
+        console.log(mark);
+
         await this.api.updatemark(mark, localStorage.getItem("token")).then((data) => {
             if (data.headerApp.code === 200) {
                 console.log('Actualizado correctamente');
+                this.name = "";
+                this.city = "";
+                this.direction = "";
             }
         }).catch(err => {
             console.log(err);
@@ -298,21 +310,27 @@ export class EditComponent implements OnInit {
         await this.getMarcks();
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se actualizado la marca ' + this.selectmark.nombre });
         this.selectmark = null;
-        this.name = "";
+
     }
 
     selected(mark: mark) {
+        console.log('MARCA');
+        console.log(mark);
         if (mark == this.selectmark) {
             this.selectmark = null;
         } else {
             this.selectmark = mark;
             this.name = this.selectmark.nombre;
+            this.city = this.selectmark.ciudad;
+            this.direction = this.selectmark.direccion;
         }
     }
 
     cancelarmark() {
         this.selectmark = null;
         this.name = "";
+        this.city = "";
+        this.direction = "";
     }
 
 }

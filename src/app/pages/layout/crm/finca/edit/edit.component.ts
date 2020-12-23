@@ -20,7 +20,6 @@ export class EditComponent implements OnInit {
   constructor(private api: ApisService, private router: Router, private messageService: MessageService) { 
     if (this.router.getCurrentNavigation().extras.state != null) {
       this.fincaTemp = JSON.parse(this.router.getCurrentNavigation().extras.state.finca);
-      console.log(this.fincaTemp);
       this.edit = true;
     } else {
       this.edit = false;
@@ -32,7 +31,6 @@ export class EditComponent implements OnInit {
   }
 
   inicializateValores(){
-    console.log('Inicializando los valores');
     this.finca = {
       apellidos: this.fincaTemp != null ? this.fincaTemp['apellidos'] : "",
       auxcodi: this.fincaTemp != null ? this.fincaTemp['auxcodi'] : "",
@@ -52,22 +50,17 @@ export class EditComponent implements OnInit {
       tipoenti: this.fincaTemp != null ? this.fincaTemp['tipoenti'] : "F",
     };
 
-    console.log(this.finca);
-
     this.options = [{ label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];
   }
 
-  save() {
-    console.log('[Guardando una finca]');
-    console.log(this.finca);   
+  save() {  
     this.api.addfinca(this.finca, localStorage.getItem("token")).then(data => {
-      console.log(data);
+      
       if (data.headerApp.code === 200) {
         this.router.navigate(['fincas']);
         this.inicializateValores();
       }
     }).catch(err => {
-      console.log(err);
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -80,17 +73,13 @@ export class EditComponent implements OnInit {
     this.router.navigate(['fincas']);
   }
 
-  modificar(){
-    console.log('[Modificando una finca]');
-    console.log(this.finca);   
-    this.api.updatefinca(this.finca, localStorage.getItem("token")).then(data => {
-      console.log(data);
+  modificar(){  
+    this.api.updatefinca(this.finca, localStorage.getItem("token")).then(data => {      
       if (data.headerApp.code === 200) {
         this.router.navigate(['fincas']);
         this.inicializateValores();
       }
     }).catch(err => {
-      console.log(err);
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);

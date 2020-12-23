@@ -4,6 +4,7 @@ import { EditComponent } from './edit.component';
 import { EditRoutingModule } from './edit-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputSwitchModule, SelectButtonModule, DropdownModule, InputTextModule, InputTextareaModule, ButtonModule, ToolbarModule, ToastModule, BlockUIModule, FieldsetModule, PickListModule, KeyFilterModule, PasswordModule } from 'primeng';
+import { SharedModule } from 'src/app/shared.module';
 
 
 
@@ -26,7 +27,8 @@ import { InputSwitchModule, SelectButtonModule, DropdownModule, InputTextModule,
     FieldsetModule,
     PickListModule,
     KeyFilterModule,
-    PasswordModule
+    PasswordModule,
+    SharedModule
   ]
 })
 export class EditModule { }

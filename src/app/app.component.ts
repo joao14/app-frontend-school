@@ -11,9 +11,9 @@ export class AppComponent {
     constructor(private translate: TranslateService) {
         this.translate.setDefaultLang('es');
         this.translate.onLangChange.subscribe(x => {
-            console.log('Se ha cambiado de lenguaje', x);
+            //console.log('Se ha cambiado de lenguaje', x);
         }, error => {
-            console.log('onchanged failed', error);
+            //console.log('onchanged failed', error);
         })
     }
 

@@ -9,7 +9,9 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { CarouselModule, ButtonModule, InputTextModule } from 'primeng';
+import { CarouselModule, ButtonModule, InputTextModule, ChartModule, DialogModule } from 'primeng';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { SharedModule } from 'src/app/shared.module';
 
 
 @NgModule({
@@ -24,7 +26,11 @@ import { CarouselModule, ButtonModule, InputTextModule } from 'primeng';
         FullCalendarModule,
         CarouselModule,
         ButtonModule,
-        InputTextModule
+        InputTextModule,
+        ChartModule,
+        NgxSkeletonLoaderModule,
+        SharedModule,
+        DialogModule,
     ],
     declarations: [
         DashboardComponent

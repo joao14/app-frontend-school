@@ -28,9 +28,11 @@ const routes: Routes = [
             { path: 'usuario', loadChildren: () => import('./security/usuario/usuario.module').then(m => m.UsuarioModule) },
             { path: 'edituser', loadChildren: () => import('./security/usuario/edit/edit.module').then(m => m.EditModule) },
             { path: 'roles', loadChildren: () => import('./security/roles/roles.module').then(m => m.RolesModule) },
-            { path: 'sales', loadChildren: () => import('./reporte/sale/sale.module').then(m => m.SaleModule) } 
+            { path: 'sales', loadChildren: () => import('./reporte/sale/sale.module').then(m => m.SaleModule) }, 
+            { path: 'aboutus', loadChildren: () => import('./aboutus/aboutus.module').then(m => m.AboutusModule) },
+            { path: 'general', loadChildren: () => import('./reporte/general/general.module').then(m => m.GeneralModule) },  
         ]
-    }
+    } 
 ];
 
 @NgModule({

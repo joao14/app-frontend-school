@@ -6,7 +6,7 @@
                 <button (click)="save()" pButton class="ui-button-success" icon="pi pi-check" label="Guardar"
                     *ngIf="!edit"></button> &nbsp;
 
-                <button (click)="modificar()" pButton class="ui-button-primary" icon="pi pi-pencil" label="Modificar"
+                <button (click)="modificar()" pButton class="ui-button-success" icon="pi pi-save" label="Actualizar"
                     *ngIf="edit"></button> &nbsp;
 
                 <button (click)="cancelar()" pButton class="ui-button-warning" icon="pi pi-arrow-left"
@@ -23,6 +23,12 @@
                     <label for="nombre">Nombre</label>
                     <input type="text" name="nombre" pInputText autocomplete="off" maxlength="100"
                         [(ngModel)]="finca.nombres" />
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <label for="razosoci">Razón Social</label>
+                    <input type="text" name="razosoci" pInputText autocomplete="off" maxlength="100"
+                        [(ngModel)]="finca.razosoci" />
                 </div>
 
                 <div class="ui-g-12 ui-md-6">

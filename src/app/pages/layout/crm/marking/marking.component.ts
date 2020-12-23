@@ -27,16 +27,11 @@ export class MarkingComponent implements OnInit {
   }
 
   getClients() {
-    console.log('Consultando los clientes..');
     this.apis.getclients(localStorage.getItem("token")).then(client => {
-      console.log(client);
       if (client.headerApp.code === 200) {
         this.clients = client.data.clientes;
-        console.log('Clientes..');
-        console.log(this.clients);        
       }
-    }).catch(err => {
-      console.log(err);
+    }).catch(err => {      
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -45,11 +40,9 @@ export class MarkingComponent implements OnInit {
   }
 
  onOptionsSelected() {
-    console.log('Consultando las marcas de los clientes');
     this.marks=[];
     this.loading=true;
     this.apis.getmarks(this.selectClient.entiId, localStorage.getItem("token")).then(mark => {
-      console.log(mark);
       if (mark.headerApp.code == 200) {
         this.marks = mark.data.marks;
         this.loading=false;
@@ -57,7 +50,6 @@ export class MarkingComponent implements OnInit {
         this.loading=false;
       }
     }).catch(err => {
-      console.log(err);
       this.loading=false;
       if (err.error.code == 401) {
         localStorage.clear();
@@ -67,18 +59,14 @@ export class MarkingComponent implements OnInit {
   }
 
   addMark(){
-    console.log('Nueva Marca');
     this.router.navigate(['/editMarca']);
   }
 
   edit(mark: mark){
-    console.log('Editando las marcaciones');
-    console.log(mark);
     this.router.navigate(['/editMarca'], { state: { mark: JSON.stringify(mark) } });
   }
 
   consultarMobile(){
-    console.log('Consultando las marcas mobile');
     if (this.name == undefined || this.name == '') {
       this.marks = [];
       this.onOptionsSelected();
@@ -91,8 +79,6 @@ export class MarkingComponent implements OnInit {
         this.marks.push(mark)
       } 
     });
-    console.log('Fincas finales');
-    console.log(this.marks);
   }
 
 

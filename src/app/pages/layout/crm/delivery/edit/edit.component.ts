@@ -20,7 +20,6 @@ export class EditComponent implements OnInit {
   constructor(private api: ApisService, private router: Router, private messageService: MessageService) {
     if (this.router.getCurrentNavigation().extras.state != null) {
       this.deliveryTemp = JSON.parse(this.router.getCurrentNavigation().extras.state.delivery);
-      console.log(this.deliveryTemp);
       this.edit = true;
     } else {
       this.edit = false;
@@ -32,7 +31,6 @@ export class EditComponent implements OnInit {
   }
 
   inicializateValores(){
-    console.log('Inicializando los valores');
     this.delivery = {
       apellidos: this.deliveryTemp != null ? this.deliveryTemp['apellidos'] : "",
       auxcodi: this.deliveryTemp != null ? this.deliveryTemp['auxcodi'] : "",
@@ -52,22 +50,17 @@ export class EditComponent implements OnInit {
       tipoenti: this.deliveryTemp != null ? this.deliveryTemp['tipoenti'] : "Z",
     };
 
-    console.log(this.delivery);
 
     this.options = [{ label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];
   }
 
   save() {
-    console.log('[Guardando una delivery]');
-    console.log(this.delivery);   
     this.api.adddelivery(this.delivery, localStorage.getItem("token")).then(data => {
-      console.log(data);
       if (data.headerApp.code === 200) {
         this.router.navigate(['delivery']);
         this.inicializateValores();
       }
     }).catch(err => {
-      console.log(err);
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -80,17 +73,14 @@ export class EditComponent implements OnInit {
     this.router.navigate(['delivery']);
   }
 
-  modificar(){
-    console.log('[Modificando una delivery]');
-    console.log(this.delivery);   
+  modificar(){ 
     this.api.updatedelivery(this.delivery, localStorage.getItem("token")).then(data => {
-      console.log(data);
+      
       if (data.headerApp.code === 200) {
         this.router.navigate(['delivery']);
         this.inicializateValores();
       }
     }).catch(err => {
-      console.log(err);
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);

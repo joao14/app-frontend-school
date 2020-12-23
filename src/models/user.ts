@@ -8,5 +8,13 @@ export interface user {
     name: string;
     lastname: string;
     roles: roles[];
-    photo: string;
+    photo: any;
+    empresa: {
+        dni: string;
+        entiid: number;
+        nombcome: string;
+        razosoci: string;
+    },
+    clave: string;
+    nickname: string;
 }

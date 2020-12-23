@@ -7,6 +7,9 @@ import * as moment from 'moment';
 import { client } from 'src/models/client';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UtilService } from 'src/services/util.service';
+import { stringify } from 'querystring';
+import { environment } from 'src/environments/environment';
+import { user } from 'src/models/user';
 
 
 export interface Head {
@@ -24,9 +27,6 @@ export interface Information {
 }
 
 export interface Item {
-  /*pdf:string;
-  nombreCliente: string;
-  clieId: number;*/
   cargname: string;
   cm: string;
   farm: string;
@@ -40,7 +40,7 @@ export interface Item {
   status: string;
   tallos: number;
   totaltallos: number;
-} 
+}
 export interface Client {
   info: Information;
   items: Array<Item>;
@@ -51,17 +51,38 @@ export interface Report {
   head: Head;
 }
 
+export interface ReportClient {
+  detalle: Array<{
+    cargcomp_id: string;
+    cm: string;
+    farm: string;
+    fincapropia: string;
+    flower: string;
+    hbqb: number;
+    line: number;
+    mark: string;
+    pcomp: string;
+    pvp: string;
+    shippingdate: string;
+    status: string;
+    totaltallos: number;
+  }>;
+  pralId: number;
+  fecha: string;
+  pdf: string;
+}
 
+ 
 @Component({
   selector: 'app-documento',
-  templateUrl: './documento.component.html',
+  templateUrl: './documento.component.html',        
   styleUrls: ['./documento.component.css'],
   providers: [MessageService, ConfirmationService, DialogService, TranslateService],
 })
 export class DocumentoComponent implements OnInit {
 
   documentos: Array<Document> = [];
-  clientes: Array<client> = [];
+  clientes: Array<client> = []; 
   selectDocument: Document;
   numDocument: string;
   date: Date;
@@ -69,30 +90,53 @@ export class DocumentoComponent implements OnInit {
   dialogVisible: boolean;
   selectClient: client;
   prealerts: Array<Report> = [];
+  prealert: ReportClient;
   url: string;
   titledialog: string;
   row: number;
+  dialogEmail: boolean;
+  emailuser: string;
+  newemailuser: string;
+  status: boolean;
+  selectclientprealert: Information;
+  rol: string;
+  user: user;
 
   constructor(private api: ApisService, private router: Router, public dialogService: DialogService,
     private messageService: MessageService, private spinner: NgxSpinnerService, private utilService: UtilService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.status = false;
+    this.rol = localStorage.getItem('rolactive');
+    this.user = JSON.parse(localStorage.getItem("user"));   
+    this.emailuser = "";
     this.date = new Date();
     this.numDocument = "";
+    this.dialogEmail = false;
     this.filterMobile = new Date();
-    this.getData();
+    switch (this.rol) {
+      case "ADM":
+        await this.getData();
+        break;
+      case "COM":
+        await this.getData();
+        break;
+      case "CLI":
+        await this.getDatabyClient();
+        break;
+      default:
+        console.error('El perfil ingresado no tiene permisos a esta página');
+        break;
+    }
   }
 
-  async getData() {
-    console.log('DATA...');
-    
+  async getDatabyClient() {
     this.utilService.isLoading.next(true);
-    await this.api.getPrealertActive(localStorage.getItem("token")).then(data => {
-      console.log(data);
+    await this.api.getPrealertActivebyClient(this.user.empresa.entiid, localStorage.getItem("token")).then(data => {
+      
       if (data.headerApp.code == 200) {
-        this.prealerts = data.data.prealerts;
-        console.log('Ejecutando...');
-        console.log(this.prealerts);
+        this.prealert = data.data.prealert;
+        
       }
     }).catch(err => {
       if (err.error.code == 401) {
@@ -101,110 +145,122 @@ export class DocumentoComponent implements OnInit {
       }
     })
     this.utilService.isLoading.next(false);
-
   }
 
-  selectItem(information: Information) {
-    this.url = 'https://addsoft-tech.com:8443/rmi/' + information.pdf;
-    this.dialogVisible = true;
-    this.titledialog = information.nombres;
-  }
-
-  sendEmail(information: Information) {
-    console.log('Se enviara el correo electrónico');
-    console.log(information.email);
-  }
-
-  sendGeneral(head: Head) {
-    console.log('Se enviara el correo electrónico general');
-    
-  }
-
-  downlaodTotal(head: Head) {
-    this.url = 'https://addsoft-tech.com:8443/rmi/' + head.pdf;
-    this.dialogVisible = true;
-    this.titledialog = 'Prealerta ID [' + head.pralId+']'
-  }
-
-  consultar() {
-    console.log('Consultar..');
-    this.documentos = [];
-
-  }
-
-  onDateSelect(event) {
-    console.log('Seleccionar');
-    console.log(event);
-    //Debe volver a consultar
-    console.log(this.documentos);
-    console.log('TEST');
-    //this.documentos = this.documentos.filter(documento => this.getFormatDate(documento.fechaTransaccion) == this.getFormatDate(event));
-    console.log('RESULTADO FINAL');
-    console.log(this.documentos);
-  }
-
-  getFormatDate(date: Date): string {
-    return (moment(date)).format('DD-MMM-YYYY');
-  }
-
-  view(document: Document) {
-    console.log('Esta es la interface');
-    console.log(document);
-    this.selectDocument = document;
-    this.dialogVisible = true;
-  }
-
-  consultarMobile() {
-    console.log('Consultando las facturas..');
-    console.log(this.filterMobile);
-    console.log(this.numDocument);
-    if (this.filterMobile == undefined && this.numDocument == "") {
-      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Debe ingresar datos en el filtro de consulta.' });
-      return;
-    }
-  }
-
-  selectRow(info: Information){
-    if(this.row==info.clieId){
-      this.row=null;
-    }else{
-      this.row= info.clieId
-    }
-     
-  }
-
-  exportExcel() {
-    import("xlsx").then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(this.documentos);
-      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-      this.saveAsExcelFile(excelBuffer, "balance");
-    });
-  }
-
-  saveAsExcelFile(buffer: any, fileName: string): void {
-    import("file-saver").then(FileSaver => {
-      let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-      let EXCEL_EXTENSION = '.xlsx';
-      const data: Blob = new Blob([buffer], {
-        type: EXCEL_TYPE
-      });
-      FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-    });
-  }
-
-  getClient() {
-    this.api.getclients(localStorage.getItem("token")).then(cliente => {
-      if (cliente.headerApp.code === 200) {
-        this.clientes = cliente.data.clientes;
+  async getData() {
+    this.utilService.isLoading.next(true);
+    await this.api.getPrealertActive(localStorage.getItem("token")).then(data => {
+      if (data.headerApp.code == 200) {
+        this.prealerts = data.data.prealerts;
       }
     }).catch(err => {
-      console.log(err);
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
       }
     })
+    this.utilService.isLoading.next(false);
   }
+
+  selectItem(information: Information) {
+    this.url = environment.url + information.pdf;
+    this.dialogVisible = true;
+    this.titledialog = information.nombres;
+  }
+
+  sendEmail(information: Information) {
+    this.emailuser = information.email;
+    this.selectclientprealert = information;
+    if (this.rol == 'ADM') {
+      this.dialogEmail = true;
+    } else {
+      this.dialogEmail = false;
+      this.ok();
+    }
+
+  }
+
+  sendGeneral(head: Head, type: string) {
+    this.emailuser = environment.email;
+    this.selectclientprealert = {
+      clieId: 1,
+      email: environment.email,
+      nombres: "Rosa Mística",
+      pdf: head.pdf
+    }
+    if (type == 'ADM') {
+      this.dialogEmail = true;
+    } else {
+      this.dialogEmail = false;
+      this.ok();
+    } 
+
+  }
+
+  downloaddReportClient() {    
+    this.url = environment.url + this.prealert.pdf;    
+    this.dialogVisible = true;
+    this.titledialog = 'Prealerta ID [' + this.prealert.pralId + ']'
+  }
+ 
+  downlaodTotal(head: Head) { 
+    this.url = environment.url + head.pdf; 
+    this.dialogVisible = true;
+    this.titledialog = 'Prealerta ID [' + head.pralId + ']'
+  }
+
+
+  view(document: Document) {
+    this.selectDocument = document;
+    this.dialogVisible = true;
+  }
+
+  selectRow(info: Information) {
+    if (this.row == info.clieId) {
+      this.row = null;
+    } else {
+      this.row = info.clieId
+    }
+
+  }
+
+
+  async ok() {
+    if (this.rol == 'ADM' && this.status && (this.newemailuser == '' || this.newemailuser == undefined)) {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Debe agregar el nuevo email' });
+      return;
+    }
+
+    let contentEmail = {
+      tipoDocu: "PAL",
+      clieId: this.selectclientprealert.clieId,
+      nombres: this.selectclientprealert.nombres,
+      email: this.status ? this.newemailuser : this.emailuser,
+      secuencia: this.prealerts[0]?.head.pralId,
+      docu: this.selectclientprealert.pdf,
+      fechaDocu: this.getFormatDate(new Date())
+    }
+    this.utilService.isLoading.next(true);
+    await this.api.sendEmail(contentEmail, localStorage.getItem("token")).then(data => {
+      if (data.headerApp.code == 200) {
+        this.dialogEmail = false;
+        this.emailuser = "";
+        this.status = false;
+        this.newemailuser = "";
+        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Email enviado correctamente' });
+      }
+    }).catch(err => {
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    this.utilService.isLoading.next(false);
+  }
+
+  getFormatDate(date: Date): string {
+    return (moment(date)).format('yyyy-MM-DD HH:mm:ss.SSS');
+  }
+
 
 }

@@ -15,8 +15,7 @@ export class DragdropDirective {
   constructor(private sanitizer: DomSanitizer) { }
 
   //Dragover listener
-  @HostListener('dragover', ['$event']) public onDragOver(evt: DragEvent) {
-    console.log('dragover');
+  @HostListener('dragover', ['$event']) public onDragOver(evt: DragEvent) {    
     evt.preventDefault();
     evt.stopPropagation();
     this.background = '#9ecbec';
@@ -25,7 +24,6 @@ export class DragdropDirective {
 
   //Dragleave listener
   @HostListener('dragleave', ['$event']) public onDragLeave(evt: DragEvent) {
-    console.log('dragleave');
     evt.preventDefault();
     evt.stopPropagation();
     this.background = '#f5fcff'
@@ -34,7 +32,6 @@ export class DragdropDirective {
 
   //Drop listener
   @HostListener('drop', ['$event']) public ondrop(evt: DragEvent) {
-    console.log('drop');
     evt.preventDefault();
     evt.stopPropagation();
     this.background = '#f5fcff'

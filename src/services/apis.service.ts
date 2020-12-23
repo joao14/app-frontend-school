@@ -67,6 +67,22 @@ export class ApisService {
             .pipe(retry(2), catchError(this.handleError)).toPromise();
     }
 
+    public resetpassword(email: string, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.resetpassword + email, opt).toPromise().then(email => {
+                resolve(email);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
     public getUsers(token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
@@ -266,7 +282,10 @@ export class ApisService {
         });
     }
 
-    public getflowerbyname(name: string, token: string): Promise<any> {
+    public getflowerbyname(name_: string, token: string): Promise<any> {
+        let json = {
+            name: name_
+        }
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -274,13 +293,45 @@ export class ApisService {
             })
         }
         return new Promise<any>((resolve, reject) => {
-            this.http.get<any>(environment.searchflower + name, opt).toPromise().then(flowers => {
+            this.http.post<any>(environment.searchflower, json, opt).toPromise().then(flowers => {
                 resolve(flowers);
             }).catch(error => {
                 reject(error);
             })
         });
 
+    }
+
+    public addResourcesflowers(flower: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.addresourcesflower, flower, opt).toPromise().then(flower => {
+                resolve(flower);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public removeResourcesflowers(idResource: number, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.removeresourcesflower + idResource, null, opt).toPromise().then(flower => {
+                resolve(flower);
+            }).catch(error => {
+                reject(error);
+            })
+        });
     }
 
 
@@ -447,6 +498,23 @@ export class ApisService {
         });
     }
 
+    public registerInvoiceDraft(invoice: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.registerinvoicedraft, invoice, opt).toPromise().then(invoice => {
+                resolve(invoice);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+
     public registerPaymentClaim(payment: any, token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
@@ -480,6 +548,9 @@ export class ApisService {
     }
 
     public getObjectbyName(type: string, name: string, token: string): Promise<any> {
+        let json = {
+            name: name
+        }
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -487,7 +558,7 @@ export class ApisService {
             })
         }
         return new Promise<any>((resolve, reject) => {
-            this.http.get<any>(environment.searchtype + type + '/' + name, opt).toPromise().then(invoice => {
+            this.http.post<any>(environment.searchtype + type, json, opt).toPromise().then(invoice => {
                 resolve(invoice);
             }).catch(error => {
                 reject(error);
@@ -529,7 +600,7 @@ export class ApisService {
 
     }
 
-    public getMarcbyName(idClient: number, name: string, token: string): Promise<any> {
+    public getBalanceGeneralbyClient(idClient: number, dateIni: string, dateFin: string, token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -537,7 +608,27 @@ export class ApisService {
             })
         }
         return new Promise<any>((resolve, reject) => {
-            this.http.get<any>(environment.getmarcsbyname + idClient + '/' + name, opt).toPromise().then(marc => {
+            this.http.get<any>(environment.getbalancegenral + idClient + '/' + dateIni + '/' + dateFin, opt).toPromise().then(sales => {
+                resolve(sales);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public getMarcbyName(idClient: number, name_: string, token: string): Promise<any> {
+        let json = {
+            name: name_
+        }
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.getmarcsbyname + idClient, json, opt).toPromise().then(marc => {
                 resolve(marc);
             }).catch(error => {
                 reject(error);
@@ -554,8 +645,8 @@ export class ApisService {
             })
         }
         return new Promise<any>((resolve, reject) => {
-            this.http.get<any>(environment.getprealertactive, opt).toPromise().then(marc => {
-                resolve(marc);
+            this.http.get<any>(environment.getprealertactive, opt).toPromise().then(prealert => {
+                resolve(prealert);
             }).catch(error => {
                 reject(error);
             })
@@ -563,6 +654,107 @@ export class ApisService {
 
     }
 
+    public getPrealertActivebyClient(idClient: number, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.getprealertactivebyClient + idClient, opt).toPromise().then(prealert => {
+                resolve(prealert);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+
+    public sendEmail(email: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.sendEmail, email, opt).toPromise().then(email => {
+                resolve(email);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public getinvoicesdraft(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.invoicesdrafts, opt).toPromise().then(invoice => {
+                resolve(invoice);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public getcharts(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.charts, opt).toPromise().then(invoice => {
+                resolve(invoice);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public getchartsbyclient(idClient: number, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.chartsbyclient + idClient, opt).toPromise().then(invoice => {
+                resolve(invoice);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public getprealertsdraft(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.prealertdrafts, opt).toPromise().then(prealert => {
+                resolve(prealert);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
 
 
 

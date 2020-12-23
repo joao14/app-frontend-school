@@ -1,17 +1,22 @@
 <div class="layout-topbar">
-   <p-progressBar [mode]="estado?'indeterminate':'determinate'" [style]="{'height': '6px'}"></p-progressBar>
+    <p-progressBar [mode]="estado?'indeterminate':'determinate'" [style]="{'height': '6px'}"></p-progressBar>
 
-    <a href="#" id="topbar-menu-button" (click)="app.onMenuButtonClick($event)">
-        <i class="fa fa-angle-left arrow"></i>
-        <i class="fa fa-angle-up mobile"></i>
+    <a href="#" id="topbar-menu-button" (click)="app.onMenuButtonClick($event)" class="web menu_web">       
+        <i class="fa fa-bars arrow"></i>
+        <i class="fa fa-bars mobile"></i>  
     </a>
 
-    <!--<div class="search-input">
-        <i class="fa fa-search icon-search"></i>
-        <input type="text" />
-    </div>-->
+    <a href="#" (click)="app.onMenuButtonClick($event)" class="mobile movile_menu">
+        <i class="fa fa-pen"></i>
+        <i class="fa fa-pen"></i>
+    </a> 
 
     <a href="/" class="logo-container">
+        <!--<img src="assets/layout/images/ecuador-logo.png" alt="ecuador-layout" />-->
+        <span style="color: white;font-weight: bold;font-size: 1.5rem;">ROSA MISTICA</span>
+    </a>
+    
+    <a href="/" style="float: left!important;margin-top: -36px;" class="mobile">
         <!--<img src="assets/layout/images/ecuador-logo.png" alt="ecuador-layout" />-->
         <span style="color: white;font-weight: bold;font-size: 1.5rem;">ROSA MISTICA</span>
     </a>
@@ -26,13 +31,21 @@
         </select>
     </div>
 
-    <a id="topbar-profile-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)">
+    <a id="topbar-profile-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)" class="mobile img">
         <span>{{name | titlecase }}</span>
-        <img [src]="user.photo" alt="ecuador-layout" class="topbar-profile" />
+        <img [src]="user.photo" alt="ecuador-layout" class="topbar-profile"
+            onError="this.src='assets/images/user2.png'" />
         <i class="fa fa-sort-desc"></i>
     </a>
 
-    <ul id="topbar-usermenu" class="fadeInDown animated" [ngClass]="{'usermenu-active': app.topbarMenuActive}">
+    <a id="topbar-profile-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)" class="web">
+        <span>{{name | titlecase }}</span>
+        <img *ngIf="user.photo!=null" [src]="user.photo" alt="ecuador-layout" class="topbar-profile"
+            onError="this.src='assets/images/user2.png'" />
+        <i class="fa fa-sort-desc"></i>
+    </a>
+
+    <ul id="topbar-usermenu" class="fadeInDown animated menu_movile" [ngClass]="{'usermenu-active': app.topbarMenuActive}">
         <li #miperfil [ngClass]="{'menuitem-active':app.activeTopbarItem === miperfil}">
             <a href="#" (click)="app.onTopbarItemClick($event, miperfil)">
                 <i class="fa fa-fw fa-user"></i>
@@ -86,23 +99,32 @@
                 </li>
             </ul>
         </li>-->
-        <li #roles [ngClass]="{'menuitem-active':app.activeTopbarItem === roles}" *ngIf="user.roles.length > 1">
-            <a href="#" (click)="app.onTopbarItemClickRoles($event, roles)">
+        <li #roles [ngClass]="{'menuitem-active':menu=='ROL'}" (click)="selectSubItem('ROL')"
+            *ngIf="user.roles.length > 1">
+            <a href="#" (click)="app.onTopbarItemClickRoles($event, roles)"
+                [class]="menu=='ROL'?'menuitem-active-a':'menuitem-no-active-a'">
                 <i class="fa fa-chain-broken"></i>
                 <span class="topbar-item-name">Roles </span>
+                <i [ngStyle]="{'color':menu === 'ROL'? 'white': '#828282'}" style="float: right;"
+                    [class]="menu=='ROL'?'fa fa-fw fa-angle-up layout-menuitem-toggler': 'fa fa-fw fa-angle-down layout-menuitem-toggler'"></i>
             </a>
             <ul *ngFor="let rol of user.roles">
                 <li role="menuitem">
                     <a href="#" class="topbar-message" (click)="app.onTopbarSubItemClickRoles($event)">
-                        <span>{{rol.rol}}</span>
+                        <span>{{rol.rol }}</span>
+                        <i *ngIf="rol.shorcut==typerol" style="float: right;font-size: 1rem" class="pi pi-check"></i>
                     </a>
                 </li>
             </ul>
         </li>
-        <li #languajes [ngClass]="{'menuitem-active':app.activeTopbarItem === languajes}" class="languajes_menu">
-            <a href="#" (click)="app.onTopbarItemClickLanguajes($event, languajes)">
+        <li #languajes [ngClass]="{'menuitem-active':app.activeTopbarItem === languajes}"
+            (click)="selectSubItem('LANGUAJE')" class="languajes_menu">
+            <a href="#" (click)="app.onTopbarItemClickLanguajes($event, languajes)"
+                [class]="menu=='LANGUAJE'?'menuitem-active-a':'menuitem-no-active-a'">
                 <i class="fa fa-fw fa-globe"></i>
-                <span class="topbar-item-name">Languajes</span>
+                <span class="topbar-item-name">Lenguajes</span>
+                <i [ngStyle]="{'color':menu === 'LANGUAJE'? 'white': '#828282'}" style="float: right;"
+                    [class]="menu=='LANGUAJE'?'fa fa-fw fa-angle-up layout-menuitem-toggler': 'fa fa-fw fa-angle-down layout-menuitem-toggler'"></i>
             </a>
             <ul>
                 <li role="menuitem">
@@ -122,6 +144,13 @@
                 <li role="menuitem">
                     <a href="#" class="topbar-message" (click)="app.onTopbarSubItemClickLanguajes($event)">
                         <span>日本人</span>
+                    </a>
+                </li>
+            </ul>
+            <ul>
+                <li role="menuitem">
+                    <a href="#" class="topbar-message" (click)="app.onTopbarSubItemClickLanguajes($event)">
+                        <span>pусский</span>
                     </a>
                 </li>
             </ul>
@@ -158,6 +187,12 @@
                 </li>
             </ul>
         </li>-->
+        <li #aboutus [ngClass]="{'menuitem-active':app.activeTopbarItem === aboutus}">
+            <a href="#" (click)="app.aboutus($event)">
+                <i class="fa fa-info"></i>
+                <span class="topbar-item-name">{{ 'Acerca de' | translate }}</span>
+            </a>
+        </li>
         <li>
             <a href="#" (click)="app.singout()">
                 <i class="fa fa-fw fa-sign-out"></i>
@@ -166,9 +201,8 @@
         </li>
     </ul>
 
-    <a href="#" id="right-panel-button" [ngClass]="{'menu-button-rotate': app.rightPanelActive}"
+    <!--<a href="#" id="right-panel-button" [ngClass]="{'menu-button-rotate': app.rightPanelActive}"
         (click)="app.onRightPanelButtonClick($event)">
         <i class="fa fa-angle-double-left"></i>
-    </a>
-
+    </a>-->
 </div>

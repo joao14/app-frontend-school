@@ -14,17 +14,19 @@ import { mark } from 'src/models/mark';
 import { UtilService } from 'src/services/util.service';
 import { user } from '../../../../models/user';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from 'src/environments/environment';
 
 export interface Item {
   fecha: string,
   cliente: client;
-  fincapropia: boolean;
+  fincapropia: string;
   finca: finca;
   marca: mark;
   HBBQ: string;
   rosamistica: flower;
   tamanio: string;
   tallos: number;
+  totaltallos: number;
   preciovent: string;
   preciocomp: string;
   carga: string;
@@ -35,6 +37,8 @@ export interface Cabecera {
   fecha: string;
   usuaId: number;
   pralCerrado: string;
+  estado: string;
+  pralId: number;
 }
 
 export interface Detail {
@@ -44,7 +48,7 @@ export interface Detail {
   fincapropia: string;
   farmId: number;
   marcId: number;
-  hbqb: number;
+  hbqb: string;
   florId: number;
   cm: string;
   tallos: number;
@@ -73,6 +77,39 @@ export interface Response {
   totaltallos: number;
   totalcajas: number;
   numregi: number;
+}
+
+export interface ClientDraft {
+  info: {
+    clieId: number;
+    email: string;
+    nombres: string;
+    pdf: string;
+  },
+  items: Array<{
+    cargname: string;
+    cm: string;
+    farm: string;
+    fincapropia: string;
+    flower: string;
+    hbqb: number;
+    mark: string;
+    pcomp: string;
+    pvp: string;
+    shippingdate: string;
+    status: string;
+    tallos: number;
+    totaltallos: number;
+  }>;
+}
+
+export interface Draft {
+  head: {
+    pralId: number;
+    fecha: string;
+    pdf: string;
+  },
+  clients: Array<ClientDraft>;
 }
 
 @Component({
@@ -116,6 +153,14 @@ export class PrealertaComponent implements OnInit {
   smsvalidate: string;
   dialogVisible: boolean;
   response: Response;
+  step: number;
+  prealertsdraft: Array<Draft> = [];
+  url: string;
+  dialogVisiblePDF: boolean;
+  editPrealert: boolean;
+  idPrealert: number;
+  minDateValue: Date = new Date();
+  hbqb: number;
 
   constructor(private messageService: MessageService, private formBuilder: FormBuilder, private confirmationService: ConfirmationService,
     private api: ApisService, private router: Router, private utilService: UtilService, private spinner: NgxSpinnerService) {
@@ -124,11 +169,12 @@ export class PrealertaComponent implements OnInit {
       cliente: ['', Validators.required],
       finca: ['', Validators.required],
       marca: ['', Validators.required],
-      HBBQ: ['', [Validators.required]],
+      HBBQ: [''],
       rosamistica: ['', [Validators.required]],
       fincapropia: [false],
       tamanio: [''],
       tallos: ['', Validators.required],
+      totaltallos: ['', Validators.required],
       preciovent: [''],
       preciocomp: [''],
       carga: ['', Validators.required],
@@ -136,30 +182,37 @@ export class PrealertaComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
-    this.inicializate();
-    this.getServicios();
+    await this.inicializate();
+    await this.prealertdraft();
+    await this.getServicios();
   }
 
 
   inicializate() {
+    this.idPrealert = 0;
+    this.editPrealert = false;
+    this.dialogVisible = false;
+    this.step = 1;
     this.selectitem = -1;
     this.cantidadPrice = [];
     this.expanded = false;
     this.validate = false;
     this.dialogVisible = false;
     this.response = null;
+    this.hbqb = 0;
     this.item = {
       fecha: '',
       cliente: null,
-      fincapropia: false,
+      fincapropia: "",
       finca: null,
       marca: null,
       HBBQ: "",
       rosamistica: null,
       tamanio: "",
       tallos: 0,
+      totaltallos: 0,
       preciovent: "",
       preciocomp: "",
       carga: "",
@@ -192,26 +245,31 @@ export class PrealertaComponent implements OnInit {
 
     this.optionSelect = "manual";
 
-    console.log(this.tamanios);
-
   }
 
-
-  delay(number) {
-    console.log('PARAMETRO : ' + number);
-    setTimeout(() => {
-      console.log('NUMERO: ' + number);
-      return number * 10;
-    }, 5000)
+  async prealertdraft() {
+    this.prealertsdraft = [];
+    this.utilService.isLoading.next(true);
+    await this.api.getprealertsdraft(localStorage.getItem('token')).then(prealert => {
+      if (prealert.headerApp.code == 200) {
+        this.prealertsdraft = prealert.data.prealerts;
+      }
+    }).catch(err => {
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    this.utilService.isLoading.next(false);
   }
+
 
   deleteItem(prealert: any) {
     this.items = this.items.filter((element) => element != prealert);
     this.total = 0;
     this.items.forEach(item => {
-      console.log(item);
       //this.prealert.cajas += parseInt(item.caja + "");
-      this.total += parseInt(item.tallos + "");
+      this.total += parseInt(item.totaltallos + "");
     });
 
   }
@@ -235,7 +293,6 @@ export class PrealertaComponent implements OnInit {
     let cm = "";
 
     this.cantidadPrice.forEach(data => {
-      console.log(data);
       pvp = pvp + data.precvent + " ",
         pcomp = pcomp + data.preccomp + " ",
         cm = cm + data.tamanio + " "
@@ -245,29 +302,27 @@ export class PrealertaComponent implements OnInit {
     this.item = {
       fecha: this.prealertForm.get('fecha').value,
       cliente: this.prealertForm.get('cliente').value,
-      fincapropia: this.prealertForm.get('fincapropia').value,
+      fincapropia: this.prealertForm.get('fincapropia').value?'S':'N',
       finca: this.prealertForm.get('finca').value,
       marca: this.prealertForm.get('marca').value,
-      HBBQ: this.prealertForm.get('HBBQ').value,
+      HBBQ: this.prealertForm.get('HBBQ').value? this.prealertForm.get('HBBQ').value: '0',
       rosamistica: this.prealertForm.get('rosamistica').value,
       tamanio: cm,
       tallos: this.prealertForm.get('tallos').value,
+      totaltallos: ((this.prealertForm.get('HBBQ').value? this.prealertForm.get('HBBQ').value : this.hbqb ) * this.prealertForm.get('tallos').value),
       preciovent: pvp,
       preciocomp: pcomp,
       carga: this.prealertForm.get('carga').value,
       status: this.prealertForm.get('estado').value.code
     }
 
-    console.log('ITEM...');
-    console.log(this.item);
+    this.prealertForm.get('HBBQ').value ? this.hbqb = this.prealertForm.get('HBBQ').value : '';
 
     this.items.push(this.item);
     this.cantidadPrice = [];
     this.total = 0;
-    console.log('ITEM...');
     this.items.forEach(item => {
-      console.log(item);
-      this.total += parseInt(item.tallos + "");
+      this.total += parseInt(item.totaltallos + "");
     });
     this.submitted = false;
     this.prealertForm.reset();
@@ -370,20 +425,22 @@ export class PrealertaComponent implements OnInit {
         let item = {
           fecha: data[i]['SHIPPING DATE'],
           cliente: client,
-          fincapropia: data[i]['FINCA PROPIA'],
+          fincapropia: data[i]['FINCA PROPIA']==undefined || data[i]['FINCA PROPIA']==''?'N':'S',
           finca: finca,
           marca: marca,
           HBBQ: data[i]['HB/QB'],
           rosamistica: flower,
           tamanio: data[i]['CM'],
           tallos: data[i]['TALLOS'],
+          totaltallos: data[i]['T/TALLOS'],
           preciovent: data[i]['PRECIO VENTA'],
           preciocomp: data[i]['PRECIO COMPRA'],
           carga: delivery,
           status: data[i]['STATUS']
         }
+        data[i]['HB/QB'] > 0 ? this.hbqb = data[i]['HB/QB'] : '';
         this.items.push(item);
-        this.total += item.tallos;
+        this.total += item.totaltallos;
       }
       this.spinner.hide();
       this.utilService.isLoading.next(false);
@@ -397,7 +454,6 @@ export class PrealertaComponent implements OnInit {
   async getClientbyName(name: string): Promise<any> {
     let cliente: client = null;
     await this.api.getObjectbyName('C', name.toUpperCase(), localStorage.getItem("token")).then(data => {
-      console.log(data);
       if (data.headerApp.code == 200) {
         cliente = data.data.cliente;
       }
@@ -413,7 +469,6 @@ export class PrealertaComponent implements OnInit {
   async getMarcbyName(entiId: number, name: string): Promise<any> {
     let marc: mark = null;
     await this.api.getMarcbyName(entiId, name.toUpperCase(), localStorage.getItem("token")).then(data => {
-      console.log(data);
       if (data.headerApp.code == 200) {
         marc = data.data.mark;
       }
@@ -429,7 +484,6 @@ export class PrealertaComponent implements OnInit {
   async getFincabyName(name: string): Promise<any> {
     let finca: finca = null;
     await this.api.getObjectbyName('F', name.toUpperCase(), localStorage.getItem("token")).then(data => {
-      console.log(data);
       if (data.headerApp.code == 200) {
         finca = data.data.farm;
       }
@@ -445,7 +499,6 @@ export class PrealertaComponent implements OnInit {
   async getEmpresaCargabyName(name: string): Promise<any> {
     let delivery: delivery = null;
     await this.api.getObjectbyName('Z', name.toUpperCase(), localStorage.getItem("token")).then(data => {
-      console.log(data);
       if (data.headerApp.code == 200) {
         delivery = data.data.cargocompanie;
       }
@@ -461,12 +514,10 @@ export class PrealertaComponent implements OnInit {
   async getFlowerbyName(name: string): Promise<any> {
     let flower: flower = null;
     await this.api.getflowerbyname(name, localStorage.getItem("token")).then(data => {
-      console.log(data);
       if (data.headerApp.code == 200) {
         flower = data.data.flower;
       }
     }).catch(err => {
-      console.log(err);
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -481,6 +532,8 @@ export class PrealertaComponent implements OnInit {
     this.items = [];
     this.estado = false;
     this.smsvalidate = "";
+    this.validate = false;
+    this.total = 0;
   }
 
 
@@ -488,47 +541,42 @@ export class PrealertaComponent implements OnInit {
     let head: Cabecera = {
       fecha: this.getFormatDate(new Date()),
       usuaId: this.user.usuaid,
-      pralCerrado: "N"
+      pralCerrado: "N",
+      estado: "T",
+      pralId: this.idPrealert == undefined ? 0 : this.idPrealert
     }
 
     let detail: Array<Detail> = [];
     let contador = 0;
     let totaltallos = 0;
     let totalcajas = 0;
-    this.items.forEach(data => {
+    this.items.forEach(data => {   
       detail.push({
         line: contador,
         shippingdate: this.getFormatDate(new Date(data.fecha)),
         clieId: data.cliente.entiId,
-        fincapropia: data.fincapropia == null ? 'N' : 'S',
-        farmId: data.finca.entiId,
+        fincapropia: data.fincapropia == 'N' ? "N" : "S",
+        farmId: data.finca.entiId,  
         marcId: data.marca.marcId,
-        hbqb: parseInt(data.HBBQ),
+        hbqb: data.HBBQ == null ? '' : data.HBBQ,
         florId: data.rosamistica['florId'],
-        cm: data.tamanio,
+        cm: data.tamanio,  
         tallos: data.tallos,
-        totaltallos: data.tallos,
+        totaltallos: data.totaltallos,
         pcomp: data.preciocomp,
         cargcompId: parseInt(data.carga['entiId']),
         pvp: data.preciovent,
         status: data.status
       })
       contador++;
-      totalcajas += parseInt(data.HBBQ);
-      totaltallos += parseInt(data.tallos + "");
+      data.HBBQ == null ? '' : totalcajas += parseInt(data.HBBQ);
+      totaltallos += parseInt(data.totaltallos + "");
     })
-
-    console.log('TOTAL TALLOS');
-    console.log(totaltallos);
-    console.log('TOTAL CAJAS');
-    console.log(totalcajas);
 
     this.prealert = {
       prealerta: head,
       detalle: detail
     }
-
-    console.log(this.prealert);
 
     this.confirmationService.confirm({
       message: "Are you sure to send the prealert?",
@@ -536,35 +584,32 @@ export class PrealertaComponent implements OnInit {
         this.spinner.show();
         await this.api.registerPrealert(this.prealert, localStorage.getItem("token")).then(data => {
           this.spinner.hide();
-          console.log(data);
           if (data.headerApp.code == 200) {
+            this.prealertdraft();
             this.dialogVisible = true;
-            console.log('Se registro la prelaerta');
             this.total = 0;
+            this.idPrealert = 0;
             this.prealert = null;
+            this.editPrealert = false;
             this.items = [];
-            this.files=[];
+            this.files = [];
             this.prealertForm.get('fecha').setValue(new Date());
             this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'La prealerta se ha registrado correctamente' });
-            console.log('LISTA..');
             let item: any[] = [];
             data.data.prealert.files.forEach(element => {
-              console.log(element);
-              item.push('https://addsoft-tech.com:8443/rmi/' + element.pdf);
+              item.push(environment.url + element.pdf);
             });
             this.response = {
               files: item,
-              pdf: 'https://addsoft-tech.com:8443/rmi/' + data.data.prealert.pdf,
+              pdf: environment.url + data.data.prealert.pdf,
               pralId: data.data.prealert.pralId,
               totaltallos: totaltallos,
               totalcajas: totalcajas,
               numregi: contador
             }
-            console.log('RESPONSE');
-            console.log(this.response);
           }
         }).catch(err => {
-          console.log(err);
+           
           if (err.error.code == 401) {
             localStorage.clear();
             this.router.navigate(['/login']);
@@ -581,7 +626,6 @@ export class PrealertaComponent implements OnInit {
     this.utilService.isLoading.next(true);
     this.clientes = [];
     await this.api.getclients(localStorage.getItem("token")).then(cliente => {
-      console.log(cliente);
       if (cliente.headerApp.code === 200) {
         let clientTemp: client[] = [];
         cliente.data.clientes.forEach(data => {
@@ -592,7 +636,7 @@ export class PrealertaComponent implements OnInit {
         this.clientes = clientTemp;
       }
     }).catch(err => {
-      console.log(err);
+       
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -610,7 +654,7 @@ export class PrealertaComponent implements OnInit {
         this.fincas = temp;
       }
     }).catch(err => {
-      console.log(err);
+       
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -629,7 +673,7 @@ export class PrealertaComponent implements OnInit {
         this.flores = temp;
       }
     }).catch(err => {
-      console.log(err);
+       
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -647,7 +691,7 @@ export class PrealertaComponent implements OnInit {
         this.deliveries = temp;
       }
     }).catch(err => {
-      console.log(err);
+       
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -659,10 +703,8 @@ export class PrealertaComponent implements OnInit {
 
 
   async onOptionsSelected() {
-    console.log(this.prealertForm.get('cliente'));
     this.marks = [];
     await this.api.getmarks(this.prealertForm.get('cliente').value.entiId, localStorage.getItem("token")).then(mark => {
-      console.log(mark);
       if (mark.headerApp.code == 200) {
         let temp: mark[] = [];
         mark.data.marks.forEach(element => {
@@ -672,7 +714,7 @@ export class PrealertaComponent implements OnInit {
         this.marks = temp;
       }
     }).catch(err => {
-      console.log(err);
+       
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -693,7 +735,6 @@ export class PrealertaComponent implements OnInit {
       preccomp: this.prealertForm.get('preciocomp').value,
       precvent: this.prealertForm.get('preciovent').value
     })
-    console.log(this.cantidadPrice);
     this.estado = false;
     this.prealertForm.get('tamanio').setValue(null);
     this.prealertForm.get('preciocomp').setValue(null);
@@ -707,6 +748,144 @@ export class PrealertaComponent implements OnInit {
 
   getFormatDate(date: Date): string {
     return (moment(date)).format('yyyy-MM-DD HH:mm:ss.SSS');
+  }
+
+  calculate() {
+    this.prealertForm.get('totaltallos').setValue((this.prealertForm.get('HBBQ').value == null || this.prealertForm.get('HBBQ').value == 0 ? this.hbqb : this.prealertForm.get('HBBQ').value) * this.prealertForm.get('tallos').value)
+  }
+
+  next() {
+    this.step = 2;
+    this.editPrealert = false;
+  }
+
+  finish(draft: Draft) {
+  }
+
+  back() {
+    this.step = 1;
+    this.prealertdraft();
+    this.editPrealert = false;
+    this.items = [];
+    this.total = 0;
+    this.idPrealert = 0;
+  }
+
+  viewdraft(draft: Draft) {
+    this.url = environment.url + draft.head.pdf;
+    this.dialogVisiblePDF = true;
+  }
+
+  async edit(draft: Draft) {    
+    this.editPrealert = true;
+    this.optionSelect='manual';
+    this.step = 2;
+    this.items = [];
+    this.idPrealert = draft.head.pralId;
+    this.spinner.show();
+    this.utilService.isLoading.next(true);
+    this.total = 0;
+    for (const clie of draft.clients) {
+      for (const item of clie.items) {
+        const cliente = await this.getClientbyName(clie.info.nombres);
+        const finca = await this.getFincabyName(item.farm);
+        const marca = await this.getMarcbyName(clie.info.clieId, item.mark);
+        const rosamistica = await this.getFlowerbyName(item.flower);
+        const carga = await this.getEmpresaCargabyName(item.cargname);
+
+        let temp = {
+          fecha: item.shippingdate,
+          cliente: cliente,
+          fincapropia: item.fincapropia == 'N' ? "N" : "S",
+          finca: finca,
+          marca: marca,
+          HBBQ: item.hbqb.toString(),
+          rosamistica: rosamistica,
+          tamanio: item.cm,
+          tallos: item.tallos,
+          totaltallos: item.tallos * (item.hbqb == null || item.hbqb == 0 ? this.hbqb : item.hbqb),
+          preciovent: item.pvp,
+          preciocomp: item.pcomp,
+          carga: carga,
+          status: item.status
+        }
+
+        item.hbqb != null && item.hbqb > 0 ? this.hbqb = item.hbqb : '';
+        this.total += temp.totaltallos;
+        this.items.push(temp);
+      }
+    }
+
+    this.utilService.isLoading.next(false);
+    this.spinner.hide();
+
+  }
+
+  async saveeraser() {
+    let head: Cabecera = {
+      fecha: this.getFormatDate(new Date()),
+      usuaId: this.user.usuaid,
+      pralCerrado: "N",
+      estado: "B",
+      pralId: this.idPrealert == undefined ? 0 : this.idPrealert
+    }
+
+    let detail: Array<Detail> = [];
+    let contador = 0;
+    let totaltallos = 0;
+    let totalcajas = 0;
+    this.items.forEach(data => {
+      detail.push({
+        line: contador,
+        shippingdate: this.getFormatDate(new Date(data.fecha)),
+        clieId: data.cliente.entiId,
+        fincapropia: data.fincapropia == 'N' ? 'N' : 'S',
+        farmId: data.finca.entiId,
+        marcId: data.marca.marcId,
+        hbqb: data.HBBQ == null ? '' : data.HBBQ,
+        florId: data.rosamistica['florId'],
+        cm: data.tamanio,
+        tallos: data.tallos,
+        totaltallos: data.totaltallos,
+        pcomp: data.preciocomp,
+        cargcompId: parseInt(data.carga['entiId']),
+        pvp: data.preciovent,
+        status: data.status
+      })
+      contador++;
+      data.HBBQ == null ? '' : totalcajas += parseInt(data.HBBQ);
+      totaltallos += parseInt(data.totaltallos + "");
+    })
+
+    this.prealert = {
+      prealerta: head,
+      detalle: detail
+    }
+   
+
+    this.spinner.show();
+    await this.api.registerPrealert(this.prealert, localStorage.getItem("token")).then(data => {
+      this.spinner.hide();
+      if (data.headerApp.code == 200) {
+        this.total = 0;
+        this.prealert = null;
+        this.items = [];
+        this.files = [];
+        this.idPrealert = 0;
+        this.optionSelect=='manual';
+        this.step = 1;
+        this.prealertdraft();
+        this.prealertForm.get('fecha').setValue(new Date());
+        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'La prealerta se ha registrado correctamente' });
+      }
+    }).catch(err => {
+       
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    this.utilService.isLoading.next(false);
   }
 
 

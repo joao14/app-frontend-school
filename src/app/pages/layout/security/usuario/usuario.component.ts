@@ -55,13 +55,11 @@ export class UsuarioComponent implements OnInit {
   getUsers() {
     this.utilService.isLoading.next(true);
     this.api.getUsers(localStorage.getItem('token')).then(users => {
-      console.log(users);
       if (users.headerApp.code === 200) {
         let temp: User[] = [];
         users.data.usuarios.forEach(element => {         
           let roles: Roles[] = [];
-          element.roles.forEach(rol => {
-            //console.log(rol);            
+          element.roles.forEach(rol => {         
             roles.push({
               rolId: rol.id,
               usroId: rol.usroId,
@@ -96,7 +94,6 @@ export class UsuarioComponent implements OnInit {
       }
     }).catch(error => {
       this.utilService.isLoading.next(false);
-      console.log(error);
       if (error.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -105,13 +102,10 @@ export class UsuarioComponent implements OnInit {
   }
 
   addUser() {
-    console.log('Editando el cliente');
     this.router.navigate(['/edituser']);
   }
 
   desactivate(user: User) {
-    console.log('Se esta desactivando el usuario');
-    console.log(user);
     this.router.navigate(['/edituser'], { state: { user: JSON.stringify(user) } });
   }
 

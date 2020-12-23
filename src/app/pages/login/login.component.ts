@@ -5,6 +5,8 @@ import { ApisService } from './../../../services/apis.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { UtilService } from 'src/services/util.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-login',
@@ -15,28 +17,22 @@ import { MessageService } from 'primeng/api';
 export class LoginComponent implements OnInit {
 
     checkoutForm: FormGroup;
-    estado:string="determinate";
+    estado: string = "determinate";
 
-    constructor(private formBuilder: FormBuilder, private messageService: MessageService, private api: ApisService, private router: Router) {
+    constructor(private formBuilder: FormBuilder, private messageService: MessageService,
+        private api: ApisService, private router: Router, private utilService: UtilService) {
         this.checkoutForm = this.formBuilder.group({
             username: '',
             password: ''
         });
     }
 
-    ngOnInit(): void {
+    ngOnInit() { }
 
-    }
-
-    onSubmit() {
-        this.estado="indeterminate";
-        console.log('Your order has been submitted 2.....');
-        console.log(this.checkoutForm.get("username").value);
-        
-        this.api.login(this.checkoutForm.get("username").value, this.checkoutForm.get("password").value).then(data => {
-        //this.api.login('test5', 'abc123').then(data => {
-            console.log("Data response");
-            console.log(data);
+    onSubmit() {        
+        this.estado = "indeterminate";
+        this.api.login(this.checkoutForm.get("username").value, '3dr' + btoa(this.checkoutForm.get("password").value)).then(data => {
+            
             if (data.headerApp.code === 200) {
                 var roles_: roles[] = [];
                 data.data.roles.forEach(element => {
@@ -47,6 +43,12 @@ export class LoginComponent implements OnInit {
                     }
                     roles_.push(rol);
                 });
+                let empresa = {
+                    dni: data.data.usuario.empresa.dni,
+                    entiid: data.data.usuario.empresa.entiid,
+                    nombcome: data.data.usuario.empresa.nombcome,
+                    razosoci: data.data.usuario.empresa.razosoci,
+                }
                 let user: user = {
                     usuaid: data.data.usuario.usuaid,
                     dni: data.data.usuario.dni,
@@ -55,39 +57,47 @@ export class LoginComponent implements OnInit {
                     name: data.data.usuario.nombres,
                     lastname: data.data.usuario.apellidos,
                     roles: roles_,
-                    photo: 'https://previews.123rf.com/images/djvstock/djvstock1508/djvstock150806855/44096519-web-developer-design-vector-illustration-eps-10-.jpg'
-                                }
-                localStorage.setItem("user", JSON.stringify(user));
-                localStorage.setItem("token", data.data.usuario.token);
-                this.estado="determinate";
-                this.router.navigate(['/dashboard']);
+                    photo: environment.url + data.data.usuario.photo,
+                    empresa: empresa,
+                    clave: data.data.usuario.clave,
+                    nickname: data.data.usuario.nickname
+                }
+
+                if (data.data.roles.length <= 0) {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Rosa Mística',
+                        detail: "EL usuario no tiene configurado un rol para el sistema"
+                    });
+                    this.estado = "determinate";
+                    return;
+
+                } else {
+                    localStorage.setItem("user", JSON.stringify(user));
+                    localStorage.setItem("token", data.data.usuario.token);
+                    this.estado = "determinate";
+                    this.router.navigate(['/dashboard']);
+                }
 
             } else {
-                this.estado="determinate";
-                console.log('No se puede loguear');
+                this.estado = "determinate";
                 this.messageService.add({
                     severity: 'error',
                     summary: 'Rosa Mística',
-                    detail: 'Usuario/Password incorrectos'
+                    detail: data.headerApp.message
                 });
             }
         }).catch(err => {
-            this.estado="determinate";
+            this.estado = "determinate";
             this.messageService.add({
                 severity: 'error',
                 summary: 'Rosa Mística',
                 detail: 'Error en la aplicación intentelo más tarde'
             });
-
-            console.log(err);
         })
 
     }
 
-    forgot(){
-        console.log('Olvido ..');
-        this.router.navigate(['/forgot']);
-    }
 
 
 }

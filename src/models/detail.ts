@@ -1,6 +1,6 @@
 export interface detail{
     tipoempaque: string,
-    cantidadcajas: number,
+    cantidadcajas: string,
     tallosxbch: number,
     medidatallo: number,
     cantidadbch: number,
@@ -8,5 +8,6 @@ export interface detail{
     preciounitario: number,
     total: number,
     farmId: number,
-    florId: number
+    florId: number,
+    line: number
 }

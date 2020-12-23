@@ -90,7 +90,6 @@ export class PagoreclamoComponent implements OnInit {
   async getClient() {
     this.utilservice.isLoading.next(true);
     await this.api.getclients(localStorage.getItem("token")).then(cliente => {
-      console.log(cliente);
       this.clientes = [];
       if (cliente.headerApp.code === 200) {
         cliente.data.clientes.forEach(cliente => {
@@ -105,7 +104,7 @@ export class PagoreclamoComponent implements OnInit {
       }
 
     }).catch(err => {
-      console.log(err);
+       
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -135,7 +134,6 @@ export class PagoreclamoComponent implements OnInit {
   }
 
   save() {
-    console.log('Enviando');
     this.submit = true;
     if (this.formGroup.invalid) {
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios' });
@@ -153,7 +151,6 @@ export class PagoreclamoComponent implements OnInit {
       documento: this.files[0].name + ';' + this.documentBase64,
       descripcion: this.formGroup.get('descripcion').value
     }
-    console.log(payment);
 
     this.confirmationService.confirm({
       message: "Are you sure to send the process?",
@@ -161,19 +158,19 @@ export class PagoreclamoComponent implements OnInit {
         this.spinner.show();
         this.utilservice.isLoading.next(true);
         await this.api.registerPaymentClaim(payment, localStorage.getItem("token")).then(data => {
-          console.log(data);
           this.spinner.hide();
           if (data.headerApp.code === 200) {
             this.submit = false;
             this.files = [];
             this.selectclient = null;
             this.selectfactura = null;  
+            this.getClient();
             this.formGroup.reset();
             this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Proceso generado exisotsamente' });
           }
 
         }).catch(err => {
-          console.log(err);
+           
           if (err.error.code == 401) {
             localStorage.clear();
             this.router.navigate(['/login']);

@@ -6,6 +6,7 @@ import { TableModule, InputSwitchModule, ToastModule, MessagesModule, MessageMod
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditComponent } from './edit/edit.component';
+import { SharedModule } from 'src/app/shared.module';
 
 
 
@@ -30,7 +31,8 @@ import { EditComponent } from './edit/edit.component';
     DropdownModule,
     BlockUIModule,
     AccordionModule,
-    KeyFilterModule
+    KeyFilterModule,
+    SharedModule
   ]
 })
 export class UsuarioModule { }

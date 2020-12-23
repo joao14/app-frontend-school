@@ -1,9 +1,3 @@
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -12,29 +6,290 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["common"], {
   /***/
-  "./node_modules/primeng/fesm2015/primeng-blockui.js":
-  /*!**********************************************************!*\
-    !*** ./node_modules/primeng/fesm2015/primeng-blockui.js ***!
-    \**********************************************************/
+  "./node_modules/primeng/checkbox/primeng-checkbox.ngfactory.js":
+  /*!*********************************************************************!*\
+    !*** ./node_modules/primeng/checkbox/primeng-checkbox.ngfactory.js ***!
+    \*********************************************************************/
 
-  /*! exports provided: BlockUI, BlockUIModule */
+  /*! exports provided: CheckboxModuleNgFactory, RenderType_Checkbox, View_Checkbox_0, View_Checkbox_Host_0, CheckboxNgFactory */
 
   /***/
-  function node_modulesPrimengFesm2015PrimengBlockuiJs(module, __webpack_exports__, __webpack_require__) {
+  function node_modulesPrimengCheckboxPrimengCheckboxNgfactoryJs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
     /* harmony export (binding) */
 
 
-    __webpack_require__.d(__webpack_exports__, "BlockUI", function () {
-      return BlockUI;
+    __webpack_require__.d(__webpack_exports__, "CheckboxModuleNgFactory", function () {
+      return CheckboxModuleNgFactory;
     });
     /* harmony export (binding) */
 
 
-    __webpack_require__.d(__webpack_exports__, "BlockUIModule", function () {
-      return BlockUIModule;
+    __webpack_require__.d(__webpack_exports__, "RenderType_Checkbox", function () {
+      return RenderType_Checkbox;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "View_Checkbox_0", function () {
+      return View_Checkbox_0;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "View_Checkbox_Host_0", function () {
+      return View_Checkbox_Host_0;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "CheckboxNgFactory", function () {
+      return CheckboxNgFactory;
+    });
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var primeng_checkbox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! primeng/checkbox */
+    "./node_modules/primeng/fesm2015/primeng-checkbox.js");
+    /* harmony import */
+
+
+    var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/common */
+    "./node_modules/@angular/common/fesm2015/common.js");
+    /* harmony import */
+
+
+    var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @angular/forms */
+    "./node_modules/@angular/forms/fesm2015/forms.js");
+    /**
+     * @fileoverview This file was generated by the Angular template compiler. Do not edit.
+     *
+     * @suppress {suspiciousCode,uselessCode,missingProperties,missingOverride,checkTypes}
+     * tslint:disable
+     */
+
+
+    var CheckboxModuleNgFactory = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵcmf"](primeng_checkbox__WEBPACK_IMPORTED_MODULE_1__["CheckboxModule"], [], function (_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmod"]([_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵCodegenComponentFactoryResolver"], [[8, []], [3, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]], _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModuleRef"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](4608, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgLocalization"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgLocaleLocalization"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["LOCALE_ID"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, primeng_checkbox__WEBPACK_IMPORTED_MODULE_1__["CheckboxModule"], primeng_checkbox__WEBPACK_IMPORTED_MODULE_1__["CheckboxModule"], [])]);
+    });
+
+    var styles_Checkbox = [];
+
+    var RenderType_Checkbox = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵcrt"]({
+      encapsulation: 2,
+      styles: styles_Checkbox,
+      data: {}
+    });
+
+    function View_Checkbox_1(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 3, "label", [], [[1, "for", 0]], [[null, "click"]], function (_v, en, $event) {
+        var ad = true;
+        var _co = _v.component;
+
+        if ("click" === en) {
+          var pd_0 = _co.onClick($event, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵnov"](_v.parent, 6), true) !== false;
+          ad = pd_0 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
+        klass: [0, "klass"],
+        ngClass: [1, "ngClass"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵpod"](2, {
+        "ui-chkbox-label": 0,
+        "ui-label-active": 1,
+        "ui-label-disabled": 2,
+        "ui-label-focus": 3
+      }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵted"](3, null, ["", ""]))], function (_ck, _v) {
+        var _co = _v.component;
+        var currVal_1 = _co.labelStyleClass;
+
+        var currVal_2 = _ck(_v, 2, 0, true, _co.checked, _co.disabled, _co.focused);
+
+        _ck(_v, 1, 0, currVal_1, currVal_2);
+      }, function (_ck, _v) {
+        var _co = _v.component;
+        var currVal_0 = _co.inputId;
+
+        _ck(_v, 0, 0, currVal_0);
+
+        var currVal_3 = _co.label;
+
+        _ck(_v, 3, 0, currVal_3);
+      });
+    }
+
+    function View_Checkbox_0(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵqud"](671088640, 1, {
+        inputViewChild: 0
+      }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](1, 0, null, null, 12, "div", [], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](2, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
+        klass: [0, "klass"],
+        ngClass: [1, "ngClass"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵpod"](3, {
+        "ui-chkbox ui-widget": 0,
+        "ui-chkbox-readonly": 1
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](4, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgStyle"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
+        ngStyle: [0, "ngStyle"]
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](5, 0, null, null, 3, "div", [["class", "ui-helper-hidden-accessible"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](6, 0, [[1, 0], ["cb", 1]], null, 2, "input", [["type", "checkbox"]], [[1, "id", 0], [1, "name", 0], [8, "readOnly", 0], [8, "value", 0], [8, "checked", 0], [8, "disabled", 0], [1, "tabindex", 0], [1, "aria-labelledby", 0], [1, "required", 0]], [[null, "focus"], [null, "blur"], [null, "change"]], function (_v, en, $event) {
+        var ad = true;
+        var _co = _v.component;
+
+        if ("focus" === en) {
+          var pd_0 = _co.onFocus() !== false;
+          ad = pd_0 && ad;
+        }
+
+        if ("blur" === en) {
+          var pd_1 = _co.onBlur() !== false;
+          ad = pd_1 && ad;
+        }
+
+        if ("change" === en) {
+          var pd_2 = _co.handleChange($event) !== false;
+          ad = pd_2 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](7, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
+        ngClass: [0, "ngClass"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵpod"](8, {
+        "ui-state-focus": 0
+      }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](9, 0, null, null, 4, "div", [["class", "ui-chkbox-box ui-widget ui-corner-all ui-state-default"], ["role", "checkbox"]], [[1, "aria-checked", 0]], [[null, "click"]], function (_v, en, $event) {
+        var ad = true;
+        var _co = _v.component;
+
+        if ("click" === en) {
+          var pd_0 = _co.onClick($event, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵnov"](_v, 6), true) !== false;
+          ad = pd_0 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](10, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
+        klass: [0, "klass"],
+        ngClass: [1, "ngClass"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵpod"](11, {
+        "ui-state-active": 0,
+        "ui-state-disabled": 1,
+        "ui-state-focus": 2
+      }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](12, 0, null, null, 1, "span", [["class", "ui-chkbox-icon ui-clickable"]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](13, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
+        klass: [0, "klass"],
+        ngClass: [1, "ngClass"]
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](16777216, null, null, 1, null, View_Checkbox_1)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](15, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"]], {
+        ngIf: [0, "ngIf"]
+      }, null)], function (_ck, _v) {
+        var _co = _v.component;
+        var currVal_0 = _co.styleClass;
+
+        var currVal_1 = _ck(_v, 3, 0, true, _co.readonly);
+
+        _ck(_v, 2, 0, currVal_0, currVal_1);
+
+        var currVal_2 = _co.style;
+
+        _ck(_v, 4, 0, currVal_2);
+
+        var currVal_12 = _ck(_v, 8, 0, _co.focused);
+
+        _ck(_v, 7, 0, currVal_12);
+
+        var currVal_14 = "ui-chkbox-box ui-widget ui-corner-all ui-state-default";
+
+        var currVal_15 = _ck(_v, 11, 0, _co.checked, _co.disabled, _co.focused);
+
+        _ck(_v, 10, 0, currVal_14, currVal_15);
+
+        var currVal_16 = "ui-chkbox-icon ui-clickable";
+        var currVal_17 = _co.checked ? _co.checkboxIcon : null;
+
+        _ck(_v, 13, 0, currVal_16, currVal_17);
+
+        var currVal_18 = _co.label;
+
+        _ck(_v, 15, 0, currVal_18);
+      }, function (_ck, _v) {
+        var _co = _v.component;
+        var currVal_3 = _co.inputId;
+        var currVal_4 = _co.name;
+        var currVal_5 = _co.readonly;
+        var currVal_6 = _co.value;
+        var currVal_7 = _co.checked;
+        var currVal_8 = _co.disabled;
+        var currVal_9 = _co.tabindex;
+        var currVal_10 = _co.ariaLabelledBy;
+        var currVal_11 = _co.required;
+
+        _ck(_v, 6, 0, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7, currVal_8, currVal_9, currVal_10, currVal_11);
+
+        var currVal_13 = _co.checked;
+
+        _ck(_v, 9, 0, currVal_13);
+      });
+    }
+
+    function View_Checkbox_Host_0(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 2, "p-checkbox", [], null, null, null, View_Checkbox_0, RenderType_Checkbox)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵprd"](5120, null, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["NG_VALUE_ACCESSOR"], function (p0_0) {
+        return [p0_0];
+      }, [primeng_checkbox__WEBPACK_IMPORTED_MODULE_1__["Checkbox"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](2, 49152, null, 0, primeng_checkbox__WEBPACK_IMPORTED_MODULE_1__["Checkbox"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]], null, null)], null, null);
+    }
+
+    var CheckboxNgFactory = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵccf"]("p-checkbox", primeng_checkbox__WEBPACK_IMPORTED_MODULE_1__["Checkbox"], View_Checkbox_Host_0, {
+      value: "value",
+      name: "name",
+      disabled: "disabled",
+      binary: "binary",
+      label: "label",
+      ariaLabelledBy: "ariaLabelledBy",
+      tabindex: "tabindex",
+      inputId: "inputId",
+      style: "style",
+      styleClass: "styleClass",
+      labelStyleClass: "labelStyleClass",
+      formControl: "formControl",
+      checkboxIcon: "checkboxIcon",
+      readonly: "readonly",
+      required: "required"
+    }, {
+      onChange: "onChange"
+    }, []);
+    /***/
+
+  },
+
+  /***/
+  "./node_modules/primeng/fesm2015/primeng-password.js":
+  /*!***********************************************************!*\
+    !*** ./node_modules/primeng/fesm2015/primeng-password.js ***!
+    \***********************************************************/
+
+  /*! exports provided: Password, PasswordModule */
+
+  /***/
+  function node_modulesPrimengFesm2015PrimengPasswordJs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "Password", function () {
+      return Password;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "PasswordModule", function () {
+      return PasswordModule;
     });
     /* harmony import */
 
@@ -65,179 +320,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
 
-    var BlockUI =
+    var Password =
     /*#__PURE__*/
     function () {
-      function BlockUI(el) {
-        _classCallCheck(this, BlockUI);
+      function Password(el, zone) {
+        _classCallCheck(this, Password);
 
         this.el = el;
-        this.autoZIndex = true;
-        this.baseZIndex = 0;
+        this.zone = zone;
+        this.promptLabel = 'Enter a password';
+        this.weakLabel = 'Weak';
+        this.mediumLabel = 'Medium';
+        this.strongLabel = 'Strong';
+        this.feedback = true;
       }
 
-      _createClass(BlockUI, [{
-        key: "ngAfterViewInit",
-        value: function ngAfterViewInit() {
-          if (this.target && !this.target.getBlockableElement) {
-            throw 'Target of BlockUI must implement BlockableUI interface';
-          }
-        }
-      }, {
-        key: "block",
-        value: function block() {
-          if (this.target) {
-            this.target.getBlockableElement().appendChild(this.mask.nativeElement);
-            var style = this.target.style || {};
-            style.position = 'relative';
-            this.target.style = style;
-          } else {
-            document.body.appendChild(this.mask.nativeElement);
-          }
-
-          if (this.autoZIndex) {
-            this.mask.nativeElement.style.zIndex = String(this.baseZIndex + ++primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].zindex);
-          }
-        }
-      }, {
-        key: "unblock",
-        value: function unblock() {
-          this.el.nativeElement.appendChild(this.mask.nativeElement);
-        }
-      }, {
-        key: "ngOnDestroy",
-        value: function ngOnDestroy() {
-          this.unblock();
-        }
-      }, {
-        key: "blocked",
-        get: function get() {
-          return this._blocked;
-        },
-        set: function set(val) {
-          this._blocked = val;
-
-          if (this.mask && this.mask.nativeElement) {
-            if (this._blocked) this.block();else this.unblock();
-          }
-        }
-      }]);
-
-      return BlockUI;
-    }();
-
-    BlockUI.ctorParameters = function () {
-      return [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]
-      }];
-    };
-
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], BlockUI.prototype, "target", void 0);
-
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], BlockUI.prototype, "autoZIndex", void 0);
-
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], BlockUI.prototype, "baseZIndex", void 0);
-
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], BlockUI.prototype, "styleClass", void 0);
-
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('mask')], BlockUI.prototype, "mask", void 0);
-
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], BlockUI.prototype, "blocked", null);
-
-    BlockUI = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-      selector: 'p-blockUI',
-      template: "\n        <div #mask [class]=\"styleClass\" [ngClass]=\"{'ui-blockui-document':!target, 'ui-blockui ui-widget-overlay': true}\" [ngStyle]=\"{display: blocked ? 'block' : 'none'}\">\n            <ng-content></ng-content>\n        </div>\n    ",
-      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].Default
-    })], BlockUI);
-
-    var BlockUIModule = function BlockUIModule() {
-      _classCallCheck(this, BlockUIModule);
-    };
-
-    BlockUIModule = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
-      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]],
-      exports: [BlockUI],
-      declarations: [BlockUI]
-    })], BlockUIModule);
-    /**
-     * Generated bundle index. Do not edit.
-     */
-    //# sourceMappingURL=primeng-blockui.js.map
-
-    /***/
-  },
-
-  /***/
-  "./node_modules/primeng/fesm2015/primeng-inputtext.js":
-  /*!************************************************************!*\
-    !*** ./node_modules/primeng/fesm2015/primeng-inputtext.js ***!
-    \************************************************************/
-
-  /*! exports provided: InputText, InputTextModule */
-
-  /***/
-  function node_modulesPrimengFesm2015PrimengInputtextJs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "InputText", function () {
-      return InputText;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "InputTextModule", function () {
-      return InputTextModule;
-    });
-    /* harmony import */
-
-
-    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! @angular/core */
-    "./node_modules/@angular/core/fesm2015/core.js");
-    /* harmony import */
-
-
-    var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! @angular/forms */
-    "./node_modules/@angular/forms/fesm2015/forms.js");
-    /* harmony import */
-
-
-    var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! @angular/common */
-    "./node_modules/@angular/common/fesm2015/common.js");
-
-    var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
-      var c = arguments.length,
-          r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-          d;
-      if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
-        if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-      }
-      return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-
-    var __param = undefined && undefined.__param || function (paramIndex, decorator) {
-      return function (target, key) {
-        decorator(target, key, paramIndex);
-      };
-    };
-
-    var InputText =
-    /*#__PURE__*/
-    function () {
-      function InputText(el, ngModel) {
-        _classCallCheck(this, InputText);
-
-        this.el = el;
-        this.ngModel = ngModel;
-      }
-
-      _createClass(InputText, [{
+      _createClass(Password, [{
         key: "ngDoCheck",
         value: function ngDoCheck() {
           this.updateFilledState();
@@ -251,28 +349,165 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "updateFilledState",
         value: function updateFilledState() {
-          this.filled = this.el.nativeElement.value && this.el.nativeElement.value.length || this.ngModel && this.ngModel.model;
+          this.filled = this.el.nativeElement.value && this.el.nativeElement.value.length;
+        }
+      }, {
+        key: "createPanel",
+        value: function createPanel() {
+          this.panel = document.createElement('div');
+          this.panel.className = 'ui-password-panel ui-widget ui-state-highlight ui-corner-all';
+          this.meter = document.createElement('div');
+          this.meter.className = 'ui-password-meter';
+          this.info = document.createElement('div');
+          this.info.className = 'ui-password-info';
+          this.info.textContent = this.promptLabel;
+          this.panel.appendChild(this.meter);
+          this.panel.appendChild(this.info);
+          this.panel.style.minWidth = primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].getOuterWidth(this.el.nativeElement) + 'px';
+          document.body.appendChild(this.panel);
+        }
+      }, {
+        key: "onFocus",
+        value: function onFocus(e) {
+          var _this = this;
+
+          if (this.feedback) {
+            if (!this.panel) {
+              this.createPanel();
+            }
+
+            this.panel.style.zIndex = String(++primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].zindex);
+            this.zone.runOutsideAngular(function () {
+              setTimeout(function () {
+                primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].addClass(_this.panel, 'ui-password-panel-visible');
+                primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].removeClass(_this.panel, 'ui-password-panel-hidden');
+              }, 1);
+              primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].absolutePosition(_this.panel, _this.el.nativeElement);
+            });
+          }
+        }
+      }, {
+        key: "onBlur",
+        value: function onBlur(e) {
+          var _this2 = this;
+
+          if (this.feedback) {
+            primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].addClass(this.panel, 'ui-password-panel-hidden');
+            primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].removeClass(this.panel, 'ui-password-panel-visible');
+            this.zone.runOutsideAngular(function () {
+              setTimeout(function () {
+                _this2.ngOnDestroy();
+              }, 150);
+            });
+          }
+        }
+      }, {
+        key: "onKeyup",
+        value: function onKeyup(e) {
+          if (this.feedback) {
+            var value = e.target.value,
+                label = null,
+                meterPos = null;
+
+            if (value.length === 0) {
+              label = this.promptLabel;
+              meterPos = '0px 0px';
+            } else {
+              var score = this.testStrength(value);
+
+              if (score < 30) {
+                label = this.weakLabel;
+                meterPos = '0px -10px';
+              } else if (score >= 30 && score < 80) {
+                label = this.mediumLabel;
+                meterPos = '0px -20px';
+              } else if (score >= 80) {
+                label = this.strongLabel;
+                meterPos = '0px -30px';
+              }
+            }
+
+            this.meter.style.backgroundPosition = meterPos;
+            this.info.textContent = label;
+          }
+        }
+      }, {
+        key: "testStrength",
+        value: function testStrength(str) {
+          var grade = 0;
+          var val;
+          val = str.match('[0-9]');
+          grade += this.normalize(val ? val.length : 1 / 4, 1) * 25;
+          val = str.match('[a-zA-Z]');
+          grade += this.normalize(val ? val.length : 1 / 2, 3) * 10;
+          val = str.match('[!@#$%^&*?_~.,;=]');
+          grade += this.normalize(val ? val.length : 1 / 6, 1) * 35;
+          val = str.match('[A-Z]');
+          grade += this.normalize(val ? val.length : 1 / 6, 1) * 30;
+          grade *= str.length / 8;
+          return grade > 100 ? 100 : grade;
+        }
+      }, {
+        key: "normalize",
+        value: function normalize(x, y) {
+          var diff = x - y;
+          if (diff <= 0) return x / y;else return 1 + 0.5 * (x / (x + y / 4));
+        }
+      }, {
+        key: "ngOnDestroy",
+        value: function ngOnDestroy() {
+          if (this.panel) {
+            document.body.removeChild(this.panel);
+            this.panel = null;
+            this.meter = null;
+            this.info = null;
+          }
+        }
+      }, {
+        key: "showPassword",
+        set: function set(show) {
+          this.el.nativeElement.type = show ? 'text' : 'password';
+        }
+      }, {
+        key: "disabled",
+        get: function get() {
+          return this.el.nativeElement.disabled;
         }
       }]);
 
-      return InputText;
+      return Password;
     }();
 
-    InputText.ctorParameters = function () {
+    Password.ctorParameters = function () {
       return [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]
       }, {
-        type: _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgModel"],
-        decorators: [{
-          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"]
-        }]
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"]
       }];
     };
 
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('input', ['$event'])], InputText.prototype, "onInput", null);
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], Password.prototype, "promptLabel", void 0);
 
-    InputText = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"])({
-      selector: '[pInputText]',
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], Password.prototype, "weakLabel", void 0);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], Password.prototype, "mediumLabel", void 0);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], Password.prototype, "strongLabel", void 0);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], Password.prototype, "feedback", void 0);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], Password.prototype, "showPassword", null);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('input', ['$event'])], Password.prototype, "onInput", null);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('focus', ['$event'])], Password.prototype, "onFocus", null);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('blur', ['$event'])], Password.prototype, "onBlur", null);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('keyup', ['$event'])], Password.prototype, "onKeyup", null);
+
+    Password = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"])({
+      selector: '[pPassword]',
       host: {
         '[class.ui-inputtext]': 'true',
         '[class.ui-corner-all]': 'true',
@@ -280,369 +515,49 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         '[class.ui-widget]': 'true',
         '[class.ui-state-filled]': 'filled'
       }
-    }), __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"])())], InputText);
+    })], Password);
 
-    var InputTextModule = function InputTextModule() {
-      _classCallCheck(this, InputTextModule);
+    var PasswordModule = function PasswordModule() {
+      _classCallCheck(this, PasswordModule);
     };
 
-    InputTextModule = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
-      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"]],
-      exports: [InputText],
-      declarations: [InputText]
-    })], InputTextModule);
-    /**
-     * Generated bundle index. Do not edit.
-     */
-    //# sourceMappingURL=primeng-inputtext.js.map
-
-    /***/
-  },
-
-  /***/
-  "./node_modules/primeng/fesm2015/primeng-keyfilter.js":
-  /*!************************************************************!*\
-    !*** ./node_modules/primeng/fesm2015/primeng-keyfilter.js ***!
-    \************************************************************/
-
-  /*! exports provided: KEYFILTER_VALIDATOR, KeyFilter, KeyFilterModule */
-
-  /***/
-  function node_modulesPrimengFesm2015PrimengKeyfilterJs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "KEYFILTER_VALIDATOR", function () {
-      return KEYFILTER_VALIDATOR;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "KeyFilter", function () {
-      return KeyFilter;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "KeyFilterModule", function () {
-      return KeyFilterModule;
-    });
-    /* harmony import */
-
-
-    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! @angular/core */
-    "./node_modules/@angular/core/fesm2015/core.js");
-    /* harmony import */
-
-
-    var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! @angular/common */
-    "./node_modules/@angular/common/fesm2015/common.js");
-    /* harmony import */
-
-
-    var primeng_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! primeng/dom */
-    "./node_modules/primeng/fesm2015/primeng-dom.js");
-    /* harmony import */
-
-
-    var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-    /*! @angular/forms */
-    "./node_modules/@angular/forms/fesm2015/forms.js");
-
-    var __decorate = undefined && undefined.__decorate || function (decorators, target, key, desc) {
-      var c = arguments.length,
-          r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-          d;
-      if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
-        if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-      }
-      return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-
-    var KEYFILTER_VALIDATOR = {
-      provide: _angular_forms__WEBPACK_IMPORTED_MODULE_3__["NG_VALIDATORS"],
-      useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["forwardRef"])(function () {
-        return KeyFilter;
-      }),
-      multi: true
-    };
-    var DEFAULT_MASKS = {
-      pint: /[\d]/,
-      'int': /[\d\-]/,
-      pnum: /[\d\.]/,
-      money: /[\d\.\s,]/,
-      num: /[\d\-\.]/,
-      hex: /[0-9a-f]/i,
-      email: /[a-z0-9_\.\-@]/i,
-      alpha: /[a-z_]/i,
-      alphanum: /[a-z0-9_]/i
-    };
-    var KEYS = {
-      TAB: 9,
-      RETURN: 13,
-      ESC: 27,
-      BACKSPACE: 8,
-      DELETE: 46
-    };
-    var SAFARI_KEYS = {
-      63234: 37,
-      63235: 39,
-      63232: 38,
-      63233: 40,
-      63276: 33,
-      63277: 34,
-      63272: 46,
-      63273: 36,
-      63275: 35 // end
-
-    };
-
-    var KeyFilter =
-    /*#__PURE__*/
-    function () {
-      function KeyFilter(el) {
-        _classCallCheck(this, KeyFilter);
-
-        this.el = el;
-        this.ngModelChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
-        this.isAndroid = primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].isAndroid();
-      }
-
-      _createClass(KeyFilter, [{
-        key: "isNavKeyPress",
-        value: function isNavKeyPress(e) {
-          var k = e.keyCode;
-          k = primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].getBrowser().safari ? SAFARI_KEYS[k] || k : k;
-          return k >= 33 && k <= 40 || k == KEYS.RETURN || k == KEYS.TAB || k == KEYS.ESC;
-        }
-      }, {
-        key: "isSpecialKey",
-        value: function isSpecialKey(e) {
-          var k = e.keyCode || e.charCode;
-          return k == 9 || k == 13 || k == 27 || k == 16 || k == 17 || k >= 18 && k <= 20 || primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].getBrowser().opera && !e.shiftKey && (k == 8 || k >= 33 && k <= 35 || k >= 36 && k <= 39 || k >= 44 && k <= 45);
-        }
-      }, {
-        key: "getKey",
-        value: function getKey(e) {
-          var k = e.keyCode || e.charCode;
-          return primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].getBrowser().safari ? SAFARI_KEYS[k] || k : k;
-        }
-      }, {
-        key: "getCharCode",
-        value: function getCharCode(e) {
-          return e.charCode || e.keyCode || e.which;
-        }
-      }, {
-        key: "findDelta",
-        value: function findDelta(value, prevValue) {
-          var delta = '';
-
-          for (var i = 0; i < value.length; i++) {
-            var str = value.substr(0, i) + value.substr(i + value.length - prevValue.length);
-            if (str === prevValue) delta = value.substr(i, value.length - prevValue.length);
-          }
-
-          return delta;
-        }
-      }, {
-        key: "isValidChar",
-        value: function isValidChar(c) {
-          return this.regex.test(c);
-        }
-      }, {
-        key: "isValidString",
-        value: function isValidString(str) {
-          for (var i = 0; i < str.length; i++) {
-            if (!this.isValidChar(str.substr(i, 1))) {
-              return false;
-            }
-          }
-
-          return true;
-        }
-      }, {
-        key: "onInput",
-        value: function onInput(e) {
-          if (this.isAndroid && !this.pValidateOnly) {
-            var val = this.el.nativeElement.value;
-            var lastVal = this.lastValue || '';
-            var inserted = this.findDelta(val, lastVal);
-            var removed = this.findDelta(lastVal, val);
-            var pasted = inserted.length > 1 || !inserted && !removed;
-
-            if (pasted) {
-              if (!this.isValidString(val)) {
-                this.el.nativeElement.value = lastVal;
-                this.ngModelChange.emit(lastVal);
-              }
-            } else if (!removed) {
-              if (!this.isValidChar(inserted)) {
-                this.el.nativeElement.value = lastVal;
-                this.ngModelChange.emit(lastVal);
-              }
-            }
-
-            val = this.el.nativeElement.value;
-
-            if (this.isValidString(val)) {
-              this.lastValue = val;
-            }
-          }
-        }
-      }, {
-        key: "onKeyPress",
-        value: function onKeyPress(e) {
-          if (this.isAndroid || this.pValidateOnly) {
-            return;
-          }
-
-          var browser = primeng_dom__WEBPACK_IMPORTED_MODULE_2__["DomHandler"].getBrowser();
-          var k = this.getKey(e);
-
-          if (browser.mozilla && (e.ctrlKey || e.altKey)) {
-            return;
-          } else if (k == 17 || k == 18) {
-            return;
-          }
-
-          var c = this.getCharCode(e);
-          var cc = String.fromCharCode(c);
-          var ok = true;
-
-          if (!browser.mozilla && (this.isSpecialKey(e) || !cc)) {
-            return;
-          }
-
-          ok = this.regex.test(cc);
-
-          if (!ok) {
-            e.preventDefault();
-          }
-        }
-      }, {
-        key: "onPaste",
-        value: function onPaste(e) {
-          var clipboardData = e.clipboardData || window.clipboardData.getData('text');
-
-          if (clipboardData) {
-            var pastedText = clipboardData.getData('text');
-
-            var _iterator = _createForOfIteratorHelper(pastedText.toString()),
-                _step;
-
-            try {
-              for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                var char = _step.value;
-
-                if (!this.regex.test(char)) {
-                  e.preventDefault();
-                  return;
-                }
-              }
-            } catch (err) {
-              _iterator.e(err);
-            } finally {
-              _iterator.f();
-            }
-          }
-        }
-      }, {
-        key: "validate",
-        value: function validate(c) {
-          if (this.pValidateOnly) {
-            var value = this.el.nativeElement.value;
-
-            if (value && !this.regex.test(value)) {
-              return {
-                validatePattern: false
-              };
-            }
-          }
-        }
-      }, {
-        key: "pattern",
-        get: function get() {
-          return this._pattern;
-        },
-        set: function set(_pattern) {
-          this._pattern = _pattern;
-          this.regex = DEFAULT_MASKS[this._pattern] || this._pattern;
-        }
-      }]);
-
-      return KeyFilter;
-    }();
-
-    KeyFilter.ctorParameters = function () {
-      return [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]
-      }];
-    };
-
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], KeyFilter.prototype, "pValidateOnly", void 0);
-
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])()], KeyFilter.prototype, "ngModelChange", void 0);
-
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])('pKeyFilter')], KeyFilter.prototype, "pattern", null);
-
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('input', ['$event'])], KeyFilter.prototype, "onInput", null);
-
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('keypress', ['$event'])], KeyFilter.prototype, "onKeyPress", null);
-
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('paste', ['$event'])], KeyFilter.prototype, "onPaste", null);
-
-    KeyFilter = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"])({
-      selector: '[pKeyFilter]',
-      providers: [KEYFILTER_VALIDATOR]
-    })], KeyFilter);
-
-    var KeyFilterModule = function KeyFilterModule() {
-      _classCallCheck(this, KeyFilterModule);
-    };
-
-    KeyFilterModule = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+    PasswordModule = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
       imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]],
-      exports: [KeyFilter],
-      declarations: [KeyFilter]
-    })], KeyFilterModule);
+      exports: [Password],
+      declarations: [Password]
+    })], PasswordModule);
     /**
      * Generated bundle index. Do not edit.
      */
-    //# sourceMappingURL=primeng-keyfilter.js.map
+    //# sourceMappingURL=primeng-password.js.map
 
     /***/
   },
 
   /***/
-  "./node_modules/primeng/fesm2015/primeng-toolbar.js":
-  /*!**********************************************************!*\
-    !*** ./node_modules/primeng/fesm2015/primeng-toolbar.js ***!
-    \**********************************************************/
+  "./node_modules/primeng/fesm2015/primeng-progressspinner.js":
+  /*!******************************************************************!*\
+    !*** ./node_modules/primeng/fesm2015/primeng-progressspinner.js ***!
+    \******************************************************************/
 
-  /*! exports provided: Toolbar, ToolbarModule */
+  /*! exports provided: ProgressSpinner, ProgressSpinnerModule */
 
   /***/
-  function node_modulesPrimengFesm2015PrimengToolbarJs(module, __webpack_exports__, __webpack_require__) {
+  function node_modulesPrimengFesm2015PrimengProgressspinnerJs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
     /* harmony export (binding) */
 
 
-    __webpack_require__.d(__webpack_exports__, "Toolbar", function () {
-      return Toolbar;
+    __webpack_require__.d(__webpack_exports__, "ProgressSpinner", function () {
+      return ProgressSpinner;
     });
     /* harmony export (binding) */
 
 
-    __webpack_require__.d(__webpack_exports__, "ToolbarModule", function () {
-      return ToolbarModule;
+    __webpack_require__.d(__webpack_exports__, "ProgressSpinnerModule", function () {
+      return ProgressSpinnerModule;
     });
     /* harmony import */
 
@@ -667,421 +582,45 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
 
-    var Toolbar =
-    /*#__PURE__*/
-    function () {
-      function Toolbar(el) {
-        _classCallCheck(this, Toolbar);
+    var ProgressSpinner = function ProgressSpinner() {
+      _classCallCheck(this, ProgressSpinner);
 
-        this.el = el;
-      }
-
-      _createClass(Toolbar, [{
-        key: "getBlockableElement",
-        value: function getBlockableElement() {
-          return this.el.nativeElement.children[0];
-        }
-      }]);
-
-      return Toolbar;
-    }();
-
-    Toolbar.ctorParameters = function () {
-      return [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]
-      }];
+      this.strokeWidth = "2";
+      this.fill = "none";
+      this.animationDuration = "2s";
     };
 
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], Toolbar.prototype, "style", void 0);
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], ProgressSpinner.prototype, "style", void 0);
 
-    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], Toolbar.prototype, "styleClass", void 0);
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], ProgressSpinner.prototype, "styleClass", void 0);
 
-    Toolbar = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-      selector: 'p-toolbar',
-      template: "\n        <div [ngClass]=\"'ui-toolbar ui-widget ui-widget-header ui-corner-all ui-helper-clearfix'\" [ngStyle]=\"style\" [class]=\"styleClass\" role=\"toolbar\">\n            <ng-content></ng-content>\n        </div>\n    ",
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], ProgressSpinner.prototype, "strokeWidth", void 0);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], ProgressSpinner.prototype, "fill", void 0);
+
+    __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])()], ProgressSpinner.prototype, "animationDuration", void 0);
+
+    ProgressSpinner = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+      selector: 'p-progressSpinner',
+      template: "\n        <div class=\"ui-progress-spinner\" [ngStyle]=\"style\" [ngClass]=\"styleClass\"  role=\"alert\" aria-busy=\"true\">\n            <svg class=\"ui-progress-spinner-svg\" viewBox=\"25 25 50 50\" [style.animation-duration]=\"animationDuration\">\n                <circle class=\"ui-progress-spinner-circle\" cx=\"50\" cy=\"50\" r=\"20\" [attr.fill]=\"fill\" [attr.stroke-width]=\"strokeWidth\" stroke-miterlimit=\"10\"/>\n            </svg>\n        </div>\n    ",
       changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].Default
-    })], Toolbar);
+    })], ProgressSpinner);
 
-    var ToolbarModule = function ToolbarModule() {
-      _classCallCheck(this, ToolbarModule);
+    var ProgressSpinnerModule = function ProgressSpinnerModule() {
+      _classCallCheck(this, ProgressSpinnerModule);
     };
 
-    ToolbarModule = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+    ProgressSpinnerModule = __decorate([Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
       imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]],
-      exports: [Toolbar],
-      declarations: [Toolbar]
-    })], ToolbarModule);
+      exports: [ProgressSpinner],
+      declarations: [ProgressSpinner]
+    })], ProgressSpinnerModule);
     /**
      * Generated bundle index. Do not edit.
      */
-    //# sourceMappingURL=primeng-toolbar.js.map
+    //# sourceMappingURL=primeng-progressspinner.js.map
 
     /***/
-  },
-
-  /***/
-  "./node_modules/primeng/selectbutton/primeng-selectbutton.ngfactory.js":
-  /*!*****************************************************************************!*\
-    !*** ./node_modules/primeng/selectbutton/primeng-selectbutton.ngfactory.js ***!
-    \*****************************************************************************/
-
-  /*! exports provided: SelectButtonModuleNgFactory, RenderType_SelectButton, View_SelectButton_0, View_SelectButton_Host_0, SelectButtonNgFactory */
-
-  /***/
-  function node_modulesPrimengSelectbuttonPrimengSelectbuttonNgfactoryJs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "SelectButtonModuleNgFactory", function () {
-      return SelectButtonModuleNgFactory;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "RenderType_SelectButton", function () {
-      return RenderType_SelectButton;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "View_SelectButton_0", function () {
-      return View_SelectButton_0;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "View_SelectButton_Host_0", function () {
-      return View_SelectButton_Host_0;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "SelectButtonNgFactory", function () {
-      return SelectButtonNgFactory;
-    });
-    /* harmony import */
-
-
-    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! @angular/core */
-    "./node_modules/@angular/core/fesm2015/core.js");
-    /* harmony import */
-
-
-    var primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! primeng/selectbutton */
-    "./node_modules/primeng/fesm2015/primeng-selectbutton.js");
-    /* harmony import */
-
-
-    var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! @angular/common */
-    "./node_modules/@angular/common/fesm2015/common.js");
-    /* harmony import */
-
-
-    var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-    /*! @angular/forms */
-    "./node_modules/@angular/forms/fesm2015/forms.js");
-    /**
-     * @fileoverview This file was generated by the Angular template compiler. Do not edit.
-     *
-     * @suppress {suspiciousCode,uselessCode,missingProperties,missingOverride,checkTypes}
-     * tslint:disable
-     */
-
-
-    var SelectButtonModuleNgFactory = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵcmf"](primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__["SelectButtonModule"], [], function (_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmod"]([_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵCodegenComponentFactoryResolver"], [[8, []], [3, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]], _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModuleRef"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](4608, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgLocalization"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgLocaleLocalization"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["LOCALE_ID"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__["SelectButtonModule"], primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__["SelectButtonModule"], [])]);
-    });
-
-    var styles_SelectButton = [];
-
-    var RenderType_SelectButton = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵcrt"]({
-      encapsulation: 2,
-      styles: styles_SelectButton,
-      data: {}
-    });
-
-    function View_SelectButton_3(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 2, "span", [], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
-        klass: [0, "klass"],
-        ngClass: [1, "ngClass"]
-      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵpad"](2, 2)], function (_ck, _v) {
-        var currVal_0 = _v.parent.parent.context.$implicit.icon;
-
-        var currVal_1 = _ck(_v, 2, 0, "ui-clickable", "ui-button-icon-left");
-
-        _ck(_v, 1, 0, currVal_0, currVal_1);
-      }, null);
-    }
-
-    function View_SelectButton_2(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](16777216, null, null, 1, null, View_SelectButton_3)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](2, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"]], {
-        ngIf: [0, "ngIf"]
-      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](3, 0, null, null, 1, "span", [["class", "ui-button-text ui-clickable"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵted"](4, null, ["", ""]))], function (_ck, _v) {
-        var currVal_0 = _v.parent.context.$implicit.icon;
-
-        _ck(_v, 2, 0, currVal_0);
-      }, function (_ck, _v) {
-        var currVal_1 = _v.parent.context.$implicit.label || "ui-btn";
-
-        _ck(_v, 4, 0, currVal_1);
-      });
-    }
-
-    function View_SelectButton_5(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 0, null, null, null, null, null, null, null))], null, null);
-    }
-
-    function View_SelectButton_4(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](16777216, null, null, 2, null, View_SelectButton_5)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 540672, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgTemplateOutlet"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"]], {
-        ngTemplateOutletContext: [0, "ngTemplateOutletContext"],
-        ngTemplateOutlet: [1, "ngTemplateOutlet"]
-      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵpod"](2, {
-        $implicit: 0,
-        index: 1
-      }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](0, null, null, 0))], function (_ck, _v) {
-        var _co = _v.component;
-
-        var currVal_0 = _ck(_v, 2, 0, _v.parent.context.$implicit, _v.parent.context.index);
-
-        var currVal_1 = _co.itemTemplate;
-
-        _ck(_v, 1, 0, currVal_0, currVal_1);
-      }, null);
-    }
-
-    function View_SelectButton_1(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, [["btn", 1]], null, 5, "div", [["role", "button"]], [[1, "aria-pressed", 0], [1, "title", 0], [1, "aria-label", 0], [1, "tabindex", 0], [1, "aria-labelledby", 0]], [[null, "click"], [null, "keydown.enter"], [null, "focus"], [null, "blur"]], function (_v, en, $event) {
-        var ad = true;
-        var _co = _v.component;
-
-        if ("click" === en) {
-          var pd_0 = _co.onItemClick($event, _v.context.$implicit, _v.context.index) !== false;
-          ad = pd_0 && ad;
-        }
-
-        if ("keydown.enter" === en) {
-          var pd_1 = _co.onItemClick($event, _v.context.$implicit, _v.context.index) !== false;
-          ad = pd_1 && ad;
-        }
-
-        if ("focus" === en) {
-          var pd_2 = _co.onFocus($event) !== false;
-          ad = pd_2 && ad;
-        }
-
-        if ("blur" === en) {
-          var pd_3 = _co.onBlur($event) !== false;
-          ad = pd_3 && ad;
-        }
-
-        return ad;
-      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
-        klass: [0, "klass"],
-        ngClass: [1, "ngClass"]
-      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵpod"](2, {
-        "ui-state-active": 0,
-        "ui-state-disabled": 1,
-        "ui-state-focus": 2,
-        "ui-button-text-icon-left": 3,
-        "ui-button-icon-only": 4
-      }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](16777216, null, null, 1, null, View_SelectButton_2)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](4, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"]], {
-        ngIf: [0, "ngIf"],
-        ngIfElse: [1, "ngIfElse"]
-      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](0, [["customcontent", 2]], null, 0, null, View_SelectButton_4))], function (_ck, _v) {
-        var _co = _v.component;
-
-        var currVal_5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵinlineInterpolate"](1, "ui-button ui-widget ui-state-default ui-button-text-only ", _v.context.$implicit.styleClass, "");
-
-        var currVal_6 = _ck(_v, 2, 0, _co.isSelected(_v.context.$implicit), _co.disabled || _v.context.$implicit.disabled, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵnov"](_v, 0) == _co.focusedItem, _v.context.$implicit.icon != null, _v.context.$implicit.icon && !_v.context.$implicit.label);
-
-        _ck(_v, 1, 0, currVal_5, currVal_6);
-
-        var currVal_7 = !_co.itemTemplate;
-
-        var currVal_8 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵnov"](_v, 5);
-
-        _ck(_v, 4, 0, currVal_7, currVal_8);
-      }, function (_ck, _v) {
-        var _co = _v.component;
-
-        var currVal_0 = _co.isSelected(_v.context.$implicit);
-
-        var currVal_1 = _v.context.$implicit.title;
-        var currVal_2 = _v.context.$implicit.label;
-        var currVal_3 = _co.tabindex;
-        var currVal_4 = _co.ariaLabelledBy;
-
-        _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4);
-      });
-    }
-
-    function View_SelectButton_0(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 4, "div", [["role", "group"]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
-        klass: [0, "klass"],
-        ngClass: [1, "ngClass"]
-      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](2, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgStyle"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
-        ngStyle: [0, "ngStyle"]
-      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵand"](16777216, null, null, 1, null, View_SelectButton_1)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](4, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgForOf"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"]], {
-        ngForOf: [0, "ngForOf"]
-      }, null)], function (_ck, _v) {
-        var _co = _v.component;
-        var currVal_0 = _co.styleClass;
-        var currVal_1 = "ui-selectbutton ui-buttonset ui-widget ui-corner-all ui-buttonset-" + (_co.options ? _co.options.length : 0);
-
-        _ck(_v, 1, 0, currVal_0, currVal_1);
-
-        var currVal_2 = _co.style;
-
-        _ck(_v, 2, 0, currVal_2);
-
-        var currVal_3 = _co.options;
-
-        _ck(_v, 4, 0, currVal_3);
-      }, null);
-    }
-
-    function View_SelectButton_Host_0(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 3, "p-selectButton", [], null, null, null, View_SelectButton_0, RenderType_SelectButton)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵprd"](5120, null, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["NG_VALUE_ACCESSOR"], function (p0_0) {
-        return [p0_0];
-      }, [primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__["SelectButton"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](2, 573440, null, 1, primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__["SelectButton"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵqud"](603979776, 1, {
-        itemTemplate: 0
-      })], null, null);
-    }
-
-    var SelectButtonNgFactory = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵccf"]("p-selectButton", primeng_selectbutton__WEBPACK_IMPORTED_MODULE_1__["SelectButton"], View_SelectButton_Host_0, {
-      tabindex: "tabindex",
-      multiple: "multiple",
-      style: "style",
-      styleClass: "styleClass",
-      ariaLabelledBy: "ariaLabelledBy",
-      disabled: "disabled",
-      dataKey: "dataKey",
-      optionLabel: "optionLabel",
-      options: "options"
-    }, {
-      onOptionClick: "onOptionClick",
-      onChange: "onChange"
-    }, []);
-    /***/
-
-  },
-
-  /***/
-  "./node_modules/primeng/toolbar/primeng-toolbar.ngfactory.js":
-  /*!*******************************************************************!*\
-    !*** ./node_modules/primeng/toolbar/primeng-toolbar.ngfactory.js ***!
-    \*******************************************************************/
-
-  /*! exports provided: ToolbarModuleNgFactory, RenderType_Toolbar, View_Toolbar_0, View_Toolbar_Host_0, ToolbarNgFactory */
-
-  /***/
-  function node_modulesPrimengToolbarPrimengToolbarNgfactoryJs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "ToolbarModuleNgFactory", function () {
-      return ToolbarModuleNgFactory;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "RenderType_Toolbar", function () {
-      return RenderType_Toolbar;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "View_Toolbar_0", function () {
-      return View_Toolbar_0;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "View_Toolbar_Host_0", function () {
-      return View_Toolbar_Host_0;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "ToolbarNgFactory", function () {
-      return ToolbarNgFactory;
-    });
-    /* harmony import */
-
-
-    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! @angular/core */
-    "./node_modules/@angular/core/fesm2015/core.js");
-    /* harmony import */
-
-
-    var primeng_toolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! primeng/toolbar */
-    "./node_modules/primeng/fesm2015/primeng-toolbar.js");
-    /* harmony import */
-
-
-    var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! @angular/common */
-    "./node_modules/@angular/common/fesm2015/common.js");
-    /**
-     * @fileoverview This file was generated by the Angular template compiler. Do not edit.
-     *
-     * @suppress {suspiciousCode,uselessCode,missingProperties,missingOverride,checkTypes}
-     * tslint:disable
-     */
-
-
-    var ToolbarModuleNgFactory = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵcmf"](primeng_toolbar__WEBPACK_IMPORTED_MODULE_1__["ToolbarModule"], [], function (_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmod"]([_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](512, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵCodegenComponentFactoryResolver"], [[8, []], [3, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]], _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModuleRef"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](4608, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgLocalization"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgLocaleLocalization"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["LOCALE_ID"]]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], []), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵmpd"](1073742336, primeng_toolbar__WEBPACK_IMPORTED_MODULE_1__["ToolbarModule"], primeng_toolbar__WEBPACK_IMPORTED_MODULE_1__["ToolbarModule"], [])]);
-    });
-
-    var styles_Toolbar = [];
-
-    var RenderType_Toolbar = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵcrt"]({
-      encapsulation: 2,
-      styles: styles_Toolbar,
-      data: {}
-    });
-
-    function View_Toolbar_0(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 3, "div", [["role", "toolbar"]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgClass"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["IterableDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
-        klass: [0, "klass"],
-        ngClass: [1, "ngClass"]
-      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](2, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgStyle"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]], {
-        ngStyle: [0, "ngStyle"]
-      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵncd"](null, 0)], function (_ck, _v) {
-        var _co = _v.component;
-        var currVal_0 = _co.styleClass;
-        var currVal_1 = "ui-toolbar ui-widget ui-widget-header ui-corner-all ui-helper-clearfix";
-
-        _ck(_v, 1, 0, currVal_0, currVal_1);
-
-        var currVal_2 = _co.style;
-
-        _ck(_v, 2, 0, currVal_2);
-      }, null);
-    }
-
-    function View_Toolbar_Host_0(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵeld"](0, 0, null, null, 1, "p-toolbar", [], null, null, null, View_Toolbar_0, RenderType_Toolbar)), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵdid"](1, 49152, null, 0, primeng_toolbar__WEBPACK_IMPORTED_MODULE_1__["Toolbar"], [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]], null, null)], null, null);
-    }
-
-    var ToolbarNgFactory = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵccf"]("p-toolbar", primeng_toolbar__WEBPACK_IMPORTED_MODULE_1__["Toolbar"], View_Toolbar_Host_0, {
-      style: "style",
-      styleClass: "styleClass"
-    }, {}, ["*"]);
-    /***/
-
   }
 }]);
 //# sourceMappingURL=common-es5.js.map

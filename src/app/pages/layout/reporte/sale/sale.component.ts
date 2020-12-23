@@ -6,6 +6,7 @@ import { UtilService } from 'src/services/util.service';
 import { client } from 'src/models/client';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { environment } from 'src/environments/environment';
 
 export interface Cliente {
   apellidos: string;
@@ -13,6 +14,14 @@ export interface Cliente {
   razosoci: string;
   entiDni: string;
   nombres: string;
+}
+
+export interface Factura {
+  clieId: number;
+  email: string;
+  nombres: string;
+  pdf: string;
+  secuencial: number;
 }
 
 export interface Documentos {
@@ -26,6 +35,7 @@ export interface Documentos {
   puntemis: string;
   codiesta: string;
   secuencial: number;
+  estado: string;
 }
 
 @Component({
@@ -47,12 +57,23 @@ export class SaleComponent implements OnInit {
   selectDocument: Documentos;
   url: string;
   claveacceso: string;
+  emailuser: string;
+  newemailuser: string;
+  status: boolean;
+  dialogEmail: boolean;
+  selectfactura: Factura;
 
-  constructor(private api: ApisService, private utilService: UtilService, private router: Router) {
+
+  constructor(private api: ApisService, private utilService: UtilService, private router: Router, private messageService: MessageService) {
 
   }
 
-  ngOnInit(): void {
+  ngOnInit(){
+    this.emailuser = "";
+    this.newemailuser = "";
+    this.status = false;
+    this.selectfactura = null;
+    this.dialogEmail = false;
     this.date = new Date();
     this.numDocument = "";
     this.filterMobile = new Date();
@@ -64,12 +85,10 @@ export class SaleComponent implements OnInit {
   async getClient() {
     this.utilService.isLoading.next(true);
     await this.api.getclients(localStorage.getItem("token")).then(cliente => {
-      console.log(cliente);
       if (cliente.headerApp.code === 200) {
         this.clientes = cliente.data.clientes;
       }
     }).catch(err => {
-      console.log(err);
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -78,46 +97,76 @@ export class SaleComponent implements OnInit {
     this.utilService.isLoading.next(false);
   }
 
-  onDateSelect(event) {
-    console.log('Seleccionar');
-    console.log(event);
-    //Debe volver a consultar
-    console.log(this.invoices);
-    console.log('TEST');
-    this.invoices = this.invoices.filter(documento => this.getFormatDate(new Date(documento.fecha)) == this.getFormatDate(event));
-    console.log('RESULTADO FINAL');
-    console.log(this.invoices);
-  }
-
-  close() {
-    this.consultar();
-  }
-
-  async consultar() {
+  async consultar() {   
     this.utilService.isLoading.next(true);
-    await this.api.getsales(this.getFormatDate(this.dateIni).replace(/-/g, ""), this.getFormatDate(this.dateFin).replace(/-/g, ""), localStorage.getItem("token")).then(data => {
-      console.log(data);
-      if (data.headerApp.code === 200) {
-        this.invoices = data.data.invoices;
-      }
-    }).catch(err => {
-      console.log(err);
-      if (err.error.code == 401) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    })
+    await this.api.getsales(this.getFormatDate(this.dateIni).replace(/-/g, "") + " 00:00:00",
+      this.getFormatDate(this.dateFin).replace(/-/g, "") + " 23:59:59",
+      localStorage.getItem("token")).then(data => {       
+        if (data.headerApp.code === 200) {
+          this.invoices = data.data.invoices;
+        }
+      }).catch(err => {
+        if (err.error.code == 401) {
+          localStorage.clear();
+          this.router.navigate(['/login']);
+        }
+      })
     this.utilService.isLoading.next(false);
+  }
+
+  send(documento: Documentos) {   
+    this.dialogEmail = true;
+    this.emailuser = documento.cliente['email'];
+    this.selectfactura = {
+      clieId: documento.cliente.entiId,
+      email: documento.cliente['email'],
+      nombres: documento.cliente.nombres,
+      pdf: documento.pdf,
+      secuencial: documento.secuencial
+    }    
   }
 
   view(documento: Documentos) {
     this.dialogVisible = true;
-    this.url = 'https://addsoft-tech.com:8443/rmi/invoices/' + documento.pdf;
+    this.url = environment.url + documento.pdf;
     this.claveacceso = documento.claveacceso;
   }
 
+  async ok() {    
+    if (this.status && (this.newemailuser == '' || this.newemailuser == undefined)) {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Debe agregar el nuevo email' });
+      return;
+    }
+
+    let contentEmail = {
+      tipoDocu: "IN",
+      clieId: this.selectfactura.clieId,
+      nombres: this.selectfactura.nombres,
+      email: this.status ? this.newemailuser : this.emailuser,
+      secuencia: this.selectfactura.secuencial,
+      docu: this.selectfactura.pdf,
+      fechaDocu: this.getFormatDate(new Date())
+    }   
+    this.utilService.isLoading.next(true);
+    await this.api.sendEmail(contentEmail, localStorage.getItem("token")).then(data => {
+      if (data.headerApp.code == 200) {
+        this.dialogEmail = false;
+        this.emailuser = "";
+        this.status = false;
+        this.newemailuser = "";
+        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Email enviado correctamente' });
+      }
+    }).catch(err => {
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    this.utilService.isLoading.next(false);
+  }
+
   getFormatDate(date: Date): string {
-    return (moment(date)).format('YYYY-MM-DD');
+    return (moment(date)).format('yyyy-MM-DD');
   }
 
 
