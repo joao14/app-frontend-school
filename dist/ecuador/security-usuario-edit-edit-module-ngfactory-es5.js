@@ -1462,13 +1462,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               while (1) {
                 switch (_context.prev = _context.next) {
                   case 0:
-                    console.log('ROles');
-                    console.log('Este es el usuario');
-                    console.log(this.user_);
-                    _context.next = 5;
+                    _context.next = 2;
                     return this.api.getRoles(localStorage.getItem("token")).then(function (roles) {
-                      console.log(roles);
-
                       if (roles.headerApp.code === 200) {
                         roles.data.roles.filter(function (rol) {
                           //Se valida cuando un cliente no es rosa mistica
@@ -1491,8 +1486,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         });
                       }
                     }).catch(function (error) {
-                      console.log(error);
-
                       if (error.error.code == 401) {
                         localStorage.clear();
 
@@ -1500,7 +1493,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                       }
                     });
 
-                  case 5:
+                  case 2:
                   case "end":
                     return _context.stop();
                 }
@@ -1557,8 +1550,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this2.lista = temp;
             }
           }).catch(function (error) {
-            console.log(error);
-
             if (error.error.code == 401) {
               localStorage.clear();
 
@@ -1587,8 +1578,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               });
             }
           }).catch(function (error) {
-            console.log(error);
-
             if (error.error.code == 401) {
               localStorage.clear();
 
@@ -1616,8 +1605,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this4.lista = temp;
             }
           }).catch(function (error) {
-            console.log(error);
-
             if (error.error.code == 401) {
               localStorage.clear();
 
@@ -1647,8 +1634,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this5.router.navigate(['usuario']);
             }
           }).catch(function (err) {
-            console.log(err);
-
             if (err.error.code == 401) {
               localStorage.clear();
 
@@ -1662,7 +1647,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this6 = this;
 
           if (this.user.apellidos == '' || this.user.nombres == '' || this.user.dni == '' || this.user.nickname == '' || this.user.email == '' || this.user.token == '' || this.user.empresa == null) {
-            console.log('algunos campos estan vacios');
             this.messageService.add({
               severity: 'error',
               summary: 'Rosa Mística',
@@ -1671,7 +1655,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             return;
           }
 
-          console.log('[Guardando el usuario]');
           var user = {
             apellidos: this.user.apellidos,
             nombres: this.user.nombres,
@@ -1687,8 +1670,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this6.router.navigate(['usuario']);
             }
           }).catch(function (err) {
-            console.log(err);
-
             if (err.error.code == 401) {
               localStorage.clear();
 
@@ -1746,8 +1727,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                           });
                         }
                       }).catch(function (err) {
-                        console.log(err);
-
                         if (err.error.code == 401) {
                           localStorage.clear();
 
@@ -1786,8 +1765,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         rolId: element.rolId
                       };
                       this.api.removeRolesByUser(rol, localStorage.getItem("token")).then(function (data) {
-                        console.log(data);
-
                         if (data.headerApp.code === 200) {
                           _this10.messageService.add({
                             severity: 'info',
@@ -1796,8 +1773,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                           });
                         }
                       }).catch(function (err) {
-                        console.log(err);
-
                         if (err.error.code == 401) {
                           localStorage.clear();
 

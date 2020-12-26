@@ -483,11 +483,8 @@ class FincaComponent {
                 });
                 this.fincas = fincaTemp;
                 this.utilservice.isLoading.next(false);
-                console.log('FINCAS..');
-                console.log(this.fincas);
             }
         }).catch(err => {
-            console.log(err);
             this.utilservice.isLoading.next(false);
             if (err.error.code == 401) {
                 localStorage.clear();
@@ -496,11 +493,9 @@ class FincaComponent {
         });
     }
     addFinca() {
-        console.log('Agregar la finca');
         this.router.navigate(['/editFinca']);
     }
     edit(finca) {
-        console.log('Editando finca...');
         this.router.navigate(['/editFinca'], { state: { finca: JSON.stringify(finca) } });
     }
     consultarMobile() {
@@ -515,8 +510,6 @@ class FincaComponent {
                 this.fincas.push(finca);
             }
         });
-        console.log('Fincas finales');
-        console.log(this.fincas);
     }
 }
 

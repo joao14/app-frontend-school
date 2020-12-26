@@ -380,11 +380,7 @@ class EditComponent {
     }
     getRoles() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            console.log('ROles');
-            console.log('Este es el usuario');
-            console.log(this.user_);
             yield this.api.getRoles(localStorage.getItem("token")).then(roles => {
-                console.log(roles);
                 if (roles.headerApp.code === 200) {
                     roles.data.roles.filter(rol => {
                         //Se valida cuando un cliente no es rosa mistica
@@ -402,7 +398,6 @@ class EditComponent {
                     });
                 }
             }).catch(error => {
-                console.log(error);
                 if (error.error.code == 401) {
                     localStorage.clear();
                     this.router.navigate(['/login']);
@@ -446,7 +441,6 @@ class EditComponent {
                 this.lista = temp;
             }
         }).catch(error => {
-            console.log(error);
             if (error.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -469,7 +463,6 @@ class EditComponent {
                 });
             }
         }).catch(error => {
-            console.log(error);
             if (error.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -492,7 +485,6 @@ class EditComponent {
                 this.lista = temp;
             }
         }).catch(error => {
-            console.log(error);
             if (error.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -517,7 +509,6 @@ class EditComponent {
                 this.router.navigate(['usuario']);
             }
         }).catch(err => {
-            console.log(err);
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -527,11 +518,9 @@ class EditComponent {
     saveuser() {
         if (this.user.apellidos == '' || this.user.nombres == '' || this.user.dni == '' || this.user.nickname == ''
             || this.user.email == '' || this.user.token == '' || this.user.empresa == null) {
-            console.log('algunos campos estan vacios');
             this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios' });
             return;
         }
-        console.log('[Guardando el usuario]');
         let user = {
             apellidos: this.user.apellidos,
             nombres: this.user.nombres,
@@ -547,7 +536,6 @@ class EditComponent {
                 this.router.navigate(['usuario']);
             }
         }).catch(err => {
-            console.log(err);
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -573,7 +561,6 @@ class EditComponent {
                     this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Se agrego un nuevo rol al usuario' });
                 }
             }).catch(err => {
-                console.log(err);
                 if (err.error.code == 401) {
                     localStorage.clear();
                     this.router.navigate(['/login']);
@@ -589,12 +576,10 @@ class EditComponent {
                 rolId: element.rolId
             };
             this.api.removeRolesByUser(rol, localStorage.getItem("token")).then(data => {
-                console.log(data);
                 if (data.headerApp.code === 200) {
                     this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Se quito un rol al usuario' });
                 }
             }).catch(err => {
-                console.log(err);
                 if (err.error.code == 401) {
                     localStorage.clear();
                     this.router.navigate(['/login']);

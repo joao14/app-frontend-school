@@ -127,7 +127,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             user: email,
             pass: password
           };
-          console.log(credential);
+          ;
           return this.http.post(src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].login, JSON.stringify(credential), this.httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["retry"])(2), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError)).toPromise();
         }
       }, {
@@ -942,7 +942,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           };
           var order = this.JSON_to_URLEncoded(body);
-          console.log(order);
           return this.http.post(url, order, header);
         }
       }, {

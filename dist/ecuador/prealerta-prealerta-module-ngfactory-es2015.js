@@ -832,7 +832,7 @@ class PrealertaComponent {
                         return;
                     }
                     let item = {
-                        fecha: data[i]['SHIPPING DATE'],
+                        fecha: data[i]['SHIPPING DATE'] + ' 00:00:00.000',
                         cliente: client,
                         fincapropia: data[i]['FINCA PROPIA'] == undefined || data[i]['FINCA PROPIA'] == '' ? 'N' : 'S',
                         finca: finca,

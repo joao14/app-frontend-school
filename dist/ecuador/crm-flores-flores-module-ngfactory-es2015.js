@@ -530,6 +530,7 @@ class FloresComponent {
     onRepresentativeChange(event) {
     }
     addFlor() {
+        this.router.navigate(['/editFlower']);
     }
     edit(flower) {
         this.router.navigate(['/editFlower'], { state: { flower: JSON.stringify(flower) } });

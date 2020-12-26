@@ -331,7 +331,6 @@ class BalanceComponent {
                 }
                 this.clientes = temp;
             }).catch(err => {
-                console.log(err);
                 if (err.error.code == 401) {
                     localStorage.clear();
                     this.router.navigate(['/login']);
@@ -349,14 +348,11 @@ class BalanceComponent {
             this.utilService.isLoading.next(true);
             this.invoices = [];
             yield this.api.getInvoicesbyClient(this.selectClient.entiId, this.getFormatDate(this.dateIni).replace(/-/g, '') + " 00:00:00", this.getFormatDate(this.dateFin).replace(/-/g, '') + " 23:59:59", localStorage.getItem("token")).then(data => {
-                console.log('Data');
-                console.log(data);
                 if (data.headerApp.code == 200) {
                     this.invoices = data.data.transacciones;
                     this.xlsx = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].url + data.data.xls;
                 }
             }).catch(err => {
-                console.log(err);
                 if (err.error.code == 401) {
                     localStorage.clear();
                     this.router.navigate(['/login']);

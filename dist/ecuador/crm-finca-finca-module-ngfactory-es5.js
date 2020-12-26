@@ -1566,13 +1566,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               _this.fincas = fincaTemp;
 
               _this.utilservice.isLoading.next(false);
-
-              console.log('FINCAS..');
-              console.log(_this.fincas);
             }
           }).catch(function (err) {
-            console.log(err);
-
             _this.utilservice.isLoading.next(false);
 
             if (err.error.code == 401) {
@@ -1585,13 +1580,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "addFinca",
         value: function addFinca() {
-          console.log('Agregar la finca');
           this.router.navigate(['/editFinca']);
         }
       }, {
         key: "edit",
         value: function edit(finca) {
-          console.log('Editando finca...');
           this.router.navigate(['/editFinca'], {
             state: {
               finca: JSON.stringify(finca)
@@ -1616,8 +1609,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               _this2.fincas.push(finca);
             }
           });
-          console.log('Fincas finales');
-          console.log(this.fincas);
         }
       }]);
 

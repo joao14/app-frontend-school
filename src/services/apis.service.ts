@@ -56,8 +56,7 @@ export class ApisService {
         let credential = {
             user: email,
             pass: password,
-        };
-        console.log(credential);
+        };;
         return this.http
             .post<any>(
                 environment.login,
@@ -765,7 +764,6 @@ export class ApisService {
             //.set("Authorization", `Bearer ${environment.stripe.sk}`),
         };
         const order = this.JSON_to_URLEncoded(body);
-        console.log(order);
         return this.http.post(url, order, header);
     }
 

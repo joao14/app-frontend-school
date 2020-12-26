@@ -95,11 +95,7 @@ export class EditComponent implements OnInit {
   }
 
   async getRoles() {
-    console.log('ROles');
-    console.log('Este es el usuario');
-    console.log(this.user_);
     await this.api.getRoles(localStorage.getItem("token")).then(roles => {
-      console.log(roles);
       if (roles.headerApp.code === 200) {
         roles.data.roles.filter(rol => {
           //Se valida cuando un cliente no es rosa mistica
@@ -117,7 +113,7 @@ export class EditComponent implements OnInit {
         });
       }
     }).catch(error => {
-      console.log(error);
+       
       if (error.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -162,7 +158,7 @@ export class EditComponent implements OnInit {
         this.lista = temp;
       }
     }).catch(error => {
-      console.log(error);
+       
       if (error.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -186,7 +182,7 @@ export class EditComponent implements OnInit {
         });
       }
     }).catch(error => {
-      console.log(error);
+       
       if (error.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -212,7 +208,7 @@ export class EditComponent implements OnInit {
 
       }
     }).catch(error => {
-      console.log(error);
+       
       if (error.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -239,7 +235,7 @@ export class EditComponent implements OnInit {
         this.router.navigate(['usuario']);
       }
     }).catch(err => {
-      console.log(err);
+       
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -252,12 +248,10 @@ export class EditComponent implements OnInit {
 
     if (this.user.apellidos == '' || this.user.nombres == '' || this.user.dni == '' || this.user.nickname == ''
       || this.user.email == '' || this.user.token == '' || this.user.empresa == null) {
-      console.log('algunos campos estan vacios');
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios' });
       return
     }
 
-    console.log('[Guardando el usuario]');
     let user = {
       apellidos: this.user.apellidos,
       nombres: this.user.nombres,
@@ -274,7 +268,7 @@ export class EditComponent implements OnInit {
         this.router.navigate(['usuario']);
       }
     }).catch(err => {
-      console.log(err);
+       
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -302,7 +296,7 @@ export class EditComponent implements OnInit {
           this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Se agrego un nuevo rol al usuario' });
         }
       }).catch(err => {
-        console.log(err);
+         
         if (err.error.code == 401) {
           localStorage.clear();
           this.router.navigate(['/login']);
@@ -323,12 +317,11 @@ export class EditComponent implements OnInit {
         rolId: element.rolId
       }
       this.api.removeRolesByUser(rol, localStorage.getItem("token")).then(data => {
-        console.log(data);
         if (data.headerApp.code === 200) {
           this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Se quito un rol al usuario' });
         }
       }).catch(err => {
-        console.log(err);
+         
         if (err.error.code == 401) {
           localStorage.clear();
           this.router.navigate(['/login']);

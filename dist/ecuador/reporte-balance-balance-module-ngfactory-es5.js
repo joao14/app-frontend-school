@@ -1554,8 +1554,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                       _this2.clientes = temp;
                     }).catch(function (err) {
-                      console.log(err);
-
                       if (err.error.code == 401) {
                         localStorage.clear();
 
@@ -1603,16 +1601,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     this.invoices = [];
                     _context3.next = 7;
                     return this.api.getInvoicesbyClient(this.selectClient.entiId, this.getFormatDate(this.dateIni).replace(/-/g, '') + " 00:00:00", this.getFormatDate(this.dateFin).replace(/-/g, '') + " 23:59:59", localStorage.getItem("token")).then(function (data) {
-                      console.log('Data');
-                      console.log(data);
-
                       if (data.headerApp.code == 200) {
                         _this3.invoices = data.data.transacciones;
                         _this3.xlsx = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].url + data.data.xls;
                       }
                     }).catch(function (err) {
-                      console.log(err);
-
                       if (err.error.code == 401) {
                         localStorage.clear();
 

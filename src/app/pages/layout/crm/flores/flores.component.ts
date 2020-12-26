@@ -89,7 +89,7 @@ export class FloresComponent implements OnInit {
   }
 
   addFlor() {
-    
+    this.router.navigate(['/editFlower']);
   }
 
   edit(flower: Flower) {

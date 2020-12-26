@@ -1292,7 +1292,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function onRepresentativeChange(event) {}
       }, {
         key: "addFlor",
-        value: function addFlor() {}
+        value: function addFlor() {
+          this.router.navigate(['/editFlower']);
+        }
       }, {
         key: "edit",
         value: function edit(flower) {
