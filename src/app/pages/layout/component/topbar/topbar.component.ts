@@ -52,7 +52,6 @@ export class TopbarComponent implements OnInit {
     }
 
     onOptionsSelected(lng: string) {
-        console.log('Seleccionar' + lng);
     }
 
     onChange(event) {
@@ -60,8 +59,6 @@ export class TopbarComponent implements OnInit {
     }
 
     onselectlanguajes(languajes: string) {
-        console.log('Esta cambiando el lenguaje');
-
     }
 
     activeMenu() {

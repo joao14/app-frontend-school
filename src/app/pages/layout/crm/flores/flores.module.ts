@@ -6,6 +6,7 @@ import { TableModule, InputSwitchModule, ToastModule, MessagesModule, MessageMod
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragdropDirective } from 'src/app/directive/dragdrop.directive';
+import { CrystalLightboxModule } from '@crystalui/angular-lightbox';
 
 
 
@@ -30,9 +31,9 @@ import { DragdropDirective } from 'src/app/directive/dragdrop.directive';
     DropdownModule,
     BlockUIModule,
     CarouselModule,
-    GalleriaModule,
     DialogModule,
-    DataViewModule
+    DataViewModule,
+    CrystalLightboxModule
   ]
 })
 export class FloresModule { }

@@ -276,8 +276,15 @@
 
 
                                     <div class="ui-g-12 ui-md-12">
-                                        <div class="ui-g-12 ui-md-9"></div>
-                                        <div class="ui-g-12 ui-md-3">
+                                        <div class="ui-g-12 ui-md-7"></div>
+                                        <div class="ui-g-12 ui-md-3">                                            
+                                            <div class="ui-field-checkbox">
+                                                <label class="lbl">{{'Seguir usando mismos datos' | translate }}</label>
+                                                &nbsp;
+                                                <p-checkbox formControlName="repeat" binary="true"></p-checkbox>                                               
+                                            </div>
+                                        </div>
+                                        <div class="ui-g-12 ui-md-2">
                                             <button pButton icon="pi pi-plus" class="ui-button-primary ouput_btn_table"
                                                 [label]="'Agregar' | translate"></button>
                                         </div>

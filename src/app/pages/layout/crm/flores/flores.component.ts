@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { SelectItem, MessageService } from 'primeng';
 import { TranslateService } from '@ngx-translate/core';
 import { flower } from 'src/models/flower';
-import { environment} from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 import { UtilService } from 'src/services/util.service';
 
 export interface Flower {
@@ -31,15 +31,16 @@ export class FloresComponent implements OnInit {
   sortField: string;
   sortOrder: string;
   typerol: string;
+  active: boolean; 
   
-
   constructor(private apis: ApisService, private router: Router, private utilservice: UtilService) {
   }
-
-  ngOnInit(): void {
+    
+  ngOnInit() {   
     this.typerol = localStorage.getItem("rolactive");
     this.sortField = "";
-    this.sortOrder = "";
+    this.sortOrder = ""; 
+    this.active = false;
     this.inicializate();
   }
 
@@ -71,7 +72,7 @@ export class FloresComponent implements OnInit {
         });
         this.flowers = temp;
       }
-      
+
     }).catch(err => {
       if (err.error.code == 401) {
         localStorage.clear();
@@ -81,11 +82,11 @@ export class FloresComponent implements OnInit {
     })
 
     this.utilservice.isLoading.next(false);
-    
+
   }
 
   onRepresentativeChange(event) {
-    
+
   }
 
   addFlor() {
@@ -102,4 +103,5 @@ export class FloresComponent implements OnInit {
     this.dialogVisible = true;
   }
 
-}
+ 
+} 

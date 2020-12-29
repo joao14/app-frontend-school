@@ -107,6 +107,7 @@ export class Graphics {
         detalle: Array<{
             cm: string;
             farm: string;
+            fincapropia: string;
             pvp: string;
             pcomp: string;
             status: string;
@@ -175,11 +176,11 @@ export class DashboardComponent implements OnInit {
         }
     }
 
-    async getRosaMistica() {
+    async getRosaMistica() {        
         this.actuallydate = new Date();
         this.graphics = null;
-        this.utilservice.isLoading.next(true);
-        await this.api.getcharts(localStorage.getItem('token')).then(data => {            
+        this.utilservice.isLoading.next(true);       
+        await this.api.getcharts(localStorage.getItem('token')).then(data => {  
             this.graphics = new Graphics();
             if (data.headerApp.code == 200) {
                 //Transactions
@@ -340,8 +341,7 @@ export class DashboardComponent implements OnInit {
         this.actuallydate = new Date();
         this.graphics = null;
         this.utilservice.isLoading.next(true);
-        await this.api.getchartsbyclient(this.user.empresa.entiid, localStorage.getItem('token')).then(data => {
-       
+        await this.api.getchartsbyclient(this.user.empresa.entiid, localStorage.getItem('token')).then(data => {            
             this.graphics = new Graphics();
             if (data.headerApp.code == 200) {
                 //Transactions
@@ -479,11 +479,12 @@ export class DashboardComponent implements OnInit {
                 }
 
                 if (data.data.prealert != null) {
-                    let detalle: Array<{ cm: string; farm: string; pvp: string; pcomp: string; status: string; flower: string; }> = [];
+                    let detalle: Array<{ cm: string; farm: string; fincapropia:string; pvp: string; pcomp: string; status: string; flower: string; }> = [];
                     data.data.prealert.detalle.forEach(element => {
                         detalle.push({
                             cm: element.cm,
                             farm: element.farm,
+                            fincapropia: element.fincapropia,
                             pvp: element.pvp,
                             pcomp: element.pcomp,
                             status: element.status,
@@ -501,6 +502,7 @@ export class DashboardComponent implements OnInit {
 
             }
         }).catch(err => {
+            console.error(err);            
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);

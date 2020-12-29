@@ -179,6 +179,7 @@ export class PrealertaComponent implements OnInit {
       preciocomp: [''],
       carga: ['', Validators.required],
       estado: ['', Validators.required],
+      repeat: ['']
     });
   }
 
@@ -324,8 +325,16 @@ export class PrealertaComponent implements OnInit {
     this.items.forEach(item => {
       this.total += parseInt(item.totaltallos + "");
     });
-    this.submitted = false;
-    this.prealertForm.reset();
+    this.submitted = false;   
+    if(!this.prealertForm.get('repeat').value){
+      this.prealertForm.reset();
+    }else{
+      this.prealertForm.get('HBBQ').setValue(null);
+      this.prealertForm.get('rosamistica').setValue(null);
+      this.prealertForm.get('tallos').setValue(null);
+      this.prealertForm.get('totaltallos').setValue(null);
+    }
+    
     this.prealertForm.get('fecha').setValue(new Date());
   }
 

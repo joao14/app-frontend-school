@@ -26,13 +26,14 @@ import { RouterModule } from '@angular/router';
 
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
-import { MessageModule, AutoCompleteModule, CardModule, SplitButtonModule, SelectButtonModule, ConfirmDialogModule, CalendarModule, DynamicDialogModule, DialogModule, VirtualScrollerModule, CarouselModule, DataViewModule, FieldsetModule, ProgressBarModule, ChartModule, BreadcrumbModule } from 'primeng';
+import { MessageModule, AutoCompleteModule, CardModule, SplitButtonModule, SelectButtonModule, ConfirmDialogModule, CalendarModule, DynamicDialogModule, DialogModule, VirtualScrollerModule, CarouselModule, DataViewModule, FieldsetModule, ProgressBarModule, ChartModule, BreadcrumbModule, GalleriaModule } from 'primeng';
 import { DragdropDirective } from 'src/app/directive/dragdrop.directive';
 
 // in app.module.ts   
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { BreadComponent } from './component/bread/bread.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { CrystalLightboxModule } from '@crystalui/angular-lightbox';
 
 @NgModule({
     imports: [
@@ -70,7 +71,9 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
         ProgressBarModule,
         ChartModule,
         BreadcrumbModule,
-        NgxSkeletonLoaderModule
+        NgxSkeletonLoaderModule,
+        GalleriaModule,
+        CrystalLightboxModule
         
     ],   
     declarations: [

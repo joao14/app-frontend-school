@@ -2,16 +2,15 @@
     <div class="ui-g-12">
         <div class="card no-margin">
             <h1>{{ 'Lista de Flores' | translate }}</h1>
-            <p-toast></p-toast>            
-            <p-dataView #dv [value]="flowers" [paginator]="true" [rows]="9" filterBy="name"
-                [sortField]="sortField"
+            <p-toast></p-toast>
+            <p-dataView #dv [value]="flowers" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField"
                 [sortOrder]="sortOrder" layout="grid">
                 <p-header>
                     <div class="ui-helper-clearfix">
                         <div class="ui-g">
                             <div class="ui-g-12 ui-md-9">
-                                <button pButton [label]="'Nuevo' | translate" icon="pi pi-plus" class="ui-button-success" *ngIf="typerol!='CLI'"
-                                        (click)="addFlor()"></button>
+                                <button pButton [label]="'Nuevo' | translate" icon="pi pi-plus"
+                                    class="ui-button-success" *ngIf="typerol!='CLI'" (click)="addFlor()"></button>
                             </div>
                             <div class="ui-g-6 ui-md-3 filter-container">
                                 <div style="position:relative">
@@ -47,9 +46,13 @@
                             <br>
                             <div class="flower-grid-item-content">
                                 <div class="galery">
-                                    <p-carousel [value]="flower.images">
+                                    <img src="../../../../../assets/images/breakimagen.webp" lightbox backgroundOpacity="0.50"
+                                        *ngIf="flower.images.length <=0 " />
+                                    <p-carousel [value]="flower.images" *ngIf="flower.images.length >0">
                                         <ng-template let-image pTemplate="item">
-                                            <img [src]="image.atributo" />
+                                            <img [src]="image.atributo" lightbox backgroundOpacity="0.50"
+                                                hideThumbnail="true" counter="true" animationDuration="400"
+                                                closeButtonText="Close" />
                                         </ng-template>
                                     </p-carousel>
                                 </div>
@@ -66,6 +69,6 @@
                     </div>
                 </ng-template>
             </p-dataView>
-        </div>        
+        </div>
     </div>
 </div>

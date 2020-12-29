@@ -364,6 +364,7 @@
                     <thead>
                         <tr>
                             <th></th>
+                            <th>{{ 'Finca' | translate }}</th>
                             <th>{{ 'Flor' | translate }}</th>
                             <th>{{ 'Tamaño' | translate }}</th>
                             <th>{{ 'P.Venta' | translate }}</th>
@@ -371,7 +372,10 @@
                     </thead>
                     <tbody *ngIf="graphics.prealerts !=null">
                         <tr *ngFor="let prealert of graphics.prealerts.detalle; index as i;">
-                            <td>{{i+1}}</td>                            
+                            <td>{{i+1}}.- </td>   
+                            <td class="country">                                
+                                <span>{{prealert.fincapropia=='S'?'Rosa Mística':prealert.farm}}</span>
+                            </td>                         
                             <td class="country">
                                 <span>{{prealert.flower}}</span>
                             </td>

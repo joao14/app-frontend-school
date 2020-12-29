@@ -90,10 +90,8 @@ export class EditComponent implements OnInit {
                 this.router.navigate(['clientes']);
                 this.inicializateValores();
             }
-            console.log(data);
 
         }).catch(err => {
-            console.log(err);
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -146,14 +144,11 @@ export class EditComponent implements OnInit {
         this.blockedPanel = false;
 
         this.api.updateclient(this.client, localStorage.getItem("token")).then(data => {
-            console.log("Actualizar cliente");
             if (data.headerApp.code === 200) {
                 this.router.navigate(['clientes']);
                 this.inicializateValores();
             }
-            console.log(data);
         }).catch(err => {
-            console.log(err);
         })
         this.messageService.clear('c');
 
@@ -167,8 +162,7 @@ export class EditComponent implements OnInit {
     async getMarcks() {
         this.marks = [];
         this.marksdisabled = [];
-        await this.api.getmarks(parseInt(this.client_['id']), localStorage.getItem("token")).then(mark => {
-            console.log(mark);
+        await this.api.getmarks(parseInt(this.client_['id']), localStorage.getItem("token")).then(mark => {            
             if (mark.headerApp.code == 200) {
                 mark.data.marks.forEach(element => {
                     if (element.estado == 'A') {
@@ -180,7 +174,6 @@ export class EditComponent implements OnInit {
                 });
             }
         }).catch(err => {
-            console.log(err);
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -198,7 +191,7 @@ export class EditComponent implements OnInit {
         }
 
         this.api.addmark(mark, localStorage.getItem("token")).then(data => {
-            console.log(data);
+            
             if (data.headerApp.code === 200) {
                 this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se ha agregado una nueva marca al cliente' });
                 this.getMarcks();
@@ -208,7 +201,6 @@ export class EditComponent implements OnInit {
 
             }
         }).catch(err => {
-            console.log(err);
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -229,10 +221,8 @@ export class EditComponent implements OnInit {
             }
             await this.api.updatemark(mark, localStorage.getItem("token")).then((data) => {                
                 if (data.headerApp.code === 200) {
-                    console.log('Actualizado correctamente');
                 }
             }).catch(err => {
-                console.log(err);
                 if (err.error.code == 401) {
                     localStorage.clear();
                     this.router.navigate(['/login']);
@@ -259,10 +249,8 @@ export class EditComponent implements OnInit {
             }
             await this.api.updatemark(mark, localStorage.getItem("token")).then((data) => {                
                 if (data.headerApp.code === 200) {
-                    console.log('Actualizado correctamente');
                 }
             }).catch(err => {
-                console.log(err);
                 if (err.error.code == 401) {
                     localStorage.clear();
                     this.router.navigate(['/login']);
@@ -280,8 +268,6 @@ export class EditComponent implements OnInit {
      * Function update name this mark of client
      */
     async modificar() {
-        console.log('SELECT MARK');
-        console.log(this.selectmark);
         let mark = {
             entiId: this.selectmark.entiId,
             marcId: this.selectmark.marcId,
@@ -290,17 +276,14 @@ export class EditComponent implements OnInit {
             direccion: this.direction,
             estado: this.selectmark.estado
         }
-        console.log(mark);
 
         await this.api.updatemark(mark, localStorage.getItem("token")).then((data) => {
             if (data.headerApp.code === 200) {
-                console.log('Actualizado correctamente');
                 this.name = "";
                 this.city = "";
                 this.direction = "";
             }
         }).catch(err => {
-            console.log(err);
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -314,8 +297,6 @@ export class EditComponent implements OnInit {
     }
 
     selected(mark: mark) {
-        console.log('MARCA');
-        console.log(mark);
         if (mark == this.selectmark) {
             this.selectmark = null;
         } else {
