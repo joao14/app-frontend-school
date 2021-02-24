@@ -332,7 +332,7 @@
                                     <div class="ui-g-12 ui-md-12">
                                         <button pButton type="button" icon="pi pi-check"
                                             class="ui-button-success in_btn_table" [label]="'Guardar' | translate"
-                                            (click)="saverow()"></button>
+                                            (click)="continue()"></button>
                                     </div>
                                     <div class="ui-g-12 ui-md-12">
                                         <button pButton type="button" icon="pi pi-times"
@@ -412,16 +412,16 @@
                         </p-table>  
                         <br>
                         <div class="ui-g form-group ui-fluid">
-                            <div class="ui-grid-col-4"></div>
-                            <div class="ui-grid-col-2">
+                            <div class="ui-grid-col-7"></div>
+                            <!--<div class="ui-grid-col-2">
                                 <button pButton icon="pi pi-save" class="ui-button-warning btn_enviar"
                                     (click)="continue()" type="button" [label]="'Salvar' | translate"
                                     [disabled]="items.length <= 0"></button>
                             </div>
-                            <div class="ui-grid-col-1"></div>
+                            <div class="ui-grid-col-1"></div>-->
                             <div class="ui-grid-col-2">
                                 <button pButton icon="pi pi-save" class="ui-button-success btn_enviar"
-                                    (click)="saveeraser()" type="button" [label]="'Guardar' | translate"
+                                    (click)="continue()" type="button" [label]="'Guardar' | translate"
                                     [disabled]="items.length <= 0"></button>
                             </div>
                             <div class="ui-grid-col-1"></div>
@@ -450,6 +450,10 @@
                         <p-table [value]="items" *ngIf="files.length > 0" class="p-datatable-responsive-demo">
                             <ng-template pTemplate="caption">
                                 <div class="p-d-flex p-ai-center p-jc-between">
+                                    <button pButton type="button" *ngIf="items.length > 1" class="ui-button-success" style="height: 30px; border-radius: 5px;"
+                                        (click)="viewXlsx()">
+                                        <i class="pi pi-download" style="font-size: 1.7rem"></i>                                        
+                                    </button> &nbsp;
                                     {{'Items de la factura' | translate}} [{{items.length}}]
                                 </div>
                             </ng-template>
@@ -499,7 +503,7 @@
                             <div class="ui-grid-col-7"></div>
                             <div class="ui-grid-col-2">
                                 <button pButton icon="pi pi-save" class="ui-button-success btn_enviar" type="button"
-                                    (click)="saveeraser()" [label]="'Guardar' | translate"
+                                    (click)="continue()" [label]="'Guardar' | translate"
                                     [disabled]="items.length <= 0"></button>
                             </div>
                             <div class="ui-grid-col-1"></div>

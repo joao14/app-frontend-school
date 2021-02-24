@@ -320,6 +320,11 @@
                 <p-table [value]="items" class="p-datatable-responsive-demo">
                     <ng-template pTemplate="caption">
                         <div class="p-d-flex p-ai-center p-jc-between">
+                            <button pButton type="button" class="ui-button-success" (click)="viewxlsx()" 
+                                *ngIf="items.length >=1 "
+                                style="height: 30px; border-radius: 5px;">
+                                <i class="pi pi-download" style="font-size: 1.7rem"></i> 
+                            </button> &nbsp;
                             {{'Items de la prealerta' | translate }} [ {{items.length}} ]
                         </div>
                     </ng-template>

@@ -854,11 +854,7 @@ export class PrealertaComponent implements OnInit {
   }
 
   async viewdraft(draft: Draft) {
-    /*this.url = environment.url + draft.head.pdf;
-    this.dialogVisiblePDF = true;*/
-    console.log('DRAFT');
-    console.log(draft);
-   
+    
     let head: Cabecera = {
       fecha: this.getFormatDate(new Date()),
       usuaId: this.user.usuaid,
@@ -873,18 +869,18 @@ export class PrealertaComponent implements OnInit {
       for (const item of clie.items) {
         const cliente = await this.getClientbyName(clie.info.nombres);        
         const finca = await this.getFincabyName(item.farm);             
-        const marca = await this.getMarcbyName(clie.info.clieId, item.mark);        
+        const marca = await this.getMarcbyName(clie.info.clieId, item.mark);  
         const rosamistica = await this.getFlowerbyName(item.flower);                
         const carga = await this.getEmpresaCargabyName(item.cargname);
         
         await this.getStatus(item.status);
         let temp = {
             line: item['line'],
-            shippingdate:  item.shippingdate,
+            shippingdate:  item.shippingdate+'.00',
             clieId: cliente.entiId,
             fincapropia: item.fincapropia,
             farmId: finca.entiId,
-            marcId: marca.entiId,
+            marcId: marca.marcId,
             hbqb: item.hbqb,
             florId: rosamistica.florId,
             cm: item.cm,
@@ -901,16 +897,13 @@ export class PrealertaComponent implements OnInit {
 
     this.utilService.isLoading.next(false);
    
-    console.log('DETAIL:::');
     let prealert = {
       prealerta: head,
       detalle: detail
-    } 
-    console.log(prealert);
+    }           
+    
     this.utilService.isLoading.next(true);
-    this.api.getExcelPrealertDraft(prealert, localStorage.getItem('token')).then((data) => {
-      console.log('DATA');
-      console.log(data);
+    this.api.getExcelPrealertDraft(prealert, localStorage.getItem('token')).then((data) => {      
       if (data.headerApp.code == 200) {
         location.href = environment.url + data.data.xls;
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'El archivo se ha descargado correctamente' });
@@ -918,13 +911,71 @@ export class PrealertaComponent implements OnInit {
     }).catch(err => {
       console.log(err);      
       if (err.error.code == 401) {
-        localStorage.clear();
+        localStorage.clear(); 
         this.router.navigate(['/login']);
       }
     })
     this.utilService.isLoading.next(false);
     
   }
+
+  viewxlsx(){
+    console.log('VIEW XLSX');
+    let head: Cabecera = {
+      fecha: this.getFormatDate(new Date()),
+      usuaId: this.user.usuaid,
+      pralCerrado: "N",
+      estado: "B",
+      pralId: this.idPrealert == undefined ? 0 : this.idPrealert
+    }
+
+    let detail: Array<Detail> = [];
+    let contador = 0;    
+    this.items.forEach(data => {
+      detail.push({
+        line: contador,
+        shippingdate: this.getFormatDate(new Date(data.fecha)),
+        clieId: data.cliente.entiId,
+        fincapropia: data.fincapropia == 'N' ? 'N' : 'S',
+        farmId: data.finca.entiId,
+        marcId: data.marca.marcId,
+        hbqb: data.HBBQ == null ? '' : data.HBBQ,
+        florId: data.rosamistica['florId'],
+        cm: data.tamanio,
+        tallos: data.tallos,
+        totaltallos: data.totaltallos,
+        pcomp: data.preciocomp,
+        cargcompId: parseInt(data.carga['entiId']),
+        pvp: data.preciovent,
+        status: data.status.titrId.toString()
+      })
+      contador++;      
+    })
+
+    this.prealert = {
+      prealerta: head,
+      detalle: detail
+    }
+
+    this.utilService.isLoading.next(true);
+    this.api.getExcelPrealertDraft(this.prealert, localStorage.getItem('token')).then((data) => {      
+      if (data.headerApp.code == 200) {
+        location.href = environment.url + data.data.xls;
+        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'El archivo se ha descargado correctamente' });
+    }
+    }).catch(err => {
+      console.log(err);      
+      if (err.error.code == 401) {
+        localStorage.clear(); 
+        this.router.navigate(['/login']);
+      }
+    })
+    this.utilService.isLoading.next(false);
+    
+
+
+  }
+
 
   async edit(draft: Draft) {
     
@@ -1015,22 +1066,21 @@ export class PrealertaComponent implements OnInit {
 
 
     this.spinner.show();
-    await this.api.registerPrealert(this.prealert, localStorage.getItem("token")).then(data => {
+    await this.api.registerPrealert(this.prealert, localStorage.getItem("token")).then(async (data) => {
       this.spinner.hide();
       if (data.headerApp.code == 200) {
-        this.total = 0;
+        /*this.total = 0;
         this.prealert = null;
         this.items = [];
         this.files = [];
         this.idPrealert = 0;
         this.optionSelect == 'manual';
-        this.step = 1;
-        this.prealertdraft();
-        this.prealertForm.get('fecha').setValue(new Date());
-        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'La prealerta se ha registrado correctamente' });
+        this.step = 1;*/
+        await this.prealertdraft();
+        //this.prealertForm.get('fecha').setValue(new Date());
+        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'La prealerta se ha guardado como borrador' });
       }
     }).catch(err => {
-
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);

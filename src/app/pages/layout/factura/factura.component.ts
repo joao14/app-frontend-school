@@ -1165,13 +1165,10 @@ export class FacturaComponent implements OnInit {
         };
     }
 
-    async continue(){
-        console.log('Continue');        
+    async continue(){        
         await this.getInvoice();
-        this.spinner.show();
+        this.spinner.show();  
         await this.api.registerInvoiceDraft(this.invoice, localStorage.getItem("token")).then(async (data) => {
-            console.log('DATA');
-            console.log(data);
             this.spinner.hide();
             if (data.headerApp.code == 200) {
                 this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se guardo el borrador para seguir editando' });
