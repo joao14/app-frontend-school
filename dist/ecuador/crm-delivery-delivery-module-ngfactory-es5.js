@@ -1335,16 +1335,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           this.utilservice.isLoading.next(true);
           this.api.getdeliveries(localStorage.getItem("token")).then(function (data) {
-            console.log(data);
-
             if (data.headerApp.code == 200) {
               _this.deliveries = data.data.cargocompanies;
 
               _this.utilservice.isLoading.next(false);
             }
           }).catch(function (err) {
-            console.log(err);
-
             _this.utilservice.isLoading.next(false);
 
             if (err.error.code == 401) {
@@ -1357,14 +1353,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "addDelivery",
         value: function addDelivery() {
-          console.log('Agregar la finca');
           this.router.navigate(['/editDelivery']);
         }
       }, {
         key: "edit",
         value: function edit(delivery) {
-          console.log('Editando delivery...');
-          console.log(delivery);
           this.router.navigate(['/editDelivery'], {
             state: {
               delivery: JSON.stringify(delivery)
@@ -1389,8 +1382,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this2.deliveries.push(delivery);
             }
           });
-          console.log('Deliveries finales');
-          console.log(this.deliveries);
         }
       }]);
 

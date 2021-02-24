@@ -4,7 +4,7 @@ import * as XLSX from "xlsx";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApisService } from 'src/services/apis.service';
 import { Flower } from '../crm/flores/flores.component';
-import * as moment from 'moment';
+import * as moment from 'moment';        
 import { Router } from '@angular/router';
 import { client } from 'src/models/client';
 import { finca } from 'src/models/finca';
@@ -15,6 +15,15 @@ import { UtilService } from 'src/services/util.service';
 import { user } from '../../../../models/user';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
+
+export interface Status {
+  titrId: number,
+  nombre: string,
+  estado: string,
+  tipo: string,
+  docuprin: string,
+  categoria: string
+}
 
 export interface Item {
   fecha: string,
@@ -30,7 +39,7 @@ export interface Item {
   preciovent: string;
   preciocomp: string;
   carga: string;
-  status: string;
+  status: Status;
 }
 
 export interface Cabecera {
@@ -123,7 +132,7 @@ export class PrealertaComponent implements OnInit {
 
   lista: Item[] = [];
   selectrow: Item;
-  status: any[] = [];
+  status: Status[] = [];
   optionSelect: string;
   files: any = [];
   selectitem: number;
@@ -161,6 +170,10 @@ export class PrealertaComponent implements OnInit {
   idPrealert: number;
   minDateValue: Date = new Date();
   hbqb: number;
+  editvisible: boolean = false;
+  activeitembyedit: Item;
+  tempStatus: Status;
+
 
   constructor(private messageService: MessageService, private formBuilder: FormBuilder, private confirmationService: ConfirmationService,
     private api: ApisService, private router: Router, private utilService: UtilService, private spinner: NgxSpinnerService) {
@@ -217,7 +230,7 @@ export class PrealertaComponent implements OnInit {
       preciovent: "",
       preciocomp: "",
       carga: "",
-      status: ""
+      status: null
     }
 
     this.prealert = {
@@ -226,10 +239,6 @@ export class PrealertaComponent implements OnInit {
     }
 
     this.items = [];
-
-    this.status = [
-      { name: "Fixed", code: "Fixed" },
-      { name: "Confirmed", code: "Confirmed" }];
 
     this.tamanios = [
       { name: 'CL', code: 'CL' },
@@ -266,10 +275,13 @@ export class PrealertaComponent implements OnInit {
 
 
   deleteItem(prealert: any) {
+    if(this.editPrealert && this.items.length <= 1){
+      this.messageService.add({ severity: 'warn', summary: 'Rosa Mística', detail: 'No se puede dejar sin items la prelaerta' });
+      return
+    }
     this.items = this.items.filter((element) => element != prealert);
     this.total = 0;
     this.items.forEach(item => {
-      //this.prealert.cajas += parseInt(item.caja + "");
       this.total += parseInt(item.totaltallos + "");
     });
 
@@ -303,18 +315,18 @@ export class PrealertaComponent implements OnInit {
     this.item = {
       fecha: this.prealertForm.get('fecha').value,
       cliente: this.prealertForm.get('cliente').value,
-      fincapropia: this.prealertForm.get('fincapropia').value?'S':'N',
+      fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
       finca: this.prealertForm.get('finca').value,
       marca: this.prealertForm.get('marca').value,
-      HBBQ: this.prealertForm.get('HBBQ').value? this.prealertForm.get('HBBQ').value: '0',
+      HBBQ: this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : '0',
       rosamistica: this.prealertForm.get('rosamistica').value,
       tamanio: cm,
       tallos: this.prealertForm.get('tallos').value,
-      totaltallos: ((this.prealertForm.get('HBBQ').value? this.prealertForm.get('HBBQ').value : this.hbqb ) * this.prealertForm.get('tallos').value),
+      totaltallos: ((this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : this.hbqb) * this.prealertForm.get('tallos').value),
       preciovent: pvp,
       preciocomp: pcomp,
       carga: this.prealertForm.get('carga').value,
-      status: this.prealertForm.get('estado').value.code
+      status: this.prealertForm.get('estado').value
     }
 
     this.prealertForm.get('HBBQ').value ? this.hbqb = this.prealertForm.get('HBBQ').value : '';
@@ -325,16 +337,16 @@ export class PrealertaComponent implements OnInit {
     this.items.forEach(item => {
       this.total += parseInt(item.totaltallos + "");
     });
-    this.submitted = false;   
-    if(!this.prealertForm.get('repeat').value){
+    this.submitted = false;
+    if (!this.prealertForm.get('repeat').value) {
       this.prealertForm.reset();
-    }else{
+    } else {
       this.prealertForm.get('HBBQ').setValue(null);
       this.prealertForm.get('rosamistica').setValue(null);
       this.prealertForm.get('tallos').setValue(null);
       this.prealertForm.get('totaltallos').setValue(null);
     }
-    
+
     this.prealertForm.get('fecha').setValue(new Date());
   }
 
@@ -431,10 +443,21 @@ export class PrealertaComponent implements OnInit {
           return
         }
 
+        const status = await this.getStatusObject(data[i]['STATUS']);
+        if (status == null) {
+          this.spinner.hide();
+          this.utilService.isLoading.next(false);
+          this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'El estado ' + data[i]['STATUS'] + ' no se encuentra ingresada en el sistema.' });
+          this.validate = true;
+          this.smsvalidate = 'La estado ' + data[i]['STATUS'] + ' no se encuentra registrada en el sistema.'
+          return
+        }
+
+
         let item = {
-          fecha: data[i]['SHIPPING DATE'] +' 00:00:00.000',
+          fecha: data[i]['SHIPPING DATE'] + ' 00:00:00.000',
           cliente: client,
-          fincapropia: data[i]['FINCA PROPIA']==undefined || data[i]['FINCA PROPIA']==''?'N':'S',
+          fincapropia: data[i]['FINCA PROPIA'] == undefined || data[i]['FINCA PROPIA'] == '' ? 'N' : 'S',
           finca: finca,
           marca: marca,
           HBBQ: data[i]['HB/QB'],
@@ -445,12 +468,13 @@ export class PrealertaComponent implements OnInit {
           preciovent: data[i]['PRECIO VENTA'],
           preciocomp: data[i]['PRECIO COMPRA'],
           carga: delivery,
-          status: data[i]['STATUS']
+          status: status
         }
         data[i]['HB/QB'] > 0 ? this.hbqb = data[i]['HB/QB'] : '';
         this.items.push(item);
         this.total += item.totaltallos;
       }
+
       this.spinner.hide();
       this.utilService.isLoading.next(false);
       this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Archivo cargado satisfactoriamente' });
@@ -559,23 +583,23 @@ export class PrealertaComponent implements OnInit {
     let contador = 0;
     let totaltallos = 0;
     let totalcajas = 0;
-    this.items.forEach(data => {   
+    this.items.forEach(data => {
       detail.push({
         line: contador,
         shippingdate: this.getFormatDate(new Date(data.fecha)),
         clieId: data.cliente.entiId,
         fincapropia: data.fincapropia == 'N' ? "N" : "S",
-        farmId: data.finca.entiId,  
+        farmId: data.finca.entiId,
         marcId: data.marca.marcId,
         hbqb: data.HBBQ == null ? '' : data.HBBQ,
         florId: data.rosamistica['florId'],
-        cm: data.tamanio,  
+        cm: data.tamanio,
         tallos: data.tallos,
         totaltallos: data.totaltallos,
         pcomp: data.preciocomp,
         cargcompId: parseInt(data.carga['entiId']),
         pvp: data.preciovent,
-        status: data.status
+        status: data.status.titrId.toString()
       })
       contador++;
       data.HBBQ == null ? '' : totalcajas += parseInt(data.HBBQ);
@@ -618,7 +642,7 @@ export class PrealertaComponent implements OnInit {
             }
           }
         }).catch(err => {
-           
+
           if (err.error.code == 401) {
             localStorage.clear();
             this.router.navigate(['/login']);
@@ -627,6 +651,35 @@ export class PrealertaComponent implements OnInit {
         this.utilService.isLoading.next(false);
       },
     });
+  }
+
+  async getStatusObject(name: string): Promise<any> {
+    let status: Status = null;
+    await this.status.filter(state => {
+      if (state.nombre.toUpperCase() == name.toUpperCase()) {
+        status = state;
+      }
+    });
+    return status;
+  }
+
+  async getStatus(id: string) {
+    await this.api.getstatusprealert(localStorage.getItem("token")).then(status => {
+      if (status.headerApp.code === 200) {
+        status.data.estados.forEach(element => {
+          if (element.titrId == id) {
+            this.tempStatus = element;
+            return;
+          }
+        });
+      }
+    }).catch(err => {
+
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
   }
 
 
@@ -645,7 +698,7 @@ export class PrealertaComponent implements OnInit {
         this.clientes = clientTemp;
       }
     }).catch(err => {
-       
+
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -663,7 +716,7 @@ export class PrealertaComponent implements OnInit {
         this.fincas = temp;
       }
     }).catch(err => {
-       
+
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -682,7 +735,7 @@ export class PrealertaComponent implements OnInit {
         this.flores = temp;
       }
     }).catch(err => {
-       
+
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -700,12 +753,32 @@ export class PrealertaComponent implements OnInit {
         this.deliveries = temp;
       }
     }).catch(err => {
-       
+
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
       }
     })
+
+    this.status = [];
+    await this.api.getstatusprealert(localStorage.getItem("token")).then(status => {
+      if (status.headerApp.code === 200) {
+        let temp: Status[] = [];
+        status.data.estados.forEach(element => {
+          if (element.estado == 'A') {
+            temp.push(element);
+          }
+        });
+        this.status = temp;
+      }
+    }).catch(err => {
+
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+
 
     this.utilService.isLoading.next(false);
   }
@@ -723,7 +796,7 @@ export class PrealertaComponent implements OnInit {
         this.marks = temp;
       }
     }).catch(err => {
-       
+
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -780,14 +853,83 @@ export class PrealertaComponent implements OnInit {
     this.idPrealert = 0;
   }
 
-  viewdraft(draft: Draft) {
-    this.url = environment.url + draft.head.pdf;
-    this.dialogVisiblePDF = true;
+  async viewdraft(draft: Draft) {
+    /*this.url = environment.url + draft.head.pdf;
+    this.dialogVisiblePDF = true;*/
+    console.log('DRAFT');
+    console.log(draft);
+   
+    let head: Cabecera = {
+      fecha: this.getFormatDate(new Date()),
+      usuaId: this.user.usuaid,
+      pralCerrado: "N",
+      estado: "B",
+      pralId: draft.head.pralId
+    }
+
+    let detail: Array<any> = [];   
+    this.utilService.isLoading.next(true);    
+    for (const clie of draft.clients) {
+      for (const item of clie.items) {
+        const cliente = await this.getClientbyName(clie.info.nombres);        
+        const finca = await this.getFincabyName(item.farm);             
+        const marca = await this.getMarcbyName(clie.info.clieId, item.mark);        
+        const rosamistica = await this.getFlowerbyName(item.flower);                
+        const carga = await this.getEmpresaCargabyName(item.cargname);
+        
+        await this.getStatus(item.status);
+        let temp = {
+            line: item['line'],
+            shippingdate:  item.shippingdate,
+            clieId: cliente.entiId,
+            fincapropia: item.fincapropia,
+            farmId: finca.entiId,
+            marcId: marca.entiId,
+            hbqb: item.hbqb,
+            florId: rosamistica.florId,
+            cm: item.cm,
+            tallos: item.tallos,
+            totaltallos: item.totaltallos,
+            pcomp: item.pcomp,
+            cargcompId: carga.entiId,
+            pvp: item.pvp,
+            status: item.status
+        }
+        detail.push(temp);
+      }
+    }
+
+    this.utilService.isLoading.next(false);
+   
+    console.log('DETAIL:::');
+    let prealert = {
+      prealerta: head,
+      detalle: detail
+    } 
+    console.log(prealert);
+    this.utilService.isLoading.next(true);
+    this.api.getExcelPrealertDraft(prealert, localStorage.getItem('token')).then((data) => {
+      console.log('DATA');
+      console.log(data);
+      if (data.headerApp.code == 200) {
+        location.href = environment.url + data.data.xls;
+        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'El archivo se ha descargado correctamente' });
+    }
+    }).catch(err => {
+      console.log(err);      
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    this.utilService.isLoading.next(false);
+    
   }
 
-  async edit(draft: Draft) {    
+  async edit(draft: Draft) {
+    
     this.editPrealert = true;
-    this.optionSelect='manual';
+    this.optionSelect = 'manual';
     this.step = 2;
     this.items = [];
     this.idPrealert = draft.head.pralId;
@@ -801,7 +943,7 @@ export class PrealertaComponent implements OnInit {
         const marca = await this.getMarcbyName(clie.info.clieId, item.mark);
         const rosamistica = await this.getFlowerbyName(item.flower);
         const carga = await this.getEmpresaCargabyName(item.cargname);
-
+        await this.getStatus(item.status);
         let temp = {
           fecha: item.shippingdate,
           cliente: cliente,
@@ -816,7 +958,7 @@ export class PrealertaComponent implements OnInit {
           preciovent: item.pvp,
           preciocomp: item.pcomp,
           carga: carga,
-          status: item.status
+          status: this.tempStatus
         }
 
         item.hbqb != null && item.hbqb > 0 ? this.hbqb = item.hbqb : '';
@@ -859,7 +1001,7 @@ export class PrealertaComponent implements OnInit {
         pcomp: data.preciocomp,
         cargcompId: parseInt(data.carga['entiId']),
         pvp: data.preciovent,
-        status: data.status
+        status: data.status.titrId.toString()
       })
       contador++;
       data.HBBQ == null ? '' : totalcajas += parseInt(data.HBBQ);
@@ -870,7 +1012,7 @@ export class PrealertaComponent implements OnInit {
       prealerta: head,
       detalle: detail
     }
-   
+
 
     this.spinner.show();
     await this.api.registerPrealert(this.prealert, localStorage.getItem("token")).then(data => {
@@ -881,20 +1023,28 @@ export class PrealertaComponent implements OnInit {
         this.items = [];
         this.files = [];
         this.idPrealert = 0;
-        this.optionSelect=='manual';
+        this.optionSelect == 'manual';
         this.step = 1;
         this.prealertdraft();
         this.prealertForm.get('fecha').setValue(new Date());
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'La prealerta se ha registrado correctamente' });
       }
     }).catch(err => {
-       
+
       if (err.error.code == 401) {
         localStorage.clear();
         this.router.navigate(['/login']);
       }
     })
     this.utilService.isLoading.next(false);
+  }
+
+  editrow(item: any) {
+    console.log(item);
+    this.editvisible = true;
+    this.activeitembyedit = { ...item };
+    console.log('ACTIVE');
+    console.log(this.activeitembyedit);
   }
 
 

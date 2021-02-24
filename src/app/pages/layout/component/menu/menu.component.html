@@ -65,6 +65,14 @@
                             <span>{{ 'E.Carga' | translate }} </span>
                         </a>
                     </li>
+                    <li *ngIf="typerol=='ADM' || typerol=='FAC' || typerol=='COM'">
+                        <a routerLink="/estados" routerLinkActive="active" style="font-size: 14px;"
+                        [class]="activeItem=='STATUS'?'active-item':'no-active-item'"
+                        (click)="selectItemMenu('STATUS')">
+                            <i class="fa fa-fw fa-etsy" [ngStyle]="{'color':activeItem ==='STATUS'? '#ff4456': '#828282'}"></i>
+                            <span>{{ 'Estados' | translate }} </span>
+                        </a>
+                    </li>
 
                 </ul>
             </li>

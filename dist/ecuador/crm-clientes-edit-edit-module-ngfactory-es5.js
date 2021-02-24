@@ -1745,11 +1745,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
               _this2.inicializateValores();
             }
-
-            console.log(data);
           }).catch(function (err) {
-            console.log(err);
-
             if (err.error.code == 401) {
               localStorage.clear();
 
@@ -1822,18 +1818,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           this.blockedPanel = false;
           this.api.updateclient(this.client, localStorage.getItem("token")).then(function (data) {
-            console.log("Actualizar cliente");
-
             if (data.headerApp.code === 200) {
               _this3.router.navigate(['clientes']);
 
               _this3.inicializateValores();
             }
-
-            console.log(data);
-          }).catch(function (err) {
-            console.log(err);
-          });
+          }).catch(function (err) {});
           this.messageService.clear('c');
         }
       }, {
@@ -1858,8 +1848,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     this.marksdisabled = [];
                     _context.next = 4;
                     return this.api.getmarks(parseInt(this.client_['id']), localStorage.getItem("token")).then(function (mark) {
-                      console.log(mark);
-
                       if (mark.headerApp.code == 200) {
                         mark.data.marks.forEach(function (element) {
                           if (element.estado == 'A') {
@@ -1872,8 +1860,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         });
                       }
                     }).catch(function (err) {
-                      console.log(err);
-
                       if (err.error.code == 401) {
                         localStorage.clear();
 
@@ -1902,8 +1888,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             entiId: this.client_['id']
           };
           this.api.addmark(mark, localStorage.getItem("token")).then(function (data) {
-            console.log(data);
-
             if (data.headerApp.code === 200) {
               _this5.messageService.add({
                 severity: 'success',
@@ -1918,8 +1902,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this5.direction = "";
             }
           }).catch(function (err) {
-            console.log(err);
-
             if (err.error.code == 401) {
               localStorage.clear();
 
@@ -1962,12 +1944,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                                 };
                                 _context2.next = 3;
                                 return this.api.updatemark(mark, localStorage.getItem("token")).then(function (data) {
-                                  if (data.headerApp.code === 200) {
-                                    console.log('Actualizado correctamente');
-                                  }
+                                  if (data.headerApp.code === 200) {}
                                 }).catch(function (err) {
-                                  console.log(err);
-
                                   if (err.error.code == 401) {
                                     localStorage.clear();
 
@@ -2039,12 +2017,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                                 };
                                 _context4.next = 3;
                                 return this.api.updatemark(mark, localStorage.getItem("token")).then(function (data) {
-                                  if (data.headerApp.code === 200) {
-                                    console.log('Actualizado correctamente');
-                                  }
+                                  if (data.headerApp.code === 200) {}
                                 }).catch(function (err) {
-                                  console.log(err);
-
                                   if (err.error.code == 401) {
                                     localStorage.clear();
 
@@ -2098,8 +2072,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               while (1) {
                 switch (_context6.prev = _context6.next) {
                   case 0:
-                    console.log('SELECT MARK');
-                    console.log(this.selectmark);
                     mark = {
                       entiId: this.selectmark.entiId,
                       marcId: this.selectmark.marcId,
@@ -2108,18 +2080,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                       direccion: this.direction,
                       estado: this.selectmark.estado
                     };
-                    console.log(mark);
-                    _context6.next = 6;
+                    _context6.next = 3;
                     return this.api.updatemark(mark, localStorage.getItem("token")).then(function (data) {
                       if (data.headerApp.code === 200) {
-                        console.log('Actualizado correctamente');
                         _this10.name = "";
                         _this10.city = "";
                         _this10.direction = "";
                       }
                     }).catch(function (err) {
-                      console.log(err);
-
                       if (err.error.code == 401) {
                         localStorage.clear();
 
@@ -2127,11 +2095,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                       }
                     });
 
-                  case 6:
-                    _context6.next = 8;
+                  case 3:
+                    _context6.next = 5;
                     return this.getMarcks();
 
-                  case 8:
+                  case 5:
                     this.messageService.add({
                       severity: 'success',
                       summary: 'Rosa Mística',
@@ -2139,7 +2107,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     });
                     this.selectmark = null;
 
-                  case 10:
+                  case 7:
                   case "end":
                     return _context6.stop();
                 }
@@ -2150,9 +2118,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "selected",
         value: function selected(mark) {
-          console.log('MARCA');
-          console.log(mark);
-
           if (mark == this.selectmark) {
             this.selectmark = null;
           } else {

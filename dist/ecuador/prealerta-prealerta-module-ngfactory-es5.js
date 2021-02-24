@@ -1652,7 +1652,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         ngIf: [0, "ngIf"]
       }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, 1, 1, null, View_PrealertaComponent_30)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](232, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgForOf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["IterableDiffers"]], {
         ngForOf: [0, "ngForOf"]
-      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](233, 0, null, null, 5, "div", [["class", "ui-g-12 ui-md-12"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](234, 0, null, null, 0, "div", [["class", "ui-g-12 ui-md-9"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](235, 0, null, null, 3, "div", [["class", "ui-g-12 ui-md-3"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](236, 0, null, null, 2, "button", [["class", "ui-button-primary ouput_btn_table"], ["icon", "pi pi-plus"], ["pButton", ""]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](237, 4341760, null, 0, primeng_button__WEBPACK_IMPORTED_MODULE_3__["ButtonDirective"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]], {
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](233, 0, null, null, 5, "div", [["class", "ui-g-12 ui-md-12"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](234, 0, null, null, 0, "div", [["class", "ui-g-12 ui-md-10"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](235, 0, null, null, 3, "div", [["class", "ui-g-12 ui-md-2"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](236, 0, null, null, 2, "button", [["class", "ui-button-primary ouput_btn_table"], ["icon", "pi pi-plus"], ["pButton", ""]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](237, 4341760, null, 0, primeng_button__WEBPACK_IMPORTED_MODULE_3__["ButtonDirective"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]], {
         label: [0, "label"],
         icon: [1, "icon"]
       }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]])], function (_ck, _v) {
@@ -2437,7 +2437,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }
 
     function View_PrealertaComponent_39(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 46, "tr", [["class", "detalle_table"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 45, "td", [["colspan", "12"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](2, 0, null, null, 44, "div", [["class", "ui-g form-group ui-fluid"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](3, 0, null, null, 10, "div", [["class", "ui-g-12 ui-md-3"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](4, 0, null, null, 2, "label", [["class", "lbl"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](5, null, ["", ""])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]]), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](7, 0, null, null, 6, "input", [["pInputText", ""], ["readonly", ""], ["type", "text"]], [[2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 46, "tr", [["class", "detalle_table"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 45, "td", [["colspan", "13"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](2, 0, null, null, 44, "div", [["class", "ui-g form-group ui-fluid"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](3, 0, null, null, 10, "div", [["class", "ui-g-12 ui-md-3"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](4, 0, null, null, 2, "label", [["class", "lbl"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](5, null, ["", ""])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]]), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](7, 0, null, null, 6, "input", [["pInputText", ""], ["readonly", ""], ["type", "text"]], [[2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) {
         var ad = true;
 
         if ("input" === en) {
@@ -3117,7 +3117,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }
 
     function View_PrealertaComponent_0(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](0, _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["LOCALE_ID"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](0, _angular_common__WEBPACK_IMPORTED_MODULE_7__["TitleCasePipe"], []), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](0, _pipes_safe_pipe__WEBPACK_IMPORTED_MODULE_22__["SafePipe"], [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_23__["DomSanitizer"]]), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](3, 0, null, null, 93, "div", [["class", "ui-g"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](4, 0, null, null, 92, "div", [["class", "ui-g-12"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](5, 0, null, null, 11, "div", [["class", "card card-w-title"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](6, 0, null, null, 2, "p-toast", [], null, null, null, _node_modules_primeng_toast_primeng_toast_ngfactory__WEBPACK_IMPORTED_MODULE_24__["View_Toast_0"], _node_modules_primeng_toast_primeng_toast_ngfactory__WEBPACK_IMPORTED_MODULE_24__["RenderType_Toast"])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 1294336, null, 1, primeng_toast__WEBPACK_IMPORTED_MODULE_25__["Toast"], [primeng_api__WEBPACK_IMPORTED_MODULE_6__["MessageService"]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 1, {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](0, _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["LOCALE_ID"]]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](0, _angular_common__WEBPACK_IMPORTED_MODULE_7__["TitleCasePipe"], []), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](0, _pipes_safe_pipe__WEBPACK_IMPORTED_MODULE_22__["SafePipe"], [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_23__["DomSanitizer"]]), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](3, 0, null, null, 153, "div", [["class", "ui-g"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](4, 0, null, null, 152, "div", [["class", "ui-g-12"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](5, 0, null, null, 11, "div", [["class", "card card-w-title"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](6, 0, null, null, 2, "p-toast", [], null, null, null, _node_modules_primeng_toast_primeng_toast_ngfactory__WEBPACK_IMPORTED_MODULE_24__["View_Toast_0"], _node_modules_primeng_toast_primeng_toast_ngfactory__WEBPACK_IMPORTED_MODULE_24__["RenderType_Toast"])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 1294336, null, 1, primeng_toast__WEBPACK_IMPORTED_MODULE_25__["Toast"], [primeng_api__WEBPACK_IMPORTED_MODULE_6__["MessageService"]], null, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 1, {
         templates: 1
       }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](9, 0, null, null, 3, "ngx-spinner", [["bdColor", "rgba(0, 0, 0, 0.8)"], ["color", "#fff"], ["size", "medium"], ["type", "square-jelly-box"]], null, null, null, _node_modules_ngx_spinner_ngx_spinner_ngfactory__WEBPACK_IMPORTED_MODULE_26__["View_NgxSpinnerComponent_0"], _node_modules_ngx_spinner_ngx_spinner_ngfactory__WEBPACK_IMPORTED_MODULE_26__["RenderType_NgxSpinnerComponent"])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](10, 770048, null, 0, ngx_spinner__WEBPACK_IMPORTED_MODULE_27__["NgxSpinnerComponent"], [ngx_spinner__WEBPACK_IMPORTED_MODULE_27__["NgxSpinnerService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]], {
         bdColor: [0, "bdColor"],
@@ -3271,7 +3271,108 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         width: 0
       }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, 1, 1, null, View_PrealertaComponent_43)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](96, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
-      }, null)], function (_ck, _v) {
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](97, 0, null, null, 59, "p-dialog", [], null, [[null, "visibleChange"]], function (_v, en, $event) {
+        var ad = true;
+        var _co = _v.component;
+
+        if ("visibleChange" === en) {
+          var pd_0 = (_co.editvisible = $event) !== false;
+          ad = pd_0 && ad;
+        }
+
+        return ad;
+      }, _node_modules_primeng_dialog_primeng_dialog_ngfactory__WEBPACK_IMPORTED_MODULE_31__["View_Dialog_0"], _node_modules_primeng_dialog_primeng_dialog_ngfactory__WEBPACK_IMPORTED_MODULE_31__["RenderType_Dialog"])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](98, 180224, null, 2, primeng_dialog__WEBPACK_IMPORTED_MODULE_32__["Dialog"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]], {
+        resizable: [0, "resizable"],
+        modal: [1, "modal"],
+        baseZIndex: [2, "baseZIndex"],
+        maximizable: [3, "maximizable"],
+        visible: [4, "visible"],
+        style: [5, "style"]
+      }, {
+        visibleChange: "visibleChange"
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 20, {
+        headerFacet: 1
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 21, {
+        footerFacet: 1
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpod"](101, {
+        width: 0
+      }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](102, 0, null, 0, 5, "p-header", [], null, null, null, _node_modules_primeng_api_primeng_api_ngfactory__WEBPACK_IMPORTED_MODULE_30__["View_Header_0"], _node_modules_primeng_api_primeng_api_ngfactory__WEBPACK_IMPORTED_MODULE_30__["RenderType_Header"])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](103, 49152, [[20, 4]], 0, primeng_api__WEBPACK_IMPORTED_MODULE_6__["Header"], [], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](104, 0, null, 0, 3, "span", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](105, 0, null, null, 0, "i", [["class", "pi pi-paperclip"], ["style", "font-size: 1rem"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](106, null, ["\xA0", ""])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]]), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](108, 0, null, 1, 43, "div", [["class", "ui-g form-group ui-fluid"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](109, 0, null, null, 42, "div", [["class", "card card-w-title"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](110, 0, null, null, 5, "div", [["class", "ui-g-12 ui-md-4"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](111, 0, null, null, 2, "label", [["class", "lbl"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](112, null, ["", ""])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]]), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](114, 0, null, null, 1, "input", [["pInputText", ""], ["readonly", ""], ["type", "text"]], [[8, "value", 0], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "input"]], function (_v, en, $event) {
+        var ad = true;
+
+        if ("input" === en) {
+          var pd_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 115).onInput($event) !== false;
+          ad = pd_0 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](115, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_8__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](116, 0, null, null, 5, "div", [["class", "ui-g-12 ui-md-4"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](117, 0, null, null, 2, "label", [["class", "lbl"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](118, null, ["", ""])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]]), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](120, 0, null, null, 1, "input", [["pInputText", ""], ["readonly", ""], ["type", "text"]], [[8, "value", 0], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "input"]], function (_v, en, $event) {
+        var ad = true;
+
+        if ("input" === en) {
+          var pd_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 121).onInput($event) !== false;
+          ad = pd_0 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](121, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_8__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](122, 0, null, null, 5, "div", [["class", "ui-g-12 ui-md-4"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](123, 0, null, null, 2, "label", [["class", "lbl"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](124, null, ["", ""])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]]), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](126, 0, null, null, 1, "input", [["pInputText", ""], ["readonly", ""], ["type", "text"]], [[8, "value", 0], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "input"]], function (_v, en, $event) {
+        var ad = true;
+
+        if ("input" === en) {
+          var pd_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 127).onInput($event) !== false;
+          ad = pd_0 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](127, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_8__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](128, 0, null, null, 5, "div", [["class", "ui-g-12 ui-md-4"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](129, 0, null, null, 2, "label", [["class", "lbl"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](130, null, ["", ""])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]]), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](132, 0, null, null, 1, "input", [["pInputText", ""], ["readonly", ""], ["type", "text"]], [[8, "value", 0], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "input"]], function (_v, en, $event) {
+        var ad = true;
+
+        if ("input" === en) {
+          var pd_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 133).onInput($event) !== false;
+          ad = pd_0 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](133, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_8__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](134, 0, null, null, 5, "div", [["class", "ui-g-12 ui-md-4"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](135, 0, null, null, 2, "label", [["class", "lbl"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](136, null, ["", ""])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]]), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](138, 0, null, null, 1, "input", [["pInputText", ""], ["readonly", ""], ["type", "text"]], [[8, "value", 0], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "input"]], function (_v, en, $event) {
+        var ad = true;
+
+        if ("input" === en) {
+          var pd_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 139).onInput($event) !== false;
+          ad = pd_0 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](139, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_8__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](140, 0, null, null, 5, "div", [["class", "ui-g-12 ui-md-4"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](141, 0, null, null, 2, "label", [["class", "lbl"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](142, null, ["", ""])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]]), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](144, 0, null, null, 1, "input", [["pInputText", ""], ["readonly", ""], ["type", "text"]], [[8, "value", 0], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "input"]], function (_v, en, $event) {
+        var ad = true;
+
+        if ("input" === en) {
+          var pd_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 145).onInput($event) !== false;
+          ad = pd_0 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](145, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_8__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](146, 0, null, null, 5, "div", [["class", "ui-g-12 ui-md-4"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](147, 0, null, null, 2, "label", [["class", "lbl"]], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](148, null, ["", ""])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]]), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](150, 0, null, null, 1, "input", [["pInputText", ""], ["readonly", ""], ["type", "text"]], [[8, "value", 0], [2, "ui-inputtext", null], [2, "ui-corner-all", null], [2, "ui-state-default", null], [2, "ui-widget", null], [2, "ui-state-filled", null]], [[null, "input"]], function (_v, en, $event) {
+        var ad = true;
+
+        if ("input" === en) {
+          var pd_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 151).onInput($event) !== false;
+          ad = pd_0 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](151, 278528, null, 0, primeng_inputtext__WEBPACK_IMPORTED_MODULE_8__["InputText"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], [2, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["NgModel"]]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](152, 0, null, 2, 4, "p-footer", [], null, null, null, _node_modules_primeng_api_primeng_api_ngfactory__WEBPACK_IMPORTED_MODULE_30__["View_Footer_0"], _node_modules_primeng_api_primeng_api_ngfactory__WEBPACK_IMPORTED_MODULE_30__["RenderType_Footer"])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](153, 49152, [[21, 4]], 0, primeng_api__WEBPACK_IMPORTED_MODULE_6__["Footer"], [], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](154, 0, null, 0, 2, "button", [["class", "ui-button-success"], ["icon", "pi pi-check"], ["pButton", ""], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) {
+        var ad = true;
+        var _co = _v.component;
+
+        if ("click" === en) {
+          var pd_0 = (_co.dialogVisible = false) !== false;
+          ad = pd_0 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](155, 4341760, null, 0, primeng_button__WEBPACK_IMPORTED_MODULE_3__["ButtonDirective"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]], {
+        label: [0, "label"],
+        icon: [1, "icon"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]])], function (_ck, _v) {
         var _co = _v.component;
 
         _ck(_v, 7, 0);
@@ -3354,6 +3455,36 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var currVal_69 = _co.dialogVisiblePDF;
 
         _ck(_v, 96, 0, currVal_69);
+
+        var currVal_70 = true;
+        var currVal_71 = true;
+        var currVal_72 = 10000;
+        var currVal_73 = true;
+        var currVal_74 = _co.editvisible;
+
+        var currVal_75 = _ck(_v, 101, 0, "50vw");
+
+        _ck(_v, 98, 0, currVal_70, currVal_71, currVal_72, currVal_73, currVal_74, currVal_75);
+
+        _ck(_v, 115, 0);
+
+        _ck(_v, 121, 0);
+
+        _ck(_v, 127, 0);
+
+        _ck(_v, 133, 0);
+
+        _ck(_v, 139, 0);
+
+        _ck(_v, 145, 0);
+
+        _ck(_v, 151, 0);
+
+        var currVal_126 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵunv"](_v, 155, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 156).transform("Guardar"));
+
+        var currVal_127 = "pi pi-check";
+
+        _ck(_v, 155, 0, currVal_126, currVal_127);
       }, function (_ck, _v) {
         var _co = _v.component;
 
@@ -3446,6 +3577,108 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var currVal_58 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵunv"](_v, 80, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 81).transform("Prealertas"));
 
         _ck(_v, 80, 0, currVal_58);
+
+        var currVal_76 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵunv"](_v, 106, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 107).transform("Editando el item"));
+
+        _ck(_v, 106, 0, currVal_76);
+
+        var currVal_77 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵunv"](_v, 112, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 113).transform("Fecha"));
+
+        _ck(_v, 112, 0, currVal_77);
+
+        var currVal_78 = _co.activeitembyedit == null ? null : _co.activeitembyedit.fecha;
+        var currVal_79 = true;
+        var currVal_80 = true;
+        var currVal_81 = true;
+        var currVal_82 = true;
+
+        var currVal_83 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 115).filled;
+
+        _ck(_v, 114, 0, currVal_78, currVal_79, currVal_80, currVal_81, currVal_82, currVal_83);
+
+        var currVal_84 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵunv"](_v, 118, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 119).transform("Cliente"));
+
+        _ck(_v, 118, 0, currVal_84);
+
+        var currVal_85 = _co.activeitembyedit == null ? null : _co.activeitembyedit.cliente.nombres;
+        var currVal_86 = true;
+        var currVal_87 = true;
+        var currVal_88 = true;
+        var currVal_89 = true;
+
+        var currVal_90 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 121).filled;
+
+        _ck(_v, 120, 0, currVal_85, currVal_86, currVal_87, currVal_88, currVal_89, currVal_90);
+
+        var currVal_91 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵunv"](_v, 124, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 125).transform("Finca propia"));
+
+        _ck(_v, 124, 0, currVal_91);
+
+        var currVal_92 = _co.activeitembyedit == null ? null : _co.activeitembyedit.fincapropia;
+        var currVal_93 = true;
+        var currVal_94 = true;
+        var currVal_95 = true;
+        var currVal_96 = true;
+
+        var currVal_97 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 127).filled;
+
+        _ck(_v, 126, 0, currVal_92, currVal_93, currVal_94, currVal_95, currVal_96, currVal_97);
+
+        var currVal_98 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵunv"](_v, 130, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 131).transform("Finca"));
+
+        _ck(_v, 130, 0, currVal_98);
+
+        var currVal_99 = _co.activeitembyedit == null ? null : _co.activeitembyedit.finca;
+        var currVal_100 = true;
+        var currVal_101 = true;
+        var currVal_102 = true;
+        var currVal_103 = true;
+
+        var currVal_104 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 133).filled;
+
+        _ck(_v, 132, 0, currVal_99, currVal_100, currVal_101, currVal_102, currVal_103, currVal_104);
+
+        var currVal_105 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵunv"](_v, 136, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 137).transform("Marca"));
+
+        _ck(_v, 136, 0, currVal_105);
+
+        var currVal_106 = _co.activeitembyedit == null ? null : _co.activeitembyedit.marca.nombre;
+        var currVal_107 = true;
+        var currVal_108 = true;
+        var currVal_109 = true;
+        var currVal_110 = true;
+
+        var currVal_111 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 139).filled;
+
+        _ck(_v, 138, 0, currVal_106, currVal_107, currVal_108, currVal_109, currVal_110, currVal_111);
+
+        var currVal_112 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵunv"](_v, 142, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 143).transform("Estado"));
+
+        _ck(_v, 142, 0, currVal_112);
+
+        var currVal_113 = _co.activeitembyedit == null ? null : _co.activeitembyedit.status;
+        var currVal_114 = true;
+        var currVal_115 = true;
+        var currVal_116 = true;
+        var currVal_117 = true;
+
+        var currVal_118 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 145).filled;
+
+        _ck(_v, 144, 0, currVal_113, currVal_114, currVal_115, currVal_116, currVal_117, currVal_118);
+
+        var currVal_119 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵunv"](_v, 148, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 149).transform("Flor"));
+
+        _ck(_v, 148, 0, currVal_119);
+
+        var currVal_120 = _co.activeitembyedit == null ? null : _co.activeitembyedit.rosamistica.name;
+        var currVal_121 = true;
+        var currVal_122 = true;
+        var currVal_123 = true;
+        var currVal_124 = true;
+
+        var currVal_125 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 151).filled;
+
+        _ck(_v, 150, 0, currVal_120, currVal_121, currVal_122, currVal_123, currVal_124, currVal_125);
       });
     }
 
@@ -3553,6 +3786,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.items = [];
         this.prealertsdraft = [];
         this.minDateValue = new Date();
+        this.editvisible = false;
         this.prealertForm = this.formBuilder.group({
           fecha: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
           cliente: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
@@ -3567,7 +3801,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           preciovent: [''],
           preciocomp: [''],
           carga: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-          estado: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+          estado: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+          repeat: ['']
         });
       }
 
@@ -3785,7 +4020,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             _this3.total += parseInt(item.totaltallos + "");
           });
           this.submitted = false;
-          this.prealertForm.reset();
+
+          if (!this.prealertForm.get('repeat').value) {
+            this.prealertForm.reset();
+          } else {
+            this.prealertForm.get('HBBQ').setValue(null);
+            this.prealertForm.get('rosamistica').setValue(null);
+            this.prealertForm.get('tallos').setValue(null);
+            this.prealertForm.get('totaltallos').setValue(null);
+          }
+
           this.prealertForm.get('fecha').setValue(new Date());
         }
       }, {
@@ -4793,6 +5037,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               }
             }, _callee14, this);
           }));
+        }
+      }, {
+        key: "editrow",
+        value: function editrow(item) {
+          console.log(item);
+          this.editvisible = true;
+          this.activeitembyedit = Object.assign({}, item);
+          console.log('ACTIVE');
+          console.log(this.activeitembyedit);
         }
       }, {
         key: "f",

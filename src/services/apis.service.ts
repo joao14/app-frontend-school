@@ -755,6 +755,108 @@ export class ApisService {
 
     }
 
+    public generatePdfInvoiceDraft(invoices: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.viewdraft, invoices, opt).toPromise().then(invoice => {
+                resolve(invoice);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public getExcelPrealertDraft(prealert: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.getXlsPrealert, prealert, opt).toPromise().then(prealert => {
+                resolve(prealert);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public getstatusprealert(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.getstatusprealert, opt).toPromise().then(prealert => {
+                resolve(prealert);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public addstatusprealert(status: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.addstatusprealert, status, opt).toPromise().then(prealert => {
+                resolve(prealert);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public updatestatusprealert(status: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.put<any>(environment.updatestatusprealert, status, opt).toPromise().then(prealert => {
+                resolve(prealert);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public deletestatusprealert(status: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.put<any>(environment.deletestatusprealert, status, opt).toPromise().then(prealert => {
+                resolve(prealert);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
 
 
     httpPost(url, body) {

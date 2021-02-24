@@ -18,6 +18,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { user } from 'src/models/user';
 import { environment } from 'src/environments/environment';
 import { LoginComponent } from '../../login/login.component';
+import { NullTemplateVisitor } from "@angular/compiler";
 
 export interface Item {
     caja: string;
@@ -87,6 +88,48 @@ export interface Draft {
     }>,
     idObjTmp: string;
 }
+
+export interface Draft {
+    cabecera: {
+        cargcompId: number;
+        cargname: string;
+        claveacceso: string;
+        cliente: client;
+        codiesta: string;
+        contdocu: number;
+        estado: string;
+        fecha: string;
+        marcId: number;
+        mark: string;
+        markCiu: string;
+        markDir: string;
+        mawb: string;
+        numeboxes: number;
+        numetallos: number;
+        pdf: string;
+        puntemis: string;
+        secuencial: number;
+        subtotal1: number;
+        total: number;
+    },
+    detalles: Array<{
+        cantidad: number;
+        cantidadbch: number;
+        cantidadcajas: number;
+        farm: string;
+        farmId: number;
+        florId: number;
+        flower: string;
+        medidatallo: string;
+        preciounitario: number;
+        tallosxbch: number;
+        tipoempaque: string;
+        total: number;
+        line: number;
+    }>,
+    idObjTmp: string;
+}
+
 @Component({
     selector: "app-factura",
     templateUrl: "./factura.component.html",
@@ -97,6 +140,7 @@ export class FacturaComponent implements OnInit {
 
 
     itemForm: FormGroup;
+    itemFormEdit: FormGroup;
     facturaForm: FormGroup;
     factura: Factura;
     flowers: string[];
@@ -120,6 +164,7 @@ export class FacturaComponent implements OnInit {
     cajas: any[] = [];
     submitted = false;
     submittedFactura = false;
+    submittedFacturaEdit = false;
     selectclient: client;
     invoice: invoice;
     dialogVisible: boolean;
@@ -135,6 +180,9 @@ export class FacturaComponent implements OnInit {
     idFactura: number;
     selectmark: mark;
     line: number;
+    dialogVisibleEdit: boolean;
+    selectItem: Item;
+    xlsx: string;
 
     constructor(
         private messageService: MessageService,
@@ -155,6 +203,19 @@ export class FacturaComponent implements OnInit {
             tallos: ['', Validators.required],
             totaltallos: ['', Validators.required],
             precio: ['', Validators.required]
+        });
+
+        this.itemFormEdit = this.formBuilder.group({
+            caja: [null],
+            pieza: [''],
+            finca: [null, Validators.required],
+            flores: [null, [Validators.required]],
+            stem: ['25', [Validators.required]],
+            tamanio: [null, Validators.required],
+            tallos: ['', Validators.required],
+            totaltallos: ['', Validators.required],
+            precio: ['', Validators.required],
+            line: [null]
         });
 
         this.facturaForm = this.formBuilder.group({
@@ -188,6 +249,8 @@ export class FacturaComponent implements OnInit {
                 this.invoicesdraft = invoice.data.invoices;
                 if (this.invoicesdraft.length <= 0) {
                     this.step = 2;
+                } else {
+                    this.step = 1;
                 }
             }
         }).catch(err => {
@@ -204,6 +267,8 @@ export class FacturaComponent implements OnInit {
     inicilizate() {
         this.idFactura = 0;
         this.line = 0;
+        this.selectItem = null;
+        this.dialogVisibleEdit = false;
         this.editInvoice = false;
         this.manual = false;
         this.automatico = false;
@@ -211,6 +276,7 @@ export class FacturaComponent implements OnInit {
         this.addrow = false;
         this.submitted = false;
         this.submittedFactura = false;
+        this.submittedFacturaEdit = false;
         this.select = "MN";
         this.validate = false;
         this.selectedtamanio = null;
@@ -493,7 +559,7 @@ export class FacturaComponent implements OnInit {
             caja: this.itemForm.get('caja').value,
             pieza: this.itemForm.get('pieza').value,
             finca: this.itemForm.get('finca').value,
-            flor: this.itemForm.get('flores').value,
+            flor: this.itemForm.get('flores').value.flor,
             stems: this.itemForm.get('stem').value,
             tamanio: this.itemForm.get('tamanio').value,
             numtallos: this.itemForm.get('tallos').value,
@@ -503,18 +569,21 @@ export class FacturaComponent implements OnInit {
             line: this.selectdraft == null ? this.items.length : this.line + 1
         });
 
-        this.selectdraft == null ?'':this.line += 1;
-     
+
+        this.selectdraft == null ? '' : this.line += 1;
+
         this.factura.total = 0;
         this.factura.tallos = 0;
         this.factura.boxes = 0;
 
         this.items.forEach((item) => {
+            item.pieza = item.pieza == null || item.pieza.toString() == '' ? null : item.pieza;
             this.factura.total += item.subtotal;
             this.factura.tallos += parseInt(item.totaltallos.toString());
             item.pieza != null ? this.factura.boxes += parseInt(item.pieza.toString()) : '';
 
         });
+
 
         this.addrow = false;
         this.submitted = false;
@@ -545,6 +614,10 @@ export class FacturaComponent implements OnInit {
     }
 
     deleteItem(item: Item) {
+        if (this.items.length == 1 && this.editInvoice) {
+            this.messageService.add({ severity: 'warn', summary: 'Rosa Mística', detail: 'No se puede eliminar el item ya que la factura necesita por lo menos un item' });
+            return;
+        }
         this.factura.total = 0;
         this.factura.tallos = 0;
         this.factura.boxes = 0;
@@ -555,6 +628,30 @@ export class FacturaComponent implements OnInit {
             item.pieza == null ? '' : this.factura.boxes += parseInt(item.pieza.toString())
         });
 
+    }
+
+    async editItem(item: Item) {
+        let finca = await this.fincas.filter(data => {
+            if (data.entiId == item.finca['entiId']) {
+                return data;
+            }
+        });
+        let flor = await this.flores.filter(data => {
+            if (data['flor'].florId === item.flor['florId']) {
+                return data;
+            }
+        });
+        this.dialogVisibleEdit = true;
+        this.itemFormEdit.get('caja').setValue(item.caja);
+        this.itemFormEdit.get('pieza').setValue(item.pieza);
+        this.itemFormEdit.get('finca').setValue(finca[0]);
+        this.itemFormEdit.get('flores').setValue(flor[0]);
+        this.itemFormEdit.get('stem').setValue(item.stems);
+        this.itemFormEdit.get('tamanio').setValue(item.tamanio);
+        this.itemFormEdit.get('tallos').setValue(item.numtallos);
+        this.itemFormEdit.get('totaltallos').setValue(item.totaltallos);
+        this.itemFormEdit.get('precio').setValue(item.price);
+        this.itemFormEdit.get('line').setValue(item.line);
     }
 
     onOptionsMarkSelected() {
@@ -580,6 +677,45 @@ export class FacturaComponent implements OnInit {
                 this.router.navigate(['/login']);
             }
         })
+
+    }
+
+    modificar() {
+        this.submittedFacturaEdit = true;
+        if (this.itemFormEdit.invalid) {
+            this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios' });
+            return;
+        }
+        this.items.forEach(item => {
+            if (item.line == this.itemFormEdit.get('line').value) {
+                item.caja = this.itemFormEdit.get('caja').value;
+                item.pieza = this.itemFormEdit.get('pieza').value;
+                item.finca = this.itemFormEdit.get('finca').value;
+                item.flor = this.itemFormEdit.get('flores').value;
+                item.stems = this.itemFormEdit.get('stem').value;
+                item.tamanio = this.itemFormEdit.get('tamanio').value;
+                item.numtallos = this.itemFormEdit.get('tallos').value;
+                item.totaltallos = this.itemFormEdit.get('totaltallos').value;
+                item.price = this.itemFormEdit.get('precio').value;
+                item.subtotal = this.itemFormEdit.get('totaltallos').value * this.itemFormEdit.get('precio').value;
+            }
+        })
+
+        this.factura.total = 0;
+        this.factura.tallos = 0;
+        this.factura.boxes = 0;
+
+        this.items.forEach((item) => {
+            this.factura.total += item.subtotal;
+            this.factura.tallos += parseInt(item.totaltallos.toString());
+            item.pieza != null ? this.factura.boxes += parseInt(item.pieza.toString()) : '';
+
+        });
+
+        this.itemFormEdit.reset();
+        this.dialogVisibleEdit = false;
+        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Item actualizado correctamente' });
+
 
     }
 
@@ -634,7 +770,7 @@ export class FacturaComponent implements OnInit {
             })
         })
 
-       
+
         let invoice = {
             cabecera: head,
             detalles: detail,
@@ -677,7 +813,7 @@ export class FacturaComponent implements OnInit {
                 flower = data.data.flower;
             }
         }).catch(err => {
-             
+
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -693,7 +829,7 @@ export class FacturaComponent implements OnInit {
                 finca = data.data.farm;
             }
         }).catch(err => {
-             
+
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -718,7 +854,7 @@ export class FacturaComponent implements OnInit {
             }
 
         }).catch(err => {
-             
+
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -736,7 +872,7 @@ export class FacturaComponent implements OnInit {
             }
 
         }).catch(err => {
-             
+
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -753,7 +889,7 @@ export class FacturaComponent implements OnInit {
                 });
             }
         }).catch(err => {
-             
+
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -771,7 +907,7 @@ export class FacturaComponent implements OnInit {
                 });
             }
         }).catch(err => {
-             
+
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -783,65 +919,23 @@ export class FacturaComponent implements OnInit {
         this.itemForm.get('totaltallos').setValue(this.itemForm.get('stem').value * this.itemForm.get('tallos').value);
     }
 
+    calculateEdit() {
+        this.itemFormEdit.get('totaltallos').setValue(this.itemFormEdit.get('stem').value * this.itemFormEdit.get('tallos').value);
+    }
+
     async saveeraser() {
         this.submittedFactura = true;
         if (this.facturaForm.invalid) {
             this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos para generar la factura son obligatorios.' });
             return;
         }
-
-        this.factura.items = this.items;
-        let head = {
-            codiesta: '001',
-            puntemis: '001',
-            clieId: this.facturaForm.get('cliente').value.entiId,
-            cargcompId: this.facturaForm.get('empresacargo').value.entiId,
-            marcId: this.facturaForm.get('marca').value.marcId,
-            mawb: this.facturaForm.get('mawba').value,
-            subtotal0: 0,
-            descuento: 0,
-            subtotal1: 0,
-            ice: 0.00,
-            iva: 0.00,
-            total: this.factura.total,
-            observacion: '-',
-            numetallos: this.factura.tallos,
-            numeboxes: this.factura.boxes,
-            estado: "B",
-            fecha: this.selectdraft == null ? null : this.selectdraft.cabecera.fecha + '.000',
-            claveacceso: this.selectdraft != null ? this.selectdraft.cabecera.claveacceso : null,
-            secuencial: this.selectdraft != null ? this.selectdraft.cabecera.secuencial : null,
-            contdocu: this.selectdraft != null ? this.selectdraft.cabecera.contdocu : 0,
-        }
-
-        let detail: detail[] = [];
-        this.factura.items.forEach(data => {
-            detail.push({
-                tipoempaque: data.caja == undefined ? "" : data.caja['code'],
-                cantidadcajas: data.pieza == undefined ? "" : String(data.pieza),
-                tallosxbch: data.stems,
-                medidatallo: data.tamanio['code'],
-                cantidadbch: data.numtallos,
-                cantidad: data.totaltallos,
-                preciounitario: data.price,
-                total: data.subtotal,
-                farmId: data.finca['entiId'],
-                florId: data.flor['florId'] == undefined ? data.flor['flor'].florId : data.flor['florId'],
-                line: data.line
-            })
-        })
-        this.invoice = {
-            cabecera: head,
-            detalles: detail,
-            idObjTmp: this.selectdraft == null ? null : this.selectdraft.idObjTmp
-        };
-
+        await this.getInvoice();
         this.spinner.show();
-        await this.api.registerInvoiceDraft(this.invoice, localStorage.getItem("token")).then(data => {
+        await this.api.registerInvoiceDraft(this.invoice, localStorage.getItem("token")).then(async (data) => {
             this.spinner.hide();
             if (data.headerApp.code == 200) {
-                this.inicilizate();
-                this.getinvoicesdraft();
+                await this.inicilizate();
+                await this.getinvoicesdraft();
                 this.invoice = null;
                 this.facturaForm.reset();
                 this.itemForm.reset();
@@ -849,7 +943,7 @@ export class FacturaComponent implements OnInit {
                 this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'El borrador de la factura se guardo correctemante' });
             }
         }).catch(err => {
-             
+
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -872,12 +966,69 @@ export class FacturaComponent implements OnInit {
         this.facturaForm.reset();
         this.factura.tallos = 0;
         this.factura.total = 0;
-        this.factura.boxes=0;
+        this.factura.boxes = 0;
         this.editInvoice = false;
         this.selectdraft = null;
     }
 
-    viewdraft(draft: Draft) {
+    async viewdraft(draft: Draft) {
+        let head = {
+            codiesta: draft.cabecera.codiesta,
+            puntemis: draft.cabecera.puntemis,
+            clieId: draft.cabecera.cliente.entiId,
+            cargcompId: draft.cabecera.cargcompId,
+            marcId: draft.cabecera.marcId,
+            mawb: draft.cabecera.mawb,
+            subtotal0: 0,
+            descuento: 0,
+            subtotal1: 0,
+            ice: 0.00,
+            iva: 0.00,
+            total: draft.cabecera.total,
+            observacion: '-',
+            numetallos: draft.cabecera.numetallos,
+            numeboxes: draft.cabecera.numeboxes,
+            estado: "T",
+            claveacceso: draft.cabecera.claveacceso,
+            secuencial: draft.cabecera.secuencial,
+            contdocu: draft.cabecera.contdocu,
+        }
+
+        let detail: detail[] = [];
+        draft.detalles.forEach(data => {
+            detail.push({
+                tipoempaque: data.tipoempaque == undefined ? "" : data.tipoempaque,
+                cantidadcajas: data.cantidadcajas == undefined ? "" : String(data.cantidadcajas),
+                tallosxbch: data.tallosxbch,
+                medidatallo: data.medidatallo,
+                cantidadbch: data.cantidadbch,
+                cantidad: data.cantidad,
+                preciounitario: data.preciounitario,
+                total: data.total,
+                farmId: data.farmId,
+                florId: data.florId,
+                line: data.line
+            })
+        })
+
+        let invoice = {
+            cabecera: head,
+            detalles: detail,
+            idObjTmp: draft.idObjTmp == null ? null : draft.idObjTmp
+        };
+        this.utilService.isLoading.next(true);
+        await this.api.generatePdfInvoiceDraft(invoice, localStorage.getItem('token')).then(data => {
+            if (data.headerApp.code == 200) {
+                location.href = environment.url + data.data.xls;
+                this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'El archivo se ha descargado correctamente' });
+            }
+        }).catch(err => {
+            if (err.error.code == 401) {
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
+        })
+        this.utilService.isLoading.next(false);
     }
 
     finish(draft: Draft) {
@@ -931,7 +1082,7 @@ export class FacturaComponent implements OnInit {
             return 0;
         });
 
-        this.line = this.items[this.items.length -1 ].line;
+        this.line = this.items[this.items.length - 1].line;
         this.factura.total = 0;
         this.factura.tallos = 0;
         this.factura.boxes = 0;
@@ -947,6 +1098,92 @@ export class FacturaComponent implements OnInit {
     }
 
 
+    async viewXlsx() {
+        console.log('Validar el XLSX');
+        await this.getInvoice();
+        this.utilService.isLoading.next(true);
+        await this.api.generatePdfInvoiceDraft(this.invoice, localStorage.getItem('token')).then(data => {
+            if (data.headerApp.code == 200) {
+                location.href = environment.url + data.data.xls;
+                this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'El archivo se ha descargado correctamente' });
+            }
+        }).catch(err => {
+            if (err.error.code == 401) {
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
+        })
+  
+        this.utilService.isLoading.next(false);
+    }
+
+    async getInvoice(){
+        this.factura.items = this.items;
+        let head = {
+            codiesta: '001',
+            puntemis: '001',
+            clieId: this.facturaForm.get('cliente').value.entiId,
+            cargcompId: this.facturaForm.get('empresacargo').value.entiId,
+            marcId: this.facturaForm.get('marca').value.marcId,
+            mawb: this.facturaForm.get('mawba').value,
+            subtotal0: 0,
+            descuento: 0,
+            subtotal1: 0,
+            ice: 0.00,
+            iva: 0.00,
+            total: this.factura.total,
+            observacion: '-',
+            numetallos: this.factura.tallos,
+            numeboxes: this.factura.boxes,
+            estado: "B",
+            fecha: this.selectdraft == null ? null : this.selectdraft.cabecera.fecha + '.000',
+            claveacceso: this.selectdraft != null ? this.selectdraft.cabecera.claveacceso : null,
+            secuencial: this.selectdraft != null ? this.selectdraft.cabecera.secuencial : null,
+            contdocu: this.selectdraft != null ? this.selectdraft.cabecera.contdocu : 0,
+        }
+
+        let detail: detail[] = [];
+        await this.factura.items.forEach(async (data) => {
+            await detail.push({
+                tipoempaque: data.caja == undefined ? "" : data.caja['code'],
+                cantidadcajas: data.pieza == undefined ? "" : String(data.pieza),
+                tallosxbch: data.stems,
+                medidatallo: data.tamanio['code'],
+                cantidadbch: data.numtallos,
+                cantidad: data.totaltallos,
+                preciounitario: data.price,
+                total: data.subtotal,
+                farmId: data.finca['entiId'],
+                florId: data.flor['florId'] == undefined ? data.flor['flor'].florId : data.flor['florId'],
+                line: data.line
+            })
+        })
+        this.invoice = {
+            cabecera: head,
+            detalles: detail,
+            idObjTmp: this.selectdraft == null ? null : this.selectdraft.idObjTmp
+        };
+    }
+
+    async continue(){
+        console.log('Continue');        
+        await this.getInvoice();
+        this.spinner.show();
+        await this.api.registerInvoiceDraft(this.invoice, localStorage.getItem("token")).then(async (data) => {
+            console.log('DATA');
+            console.log(data);
+            this.spinner.hide();
+            if (data.headerApp.code == 200) {
+                this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se guardo el borrador para seguir editando' });
+            }
+        }).catch(err => {
+            this.spinner.hide();
+            if (err.error.code == 401) {
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
+        });
+    }
 
     async getMarcbyName(entiId: number, name: string): Promise<any> {
         let marc: mark = null;
@@ -983,6 +1220,10 @@ export class FacturaComponent implements OnInit {
     }
     get fr() {
         return this.facturaForm.controls;
+    }
+
+    get fv() {
+        return this.itemFormEdit.controls;
     }
 
 }

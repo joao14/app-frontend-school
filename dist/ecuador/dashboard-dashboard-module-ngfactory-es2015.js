@@ -367,7 +367,6 @@ class DashboardComponent {
     }
     getRosaMistica() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            console.log(localStorage.getItem('token'));
             this.actuallydate = new Date();
             this.graphics = null;
             this.utilservice.isLoading.next(true);

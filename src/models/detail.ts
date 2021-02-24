@@ -2,7 +2,7 @@ export interface detail{
     tipoempaque: string,
     cantidadcajas: string,
     tallosxbch: number,
-    medidatallo: number,
+    medidatallo: string,
     cantidadbch: number,
     cantidad: number,
     preciounitario: number,

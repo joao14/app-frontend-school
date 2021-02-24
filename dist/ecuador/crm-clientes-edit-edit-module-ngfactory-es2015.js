@@ -457,9 +457,7 @@ class EditComponent {
                 this.router.navigate(['clientes']);
                 this.inicializateValores();
             }
-            console.log(data);
         }).catch(err => {
-            console.log(err);
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -502,14 +500,11 @@ class EditComponent {
     onConfirm() {
         this.blockedPanel = false;
         this.api.updateclient(this.client, localStorage.getItem("token")).then(data => {
-            console.log("Actualizar cliente");
             if (data.headerApp.code === 200) {
                 this.router.navigate(['clientes']);
                 this.inicializateValores();
             }
-            console.log(data);
         }).catch(err => {
-            console.log(err);
         });
         this.messageService.clear('c');
     }
@@ -522,7 +517,6 @@ class EditComponent {
             this.marks = [];
             this.marksdisabled = [];
             yield this.api.getmarks(parseInt(this.client_['id']), localStorage.getItem("token")).then(mark => {
-                console.log(mark);
                 if (mark.headerApp.code == 200) {
                     mark.data.marks.forEach(element => {
                         if (element.estado == 'A') {
@@ -534,7 +528,6 @@ class EditComponent {
                     });
                 }
             }).catch(err => {
-                console.log(err);
                 if (err.error.code == 401) {
                     localStorage.clear();
                     this.router.navigate(['/login']);
@@ -551,7 +544,6 @@ class EditComponent {
             entiId: this.client_['id']
         };
         this.api.addmark(mark, localStorage.getItem("token")).then(data => {
-            console.log(data);
             if (data.headerApp.code === 200) {
                 this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se ha agregado una nueva marca al cliente' });
                 this.getMarcks();
@@ -560,7 +552,6 @@ class EditComponent {
                 this.direction = "";
             }
         }).catch(err => {
-            console.log(err);
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
@@ -581,10 +572,8 @@ class EditComponent {
                 };
                 yield this.api.updatemark(mark, localStorage.getItem("token")).then((data) => {
                     if (data.headerApp.code === 200) {
-                        console.log('Actualizado correctamente');
                     }
                 }).catch(err => {
-                    console.log(err);
                     if (err.error.code == 401) {
                         localStorage.clear();
                         this.router.navigate(['/login']);
@@ -610,10 +599,8 @@ class EditComponent {
                 };
                 yield this.api.updatemark(mark, localStorage.getItem("token")).then((data) => {
                     if (data.headerApp.code === 200) {
-                        console.log('Actualizado correctamente');
                     }
                 }).catch(err => {
-                    console.log(err);
                     if (err.error.code == 401) {
                         localStorage.clear();
                         this.router.navigate(['/login']);
@@ -630,8 +617,6 @@ class EditComponent {
      */
     modificar() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            console.log('SELECT MARK');
-            console.log(this.selectmark);
             let mark = {
                 entiId: this.selectmark.entiId,
                 marcId: this.selectmark.marcId,
@@ -640,16 +625,13 @@ class EditComponent {
                 direccion: this.direction,
                 estado: this.selectmark.estado
             };
-            console.log(mark);
             yield this.api.updatemark(mark, localStorage.getItem("token")).then((data) => {
                 if (data.headerApp.code === 200) {
-                    console.log('Actualizado correctamente');
                     this.name = "";
                     this.city = "";
                     this.direction = "";
                 }
             }).catch(err => {
-                console.log(err);
                 if (err.error.code == 401) {
                     localStorage.clear();
                     this.router.navigate(['/login']);
@@ -661,8 +643,6 @@ class EditComponent {
         });
     }
     selected(mark) {
-        console.log('MARCA');
-        console.log(mark);
         if (mark == this.selectmark) {
             this.selectmark = null;
         }

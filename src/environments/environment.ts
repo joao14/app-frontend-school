@@ -1,5 +1,6 @@
-const IP: string = "https://addsoft-tech.com:"
-const PUERTO: string = "8443"
+//const IP: string = "https://addsoft-tech.com:"
+const IP: string = "http://35.243.246.83:"
+const PUERTO: string = "8780"
 
 const URL: string = IP + PUERTO;
 
@@ -46,8 +47,13 @@ export const environment = {
     sendEmail: URL +'/romi/apirm/crm/mail/send/trx',
     invoicesdrafts: URL +'/romi/apirm/invoice/drafts',
     prealertdrafts: URL + '/romi/apirm/prealert/drafts',
+    viewdraft: URL + '/romi/apirm/invoice/draft/excel',
     charts: URL + '/romi/apirm/crm/data/charts',
     chartsbyclient: URL + '/romi/apirm/crm/data/charts/client/',
-    getbalancegenral:  URL + '/romi/apirm/trx/find/cliedate/report/'
-
+    getbalancegenral:  URL + '/romi/apirm/trx/find/cliedate/report/',
+    getstatusprealert: URL + '/romi/apirm/prealert/state/all',
+    addstatusprealert: URL + '/romi/apirm/prealert/state/new',
+    updatestatusprealert: URL + '/romi/apirm/prealert/state/update',
+    deletestatusprealert: URL + '/romi/apirm/prealert/state/del',
+    getXlsPrealert: URL + '/romi/apirm/prealert/generate/xls',
 };

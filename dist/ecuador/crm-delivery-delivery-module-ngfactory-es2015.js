@@ -327,13 +327,11 @@ class DeliveryComponent {
     getDelivery() {
         this.utilservice.isLoading.next(true);
         this.api.getdeliveries(localStorage.getItem("token")).then(data => {
-            console.log(data);
             if (data.headerApp.code == 200) {
                 this.deliveries = data.data.cargocompanies;
                 this.utilservice.isLoading.next(false);
             }
         }).catch(err => {
-            console.log(err);
             this.utilservice.isLoading.next(false);
             if (err.error.code == 401) {
                 localStorage.clear();
@@ -342,12 +340,9 @@ class DeliveryComponent {
         });
     }
     addDelivery() {
-        console.log('Agregar la finca');
         this.router.navigate(['/editDelivery']);
     }
     edit(delivery) {
-        console.log('Editando delivery...');
-        console.log(delivery);
         this.router.navigate(['/editDelivery'], { state: { delivery: JSON.stringify(delivery) } });
     }
     consultarMobile() {
@@ -362,8 +357,6 @@ class DeliveryComponent {
                 this.deliveries.push(delivery);
             }
         });
-        console.log('Deliveries finales');
-        console.log(this.deliveries);
     }
 }
 

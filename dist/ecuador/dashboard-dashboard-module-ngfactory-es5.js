@@ -2258,11 +2258,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               while (1) {
                 switch (_context3.prev = _context3.next) {
                   case 0:
-                    console.log(localStorage.getItem('token'));
                     this.actuallydate = new Date();
                     this.graphics = null;
                     this.utilservice.isLoading.next(true);
-                    _context3.next = 6;
+                    _context3.next = 5;
                     return this.api.getcharts(localStorage.getItem('token')).then(function (data) {
                       _this2.graphics = new Graphics();
 
@@ -2384,10 +2383,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                       }
                     });
 
-                  case 6:
+                  case 5:
                     this.utilservice.isLoading.next(false);
 
-                  case 7:
+                  case 6:
                   case "end":
                     return _context3.stop();
                 }

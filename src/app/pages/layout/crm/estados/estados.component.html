@@ -1,0 +1,76 @@
+<div class="ui-g">
+    <div class="ui-g-12">
+        <div class="card no-margin">
+            <h1>{{'Lista de estados de prealerta' | translate}}</h1>
+            <p-toast></p-toast>
+            <p-toolbar>
+                <div class="p-toolbar-group-left">
+                    <button pButton label="Nuevo" icon="pi pi-plus" class="ui-button-success"
+                        (click)="addEstado()"></button>
+                </div>
+            </p-toolbar>
+
+            <p-table #dt [value]="estados" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+                class="p-datatable-responsive-demo"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[10,25,50,100]">
+
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        {{'Lista de estados de las prealertas' | translate}} [{{estados.length}}]
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th> {{'Nombre' | translate}}</th>
+                        <th> {{'Estado' | translate}}</th>
+                        <th style="width: 8em; text-align: center;">
+                            <button pButton type="button" icon="pi pi-cog"></button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="ui-fluid">
+                                <input pInputText type="text"
+                                    (input)="dt.filter($event.target.value, 'nombre', 'contains')"
+                                    placeholder="Search by Name" class="p-column-filter">
+                            </div>
+                        </th>
+                        <th>
+                            <div class="ui-fluid">
+                                <input pInputText type="text"
+                                    (input)="dt.filter($event.target.value, 'estado', 'startsWith')"
+                                    placeholder="Search by State" class="p-column-filter">
+                            </div>
+                        </th>
+                        <th style="width: 8em;">
+
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-estado>
+                    <tr [pSelectableRow]="estado" [pEditableRow]="estado" style="background-color: white;">
+                        <td>{{estado.nombre | titlecase}}</td>
+                        <td style="text-align: center;">
+                            <div [class]="estado.estado=='A'?'active-badge':'inactive-badge'">
+                                <span>{{estado.estado=='A'?'Activo':'Inactivo'}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil"
+                                (click)="edit(estado)"></button>
+                                &nbsp;
+                            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
+                                (click)="remove(estado)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="3">No status found.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
