@@ -4,7 +4,7 @@ import * as XLSX from "xlsx";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApisService } from 'src/services/apis.service';
 import { Flower } from '../crm/flores/flores.component';
-import * as moment from 'moment';        
+import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { client } from 'src/models/client';
 import { finca } from 'src/models/finca';
@@ -173,7 +173,7 @@ export class PrealertaComponent implements OnInit {
   editvisible: boolean = false;
   activeitembyedit: Item;
   tempStatus: Status;
-
+  pralId: string;
 
   constructor(private messageService: MessageService, private formBuilder: FormBuilder, private confirmationService: ConfirmationService,
     private api: ApisService, private router: Router, private utilService: UtilService, private spinner: NgxSpinnerService) {
@@ -215,6 +215,7 @@ export class PrealertaComponent implements OnInit {
     this.validate = false;
     this.dialogVisible = false;
     this.response = null;
+    this.pralId="";
     this.hbqb = 0;
     this.item = {
       fecha: '',
@@ -275,7 +276,7 @@ export class PrealertaComponent implements OnInit {
 
 
   deleteItem(prealert: any) {
-    if(this.editPrealert && this.items.length <= 1){
+    if (this.editPrealert && this.items.length <= 1) {
       this.messageService.add({ severity: 'warn', summary: 'Rosa Mística', detail: 'No se puede dejar sin items la prelaerta' });
       return
     }
@@ -306,7 +307,7 @@ export class PrealertaComponent implements OnInit {
     let cm = "";
 
     this.cantidadPrice.forEach(data => {
-      pvp = pvp + data.precvent + " ",
+        pvp = pvp + data.precvent + " ",
         pcomp = pcomp + data.preccomp + " ",
         cm = cm + data.tamanio + " "
     });
@@ -611,6 +612,10 @@ export class PrealertaComponent implements OnInit {
       detalle: detail
     }
 
+    if(!this.editPrealert && this.pralId!=""){
+      this.prealert.prealerta.pralId=parseInt(this.pralId)
+    }
+
     this.confirmationService.confirm({
       message: "Are you sure to send the prealert?",
       accept: async () => {
@@ -622,6 +627,7 @@ export class PrealertaComponent implements OnInit {
             this.dialogVisible = true;
             this.total = 0;
             this.idPrealert = 0;
+            this.pralId="";
             this.prealert = null;
             this.editPrealert = false;
             this.items = [];
@@ -854,7 +860,7 @@ export class PrealertaComponent implements OnInit {
   }
 
   async viewdraft(draft: Draft) {
-    
+
     let head: Cabecera = {
       fecha: this.getFormatDate(new Date()),
       usuaId: this.user.usuaid,
@@ -863,64 +869,63 @@ export class PrealertaComponent implements OnInit {
       pralId: draft.head.pralId
     }
 
-    let detail: Array<any> = [];   
-    this.utilService.isLoading.next(true);    
+    let detail: Array<any> = [];
+    this.utilService.isLoading.next(true);
     for (const clie of draft.clients) {
       for (const item of clie.items) {
-        const cliente = await this.getClientbyName(clie.info.nombres);        
-        const finca = await this.getFincabyName(item.farm);             
-        const marca = await this.getMarcbyName(clie.info.clieId, item.mark);  
-        const rosamistica = await this.getFlowerbyName(item.flower);                
+        const cliente = await this.getClientbyName(clie.info.nombres);
+        const finca = await this.getFincabyName(item.farm);
+        const marca = await this.getMarcbyName(clie.info.clieId, item.mark);
+        const rosamistica = await this.getFlowerbyName(item.flower);
         const carga = await this.getEmpresaCargabyName(item.cargname);
-        
+
         await this.getStatus(item.status);
         let temp = {
-            line: item['line'],
-            shippingdate:  item.shippingdate+'.00',
-            clieId: cliente.entiId,
-            fincapropia: item.fincapropia,
-            farmId: finca.entiId,
-            marcId: marca.marcId,
-            hbqb: item.hbqb,
-            florId: rosamistica.florId,
-            cm: item.cm,
-            tallos: item.tallos,
-            totaltallos: item.totaltallos,
-            pcomp: item.pcomp,
-            cargcompId: carga.entiId,
-            pvp: item.pvp,
-            status: item.status
+          line: item['line'],
+          shippingdate: item.shippingdate + '.00',
+          clieId: cliente.entiId,
+          fincapropia: item.fincapropia,
+          farmId: finca.entiId,
+          marcId: marca.marcId,
+          hbqb: item.hbqb,
+          florId: rosamistica.florId,
+          cm: item.cm,
+          tallos: item.tallos,
+          totaltallos: item.totaltallos,
+          pcomp: item.pcomp,
+          cargcompId: carga.entiId,
+          pvp: item.pvp,
+          status: item.status
         }
         detail.push(temp);
       }
     }
 
     this.utilService.isLoading.next(false);
-   
+
     let prealert = {
       prealerta: head,
       detalle: detail
-    }           
-    
+    }
+
     this.utilService.isLoading.next(true);
-    this.api.getExcelPrealertDraft(prealert, localStorage.getItem('token')).then((data) => {      
+    this.api.getExcelPrealertDraft(prealert, localStorage.getItem('token')).then((data) => {
       if (data.headerApp.code == 200) {
         location.href = environment.url + data.data.xls;
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'El archivo se ha descargado correctamente' });
-    }
+      }
     }).catch(err => {
-      console.log(err);      
+      console.log(err);
       if (err.error.code == 401) {
-        localStorage.clear(); 
+        localStorage.clear();
         this.router.navigate(['/login']);
       }
     })
     this.utilService.isLoading.next(false);
-    
+
   }
 
-  viewxlsx(){
-    console.log('VIEW XLSX');
+  viewxlsx() {
     let head: Cabecera = {
       fecha: this.getFormatDate(new Date()),
       usuaId: this.user.usuaid,
@@ -930,7 +935,7 @@ export class PrealertaComponent implements OnInit {
     }
 
     let detail: Array<Detail> = [];
-    let contador = 0;    
+    let contador = 0;
     this.items.forEach(data => {
       detail.push({
         line: contador,
@@ -949,7 +954,7 @@ export class PrealertaComponent implements OnInit {
         pvp: data.preciovent,
         status: data.status.titrId.toString()
       })
-      contador++;      
+      contador++;
     })
 
     this.prealert = {
@@ -958,27 +963,27 @@ export class PrealertaComponent implements OnInit {
     }
 
     this.utilService.isLoading.next(true);
-    this.api.getExcelPrealertDraft(this.prealert, localStorage.getItem('token')).then((data) => {      
+    this.api.getExcelPrealertDraft(this.prealert, localStorage.getItem('token')).then((data) => {
       if (data.headerApp.code == 200) {
         location.href = environment.url + data.data.xls;
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'El archivo se ha descargado correctamente' });
-    }
+      }
     }).catch(err => {
-      console.log(err);      
+      console.log(err);
       if (err.error.code == 401) {
-        localStorage.clear(); 
+        localStorage.clear();
         this.router.navigate(['/login']);
       }
     })
     this.utilService.isLoading.next(false);
-    
+
 
 
   }
 
 
   async edit(draft: Draft) {
-    
+
     this.editPrealert = true;
     this.optionSelect = 'manual';
     this.step = 2;
@@ -1064,9 +1069,12 @@ export class PrealertaComponent implements OnInit {
       detalle: detail
     }
 
-
+    if(!this.editPrealert && this.pralId!=""){
+      this.prealert.prealerta.pralId=parseInt(this.pralId)
+    }
+    
     this.spinner.show();
-    await this.api.registerPrealert(this.prealert, localStorage.getItem("token")).then(async (data) => {
+    await this.api.registerPrealert(this.prealert, localStorage.getItem("token")).then(async (data) => {     
       this.spinner.hide();
       if (data.headerApp.code == 200) {
         /*this.total = 0;
@@ -1077,6 +1085,8 @@ export class PrealertaComponent implements OnInit {
         this.optionSelect == 'manual';
         this.step = 1;*/
         await this.prealertdraft();
+        this.pralId=data.data.prealert.pralId;        
+        this.step = 2;
         //this.prealertForm.get('fecha').setValue(new Date());
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'La prealerta se ha guardado como borrador' });
       }
@@ -1089,12 +1099,9 @@ export class PrealertaComponent implements OnInit {
     this.utilService.isLoading.next(false);
   }
 
-  editrow(item: any) {
-    console.log(item);
+  editrow(item: any) {    
     this.editvisible = true;
-    this.activeitembyedit = { ...item };
-    console.log('ACTIVE');
-    console.log(this.activeitembyedit);
+    this.activeitembyedit = { ...item };    
   }
 
 

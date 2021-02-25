@@ -36,6 +36,7 @@ export interface Documentos {
   codiesta: string;
   secuencial: number;
   estado: string;
+  numeboxes: number;
 }
 
 @Component({
@@ -62,13 +63,16 @@ export class SaleComponent implements OnInit {
   status: boolean;
   dialogEmail: boolean;
   selectfactura: Factura;
+  total: number;
+  totaltallos: number;
+  totalcajas: number;
 
 
   constructor(private api: ApisService, private utilService: UtilService, private router: Router, private messageService: MessageService) {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.emailuser = "";
     this.newemailuser = "";
     this.status = false;
@@ -79,6 +83,9 @@ export class SaleComponent implements OnInit {
     this.filterMobile = new Date();
     this.dialogVisible = false;
     this.selectDocument = null;
+    this.total = 0;
+    this.totaltallos = 0;
+    this.totalcajas = 0;
     this.getClient();
   }
 
@@ -97,13 +104,26 @@ export class SaleComponent implements OnInit {
     this.utilService.isLoading.next(false);
   }
 
-  async consultar() {   
+  async consultar() {
+    this.total = 0;
+    this.totalcajas = 0;
+    this.totaltallos = 0;
+    this.invoices = [];
     this.utilService.isLoading.next(true);
     await this.api.getsales(this.getFormatDate(this.dateIni).replace(/-/g, "") + " 00:00:00",
       this.getFormatDate(this.dateFin).replace(/-/g, "") + " 23:59:59",
-      localStorage.getItem("token")).then(data => {       
+      localStorage.getItem("token")).then(data => {
+        console.log('DATA');
+        console.log(data);
         if (data.headerApp.code === 200) {
           this.invoices = data.data.invoices;
+          this.invoices.forEach(res => {
+            this.totaltallos += res.numetallos;
+            this.total += parseInt(res.total);
+            this.totalcajas += res.numeboxes;
+          })
+        }else{
+          this.messageService.add({ severity: 'warn', summary: 'Rosa Mística', detail: 'No se ha encontrado información al respecto' });
         }
       }).catch(err => {
         if (err.error.code == 401) {
@@ -114,7 +134,7 @@ export class SaleComponent implements OnInit {
     this.utilService.isLoading.next(false);
   }
 
-  send(documento: Documentos) {   
+  send(documento: Documentos) {
     this.dialogEmail = true;
     this.emailuser = documento.cliente['email'];
     this.selectfactura = {
@@ -123,7 +143,7 @@ export class SaleComponent implements OnInit {
       nombres: documento.cliente.nombres,
       pdf: documento.pdf,
       secuencial: documento.secuencial
-    }    
+    }
   }
 
   view(documento: Documentos) {
@@ -132,7 +152,7 @@ export class SaleComponent implements OnInit {
     this.claveacceso = documento.claveacceso;
   }
 
-  async ok() {    
+  async ok() {
     if (this.status && (this.newemailuser == '' || this.newemailuser == undefined)) {
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Debe agregar el nuevo email' });
       return;
@@ -146,7 +166,7 @@ export class SaleComponent implements OnInit {
       secuencia: this.selectfactura.secuencial,
       docu: this.selectfactura.pdf,
       fechaDocu: this.getFormatDate(new Date())
-    }   
+    }
     this.utilService.isLoading.next(true);
     await this.api.sendEmail(contentEmail, localStorage.getItem("token")).then(data => {
       if (data.headerApp.code == 200) {

@@ -5,4 +5,4 @@ export interface invoice{
     cabecera: head;
     detalles: detail[];
     idObjTmp: string;
-}
+} 

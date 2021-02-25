@@ -1,5 +1,5 @@
-//const IP: string = "https://addsoft-tech.com:"
-const IP: string = "http://35.243.246.83:"
+const IP: string = "https://addsoft-tech.com:"
+//const IP: string = "http://35.243.246.83:"
 const PUERTO: string = "8780"
 
 const URL: string = IP + PUERTO;

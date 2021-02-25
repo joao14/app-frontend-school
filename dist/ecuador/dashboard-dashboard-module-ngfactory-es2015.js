@@ -373,7 +373,7 @@ class DashboardComponent {
             yield this.api.getcharts(localStorage.getItem('token')).then(data => {
                 this.graphics = new Graphics();
                 if (data.headerApp.code == 200) {
-                    //Transactions
+                    //Transactions                
                     this.graphics.count_ent = data.data.count_ent;
                     this.graphics.count_ent.FL = data.data.count_flower;
                     this.graphics.number_transactions = {
@@ -520,8 +520,13 @@ class DashboardComponent {
             this.graphics = null;
             this.utilservice.isLoading.next(true);
             yield this.api.getchartsbyclient(this.user.empresa.entiid, localStorage.getItem('token')).then(data => {
+                console.log('DASHBOARD');
+                console.log(data);
                 this.graphics = new Graphics();
                 if (data.headerApp.code == 200) {
+                    console.log('El balance de la empresa essss');
+                    console.log(data.data.entidad.balance);
+                    this.utilservice.balance.next(data.data.entidad.balance == null ? 0 : data.data.entidad.balance);
                     //Transactions
                     this.graphics.count_ent = data.data.count_ent;
                     this.graphics.count_trx = {
@@ -782,4 +787,3 @@ class DashboardModule {
 /***/ })
 
 }]);
-//# sourceMappingURL=dashboard-dashboard-module-ngfactory-es2015.js.map

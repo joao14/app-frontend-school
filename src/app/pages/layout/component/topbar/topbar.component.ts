@@ -3,6 +3,7 @@ import { user } from './../../../../../models/user';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-topbar',
@@ -19,16 +20,21 @@ export class TopbarComponent implements OnInit {
     selectlanguajes: string;
     languajes: any[] = [];
     typerol: string;
+    balance: string;
 
-    constructor(public app: LayoutComponent, private translate: TranslateService) {
+    constructor(public app: LayoutComponent, private translate: TranslateService, private router: Router) {
+
+        this.app.utilservice.balance.subscribe( data =>{            
+            this.balance= data;            
+        })
 
         this.app.utilservice.isLoading.subscribe(data => {
             this.estado = data;
         })
 
-        this.app.utilservice.typerolselected.subscribe(data => {
-            this.typerol = data;
-            this.menu = 'ROL';
+        this.app.utilservice.typerolselected.subscribe(data => {                  
+            this.typerol = data;  
+            this.menu = 'ROL'; 
         });
 
         this.app.utilservice.user.subscribe(data => {
@@ -75,7 +81,7 @@ export class TopbarComponent implements OnInit {
         } else {
             this.menu = menu;  
         }
-    }
+    }      
 
 
 }

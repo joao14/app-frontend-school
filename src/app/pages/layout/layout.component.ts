@@ -54,6 +54,7 @@ export class LayoutComponent implements OnInit {
         })
 
         this.utilservice.typerolselected.subscribe(data => {
+            console.log('Variable');
             this.type = data;
         })
 
@@ -61,11 +62,9 @@ export class LayoutComponent implements OnInit {
 
     ngOnInit() {
         this.typerol = JSON.parse(localStorage.getItem('user')).roles[0].shorcut;
+       
         localStorage.setItem("rolactive", this.typerol);
-
-        if (JSON.parse(localStorage.getItem('user')).roles.length > 1) {
-            this.utilservice.typerolselected.next(this.typerol);
-        }
+        this.utilservice.typerolselected.next(this.typerol);
 
         this.utilservice.itemsSource.next([
             { label: 'Dashboard' }]);
@@ -139,6 +138,8 @@ export class LayoutComponent implements OnInit {
     }
 
     onTopbarSubItemClickRoles(event) {
+        console.log('LAYOUT---');
+        console.log(event.target.textContent);
 
         this.utilservice.rolselected.next(event.target.textContent);
         switch ((event.target.textContent).toUpperCase()) {
@@ -168,7 +169,7 @@ export class LayoutComponent implements OnInit {
         event.preventDefault();
     }
 
-    onTopbarItemClickLanguajes(event, item) {        
+    onTopbarItemClickLanguajes(event, item) {
         this.topbarItemClick = true;
         if (this.activeTopbarItem === item) {
             this.activeTopbarItem = null;
@@ -202,15 +203,19 @@ export class LayoutComponent implements OnInit {
         event.preventDefault();
     }
 
-    onTopbarSubItemClickLanguajes(event) {        
+    reportbalance(){       
+        this.router.navigate(['/general'])
+    }
+
+    onTopbarSubItemClickLanguajes(event) {
         let languajes = "";
         if (event.target.text == "Español") {
             languajes = "es";
         } else if (event.target.text == "English") {
             languajes = "en";
-        } else if (event.target.text == "日本人"){
+        } else if (event.target.text == "日本人") {
             languajes = "ch";
-        } else{
+        } else {
             languajes = "ru";
         }
 
@@ -230,7 +235,7 @@ export class LayoutComponent implements OnInit {
 
     aboutus(event) {
         event.preventDefault();
-        this.utilservice.itemsSource.next([{ 'label': ' Sobre nosotros' }])        
+        this.utilservice.itemsSource.next([{ 'label': ' Sobre nosotros' }])
         this.router.navigate(["aboutus"]);
     }
 

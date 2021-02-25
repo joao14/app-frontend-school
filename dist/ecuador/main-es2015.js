@@ -40,7 +40,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵ4", function() { return ɵ4; });
 /* harmony import */ var _guard_auth_guard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./guard/auth.guard */ "./src/app/guard/auth.guard.ts");
 
-const ɵ0 = () => Promise.all(/*! import() | pages-layout-layout-module-ngfactory */[__webpack_require__.e("default~pages-forgot-forgot-module-ngfactory~pages-layout-layout-module-ngfactory~pages-login-login-~1d59073f"), __webpack_require__.e("pages-layout-layout-module-ngfactory")]).then(__webpack_require__.bind(null, /*! ./pages/layout/layout.module.ngfactory */ "./src/app/pages/layout/layout.module.ngfactory.js")).then(m => m.LayoutModuleNgFactory), ɵ1 = () => Promise.all(/*! import() | pages-login-login-module-ngfactory */[__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~a50a1ce0"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~152795f3"), __webpack_require__.e("default~pages-forgot-forgot-module-ngfactory~pages-layout-layout-module-ngfactory~pages-login-login-~1d59073f"), __webpack_require__.e("common"), __webpack_require__.e("pages-login-login-module-ngfactory")]).then(__webpack_require__.bind(null, /*! ./pages/login/login.module.ngfactory */ "./src/app/pages/login/login.module.ngfactory.js")).then(m => m.LoginModuleNgFactory), ɵ2 = () => Promise.all(/*! import() | pages-forgot-forgot-module-ngfactory */[__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~a50a1ce0"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~152795f3"), __webpack_require__.e("default~pages-forgot-forgot-module-ngfactory~pages-layout-layout-module-ngfactory~pages-login-login-~1d59073f"), __webpack_require__.e("common"), __webpack_require__.e("pages-forgot-forgot-module-ngfactory")]).then(__webpack_require__.bind(null, /*! ./pages/forgot/forgot.module.ngfactory */ "./src/app/pages/forgot/forgot.module.ngfactory.js")).then(m => m.ForgotModuleNgFactory), ɵ3 = () => __webpack_require__.e(/*! import() | pages-register-register-module-ngfactory */ "pages-register-register-module-ngfactory").then(__webpack_require__.bind(null, /*! ./pages/register/register.module.ngfactory */ "./src/app/pages/register/register.module.ngfactory.js")).then(m => m.RegisterModuleNgFactory), ɵ4 = () => __webpack_require__.e(/*! import() | pages-not-found-not-found-module-ngfactory */ "pages-not-found-not-found-module-ngfactory").then(__webpack_require__.bind(null, /*! ./pages/not-found/not-found.module.ngfactory */ "./src/app/pages/not-found/not-found.module.ngfactory.js")).then(m => m.NotFoundModuleNgFactory);
+const ɵ0 = () => Promise.all(/*! import() | pages-layout-layout-module-ngfactory */[__webpack_require__.e("default~pages-forgot-forgot-module-ngfactory~pages-layout-layout-module-ngfactory~pages-login-login-~1d59073f"), __webpack_require__.e("pages-layout-layout-module-ngfactory")]).then(__webpack_require__.bind(null, /*! ./pages/layout/layout.module.ngfactory */ "./src/app/pages/layout/layout.module.ngfactory.js")).then(m => m.LayoutModuleNgFactory), ɵ1 = () => Promise.all(/*! import() | pages-login-login-module-ngfactory */[__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~pages-forgot-forgot-module-ngfactory~pages-layout-layout-module-ngfactory~pages-login-login-~1d59073f"), __webpack_require__.e("common"), __webpack_require__.e("pages-login-login-module-ngfactory")]).then(__webpack_require__.bind(null, /*! ./pages/login/login.module.ngfactory */ "./src/app/pages/login/login.module.ngfactory.js")).then(m => m.LoginModuleNgFactory), ɵ2 = () => Promise.all(/*! import() | pages-forgot-forgot-module-ngfactory */[__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~pages-forgot-forgot-module-ngfactory~pages-layout-layout-module-ngfactory~pages-login-login-~1d59073f"), __webpack_require__.e("common"), __webpack_require__.e("pages-forgot-forgot-module-ngfactory")]).then(__webpack_require__.bind(null, /*! ./pages/forgot/forgot.module.ngfactory */ "./src/app/pages/forgot/forgot.module.ngfactory.js")).then(m => m.ForgotModuleNgFactory), ɵ3 = () => __webpack_require__.e(/*! import() | pages-register-register-module-ngfactory */ "pages-register-register-module-ngfactory").then(__webpack_require__.bind(null, /*! ./pages/register/register.module.ngfactory */ "./src/app/pages/register/register.module.ngfactory.js")).then(m => m.RegisterModuleNgFactory), ɵ4 = () => __webpack_require__.e(/*! import() | pages-not-found-not-found-module-ngfactory */ "pages-not-found-not-found-module-ngfactory").then(__webpack_require__.bind(null, /*! ./pages/not-found/not-found.module.ngfactory */ "./src/app/pages/not-found/not-found.module.ngfactory.js")).then(m => m.NotFoundModuleNgFactory);
 const routes = [
     { path: '', loadChildren: ɵ0, canActivate: [_guard_auth_guard__WEBPACK_IMPORTED_MODULE_0__["AuthGuard"]] },
     { path: 'login', loadChildren: ɵ1 },
@@ -1051,7 +1051,8 @@ const ru = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
 const IP = "https://addsoft-tech.com:";
-const PUERTO = "8443";
+//const IP: string = "http://35.243.246.83:"
+const PUERTO = "8780";
 const URL = IP + PUERTO;
 const environment = {
     production: false,
@@ -1096,9 +1097,15 @@ const environment = {
     sendEmail: URL + '/romi/apirm/crm/mail/send/trx',
     invoicesdrafts: URL + '/romi/apirm/invoice/drafts',
     prealertdrafts: URL + '/romi/apirm/prealert/drafts',
+    viewdraft: URL + '/romi/apirm/invoice/draft/excel',
     charts: URL + '/romi/apirm/crm/data/charts',
     chartsbyclient: URL + '/romi/apirm/crm/data/charts/client/',
-    getbalancegenral: URL + '/romi/apirm/trx/find/cliedate/report/'
+    getbalancegenral: URL + '/romi/apirm/trx/find/cliedate/report/',
+    getstatusprealert: URL + '/romi/apirm/prealert/state/all',
+    addstatusprealert: URL + '/romi/apirm/prealert/state/new',
+    updatestatusprealert: URL + '/romi/apirm/prealert/state/update',
+    deletestatusprealert: URL + '/romi/apirm/prealert/state/del',
+    getXlsPrealert: URL + '/romi/apirm/prealert/generate/xls',
 };
 
 
@@ -1146,4 +1153,3 @@ module.exports = __webpack_require__(/*! /home/alex/Documentos/AddSofTech/Aplica
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
-//# sourceMappingURL=main-es2015.js.map

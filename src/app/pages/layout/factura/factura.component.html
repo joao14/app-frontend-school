@@ -22,7 +22,7 @@
                             <th>{{'Número de tallos' | translate}}</th>
                             <th>{{'Secuencial' | translate}}</th>
                             <th>{{'Total' | translate}}</th>
-                        </tr>
+                        </tr>  
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-item>
                         <tr style="background-color: white;">
@@ -347,7 +347,7 @@
                         <p-table [value]="items" class="p-datatable-responsive-demo">
                             <ng-template pTemplate="caption">
                                 <div class="p-d-flex p-ai-center p-jc-between">
-                                    <button pButton type="button" *ngIf="items.length > 1" class="ui-button-success" style="height: 30px; border-radius: 5px;"
+                                    <button pButton type="button" *ngIf="items.length >= 1" class="ui-button-success" style="height: 30px; border-radius: 5px;"
                                         (click)="viewXlsx()">
                                         <i class="pi pi-download" style="font-size: 1.7rem"></i>                                        
                                     </button> &nbsp;
@@ -450,7 +450,7 @@
                         <p-table [value]="items" *ngIf="files.length > 0" class="p-datatable-responsive-demo">
                             <ng-template pTemplate="caption">
                                 <div class="p-d-flex p-ai-center p-jc-between">
-                                    <button pButton type="button" *ngIf="items.length > 1" class="ui-button-success" style="height: 30px; border-radius: 5px;"
+                                    <button pButton type="button" *ngIf="items.length >= 1" class="ui-button-success" style="height: 30px; border-radius: 5px;"
                                         (click)="viewXlsx()">
                                         <i class="pi pi-download" style="font-size: 1.7rem"></i>                                        
                                     </button> &nbsp;
@@ -500,7 +500,7 @@
                         </p-table>
                         <br>
                         <div class="ui-g form-group ui-fluid" *ngIf="items.length > 0">
-                            <div class="ui-grid-col-7"></div>
+                            <div class="ui-grid-col-7"></div> 
                             <div class="ui-grid-col-2">
                                 <button pButton icon="pi pi-save" class="ui-button-success btn_enviar" type="button"
                                     (click)="continue()" [label]="'Guardar' | translate"

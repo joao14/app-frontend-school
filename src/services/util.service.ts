@@ -14,6 +14,8 @@ export class UtilService {
 
   typerolselected= new Subject<any>();
 
+  balance=new Subject<any>();
+
   itemsSource = new Subject<MenuItem[]>();
 
   user= new Subject<any>();

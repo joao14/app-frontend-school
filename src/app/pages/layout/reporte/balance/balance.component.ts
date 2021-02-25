@@ -107,7 +107,6 @@ export class BalanceComponent implements OnInit {
     this.utilService.isLoading.next(true);
     this.invoices = [];
     await this.api.getInvoicesbyClient(this.selectClient.entiId, this.getFormatDate(this.dateIni).replace(/-/g, '') + " 00:00:00", this.getFormatDate(this.dateFin).replace(/-/g, '') + " 23:59:59", localStorage.getItem("token")).then(data => {
-     
       if (data.headerApp.code == 200) {
         this.invoices = data.data.transacciones;
         this.xlsx = environment.url + data.data.xls;

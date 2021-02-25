@@ -26,7 +26,7 @@
                     </div>
                 </p-header>
                 <ng-template let-flower pTemplate="gridItem">
-                    <div class="ui-g-12 ui-md-4">
+                    <div class="ui-g-12 ui-md-4" *ngIf="(flower.state=='Activo' && typerol=='CLI') || typerol!='CLI'">
                         <div class="card">
                             <div class="flower-grid-item-top">
                                 <div class="ui-g-12 ui-md-7">

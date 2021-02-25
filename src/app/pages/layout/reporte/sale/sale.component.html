@@ -51,9 +51,11 @@
                         <th>{{'Fecha de transacción' | translate }}</th>
                         <th>{{'N° de documento' | translate}}</th>
                         <th>{{'Cliente' | translate}}</th>
-                        <th>{{'Total' | translate}}</th>
-                        <th>{{'N°. de tallos' | translate}}</th>
                         <th>{{'Secuencial' | translate}}</th>
+                        <th>{{'N°. de cajas' | translate}}</th>
+                        <th>{{'N°. de tallos' | translate}}</th>
+                        <th>{{'Total' | translate}}</th>
+                        
                     </tr>
                     <tr>
                         <th></th>
@@ -77,7 +79,14 @@
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'total', 'contains')"
+                                    (input)="dt.filter($event.target.value, 'secuencial', 'contains')"
+                                    [placeholder]="'Buscar' | translate" class="p-column-filter">
+                            </div>
+                        </th>
+                        <th>
+                            <div class="ui-fluid">
+                                <input pInputText type="text"
+                                    (input)="dt.filter($event.target.value, 'numeboxes', 'contains')"
                                     [placeholder]="'Buscar' | translate" class="p-column-filter">
                             </div>
                         </th>
@@ -87,14 +96,14 @@
                                     (input)="dt.filter($event.target.value, 'numetallos', 'contains')"
                                     [placeholder]="'Buscar' | translate" class="p-column-filter">
                             </div>
-                        </th>
+                        </th>   
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text"
-                                    (input)="dt.filter($event.target.value, 'secuencial', 'contains')"
+                                    (input)="dt.filter($event.target.value, 'total', 'contains')"
                                     [placeholder]="'Buscar' | translate" class="p-column-filter">
                             </div>
-                        </th>
+                        </th>                     
 
                     </tr>
                 </ng-template>
@@ -113,13 +122,23 @@
                         <td><span class="p-column-title">{{item.fecha | date :'dd-MMM-yy h:mm:ss'  }}</span>
                         </td>
                         <td><span class="p-column-title">{{item.contdocu}}</span></td>
-                        <td><span class="p-column-title">{{item.cliente.nombres | titlecase }}</span></td>
-                        <td style="text-align: right;"><span class="p-column-title">{{item.total }}</span>
+                        <td><span class="p-column-title">{{item.cliente.nombres | titlecase }}</span></td>   
+                        <td style="text-align: right;"><span class="p-column-title">{{item.secuencial }}</span>
+                        </td>
+                        <td style="text-align: right;"><span class="p-column-title">{{item.numeboxes }}</span>
                         </td>
                         <td style="text-align: right;"><span class="p-column-title">{{item.numetallos }}</span>
                         </td>
-                        <td style="text-align: right;"><span class="p-column-title">{{item.secuencial }}</span>
+                        <td style="text-align: right;"><span class="p-column-title">{{item.total }}</span>
                         </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                        <td colspan="5" style="text-align: center; font-weight: bold;font-size: 18px;">Totales</td>                        
+                        <td style="text-align: right"><span class="total_valor">{{totalcajas}}</span></td>
+                        <td style="text-align: right"><span class="total_valor">{{totaltallos}}</span></td>
+                        <td><span class="total_valor">{{total | currency: 'USD'}}</span></td>
                     </tr>
                 </ng-template>
             </p-table>

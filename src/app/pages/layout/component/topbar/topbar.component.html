@@ -31,6 +31,13 @@
         </select>
     </div>
 
+    <div class="balance" *ngIf="typerol=='CLI'" (click)="app.reportbalance()">
+        <span style="font-size: 15px;color: white;font-weight: bold;">             
+            <i class="fa fa-line-chart" style="font-size: 1.5rem;color: white;"></i> &nbsp; {{ 'Balance' | translate }}: &nbsp;
+             {{balance | currency}}
+        </span>
+    </div>        
+
     <a id="topbar-profile-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)" class="mobile img">
         <span>{{name | titlecase }}</span>
         <img [src]="user.photo" alt="ecuador-layout" class="topbar-profile"

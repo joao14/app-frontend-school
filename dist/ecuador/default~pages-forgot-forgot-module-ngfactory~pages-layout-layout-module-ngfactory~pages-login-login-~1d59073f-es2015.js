@@ -1651,6 +1651,7 @@ class UtilService {
         this.isLoading = new rxjs__WEBPACK_IMPORTED_MODULE_0__["Subject"]();
         this.rolselected = new rxjs__WEBPACK_IMPORTED_MODULE_0__["Subject"]();
         this.typerolselected = new rxjs__WEBPACK_IMPORTED_MODULE_0__["Subject"]();
+        this.balance = new rxjs__WEBPACK_IMPORTED_MODULE_0__["Subject"]();
         this.itemsSource = new rxjs__WEBPACK_IMPORTED_MODULE_0__["Subject"]();
         this.user = new rxjs__WEBPACK_IMPORTED_MODULE_0__["Subject"]();
     }
@@ -1661,4 +1662,3 @@ UtilService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjec
 /***/ })
 
 }]);
-//# sourceMappingURL=default~pages-forgot-forgot-module-ngfactory~pages-layout-layout-module-ngfactory~pages-login-login-~1d59073f-es2015.js.map

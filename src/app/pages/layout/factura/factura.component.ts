@@ -183,6 +183,8 @@ export class FacturaComponent implements OnInit {
     dialogVisibleEdit: boolean;
     selectItem: Item;
     xlsx: string;
+    idObjTmp: string;
+    claveacceso: string;
 
     constructor(
         private messageService: MessageService,
@@ -244,14 +246,9 @@ export class FacturaComponent implements OnInit {
     async getinvoicesdraft() {
         this.invoicesdraft = [];
         this.utilService.isLoading.next(true);
-        await this.api.getinvoicesdraft(localStorage.getItem('token')).then(invoice => {
+        await this.api.getinvoicesdraft(localStorage.getItem('token')).then(invoice => {            
             if (invoice.headerApp.code == 200) {
                 this.invoicesdraft = invoice.data.invoices;
-                if (this.invoicesdraft.length <= 0) {
-                    this.step = 2;
-                } else {
-                    this.step = 1;
-                }
             }
         }).catch(err => {
             if (err.error.code == 401) {
@@ -282,6 +279,8 @@ export class FacturaComponent implements OnInit {
         this.selectedtamanio = null;
         this.selectdraft = null;
         this.selectmark = null;
+        this.claveacceso="";
+        this.idObjTmp="";
         this.factura = {
             client: null,
             city: "",
@@ -777,11 +776,22 @@ export class FacturaComponent implements OnInit {
             idObjTmp: this.selectdraft == null ? null : this.selectdraft.idObjTmp,
             fromTemp: this.selectdraft == null ? false : true
         };
+
+        if (!this.editInvoice && this.idObjTmp != undefined) {            
+            invoice.idObjTmp = this.idObjTmp;
+            invoice.fromTemp = true;
+            invoice.cabecera['claveacceso'] = this.claveacceso;
+        } else if(this.editInvoice && (this.idObjTmp != undefined || invoice.idObjTmp != undefined)){
+            invoice.fromTemp = true;
+        }else{
+            invoice.fromTemp = false;
+        }
+
         this.confirmationService.confirm({
             message: "Are you sure to send the invoice?",
             accept: async () => {
                 this.spinner.show();
-                await this.api.registerInvoice(invoice, localStorage.getItem("token")).then(data => {
+                await this.api.registerInvoice(invoice, localStorage.getItem("token")).then(data => {                   
                     this.spinner.hide();
                     if (data.headerApp.code == 200) {
                         this.dialogVisible = true;
@@ -1099,7 +1109,6 @@ export class FacturaComponent implements OnInit {
 
 
     async viewXlsx() {
-        console.log('Validar el XLSX');
         await this.getInvoice();
         this.utilService.isLoading.next(true);
         await this.api.generatePdfInvoiceDraft(this.invoice, localStorage.getItem('token')).then(data => {
@@ -1113,11 +1122,11 @@ export class FacturaComponent implements OnInit {
                 this.router.navigate(['/login']);
             }
         })
-  
+
         this.utilService.isLoading.next(false);
     }
 
-    async getInvoice(){
+    async getInvoice() {
         this.factura.items = this.items;
         let head = {
             codiesta: '001',
@@ -1163,23 +1172,36 @@ export class FacturaComponent implements OnInit {
             detalles: detail,
             idObjTmp: this.selectdraft == null ? null : this.selectdraft.idObjTmp
         };
+
+
     }
 
-    async continue(){        
+    async continue() {
         await this.getInvoice();
-        this.spinner.show();  
-        await this.api.registerInvoiceDraft(this.invoice, localStorage.getItem("token")).then(async (data) => {
-            this.spinner.hide();
+        if (!this.editInvoice && this.idObjTmp != "") {
+            this.invoice.idObjTmp = this.idObjTmp;
+        }
+        if (!this.editInvoice && this.claveacceso != "") {
+            this.invoice.cabecera['claveacceso'] = this.claveacceso;
+        }    
+        this.spinner.show();
+        await this.api.registerInvoiceDraft(this.invoice, localStorage.getItem("token")).then(async (data) => {           
+            this.spinner.hide();            
             if (data.headerApp.code == 200) {
+                await this.getinvoicesdraft();
+                this.step = 2;
+                this.idObjTmp = data.data.invoice.idObjTmp;
+                this.claveacceso = data.data.invoice.claveacceso;
                 this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se guardo el borrador para seguir editando' });
             }
-        }).catch(err => {
+        }).catch(err => {            
             this.spinner.hide();
             if (err.error.code == 401) {
                 localStorage.clear();
                 this.router.navigate(['/login']);
             }
         });
+
     }
 
     async getMarcbyName(entiId: number, name: string): Promise<any> {
