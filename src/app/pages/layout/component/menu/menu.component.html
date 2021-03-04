@@ -102,6 +102,14 @@
                             <span>{{ 'Facturación' | translate }} </span>
                         </a>
                     </li>
+                    <li *ngIf="typerol=='ADM' || typerol=='FAC'">
+                        <a routerLink="/template" routerLinkActive="active" style="font-size: 14px;"
+                        [class]="activeItem=='TEMP'?'active-item':'no-active-item'"
+                        (click)="selectItemMenu('TEMP')">
+                            <i class="fa fa-list-alt" [ngStyle]="{'color':activeItem ==='TEMP'? '#ff4456': '#828282'}"></i>
+                            <span>{{ 'Templates' | translate }} </span>
+                        </a>
+                    </li> 
                     <li *ngIf="typerol=='ADM'">
                         <a routerLink="/pagoreclamo" routerLinkActive="active" style="font-size: 14px;"
                         [class]="activeItem=='ASIE'?'active-item':'no-active-item'"

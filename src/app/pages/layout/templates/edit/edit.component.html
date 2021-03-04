@@ -1,0 +1,219 @@
+<div class="ui-g">
+    <div class="ui-g-12 ui-lg-12">
+        <p-toast></p-toast>
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+                <button (click)="save()" pButton class="ui-button-success" icon="pi pi-check" label="Guardar"
+                    *ngIf="!edit"></button> &nbsp;
+
+                <button (click)="modificar()" pButton class="ui-button-success" icon="pi pi-save" label="Actualizar"
+                    *ngIf="edit"></button> &nbsp;
+
+                <button (click)="cancelar()" pButton class="ui-button-warning" icon="pi pi-arrow-left"
+                    label="Atrás"></button> &nbsp;
+
+            </div>
+        </p-toolbar>
+        <div class="card card-w-title ui-fluid">
+            <h1 *ngIf="!edit">Agregar nuevo template</h1>
+            <h1 *ngIf="edit">Editar template</h1>
+            <div class="ui-g form-group">
+                <div class="ui-g-12 ui-md-6">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" pInputText autocomplete="off" maxlength="100"
+                        [(ngModel)]="template.cabecera.nombre" />
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <label for="estado">Estado</label>
+                    <p-selectButton [options]="options" [(ngModel)]="template.cabecera.estado"></p-selectButton>
+                </div>
+            </div>
+        </div>
+        <!--Agregar manualmente-->
+        <div *ngIf="edit">
+            <form [formGroup]="itemForm" (ngSubmit)="saverow()">
+                <br>
+                <div class="ui-g form-group ui-fluid">
+                    <div class="ui-g-12 ui-md-2" *ngIf="!addrow">
+                        <button pButton type="button" icon="pi pi-plus" class="ui-button-primary"
+                            [label]="'Nuevo' | translate" (click)="add()"></button>
+                    </div>
+                </div>
+                <div class="card row" *ngIf="addrow">
+                    <div class="ui-g form-group ui-fluid">
+                        <div class="ui-g-12 ui-md-1">
+                            <br>
+                            <div class="ui-g-12 ui-md-3" *ngIf="addrow">
+                                <button pButton icon="pi pi-check" style="height: 2.2rem;width: 35px;"
+                                    class="ui-button-success ouput_btn_table"></button>
+                            </div>
+                            <div class="ui-g-12 ui-md-3"></div>
+                            <div class="ui-g-12 ui-md-4" *ngIf="addrow">
+                                <button pButton type="button" icon="pi pi-times" style="height: 2.2rem;width: 35px;"
+                                    class="ui-button-lg ui-button-warning ouput_btn_table"
+                                    (click)="cancelrow()"></button>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-1">
+                            <label class="lbl">{{'Caja' | translate}}</label>
+                            <p-dropdown [options]="cajas" optionLabel="name" formControlName="caja"
+                                [placeholder]="'Seleccione' | translate">
+                            </p-dropdown>
+                        </div>
+                        <div class="ui-g-12 ui-md-1">
+                            <label class="lbl">{{'Piezas' | translate}} </label>
+                            <input type="text" pInputText pKeyFilter="int" placeholder="0" formControlName="pieza">
+                        </div>
+                        <div class="ui-g-12 ui-md-2">
+                            <label class="lbl">{{'Finca' | translate}}</label>
+                            <p-dropdown [options]="fincas" formControlName="finca" optionLabel="nombres"
+                                [ngClass]="{ 'is-invalid': submitted && f.finca.errors }" class="form-control"
+                                [filter]="true" [placeholder]="'Seleccione' | translate">
+                            </p-dropdown>
+                            <div *ngIf="submitted && f.finca.errors" class="invalid-feedback">
+                                <div *ngIf="f.finca.errors.required">{{'Finca es requerido' | translate}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-2">
+                            <label class="lbl">{{'Variedad' | translate}}</label>
+                            <p-dropdown [options]="flores" formControlName="flores" optionLabel="flor.nombre"
+                                [ngClass]="{ 'is-invalid': submitted && f.flores.errors }" class="form-control"
+                                [filter]="true" [placeholder]="'Seleccione' | translate">
+                            </p-dropdown>
+                            <div *ngIf="submitted && f.flores.errors" class="invalid-feedback">
+                                <div *ngIf="f.flores.errors.required">
+                                    {{'Variedad es requerido' | translate}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-1">
+                            <label class="lbl">{{'BCH' | translate}}</label>
+                            <input type="text" pInputText pKeyFilter="int"
+                                [ngClass]="{ 'is-invalid': submitted && f.stem.errors }" class="form-control"
+                                placeholder="0" formControlName="stem">
+                            <div *ngIf="submitted && f.stem.errors" class="invalid-feedback">
+                                <div *ngIf="f.stem.errors.required">{{'Tallos es requerido' | translate}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-1">
+                            <label class="lbl">{{'CM' | translate}}</label>
+                            <p-dropdown [options]="tamanios" [placeholder]="'Seleccione' | translate" optionLabel="name"
+                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tamanio.errors }"
+                                formControlName="tamanio" formControlName="tamanio">
+                            </p-dropdown>
+                            <div *ngIf="submitted && f.tamanio.errors" class="invalid-feedback">
+                                <div *ngIf="f.tamanio.errors.required">{{'Tamaño es requerido' | translate}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-1">
+                            <label class="lbl">{{'No BCH' | translate}}</label>
+                            <input type="text" pInputText pKeyFilter="int" placeholder="0" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.tallos.errors }" (focusout)="calculate()"
+                                formControlName="tallos">
+                            <div *ngIf="submitted && f.tallos.errors" class="invalid-feedback">
+                                <div *ngIf="f.tallos.errors.required">
+                                    {{'N° tallos es requerido' | translate}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-1">
+                            <label class="lbl" style="color: #ff4456;font-weight: bold;">{{'No Tallos' |
+                                translate}}</label>
+                            <input type="text" pInputText pKeyFilter="int" placeholder="0" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.totaltallos.errors }" readonly
+                                pTooltip="Este valor se auto calculara" tooltipPosition="bottom"
+                                style="font-size: 14px;font-weight: bold;text-align: center;background-color: #FFFAF0;"
+                                formControlName="totaltallos">
+                            <div *ngIf="submitted && f.totaltallos.errors" class="invalid-feedback">
+                                <div *ngIf="f.totaltallos.errors.required">
+                                    {{'Total tallos es requerido' | translate}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-1">
+                            <label class="lbl">{{'Precio' | translate}}</label>
+                            <input type="text" pInputText placeholder="0" pKeyFilter="money" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.precio.errors }" formControlName="precio"
+                                formControlName="precio">
+                            <div *ngIf="submitted && f.precio.errors" class="invalid-feedback">
+                                <div *ngIf="f.precio.errors.required">{{'Precio es requerido' | translate}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <p-table [value]="items" class="p-datatable-responsive-demo">
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        {{'Items del template'| translate}} [ {{items.length}} ]
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:4em;"></th>
+                        <th>{{'Caja' | translate}}</th>
+                        <th>{{'Pieza' | translate}}</th>
+                        <th style="width: 35em;">{{'Finca' | translate}}</th>
+                        <th style="width: 15em;">{{'Variedad' | translate}}</th>
+                        <th>{{'BCH' | translate}}</th>
+                        <th>{{'CM' | translate}}</th>
+                        <th>{{'No BCH' | translate}}</th>
+                        <th>{{'No Tallos' | translate}}</th>
+                        <th>{{'Precio' | translate}}</th>
+                        <th>{{'Total' | translate}}</th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-item>
+                    <tr style="background-color: white;">
+                        <td><span class="p-column-title">
+                                <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
+                                    (click)="deleteItem(item)"></button>
+                            </span>
+                            <!--&nbsp;
+                            <span class="p-column-title">
+                                <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil"
+                                    (click)="editItem(item)"></button>
+                            </span>-->
+                        </td>
+                        <td><span class="p-column-title">{{item.caja==null?'':item.caja.code}}</span></td>
+                        <td><span class="p-column-title">{{item.pieza==null?'':item.pieza}}</span></td>
+                        <td style="width: 10em;"><span class="p-column-title">{{item.finca.nombres |
+                                titlecase}} - (
+                                {{item.finca.razosoci}}) </span></td>
+                        <td><span class="p-column-title">{{item.flor.flor== null? (item.flor.nombre |
+                                titlecase) : (item.flor.flor.nombre | titlecase) }}</span>
+                        </td>
+                        <td><span class="p-column-title">{{item.stems }}</span></td>
+                        <td><span class="p-column-title">{{item.tamanio.code }}</span></td>
+                        <td><span class="p-column-title">{{item.numtallos }}</span></td>
+                        <td><span class="p-column-title">{{item.totaltallos }}</span></td>
+                        <td><span class="p-column-title">{{item.price | currency}}</span></td>
+                        <td><span class="p-column-title">{{item.subtotal | currency}}</span></td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><span class="total_valor">{{totcajas}}</span></td>
+                        <td colspan="5" class="total_table">{{'Totales' | translate}}</td>
+                        <td><span class="total_valor">{{tottallos}}</span></td>
+                        <td></td>
+                        <td><span class="total_valor">$ {{total}}</span></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

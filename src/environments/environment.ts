@@ -1,12 +1,13 @@
-const IP: string = "https://addsoft-tech.com:"
-//const IP: string = "http://35.243.246.83:"
+//const IP: string = "https://addsoft-tech.com:"
+const IP: string = "http://35.243.246.83:"
 const PUERTO: string = "8780"
+//const PUERTO: string = "8443"
 
 const URL: string = IP + PUERTO;
-
+ 
 export const environment = {
     production: false,
-    email: 'lukassant77@gmail.com',
+    email: 'lukassant77@gmail.com', 
     url: 'https://addsoft-tech.com:8443/rmi/',
     login: URL + '/romi/apirm/user/login',
     client: URL + '/romi/apirm/crm/clients',
@@ -56,4 +57,10 @@ export const environment = {
     updatestatusprealert: URL + '/romi/apirm/prealert/state/update',
     deletestatusprealert: URL + '/romi/apirm/prealert/state/del',
     getXlsPrealert: URL + '/romi/apirm/prealert/generate/xls',
+    templates: URL + '/romi/apirm/template/list/all',
+    addtemplateshead: URL + '/romi/apirm/template/new',
+    addtemplatesdetaill: URL + '/romi/apirm/template/detail/new',
+    deletetemplate: URL + '/romi/apirm/template/delete/',
+    deletetemplatedetalle: URL + '/romi/apirm/template/delete/detail/',
+    updatetemplatedetalle: URL + '/romi/apirm/template/detail/update'
 };

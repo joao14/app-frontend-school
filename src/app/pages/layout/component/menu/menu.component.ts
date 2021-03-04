@@ -573,6 +573,9 @@ export class MenuComponent implements OnInit, OnChanges {
                                             } else
                                                 if (item == 'STATUS') {
                                                     this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Estados' }])
+                                                }else
+                                                if (item == 'TEMP') {
+                                                    this.app.utilservice.itemsSource.next([{ 'label': 'Templates' }, { 'label': 'Facturación' }])
                                                 }
 
         if (this.activeItem == item) {

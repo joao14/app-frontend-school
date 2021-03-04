@@ -17,8 +17,6 @@ import { UtilService } from 'src/services/util.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { user } from 'src/models/user';
 import { environment } from 'src/environments/environment';
-import { LoginComponent } from '../../login/login.component';
-import { NullTemplateVisitor } from "@angular/compiler";
 
 export interface Item {
     caja: string;
@@ -130,6 +128,37 @@ export interface Draft {
     idObjTmp: string;
 }
 
+export interface Cabecera {
+    tempId: string,
+    fechcrea: string,
+    nombre: string,
+    estado: string,
+    usuario: string,
+    fechactu: string
+}
+
+export interface Detalle {
+    deteId: string,
+    tipoempaque: string,
+    cantidadcajas: string,
+    tallosxbch: string,
+    medidatallo: string,
+    cantidadbch: string,
+    cantidad: string,
+    preciounitario: string,
+    total: string,
+    farm: string,
+    farmId: string,
+    florId: string,
+    flor: string,
+    line: string
+}
+
+export interface Template {
+    cabecera: Cabecera;
+    detalle: Array<Detalle>
+}
+
 @Component({
     selector: "app-factura",
     templateUrl: "./factura.component.html",
@@ -185,6 +214,9 @@ export class FacturaComponent implements OnInit {
     xlsx: string;
     idObjTmp: string;
     claveacceso: string;
+    dialogViewTemplates: boolean;
+    templates: Array<Template> = [];
+    selectedTemplate: Template;
 
     constructor(
         private messageService: MessageService,
@@ -246,7 +278,9 @@ export class FacturaComponent implements OnInit {
     async getinvoicesdraft() {
         this.invoicesdraft = [];
         this.utilService.isLoading.next(true);
-        await this.api.getinvoicesdraft(localStorage.getItem('token')).then(invoice => {            
+        await this.api.getinvoicesdraft(localStorage.getItem('token')).then(invoice => {
+            console.log('INVOCIE DRAFT');
+            console.log(invoice);
             if (invoice.headerApp.code == 200) {
                 this.invoicesdraft = invoice.data.invoices;
             }
@@ -263,6 +297,8 @@ export class FacturaComponent implements OnInit {
 
     inicilizate() {
         this.idFactura = 0;
+        this.selectedTemplate = null;
+        this.dialogViewTemplates = false;
         this.line = 0;
         this.selectItem = null;
         this.dialogVisibleEdit = false;
@@ -279,8 +315,8 @@ export class FacturaComponent implements OnInit {
         this.selectedtamanio = null;
         this.selectdraft = null;
         this.selectmark = null;
-        this.claveacceso="";
-        this.idObjTmp="";
+        this.claveacceso = "";
+        this.idObjTmp = "";
         this.factura = {
             client: null,
             city: "",
@@ -312,10 +348,11 @@ export class FacturaComponent implements OnInit {
         ]
     }
 
-    selectOptions(type: string) {
+    selectOptions(type: string) {       
         this.options = true;
         this.files = [];
         if (type == "manual") {
+            console.log('MANUAL');
             this.addrow = false;
             this.manual = true;
             this.automatico = false;
@@ -323,19 +360,26 @@ export class FacturaComponent implements OnInit {
             this.items = [];
             this.factura.total = 0.0;
             this.factura.tallos = 0;
+            this.factura.boxes = 0;
             this.validate = false;
+            this.selectedTemplate=null;
             this.smsvalidate = "";
             this.line = 0;
-        } else {
+        } if (type == "automatico") {            
             this.automatico = true;
             this.manual = false;
             this.items = [];
             this.factura.total = 0.0;
             this.factura.tallos = 0;
+            this.factura.boxes = 0;
+            this.selectedTemplate=null;
             this.validate = false;
             this.smsvalidate = "";
             this.line = 0;
-        }
+        } else
+            if (type == "template") {                
+                this.dialogViewTemplates = true;
+            }
     }
 
     async getClientbyName(name: string): Promise<any> {
@@ -756,7 +800,7 @@ export class FacturaComponent implements OnInit {
         this.factura.items.forEach(data => {
             detail.push({
                 tipoempaque: data.caja == undefined ? "" : data.caja['code'],
-                cantidadcajas: data.pieza == undefined ? "" : String(data.pieza),
+                cantidadcajas: data.pieza == undefined || data.pieza == 0 ? "" : String(data.pieza),
                 tallosxbch: data.stems,
                 medidatallo: data.tamanio['code'],
                 cantidadbch: data.numtallos,
@@ -777,13 +821,13 @@ export class FacturaComponent implements OnInit {
             fromTemp: this.selectdraft == null ? false : true
         };
 
-        if (!this.editInvoice && this.idObjTmp != undefined) {            
+        if (!this.editInvoice && this.idObjTmp != undefined) {
             invoice.idObjTmp = this.idObjTmp;
             invoice.fromTemp = true;
             invoice.cabecera['claveacceso'] = this.claveacceso;
-        } else if(this.editInvoice && (this.idObjTmp != undefined || invoice.idObjTmp != undefined)){
+        } else if (this.editInvoice && (this.idObjTmp != undefined || invoice.idObjTmp != undefined)) {
             invoice.fromTemp = true;
-        }else{
+        } else {
             invoice.fromTemp = false;
         }
 
@@ -791,7 +835,7 @@ export class FacturaComponent implements OnInit {
             message: "Are you sure to send the invoice?",
             accept: async () => {
                 this.spinner.show();
-                await this.api.registerInvoice(invoice, localStorage.getItem("token")).then(data => {                   
+                await this.api.registerInvoice(invoice, localStorage.getItem("token")).then(data => {
                     this.spinner.hide();
                     if (data.headerApp.code == 200) {
                         this.dialogVisible = true;
@@ -923,6 +967,28 @@ export class FacturaComponent implements OnInit {
                 this.router.navigate(['/login']);
             }
         })
+
+        await this.api.getTemplates(localStorage.getItem('token')).then(async (data) => {
+            console.log(data);
+            this.templates = [];
+            if (data.headerApp.code == 200) {
+                await data.data.templates.forEach(template => {
+                    if (template.cabecera.estado == 'A') {
+                        console.log('Estado activo');
+                        this.templates.push(template)
+                    }
+                })
+                console.log('Templates');
+                console.log(this.templates);
+            }
+        }).catch(err => {
+            console.log(err);
+            if (err.error.code == 401) {
+                localStorage.clear();
+                this.router.navigate(['/login']);
+            }
+        })
+
     }
 
     calculate() {
@@ -979,6 +1045,9 @@ export class FacturaComponent implements OnInit {
         this.factura.boxes = 0;
         this.editInvoice = false;
         this.selectdraft = null;
+        this.manual = false;
+        this.automatico = false;
+        this.dialogViewTemplates = false;
     }
 
     async viewdraft(draft: Draft) {
@@ -1155,7 +1224,7 @@ export class FacturaComponent implements OnInit {
         await this.factura.items.forEach(async (data) => {
             await detail.push({
                 tipoempaque: data.caja == undefined ? "" : data.caja['code'],
-                cantidadcajas: data.pieza == undefined ? "" : String(data.pieza),
+                cantidadcajas: data.pieza == undefined ||  data.pieza == 0 ? "" : String(data.pieza),
                 tallosxbch: data.stems,
                 medidatallo: data.tamanio['code'],
                 cantidadbch: data.numtallos,
@@ -1183,10 +1252,10 @@ export class FacturaComponent implements OnInit {
         }
         if (!this.editInvoice && this.claveacceso != "") {
             this.invoice.cabecera['claveacceso'] = this.claveacceso;
-        }    
+        }
         this.spinner.show();
-        await this.api.registerInvoiceDraft(this.invoice, localStorage.getItem("token")).then(async (data) => {           
-            this.spinner.hide();            
+        await this.api.registerInvoiceDraft(this.invoice, localStorage.getItem("token")).then(async (data) => {
+            this.spinner.hide();
             if (data.headerApp.code == 200) {
                 await this.getinvoicesdraft();
                 this.step = 2;
@@ -1194,7 +1263,7 @@ export class FacturaComponent implements OnInit {
                 this.claveacceso = data.data.invoice.claveacceso;
                 this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se guardo el borrador para seguir editando' });
             }
-        }).catch(err => {            
+        }).catch(err => {
             this.spinner.hide();
             if (err.error.code == 401) {
                 localStorage.clear();
@@ -1232,6 +1301,70 @@ export class FacturaComponent implements OnInit {
             }
         })
         return delivery;
+    }
+
+    async choose() {
+        console.log("Sellecciono ITEMS");
+        console.log(this.selectedTemplate);
+        this.dialogViewTemplates = false;
+        this.items = [];
+        console.log('ITEM');
+        this.utilService.isLoading.next(true);
+        await this.selectedTemplate.detalle.forEach(async (item) => {
+            console.log(item);
+            let tamanio = await this.tamanios.filter(tamanio => tamanio.code == item.medidatallo);
+            let caja = await this.cajas.filter(caja => caja.code == item.tipoempaque);
+            let farm = await this.getFincabyName(item.farm);
+            let flower = await this.getFlowerbyName(item.flor);
+            await this.items.push({
+                caja: caja[0] == null ? '' : caja[0],
+                pieza: item.cantidadcajas !=null?parseInt(item.cantidadcajas):0,
+                finca: farm,
+                flor: flower,
+                stems: parseInt(item.tallosxbch),
+                tamanio: tamanio[0],
+                numtallos: parseInt(item.cantidadbch),
+                totaltallos: parseInt(item.cantidad),
+                price: parseInt(item.preciounitario),
+                subtotal: parseInt(item.total),
+                line: parseInt(item['line'])
+            });
+            console.log('ITEMS');
+            console.log(this.items);
+            this.manual = true;
+            this.automatico = false;
+            this.validate = false;
+            this.smsvalidate = "";
+
+            this.items.sort(function (a, b) {
+                if (a.line > b.line) {
+                    return 1;
+                }
+                if (a.line < b.line) {
+                    return -1;
+                }
+                return 0;
+            });
+
+            this.line = this.items[this.items.length - 1].line;
+            this.factura.total = 0;
+            this.factura.tallos = 0;
+            this.factura.boxes = 0;
+
+            this.items.forEach((item) => {
+                this.factura.total += item.subtotal;
+                this.factura.tallos += parseInt(item.totaltallos.toString());
+                item.pieza != null ? this.factura.boxes += item.pieza : '';
+            });
+
+        })
+
+        this.selectdraft == null ? '' : this.line += 1;
+        this.addrow = false;
+        this.submitted = false;
+        this.itemForm.reset();
+        this.itemForm.get('stem').setValue('25');
+        this.utilService.isLoading.next(false);
     }
 
     get f() {

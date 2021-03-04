@@ -22,28 +22,28 @@
                             <th>{{'Número de tallos' | translate}}</th>
                             <th>{{'Secuencial' | translate}}</th>
                             <th>{{'Total' | translate}}</th>
-                        </tr>  
+                        </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-item>
                         <tr style="background-color: white;">
-                            <td><span class="p-column-title">                                
-                                     <button pButton type="button" class="ui-button-warning" style="height: 30px; border-radius: 5px;"
-                                        (click)="edit(item)">
+                            <td><span class="p-column-title">
+                                    <button pButton type="button" class="ui-button-warning"
+                                        style="height: 30px; border-radius: 5px;" (click)="edit(item)">
                                         <i class="pi pi-pencil" style="font-size: 1.7rem"></i>
                                     </button>
                                     &nbsp;
-                                    <button pButton type="button" class="ui-button-success" style="height: 30px; border-radius: 5px;"
-                                        (click)="viewdraft(item)">
-                                        <i class="pi pi-download" style="font-size: 1.7rem"></i>                                        
-                                    </button>   
+                                    <button pButton type="button" class="ui-button-success"
+                                        style="height: 30px; border-radius: 5px;" (click)="viewdraft(item)">
+                                        <i class="pi pi-download" style="font-size: 1.7rem"></i>
+                                    </button>
                                     &nbsp;
                                     <button pButton type="button" class="ui-button-success" icon="pi pi-replay"
                                         style="display: none;" (click)="finish(item)"></button>
-                                   
+
                                 </span>
                             </td>
                             <td><span class="p-column-title">{{item.cabecera.cliente.nombres }}</span></td>
-                            <td><span class="p-column-title">{{item.cabecera.fecha }}</span></td>  
+                            <td><span class="p-column-title">{{item.cabecera.fecha }}</span></td>
                             <td><span class="p-column-title">{{item.cabecera.numetallos }}</span></td>
                             <td><span class="p-column-title">{{item.cabecera.secuencial }}</span></td>
                             <td><span class="p-column-title" style="font-weight: bold;">{{item.cabecera.total |
@@ -175,15 +175,20 @@
                                 <div [class]="typerol=='ADM'? 'ui-g-12 ui-md-6':'ui-g-12 ui-md-4'" *ngIf="!editInvoice">
                                     <label for="address" class="lbl">{{'Operación' | translate}}</label>
                                     <div class="ui-grid-row">
-                                        <div class="ui-grid-col-6">
+                                        <div class="ui-grid-col-4">
                                             <button pButton type="button" icon="pi pi-pencil" class="ui-button-primary"
                                                 [label]="'Manual' | translate" (click)="selectOptions('manual')"
                                                 style="height: 40px;"></button>
                                         </div>
-                                        <div class="ui-grid-col-6">
+                                        <div class="ui-grid-col-4">
                                             <button pButton type="button" icon="pi pi-upload" class="ui-button-warning"
                                                 [label]="'Subir archivo' | translate"
                                                 (click)="selectOptions('automatico')" style="height: 40px;"></button>
+                                        </div>
+                                        <div class="ui-grid-col-4">
+                                            <button pButton type="button" icon="pi pi-file" class="ui-button-success"
+                                                [label]="'Template' | translate" (click)="selectOptions('template')"
+                                                style="height: 40px;"></button>
                                         </div>
                                     </div>
                                 </div>
@@ -343,13 +348,13 @@
 
                                 </div>
                             </div>
-                        </form> 
+                        </form>
                         <p-table [value]="items" class="p-datatable-responsive-demo">
                             <ng-template pTemplate="caption">
                                 <div class="p-d-flex p-ai-center p-jc-between">
-                                    <button pButton type="button" *ngIf="items.length >= 1" class="ui-button-success" style="height: 30px; border-radius: 5px;"
-                                        (click)="viewXlsx()">
-                                        <i class="pi pi-download" style="font-size: 1.7rem"></i>                                        
+                                    <button pButton type="button" *ngIf="items.length >= 1" class="ui-button-success"
+                                        style="height: 30px; border-radius: 5px;" (click)="viewXlsx()">
+                                        <i class="pi pi-download" style="font-size: 1.7rem"></i>
                                     </button> &nbsp;
                                     {{'Items de la factura'| translate}} [ {{items.length}} ]
                                 </div>
@@ -383,7 +388,7 @@
                                         </span>
                                     </td>
                                     <td><span class="p-column-title">{{item.caja==null?'':item.caja.code}}</span></td>
-                                    <td><span class="p-column-title">{{item.pieza==null?'':item.pieza}}</span></td>
+                                    <td><span class="p-column-title">{{item.pieza==null || item.pieza== 0?'':item.pieza}}</span></td>
                                     <td style="width: 10em;"><span class="p-column-title">{{item.finca.nombres |
                                             titlecase}} - (
                                             {{item.finca.razosoci}}) </span></td>
@@ -409,7 +414,7 @@
                                     <td><span class="total_valor">{{factura.total | currency: 'USD'}}</span></td>
                                 </tr>
                             </ng-template>
-                        </p-table>  
+                        </p-table>
                         <br>
                         <div class="ui-g form-group ui-fluid">
                             <div class="ui-grid-col-7"></div>
@@ -450,9 +455,9 @@
                         <p-table [value]="items" *ngIf="files.length > 0" class="p-datatable-responsive-demo">
                             <ng-template pTemplate="caption">
                                 <div class="p-d-flex p-ai-center p-jc-between">
-                                    <button pButton type="button" *ngIf="items.length >= 1" class="ui-button-success" style="height: 30px; border-radius: 5px;"
-                                        (click)="viewXlsx()">
-                                        <i class="pi pi-download" style="font-size: 1.7rem"></i>                                        
+                                    <button pButton type="button" *ngIf="items.length >= 1" class="ui-button-success"
+                                        style="height: 30px; border-radius: 5px;" (click)="viewXlsx()">
+                                        <i class="pi pi-download" style="font-size: 1.7rem"></i>
                                     </button> &nbsp;
                                     {{'Items de la factura' | translate}} [{{items.length}}]
                                 </div>
@@ -500,7 +505,7 @@
                         </p-table>
                         <br>
                         <div class="ui-g form-group ui-fluid" *ngIf="items.length > 0">
-                            <div class="ui-grid-col-7"></div> 
+                            <div class="ui-grid-col-7"></div>
                             <div class="ui-grid-col-2">
                                 <button pButton icon="pi pi-save" class="ui-button-success btn_enviar" type="button"
                                     (click)="continue()" [label]="'Guardar' | translate"
@@ -615,25 +620,27 @@
             </iframe>
         </p-dialog>
 
-        <p-dialog [header]="'Editar item de factura' | translate" [(visible)]="dialogVisibleEdit" [style]="{width: '80vw'}" [baseZIndex]="10000" [maximizable]="true"
-            [modal]="true" [resizable]="true">
-            <form [formGroup]="itemFormEdit" (ngSubmit)="modificar()">               
+        <p-dialog [header]="'Editar item de factura' | translate" [(visible)]="dialogVisibleEdit"
+            [style]="{width: '80vw'}" [baseZIndex]="10000" [maximizable]="true" [modal]="true" [resizable]="true">
+            <form [formGroup]="itemFormEdit" (ngSubmit)="modificar()">
                 <div class="ui-g form-group ui-fluid">
                     <div class="card card-w-title">
                         <div class="ui-g-12 ui-md-2">
                             <label class="lbl">{{'Caja' | translate}}</label>
-                            <p-dropdown [options]="cajas" optionLabel="name" formControlName="caja" [placeholder]="'Seleccione' | translate"
-                                [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.caja.errors }" class="form-control"
-                                formControlName="caja"></p-dropdown>
-                                <div *ngIf="submittedFacturaEdit && fv.caja.errors" class="invalid-feedback">
-                                    <div *ngIf="fv.caja.errors.required">{{'Caja es requerido' | translate}}
-                                    </div>
+                            <p-dropdown [options]="cajas" optionLabel="name" formControlName="caja"
+                                [placeholder]="'Seleccione' | translate"
+                                [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.caja.errors }"
+                                class="form-control" formControlName="caja"></p-dropdown>
+                            <div *ngIf="submittedFacturaEdit && fv.caja.errors" class="invalid-feedback">
+                                <div *ngIf="fv.caja.errors.required">{{'Caja es requerido' | translate}}
                                 </div>
+                            </div>
                         </div>
                         <div class="ui-g-12 ui-md-2">
                             <label class="lbl">{{'Pieza' | translate}}</label>
                             <input type="text" pInputText formControlName="pieza" pKeyFilter="int" placeholder="0"
-                            [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.pieza.errors }" class="form-control">
+                                [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.pieza.errors }"
+                                class="form-control">
                             <div *ngIf="submittedFacturaEdit && fv.pieza.errors" class="invalid-feedback">
                                 <div *ngIf="fv.pieza.errors.required">{{'Pieza es requerido' | translate}}
                                 </div>
@@ -641,9 +648,10 @@
                         </div>
                         <div class="ui-g-12 ui-md-4">
                             <label class="lbl">{{'Finca' | translate}}</label>
-                            <p-dropdown [options]="fincas" optionLabel="nombres" formControlName="finca"
-                            [filter]="true" [placeholder]="'Seleccione' | translate"
-                            [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.finca.errors }" class="form-control"></p-dropdown>
+                            <p-dropdown [options]="fincas" optionLabel="nombres" formControlName="finca" [filter]="true"
+                                [placeholder]="'Seleccione' | translate"
+                                [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.finca.errors }"
+                                class="form-control"></p-dropdown>
                             <div *ngIf="submittedFacturaEdit && fv.finca.errors" class="invalid-feedback">
                                 <div *ngIf="fv.finca.errors.required">{{'Finca es requerido' | translate}}
                                 </div>
@@ -652,9 +660,10 @@
                         <div class="ui-g-12 ui-md-4">
                             <label class="lbl">{{'Variedad' | translate}}</label>
                             <p-dropdown [options]="flores" optionLabel="flor.nombre" formControlName="flores"
-                            [filter]="true" [placeholder]="'Seleccione' | translate"
-                            [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.flores.errors }" class="form-control">
-                            </p-dropdown> 
+                                [filter]="true" [placeholder]="'Seleccione' | translate"
+                                [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.flores.errors }"
+                                class="form-control">
+                            </p-dropdown>
                             <div *ngIf="submittedFacturaEdit && fv.flores.errors" class="invalid-feedback">
                                 <div *ngIf="fv.flores.errors.required">{{'Variedad es requerido' | translate}}
                                 </div>
@@ -664,7 +673,8 @@
                         <div class="ui-g-12 ui-md-2">
                             <label class="lbl">{{'BCH' | translate}}</label>
                             <input type="text" pInputText formControlName="stem" pKeyFilter="int"
-                            [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.stem.errors }" class="form-control">
+                                [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.stem.errors }"
+                                class="form-control">
                             <div *ngIf="submittedFacturaEdit && fv.stem.errors" class="invalid-feedback">
                                 <div *ngIf="fv.stem.errors.required">{{'CM es requerido' | translate}}
                                 </div>
@@ -674,8 +684,9 @@
                         <div class="ui-g-12 ui-md-2">
                             <label class="lbl">{{'CM' | translate}}</label>
                             <p-dropdown [options]="tamanios" optionLabel="name" formControlName="tamanio"
-                            [filter]="true" [placeholder]="'Seleccione' | translate"
-                            [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.tamanio.errors }" class="form-control">
+                                [filter]="true" [placeholder]="'Seleccione' | translate"
+                                [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.tamanio.errors }"
+                                class="form-control">
                             </p-dropdown>
                             <div *ngIf="submittedFacturaEdit && fv.tamanio.errors" class="invalid-feedback">
                                 <div *ngIf="fv.tamanio.errors.required">{{'CM es requerido' | translate}}
@@ -686,13 +697,13 @@
                         <div class="ui-g-12 ui-md-2">
                             <label class="lbl">{{'No BCH' | translate}}</label>
                             <input type="text" pInputText formControlName="tallos" (focusout)="calculateEdit()"
-                                [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.tallos.errors }" class="form-control"
-                                pKeyFilter="int">
-                                <div *ngIf="submittedFacturaEdit && fv.tallos.errors" class="invalid-feedback">
-                                    <div *ngIf="fv.tallos.errors.required">{{'No BCH es requerido' | translate}}
-                                    </div>
+                                [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.tallos.errors }"
+                                class="form-control" pKeyFilter="int">
+                            <div *ngIf="submittedFacturaEdit && fv.tallos.errors" class="invalid-feedback">
+                                <div *ngIf="fv.tallos.errors.required">{{'No BCH es requerido' | translate}}
                                 </div>
-                        </div>  
+                            </div>
+                        </div>
 
                         <div class="ui-g-12 ui-md-2">
                             <label class="lbl" style="color: #ff4456;font-weight: bold;">{{'No Tallos' |
@@ -706,7 +717,8 @@
                         <div class="ui-g-12 ui-md-2">
                             <label class="lbl">{{'Precio' | translate}}</label>
                             <input type="text" pInputText formControlName="precio"
-                            [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.precio.errors }" class="form-control">                            
+                                [ngClass]="{ 'is-invalid': submittedFacturaEdit && fv.precio.errors }"
+                                class="form-control">
                             <div *ngIf="submittedFacturaEdit && fv.precio.errors" class="invalid-feedback">
                                 <div *ngIf="fv.precio.errors.required">{{'Precio es requerido' | translate}}
                                 </div>
@@ -718,13 +730,39 @@
                         <div class="ui-g-12 ui-md-10"></div>
                         <div class="ui-g-12 ui-md-2">
                             <button type="button" pButton icon="pi pi-check" class="ui-button-success"
-                                    [label]="'Modificar' | translate" (click)="modificar()"></button>
-                        </div>                        
-                    </div>                    
-                </div>               
+                                [label]="'Modificar' | translate" (click)="modificar()"></button>
+                        </div>
+                    </div>
+                </div>
             </form>
         </p-dialog>
 
+        <!--Select template-->
+        <p-dialog [header]="'Seleccionar template' | translate" [(visible)]="dialogViewTemplates"
+            [style]="{width: '22vw'}" [baseZIndex]="10000"  [modal]="true" [resizable]="true">
+
+            <div class="ui-g form-group ui-fluid">
+                <div class="card card-w-title">
+                    <div class="ui-g-12 ui-md-12">
+                        <div class="ui-g-12 ui-md-12">
+                            <label class="lbl">{{'Templates' | translate}}</label>
+                            <br>
+                            <div *ngFor="let template of templates">
+                                <p-radioButton name="groupname" [label]="template?.cabecera.nombre" [value]="template"
+                                    [(ngModel)]="selectedTemplate"></p-radioButton>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="ui-g-12 ui-md-12">
+                            <button type="button" pButton icon="pi pi-check" class="ui-button-primary"
+                                [label]="'Seleccionar' | translate" (click)="choose()"></button>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </p-dialog>
     </div>
 
 </div>

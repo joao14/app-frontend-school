@@ -32,7 +32,9 @@ const routes: Routes = [
             { path: 'aboutus', loadChildren: () => import('./aboutus/aboutus.module').then(m => m.AboutusModule) },
             { path: 'general', loadChildren: () => import('./reporte/general/general.module').then(m => m.GeneralModule) }, 
             { path: 'estados', loadChildren: () => import('./crm/estados/estados.module').then(m => m.EstadosModule) }, 
-            { path: 'editarestados', loadChildren: () => import('./crm/estados/edit/edit.module').then(m => m.EditModule) }, 
+            { path: 'editarestados', loadChildren: () => import('./crm/estados/edit/edit.module').then(m => m.EditModule) },
+            { path: 'template', loadChildren: () => import('./templates/templates.module').then(m => m.TemplatesModule) },
+            { path: 'edittemplate', loadChildren: () => import('./templates/edit/edit.module').then(m => m.EditModule) }, 
         ]
     }  
 ];

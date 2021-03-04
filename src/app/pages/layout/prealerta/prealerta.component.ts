@@ -261,7 +261,7 @@ export class PrealertaComponent implements OnInit {
   async prealertdraft() {
     this.prealertsdraft = [];
     this.utilService.isLoading.next(true);
-    await this.api.getprealertsdraft(localStorage.getItem('token')).then(prealert => {
+    await this.api.getprealertsdraft(localStorage.getItem('token')).then(prealert => {      
       if (prealert.headerApp.code == 200) {
         this.prealertsdraft = prealert.data.prealerts;
       }
@@ -600,7 +600,7 @@ export class PrealertaComponent implements OnInit {
         pcomp: data.preciocomp,
         cargcompId: parseInt(data.carga['entiId']),
         pvp: data.preciovent,
-        status: data.status.titrId.toString()
+        status: data.status.nombre
       })
       contador++;
       data.HBBQ == null ? '' : totalcajas += parseInt(data.HBBQ);
@@ -669,11 +669,11 @@ export class PrealertaComponent implements OnInit {
     return status;
   }
 
-  async getStatus(id: string) {
-    await this.api.getstatusprealert(localStorage.getItem("token")).then(status => {
+  async getStatus(nombre: string) {   
+    await this.api.getstatusprealert(localStorage.getItem("token")).then(status => {      
       if (status.headerApp.code === 200) {
         status.data.estados.forEach(element => {
-          if (element.titrId == id) {
+          if (element.nombre == nombre) {            
             this.tempStatus = element;
             return;
           }
@@ -952,9 +952,9 @@ export class PrealertaComponent implements OnInit {
         pcomp: data.preciocomp,
         cargcompId: parseInt(data.carga['entiId']),
         pvp: data.preciovent,
-        status: data.status.titrId.toString()
+        status: data.status.nombre
       })
-      contador++;
+      contador++; 
     })
 
     this.prealert = {
@@ -983,7 +983,6 @@ export class PrealertaComponent implements OnInit {
 
 
   async edit(draft: Draft) {
-
     this.editPrealert = true;
     this.optionSelect = 'manual';
     this.step = 2;
@@ -1000,6 +999,7 @@ export class PrealertaComponent implements OnInit {
         const rosamistica = await this.getFlowerbyName(item.flower);
         const carga = await this.getEmpresaCargabyName(item.cargname);
         await this.getStatus(item.status);
+        
         let temp = {
           fecha: item.shippingdate,
           cliente: cliente,
@@ -1057,7 +1057,7 @@ export class PrealertaComponent implements OnInit {
         pcomp: data.preciocomp,
         cargcompId: parseInt(data.carga['entiId']),
         pvp: data.preciovent,
-        status: data.status.titrId.toString()
+        status: data.status.nombre
       })
       contador++;
       data.HBBQ == null ? '' : totalcajas += parseInt(data.HBBQ);

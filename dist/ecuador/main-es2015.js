@@ -1052,7 +1052,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
 const IP = "https://addsoft-tech.com:";
 //const IP: string = "http://35.243.246.83:"
-const PUERTO = "8780";
+//const PUERTO: string = "8780"
+const PUERTO = "8443";
 const URL = IP + PUERTO;
 const environment = {
     production: false,
@@ -1153,3 +1154,4 @@ module.exports = __webpack_require__(/*! /home/alex/Documentos/AddSofTech/Aplica
 /***/ })
 
 },[[0,"runtime","vendor"]]]);
+//# sourceMappingURL=main-es2015.js.map

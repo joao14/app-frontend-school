@@ -787,3 +787,4 @@ class DashboardModule {
 /***/ })
 
 }]);
+//# sourceMappingURL=dashboard-dashboard-module-ngfactory-es2015.js.map

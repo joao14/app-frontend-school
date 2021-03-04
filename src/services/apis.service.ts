@@ -857,6 +857,91 @@ export class ApisService {
 
     }
 
+    public getTemplates(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.templates, opt).toPromise().then(template => {
+                resolve(template);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public addTemplateHead(headTemplate: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.addtemplateshead, headTemplate, opt).toPromise().then(template => {
+                resolve(template);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public addTemplateDetaill(detailTemplate: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.addtemplatesdetaill, detailTemplate, opt).toPromise().then(template => {
+                resolve(template);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+
+    public deleteTemplate(idTemplate: string, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.deletetemplate + idTemplate, null, opt).toPromise().then(template => {
+                resolve(template);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public deleteTemplateDetalle(idDetalle: string, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.deletetemplatedetalle + idDetalle, null, opt).toPromise().then(template => {
+                resolve(template);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
 
 
     httpPost(url, body) {

@@ -622,3 +622,4 @@ class SaleModule {
 /***/ })
 
 }]);
+//# sourceMappingURL=reporte-sale-sale-module-ngfactory-es2015.js.map
