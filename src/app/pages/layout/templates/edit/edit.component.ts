@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService, SelectItem } from 'primeng';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng';
 import { user } from 'src/models/user';
 import { ApisService } from 'src/services/apis.service';
 import * as moment from 'moment';
@@ -61,7 +61,7 @@ export interface Item {
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 })
 export class EditComponent implements OnInit {
 
@@ -83,8 +83,12 @@ export class EditComponent implements OnInit {
   totcajas: number;
   tottallos: number;
   total: number;
+  dialogVisibleEdit: boolean = false;
+  submittedFacturaEdit: boolean = false;
+  itemFormEdit: FormGroup;
 
   constructor(private api: ApisService, private router: Router, private utilService: UtilService,
+    private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder, private messageService: MessageService) {
     this.itemForm = this.formBuilder.group({
       caja: [null],
@@ -98,12 +102,24 @@ export class EditComponent implements OnInit {
       precio: ['', Validators.required],
       line: [null]
     });
-    if (this.router.getCurrentNavigation().extras.state != null) {
-      console.log("Editando..");
+
+    this.itemFormEdit = this.formBuilder.group({
+      deteId: [null],
+      caja: [null],
+      pieza: [''],
+      finca: [null, Validators.required],
+      flores: [null, [Validators.required]],
+      stem: ['25', [Validators.required]],
+      tamanio: [null, Validators.required],
+      tallos: ['', Validators.required],
+      totaltallos: ['', Validators.required],
+      precio: ['', Validators.required],
+      line: [null]
+    });
+    if (this.router.getCurrentNavigation().extras.state != null) {      
       this.templateTemp = JSON.parse(this.router.getCurrentNavigation().extras.state.template);
       this.edit = true;
     } else {
-      console.log('Created');
       this.edit = false;
     }
     this.inicializateValores();
@@ -117,60 +133,6 @@ export class EditComponent implements OnInit {
   }
 
   async inicializateValores() {
-
-    let cabecera = {
-      tempId: this.templateTemp != null ? this.templateTemp.cabecera['tempId'] : "",
-      fechcrea: this.templateTemp != null ? this.templateTemp.cabecera['fechcrea'] : "",
-      nombre: this.templateTemp != null ? this.templateTemp.cabecera['nombre'] : "",
-      estado: this.templateTemp != null ? this.templateTemp.cabecera['estado'] == "A" ? "A" : "I" : "A",
-      usuario: this.templateTemp != null ? this.templateTemp.cabecera['usuario'] : "",
-      fechactu: this.templateTemp != null ? this.templateTemp.cabecera['fechactu'] : ""
-    }
-    let detalles: Detalle[] = [];
-    if (this.templateTemp != null && this.templateTemp.detalle != null) {
-      await this.templateTemp.detalle.forEach(async (element) => {
-        console.log('ELEMENT');
-        console.log(element);
-        const finca = await this.getFincabyName(element.farm);
-        const flower = await this.getFlowerbyName(element.flor);
-        let item = {
-          deteId: element.deteId,
-          caja: this.getTypeBox(element.tipoempaque),
-          pieza: element.cantidadcajas != null ? element.cantidadcajas : "",
-          finca: finca,
-          flor: flower,
-          numtallos: parseInt(element.cantidadbch),
-          tamanio: element.medidatallo,
-          totaltallos: parseInt(element.cantidad),
-          stems: parseInt(element.tallosxbch),
-          price: element.preciounitario,
-          subtotal: element.total,
-          line: parseInt(element.line),
-        }
-        this.items.push(item);
-        console.log('Items');
-        console.log(this.items);
-        element.cantidadcajas != null ? this.totcajas += parseInt(element.cantidadcajas) : 0;
-        element.cantidad != null ? this.tottallos += parseInt(element.cantidad) : 0;
-        element.total != null ? this.total += parseFloat(element.total) : 0;
-      });
-
-      this.items.sort(function (a, b) {
-        if (a.line > b.line) {
-          return 1;
-        }
-        if (a.line < b.line) {
-          return -1;
-        }
-        return 0;
-      });
-
-    }
-
-    this.template = {
-      cabecera: cabecera,
-      detalle: detalles
-    };
 
     this.tamanios = [
       { name: "CL", code: "CL" },
@@ -192,11 +154,62 @@ export class EditComponent implements OnInit {
 
     this.options = [{ label: 'Activo', value: 'A' }, { label: 'Inactivo', value: 'I' }];
 
+    let cabecera = {
+      tempId: this.templateTemp != null ? this.templateTemp.cabecera['tempId'] : "",
+      fechcrea: this.templateTemp != null ? this.templateTemp.cabecera['fechcrea'] : "",
+      nombre: this.templateTemp != null ? this.templateTemp.cabecera['nombre'] : "",
+      estado: this.templateTemp != null ? this.templateTemp.cabecera['estado'] == "A" ? "A" : "I" : "A",
+      usuario: this.templateTemp != null ? this.templateTemp.cabecera['usuario'] : "",
+      fechactu: this.templateTemp != null ? this.templateTemp.cabecera['fechactu'] : ""
+    }
+
+    this.template = {
+      cabecera: cabecera,
+      detalle: []
+    };
+
+    if (this.templateTemp != null && this.templateTemp.detalle != null) {
+      this.items = [];
+      await Promise.all(this.templateTemp.detalle.map(async (element) => {
+        const finca = await this.getFincabyName(element.farm);
+        const flower = await this.getFlowerbyName(element.flor);
+        const tamanio = await this.tamanios.filter(tamanio => tamanio.code == element.medidatallo);
+        const caja = await this.cajas.filter(caja => caja.code == element.tipoempaque);
+        let item = {
+          deteId: element.deteId,
+          caja: caja[0] == null ? '' : caja[0],
+          pieza: element.cantidadcajas != null ? element.cantidadcajas : "",
+          finca: finca,
+          flor: flower,
+          numtallos: parseInt(element.cantidadbch),
+          tamanio: tamanio[0],
+          totaltallos: parseInt(element.cantidad),
+          stems: parseInt(element.tallosxbch),
+          price: element.preciounitario,
+          subtotal: element.total,
+          line: parseInt(element.line),
+        }
+        this.items.push(item);
+        element.cantidadcajas != null ? this.totcajas += parseInt(element.cantidadcajas) : 0;
+        element.cantidad != null ? this.tottallos += parseInt(element.cantidad) : 0;
+        element.total != null ? this.total += parseFloat(element.total) : 0;
+
+      }));
+
+      await this.items.sort(function (a, b) {
+        if (a.line > b.line) {
+          return 1;
+        }
+        if (a.line < b.line) {
+          return -1;
+        }
+        return 0;
+      });
+    }
     await this.getServicios();
   }
 
   save() {
-    console.log('..Guardando el template..');
 
     let head = {
       fechcrea: this.getFormatDate(new Date()),
@@ -204,13 +217,10 @@ export class EditComponent implements OnInit {
       estado: this.template.cabecera.estado,
       usuario: this.user.nickname
     }
-    console.log('HEAD');
-    console.log(head);
 
     this.api.addTemplateHead(head, localStorage.getItem('token')).then(data => {
       console.log(data);
       if (data.headerApp.code == 200) {
-        console.log('Se guardo correctamente..');
         this.router.navigate(['template']);
       }
 
@@ -303,7 +313,76 @@ export class EditComponent implements OnInit {
     this.itemForm.get('totaltallos').setValue(this.itemForm.get('stem').value * this.itemForm.get('tallos').value);
   }
 
-  modificar() {
+  calculateEdit() {
+    this.itemFormEdit.get('totaltallos').setValue(this.itemFormEdit.get('stem').value * this.itemFormEdit.get('tallos').value);
+  }
+
+  async modificar() {
+    this.submittedFacturaEdit = true;
+    if (this.itemFormEdit.invalid) {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios' });
+      return;
+    }
+    let item = { 
+      deteId: this.itemFormEdit.get('deteId').value,
+      tempId: this.template.cabecera.tempId,
+      tipoempaque: this.itemFormEdit.get('caja').value.code,
+      cantidadcajas: this.itemFormEdit.get('pieza').value,
+      farmId: this.itemFormEdit.get('finca').value.entiId,
+      florId: this.itemFormEdit.get('flores').value.flor.florId,
+      tallosxbch: this.itemFormEdit.get('stem').value,
+      medidatallo: this.itemFormEdit.get('tamanio').value.code,
+      cantidadbch: this.itemFormEdit.get('tallos').value,
+      cantidad: this.itemFormEdit.get('totaltallos').value,
+      preciounitario: this.itemFormEdit.get('precio').value,
+      total: String(this.itemFormEdit.get('totaltallos').value * this.itemFormEdit.get('precio').value),
+      line: this.itemFormEdit.get('line').value,
+    }
+   
+    this.utilService.isLoading.next(true);
+    await this.api.updateTemplateDetalle(item, localStorage.getItem('token')).then(async (data) => {
+      console.log(data);
+      if (data.headerApp.code == 200) {
+        this.items.forEach(item => {          
+          if (item.line == this.itemFormEdit.get('line').value) {            
+            item.caja = this.itemFormEdit.get('caja').value;
+            item.pieza = this.itemFormEdit.get('pieza').value;
+            item.finca = this.itemFormEdit.get('finca').value;
+            item.flor = this.itemFormEdit.get('flores').value.flor;
+            item.stems = this.itemFormEdit.get('stem').value;
+            item.tamanio = this.itemFormEdit.get('tamanio').value;
+            item.numtallos = this.itemFormEdit.get('tallos').value;
+            item.totaltallos = this.itemFormEdit.get('totaltallos').value;
+            item.price = this.itemFormEdit.get('precio').value;
+            item.subtotal = String(this.itemFormEdit.get('totaltallos').value * this.itemFormEdit.get('precio').value);
+          }
+        })
+        this.total = 0;
+        this.tottallos = 0;
+        this.totcajas = 0;
+
+        this.items.forEach((item) => {
+          this.total += parseFloat(item.subtotal);
+          this.tottallos += parseInt(item.totaltallos.toString());
+          item.pieza != '' ? this.totcajas += parseInt(item.pieza.toString()) : '';
+        });
+
+        this.itemFormEdit.reset();
+        this.dialogVisibleEdit = false;
+        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Item actualizado correctamente' });
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Error al actualizar el item' });
+      }
+
+    }).catch(err => {
+      console.log(err);
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    });
+
+    this.utilService.isLoading.next(false);
 
   }
 
@@ -319,9 +398,33 @@ export class EditComponent implements OnInit {
     this.addrow = true;
   }
 
-  async deleteItem(item: Item) {
-    console.log('Eliminando el ITEM');
-    console.log(item);
+  async editItem(item: Item) {   
+    this.dialogVisibleEdit = true;
+    let finca = await this.fincas.filter(data => {
+      if (data.entiId == item.finca['entiId']) {
+        return data;
+      } 
+    });
+    let flor = await this.flores.filter(data => {
+      if (data['flor'].florId === item.flor['florId']) {
+        return data;
+      }
+    });
+    this.dialogVisibleEdit = true;
+    this.itemFormEdit.get('deteId').setValue(item.deteId);
+    this.itemFormEdit.get('caja').setValue(item.caja);
+    this.itemFormEdit.get('pieza').setValue(item.pieza);
+    this.itemFormEdit.get('finca').setValue(finca[0]);
+    this.itemFormEdit.get('flores').setValue(flor[0]);
+    this.itemFormEdit.get('stem').setValue(item.stems);
+    this.itemFormEdit.get('tamanio').setValue(item.tamanio);
+    this.itemFormEdit.get('tallos').setValue(item.numtallos);
+    this.itemFormEdit.get('totaltallos').setValue(item.totaltallos);
+    this.itemFormEdit.get('precio').setValue(item.price);
+    this.itemFormEdit.get('line').setValue(item.line);
+  }
+
+  async deleteItem(item: Item) {    
     await this.api.deleteTemplateDetalle(item.deteId, localStorage.getItem('token')).then(async (data) => {
       console.log(data);
       if (data.headerApp.code == 200) {
@@ -329,16 +432,10 @@ export class EditComponent implements OnInit {
         this.tottallos = 0;
         this.total = 0;
         this.items = await this.items.filter((element) => element != item);
-        this.items.forEach((item) => {
-          console.log(item);
-          console.log('Validacion');
-          console.log(item.pieza);
+        this.items.forEach((item) => {          
           this.total += parseFloat(item.subtotal);
           this.tottallos += parseInt(item.totaltallos.toString());
           item.pieza != '' ? this.totcajas += parseInt(item.pieza) : '';
-          console.log(this.total);
-          console.log(this.tottallos);
-          console.log(this.totcajas);
         });
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Eliminacion satisfactoria' });
       }
@@ -371,25 +468,27 @@ export class EditComponent implements OnInit {
       farmId: this.itemForm.get('finca').value.entiId,
       florId: this.itemForm.get('flores').value.flor.florId,
       line: this.items.length > 0 ? (this.items[this.items.length - 1].line) + 1 : 0
-    }
-    console.log('Agregando nueva fila');
-    console.log(itemTemplate);
+    }    
     this.utilService.isLoading.next(true);
-    await this.api.addTemplateDetaill(itemTemplate, localStorage.getItem('token')).then(data => {
+    await this.api.addTemplateDetaill(itemTemplate, localStorage.getItem('token')).then(async (data) => {
       console.log(data);
       if (data.headerApp.code == 200) {
         this.itemForm.reset();
         this.submitted = false;
         this.addrow = false;
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Item guardado correctamente' });
+        const tamanio = await this.tamanios.filter(tamanio => tamanio.code == data.data.detatemp.medidatallo);
+        const finca = await this.getFincabyName(data.data.detatemp.farm);
+        const flower = await this.getFlowerbyName(data.data.detatemp.flor);
+        const caja = await this.cajas.filter(caja => caja.code == data.data.detatemp.tipoempaque);
         this.items.push({
           deteId: data.data.detatemp.deteId,
-          caja: data.data.detatemp.tipoempaque,
+          caja: caja[0] == null ? '' : caja[0],
           pieza: data.data.detatemp.cantidadcajas,
-          finca: data.data.detatemp.farmId,
-          flor: data.data.detatemp.florId,
+          finca: finca,
+          flor: flower,
           numtallos: data.data.detatemp.cantidadbch,
-          tamanio: data.data.detatemp.medidatallo,
+          tamanio: tamanio[0],
           totaltallos: data.data.detatemp.cantidad,
           stems: data.data.detatemp.tallosxbch,
           price: data.data.detatemp.preciounitario,
@@ -482,6 +581,10 @@ export class EditComponent implements OnInit {
 
   get f() {
     return this.itemForm.controls;
+  }
+
+  get fv() {
+    return this.itemFormEdit.controls;
   }
 
 }

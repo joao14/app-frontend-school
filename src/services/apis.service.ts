@@ -944,6 +944,24 @@ export class ApisService {
     }
 
 
+    public updateTemplateDetalle(detaill: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.put<any>(environment.updatetemplatedetalle, detaill, opt).toPromise().then(template => {
+                resolve(template);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+
     httpPost(url, body) {
         const header = {
             headers: new HttpHeaders()

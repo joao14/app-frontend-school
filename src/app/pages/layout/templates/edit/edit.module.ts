@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EditComponent } from './edit.component';
 import { EditRoutingModule } from './edit-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BlockUIModule, ButtonModule, DataViewModule, DropdownModule, InputSwitchModule, InputTextareaModule, InputTextModule, SelectButtonModule, TableModule, ToastModule, ToolbarModule } from 'primeng';
+import { BlockUIModule, ButtonModule, ConfirmDialog, ConfirmDialogModule, DataViewModule, DialogModule, DropdownModule, InputSwitchModule, InputTextareaModule, InputTextModule, SelectButtonModule, TableModule, ToastModule, ToolbarModule } from 'primeng';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -29,6 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     DataViewModule,
     TableModule,
+    DialogModule
   ]
 })
 export class EditModule { }

@@ -1311,7 +1311,6 @@ export class FacturaComponent implements OnInit {
         console.log('ITEM');
         this.utilService.isLoading.next(true);
         await this.selectedTemplate.detalle.forEach(async (item) => {
-            console.log(item);
             let tamanio = await this.tamanios.filter(tamanio => tamanio.code == item.medidatallo);
             let caja = await this.cajas.filter(caja => caja.code == item.tipoempaque);
             let farm = await this.getFincabyName(item.farm);
@@ -1328,9 +1327,7 @@ export class FacturaComponent implements OnInit {
                 price: parseInt(item.preciounitario),
                 subtotal: parseInt(item.total),
                 line: parseInt(item['line'])
-            });
-            console.log('ITEMS');
-            console.log(this.items);
+            });           
             this.manual = true;
             this.automatico = false;
             this.validate = false;

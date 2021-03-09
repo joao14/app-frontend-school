@@ -57,11 +57,8 @@ export class TemplatesComponent implements OnInit {
   async getTemplates() {
     this.utilService.isLoading.next(true);
     await this.api.getTemplates(localStorage.getItem('token')).then((data) => {
-      console.log(data);
       if (data.headerApp.code == 200) {
         this.templates = data.data.templates;
-        console.log('Final');
-        console.log(this.templates);
       }
     }).catch(err => {
       console.log(err);
@@ -78,15 +75,12 @@ export class TemplatesComponent implements OnInit {
   }
 
   edit(template: Template) {
-    console.log('EDIT');
-    console.log(template);
     this.router.navigate(['/edittemplate'], { state: { template: JSON.stringify(template) } });
 
   }
 
   async remove(template: Template) {
     await this.api.deleteTemplate(template.cabecera.tempId, localStorage.getItem('token')).then(async (data) => {
-      console.log(data);
       if (data.headerApp.code == 200) {
         await this.getTemplates();
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se ha eliminado correctamente' });
