@@ -1110,8 +1110,6 @@ export class FacturaComponent implements OnInit {
     }
 
     async edit(draft: Draft) {
-        console.log('Editando');
-        console.log(draft);
         this.editInvoice = true;
         this.selectdraft = draft;
         this.step = 2; 
@@ -1306,7 +1304,6 @@ export class FacturaComponent implements OnInit {
         this.items = [];
         this.utilService.isLoading.next(true);
         await this.selectedTemplate.detalle.forEach(async (item) => {
-            console.log(item);
             let tamanio = await this.tamanios.filter(tamanio => tamanio.code == item.medidatallo);
             let caja = await this.cajas.filter(caja => caja.code == item.tipoempaque);
             let farm = await this.getFincabyName(item.farm);
