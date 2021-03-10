@@ -82,14 +82,9 @@
                                 <div class="ui-g-12 ui-md-2">
                                     <label for="client" class="lbl">{{'Cliente' | translate}}</label>
                                     <p-dropdown [options]="clientes" optionLabel="nombres" formControlName="cliente"
-                                        *ngIf="!editInvoice"
                                         [ngClass]="{ 'is-invalid': submittedFactura && fr.cliente.errors }"
                                         class="form-control" class="form-control" (onChange)='onOptionsSelected()'
                                         [filter]="true" [placeholder]="'Seleccione' | translate"></p-dropdown>
-
-                                    <input type="text" pInputText [value]="selectclient?.nombres" readonly
-                                        [ngClass]="{ 'is-invalid': submittedFactura && fr.cliente.errors }"
-                                        class="form-control" class="form-control" *ngIf="editInvoice" />
 
                                     <div *ngIf="submittedFactura && fr.cliente.errors" class="invalid-feedback">
                                         <div *ngIf="fr.cliente.errors.required">{{'Cliente es requerido' | translate}}
@@ -100,15 +95,11 @@
                                 <div class="ui-g-12 ui-md-2">
                                     <label for="mark" class="lbl">{{'Marca' | translate}}</label>
                                     <p-dropdown [options]="marks" optionLabel="nombre" formControlName="marca"
-                                        *ngIf="!editInvoice" (onChange)='onOptionsMarkSelected()'
+                                        (onChange)='onOptionsMarkSelected()'
                                         [ngClass]="{ 'is-invalid': submittedFactura && fr.marca.errors }"
                                         class="form-control" class="form-control" [filter]="true"
                                         [placeholder]="'Seleccione' | translate">
                                     </p-dropdown>
-
-                                    <input type="text" pInputText [value]="selectdraft?.cabecera.mark" readonly
-                                        [ngClass]="{ 'is-invalid': submittedFactura && fr.cliente.errors }"
-                                        class="form-control" class="form-control" *ngIf="editInvoice" />
 
                                     <div *ngIf="submittedFactura && fr.marca.errors" class="invalid-feedback">
                                         <div *ngIf="fr.marca.errors.required">{{'Marca es requerido' | translate}}</div>
@@ -128,14 +119,9 @@
                                     <label for="freightforwarder" class="lbl">{{'Empresa carga' | translate}}</label>
                                     <p-dropdown [options]="deliveries" optionLabel="nombres" class="form-control"
                                         (onChange)='onOptionsSelected()' formControlName="empresacargo"
-                                        *ngIf="!editInvoice"
                                         [ngClass]="{ 'is-invalid': submittedFactura && fr.empresacargo.errors }"
                                         class="form-control" [filter]="true" [placeholder]="'Seleccione' | translate">
                                     </p-dropdown>
-
-                                    <input type="text" pInputText [value]="selectdraft?.cabecera.cargname" readonly
-                                        [ngClass]="{ 'is-invalid': submittedFactura && fr.cliente.errors }"
-                                        class="form-control" class="form-control" *ngIf="editInvoice" />
 
                                     <div *ngIf="submittedFactura && fr.empresacargo.errors" class="invalid-feedback">
                                         <div *ngIf="fr.empresacargo.errors.required">
@@ -154,18 +140,18 @@
                                         readonly>
                                 </div>
 
-                                <div class="ui-g-12 ui-md-2" *ngIf="typerol=='ADM'">
+                                <div [class]="!editInvoice?'ui-g-12 ui-md-2':'ui-g-12 ui-md-4'" *ngIf="typerol=='ADM'">
                                     <label for="ciudad" class="lbl">{{'País-Ciudad'| translate}}</label>
                                     <input type="text" id="ciudad" pInputText [value]="selectclient?.paiscity" readonly>
                                 </div>
 
-                                <div class="ui-g-12 ui-md-2" *ngIf="typerol=='ADM'">
+                                <div [class]="!editInvoice?'ui-g-12 ui-md-2':'ui-g-12 ui-md-4'" *ngIf="typerol=='ADM'">
                                     <label for="email" class="lbl">{{'Email' | translate}}</label>
                                     <textarea pInputTextarea id="email" [value]="selectclient?.email"
                                         readonly></textarea>
                                 </div>
 
-                                <div class="ui-g-12 ui-md-2" *ngIf="typerol=='ADM'">
+                                <div [class]="!editInvoice?'ui-g-12 ui-md-2':'ui-g-12 ui-md-4'" *ngIf="typerol=='ADM'">
                                     <label for="address" class="lbl">{{'Dirección' | translate}}</label>
                                     <textarea pInputTextarea id="address" [value]="selectmark?.direccion"
                                         readonly></textarea>
@@ -185,7 +171,7 @@
                                                 [label]="'Subir archivo' | translate"
                                                 (click)="selectOptions('automatico')" style="height: 40px;"></button>
                                         </div>
-                                        <div class="ui-grid-col-4">
+                                        <div class="ui-grid-col-4" *ngIf="templates.length > 0">
                                             <button pButton type="button" icon="pi pi-file" class="ui-button-success"
                                                 [label]="'Template' | translate" (click)="selectOptions('template')"
                                                 style="height: 40px;"></button>
@@ -388,7 +374,8 @@
                                         </span>
                                     </td>
                                     <td><span class="p-column-title">{{item.caja==null?'':item.caja.code}}</span></td>
-                                    <td><span class="p-column-title">{{item.pieza==null || item.pieza== 0?'':item.pieza}}</span></td>
+                                    <td><span class="p-column-title">{{item.pieza==null || item.pieza==
+                                            0?'':item.pieza}}</span></td>
                                     <td style="width: 10em;"><span class="p-column-title">{{item.finca.nombres |
                                             titlecase}} - (
                                             {{item.finca.razosoci}}) </span></td>
@@ -621,7 +608,7 @@
         </p-dialog>
 
         <p-dialog [header]="'Editar item de factura' | translate" [(visible)]="dialogVisibleEdit"
-            [style]="{width: '80vw'}" [baseZIndex]="10000" [maximizable]="true" [modal]="true" [resizable]="true">
+            [style]="{width: '80vw'}" [baseZIndex]="10000" [modal]="true" [resizable]="true">
             <form [formGroup]="itemFormEdit" (ngSubmit)="modificar()">
                 <div class="ui-g form-group ui-fluid">
                     <div class="card card-w-title">
@@ -739,7 +726,7 @@
 
         <!--Select template-->
         <p-dialog [header]="'Seleccionar template' | translate" [(visible)]="dialogViewTemplates"
-            [style]="{width: '22vw'}" [baseZIndex]="10000"  [modal]="true" [resizable]="true">
+            [style]="{width: '22vw'}" [baseZIndex]="10000" [modal]="true" [resizable]="true">
 
             <div class="ui-g form-group ui-fluid">
                 <div class="card card-w-title">
@@ -758,7 +745,7 @@
                                 [label]="'Seleccionar' | translate" (click)="choose()"></button>
                         </div>
                     </div>
-                    
+
                 </div>
 
             </div>

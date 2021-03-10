@@ -279,8 +279,6 @@ export class FacturaComponent implements OnInit {
         this.invoicesdraft = [];
         this.utilService.isLoading.next(true);
         await this.api.getinvoicesdraft(localStorage.getItem('token')).then(invoice => {
-            console.log('INVOCIE DRAFT');
-            console.log(invoice);
             if (invoice.headerApp.code == 200) {
                 this.invoicesdraft = invoice.data.invoices;
             }
@@ -346,13 +344,13 @@ export class FacturaComponent implements OnInit {
             { name: "HB", code: "HB" },
             { name: "QB", code: "QB" },
         ]
+        
     }
 
-    selectOptions(type: string) {       
+    selectOptions(type: string) {
         this.options = true;
         this.files = [];
         if (type == "manual") {
-            console.log('MANUAL');
             this.addrow = false;
             this.manual = true;
             this.automatico = false;
@@ -362,22 +360,22 @@ export class FacturaComponent implements OnInit {
             this.factura.tallos = 0;
             this.factura.boxes = 0;
             this.validate = false;
-            this.selectedTemplate=null;
+            this.selectedTemplate = null;
             this.smsvalidate = "";
             this.line = 0;
-        } if (type == "automatico") {            
+        } if (type == "automatico") {
             this.automatico = true;
             this.manual = false;
             this.items = [];
             this.factura.total = 0.0;
             this.factura.tallos = 0;
             this.factura.boxes = 0;
-            this.selectedTemplate=null;
+            this.selectedTemplate = null;
             this.validate = false;
             this.smsvalidate = "";
             this.line = 0;
         } else
-            if (type == "template") {                
+            if (type == "template") {
                 this.dialogViewTemplates = true;
             }
     }
@@ -386,8 +384,7 @@ export class FacturaComponent implements OnInit {
         let cliente: client = null;
         await this.api.getObjectbyName('C', name.toUpperCase(), localStorage.getItem("token")).then(data => {
             if (data.headerApp.code == 200) {
-                this.facturaForm.get('cliente').setValue(data.data.cliente);
-                this.selectclient = data.data.cliente;
+                cliente = data.data.cliente;
             }
         }).catch(err => {
             if (err.error.code == 401) {
@@ -705,6 +702,7 @@ export class FacturaComponent implements OnInit {
         this.marks = [];
         this.selectclient = this.facturaForm.get('cliente').value;
         this.selectclient.paiscity = this.selectclient.pais + ' - ' + this.selectclient.ciudad;
+        this.selectmark=null;       
         await this.api.getmarks(this.facturaForm.get('cliente').value.entiId, localStorage.getItem("token")).then(mark => {
             if (mark.headerApp.code == 200) {
                 let temp: mark[] = [];
@@ -969,17 +967,13 @@ export class FacturaComponent implements OnInit {
         })
 
         await this.api.getTemplates(localStorage.getItem('token')).then(async (data) => {
-            console.log(data);
             this.templates = [];
             if (data.headerApp.code == 200) {
                 await data.data.templates.forEach(template => {
                     if (template.cabecera.estado == 'A') {
-                        console.log('Estado activo');
                         this.templates.push(template)
                     }
                 })
-                console.log('Templates');
-                console.log(this.templates);
             }
         }).catch(err => {
             console.log(err);
@@ -1032,6 +1026,8 @@ export class FacturaComponent implements OnInit {
 
     facturar() {
         this.step = 2;
+        this.selectclient=null;
+        this.selectmark=null;
     }
 
     async back() {
@@ -1114,17 +1110,19 @@ export class FacturaComponent implements OnInit {
     }
 
     async edit(draft: Draft) {
-
+        console.log('Editando');
+        console.log(draft);
         this.editInvoice = true;
         this.selectdraft = draft;
-        this.step = 2;
+        this.step = 2; 
         this.idFactura = draft.cabecera.secuencial;
         this.utilService.isLoading.next(true);
-        this.facturaForm.get('cliente').setValue(draft.cabecera.cliente);
-        this.selectclient = draft.cabecera.cliente;
+        const cliente = await this.getClientbyName(draft.cabecera.cliente.nombres);
+        this.facturaForm.get('cliente').setValue(cliente);
+        await this.onOptionsSelected();
         const mark = await this.getMarcbyName(draft.cabecera.cliente.entiId, draft.cabecera.mark);
+        this.selectmark=mark;
         this.facturaForm.get('marca').setValue(mark);
-        this.selectmark = mark;
         const empresacargo = await this.getEmpresaCargabyName(draft.cabecera.cargname);
         this.facturaForm.get('empresacargo').setValue(empresacargo);
         this.facturaForm.get('mawba').setValue(draft.cabecera.mawb);
@@ -1224,7 +1222,7 @@ export class FacturaComponent implements OnInit {
         await this.factura.items.forEach(async (data) => {
             await detail.push({
                 tipoempaque: data.caja == undefined ? "" : data.caja['code'],
-                cantidadcajas: data.pieza == undefined ||  data.pieza == 0 ? "" : String(data.pieza),
+                cantidadcajas: data.pieza == undefined || data.pieza == 0 ? "" : String(data.pieza),
                 tallosxbch: data.stems,
                 medidatallo: data.tamanio['code'],
                 cantidadbch: data.numtallos,
@@ -1303,31 +1301,29 @@ export class FacturaComponent implements OnInit {
         return delivery;
     }
 
-    async choose() {
-        console.log("Sellecciono ITEMS");
-        console.log(this.selectedTemplate);
+    async choose() {        
         this.dialogViewTemplates = false;
         this.items = [];
-        console.log('ITEM');
         this.utilService.isLoading.next(true);
         await this.selectedTemplate.detalle.forEach(async (item) => {
+            console.log(item);
             let tamanio = await this.tamanios.filter(tamanio => tamanio.code == item.medidatallo);
             let caja = await this.cajas.filter(caja => caja.code == item.tipoempaque);
             let farm = await this.getFincabyName(item.farm);
             let flower = await this.getFlowerbyName(item.flor);
             await this.items.push({
                 caja: caja[0] == null ? '' : caja[0],
-                pieza: item.cantidadcajas !=null?parseInt(item.cantidadcajas):0,
+                pieza: item.cantidadcajas != null ? parseInt(item.cantidadcajas) : 0,
                 finca: farm,
                 flor: flower,
                 stems: parseInt(item.tallosxbch),
                 tamanio: tamanio[0],
                 numtallos: parseInt(item.cantidadbch),
                 totaltallos: parseInt(item.cantidad),
-                price: parseInt(item.preciounitario),
+                price: parseFloat(item.preciounitario),
                 subtotal: parseInt(item.total),
                 line: parseInt(item['line'])
-            });           
+            });
             this.manual = true;
             this.automatico = false;
             this.validate = false;
@@ -1355,7 +1351,7 @@ export class FacturaComponent implements OnInit {
             });
 
         })
-
+        
         this.selectdraft == null ? '' : this.line += 1;
         this.addrow = false;
         this.submitted = false;
