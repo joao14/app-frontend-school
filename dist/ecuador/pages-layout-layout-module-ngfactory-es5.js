@@ -71422,6 +71422,63 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }
 
     function View_MenuComponent_14(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 11, "li", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 10, "a", [["routerLink", "/template"], ["routerLinkActive", "active"], ["style", "font-size: 14px;"]], [[8, "className", 0], [1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) {
+        var ad = true;
+        var _co = _v.component;
+
+        if ("click" === en) {
+          var pd_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 2).onClick($event.button, $event.ctrlKey, $event.metaKey, $event.shiftKey) !== false;
+          ad = pd_0 && ad;
+        }
+
+        if ("click" === en) {
+          var pd_1 = _co.selectItemMenu("TEMP") !== false;
+          ad = pd_1 && ad;
+        }
+
+        return ad;
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[18, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
+        routerLink: [0, "routerLink"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](3, 1720320, null, 2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkActive"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLink"]], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"]]], {
+        routerLinkActive: [0, "routerLinkActive"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 17, {
+        links: 1
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 18, {
+        linksWithHrefs: 1
+      }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](6, 0, null, null, 2, "i", [["class", "fa fa-list-alt"]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgStyle"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]], {
+        ngStyle: [0, "ngStyle"]
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpod"](8, {
+        "color": 0
+      }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](9, 0, null, null, 2, "span", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](10, null, ["", " "])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslatePipe"], [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]])], function (_ck, _v) {
+        var _co = _v.component;
+        var currVal_3 = "/template";
+
+        _ck(_v, 2, 0, currVal_3);
+
+        var currVal_4 = "active";
+
+        _ck(_v, 3, 0, currVal_4);
+
+        var currVal_5 = _ck(_v, 8, 0, _co.activeItem === "TEMP" ? "#ff4456" : "#828282");
+
+        _ck(_v, 7, 0, currVal_5);
+      }, function (_ck, _v) {
+        var _co = _v.component;
+        var currVal_0 = _co.activeItem == "TEMP" ? "active-item" : "no-active-item";
+
+        var currVal_1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 2).target;
+
+        var currVal_2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 2).href;
+
+        _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2);
+
+        var currVal_6 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵunv"](_v, 10, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 11).transform("Templates"));
+
+        _ck(_v, 10, 0, currVal_6);
+      });
+    }
+
+    function View_MenuComponent_15(_l) {
       return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 11, "li", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 10, "a", [["routerLink", "/pagoreclamo"], ["routerLinkActive", "active"], ["style", "font-size: 14px;"]], [[8, "className", 0], [1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
@@ -71437,13 +71494,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         return ad;
-      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[18, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[20, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
         routerLink: [0, "routerLink"]
       }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](3, 1720320, null, 2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkActive"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLink"]], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"]]], {
         routerLinkActive: [0, "routerLinkActive"]
-      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 17, {
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 19, {
         links: 1
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 18, {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 20, {
         linksWithHrefs: 1
       }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](6, 0, null, null, 2, "i", [["class", "fa fa-fw fa-ticket"]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgStyle"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]], {
         ngStyle: [0, "ngStyle"]
@@ -71479,11 +71536,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }
 
     function View_MenuComponent_11(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 7, "li", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 6, "ul", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_12)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](3, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 9, "li", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 8, "ul", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_12)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](3, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
       }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_13)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](5, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
       }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_14)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
+        ngIf: [0, "ngIf"]
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_15)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](9, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
       }, null)], function (_ck, _v) {
         var _co = _v.component;
@@ -71495,13 +71554,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _ck(_v, 5, 0, currVal_1);
 
-        var currVal_2 = _co.typerol == "ADM";
+        var currVal_2 = _co.typerol == "ADM" || _co.typerol == "FAC";
 
         _ck(_v, 7, 0, currVal_2);
+
+        var currVal_3 = _co.typerol == "ADM";
+
+        _ck(_v, 9, 0, currVal_3);
       }, null);
     }
 
-    function View_MenuComponent_15(_l) {
+    function View_MenuComponent_16(_l) {
       return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 11, "li", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 10, "a", [["routerLink", "/prealerta"], ["routerLinkActive", "active"], ["style", "font-size: 14px;"]], [[8, "className", 0], [1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
@@ -71517,13 +71580,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         return ad;
-      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[20, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[22, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
         routerLink: [0, "routerLink"]
       }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](3, 1720320, null, 2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkActive"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLink"]], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"]]], {
         routerLinkActive: [0, "routerLinkActive"]
-      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 19, {
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 21, {
         links: 1
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 20, {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 22, {
         linksWithHrefs: 1
       }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](6, 0, null, null, 2, "i", [["class", "fa fa-fw fa-pencil-square-o"]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgStyle"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]], {
         ngStyle: [0, "ngStyle"]
@@ -71558,7 +71621,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       });
     }
 
-    function View_MenuComponent_16(_l) {
+    function View_MenuComponent_17(_l) {
       return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 10, "li", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 9, "a", [["style", "font-size: 14px;"]], [[8, "className", 0]], [[null, "click"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
@@ -71603,7 +71666,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       });
     }
 
-    function View_MenuComponent_18(_l) {
+    function View_MenuComponent_19(_l) {
       return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 11, "li", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 10, "a", [["routerLink", "/sales"], ["routerLinkActive", "active"], ["style", "font-size: 14px;"]], [[8, "className", 0], [1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
@@ -71619,13 +71682,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         return ad;
-      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[22, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[24, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
         routerLink: [0, "routerLink"]
       }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](3, 1720320, null, 2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkActive"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLink"]], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"]]], {
         routerLinkActive: [0, "routerLinkActive"]
-      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 21, {
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 23, {
         links: 1
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 22, {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 24, {
         linksWithHrefs: 1
       }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](6, 0, null, null, 2, "i", [["class", "fa fa-fw fa-file-text-o"]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgStyle"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]], {
         ngStyle: [0, "ngStyle"]
@@ -71660,7 +71723,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       });
     }
 
-    function View_MenuComponent_19(_l) {
+    function View_MenuComponent_20(_l) {
       return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 11, "li", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 10, "a", [["routerLink", "/general"], ["routerLinkActive", "active"], ["style", "font-size: 14px;"]], [[8, "className", 0], [1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
@@ -71676,13 +71739,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         return ad;
-      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[24, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[26, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
         routerLink: [0, "routerLink"]
       }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](3, 1720320, null, 2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkActive"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLink"]], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"]]], {
         routerLinkActive: [0, "routerLinkActive"]
-      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 23, {
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 25, {
         links: 1
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 24, {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 26, {
         linksWithHrefs: 1
       }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](6, 0, null, null, 2, "i", [["class", "fa fa-fw fa-file-text-o"]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgStyle"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]], {
         ngStyle: [0, "ngStyle"]
@@ -71717,7 +71780,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       });
     }
 
-    function View_MenuComponent_20(_l) {
+    function View_MenuComponent_21(_l) {
       return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 11, "li", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 10, "a", [["routerLink", "/balance"], ["routerLinkActive", "active"], ["style", "font-size: 14px;"]], [[8, "className", 0], [1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
@@ -71733,13 +71796,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         return ad;
-      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[26, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[28, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
         routerLink: [0, "routerLink"]
       }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](3, 1720320, null, 2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkActive"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLink"]], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"]]], {
         routerLinkActive: [0, "routerLinkActive"]
-      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 25, {
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 27, {
         links: 1
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 26, {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 28, {
         linksWithHrefs: 1
       }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](6, 0, null, null, 2, "i", [["class", "fa fa-fw fa-file-text-o"]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgStyle"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]], {
         ngStyle: [0, "ngStyle"]
@@ -71774,7 +71837,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       });
     }
 
-    function View_MenuComponent_21(_l) {
+    function View_MenuComponent_22(_l) {
       return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 11, "li", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 10, "a", [["routerLink", "/documento"], ["routerLinkActive", "active"], ["style", "font-size: 14px;"]], [[8, "className", 0], [1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) {
         var ad = true;
         var _co = _v.component;
@@ -71790,13 +71853,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         return ad;
-      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[28, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
+      }, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](2, 671744, [[30, 4]], 0, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["LocationStrategy"]], {
         routerLink: [0, "routerLink"]
       }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](3, 1720320, null, 2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkActive"], [_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLink"]], [2, _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLinkWithHref"]]], {
         routerLinkActive: [0, "routerLinkActive"]
-      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 27, {
+      }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 29, {
         links: 1
-      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 28, {
+      }), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵqud"](603979776, 30, {
         linksWithHrefs: 1
       }), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](6, 0, null, null, 2, "i", [["class", "fa fa-fw fa-file-text-o"]], null, null, null, null, null)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgStyle"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["KeyValueDiffers"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]], {
         ngStyle: [0, "ngStyle"]
@@ -71831,14 +71894,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       });
     }
 
-    function View_MenuComponent_17(_l) {
-      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 9, "li", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 8, "ul", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_18)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](3, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
+    function View_MenuComponent_18(_l) {
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 9, "li", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](1, 0, null, null, 8, "ul", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_19)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](3, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
-      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_19)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](5, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_20)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](5, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
-      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_20)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_21)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](7, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
-      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_21)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](9, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_22)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](9, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
       }, null)], function (_ck, _v) {
         var _co = _v.component;
@@ -71910,11 +71973,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ngIf: [0, "ngIf"]
       }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_11)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](28, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
-      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_15)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](30, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_16)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](30, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
-      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_16)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](32, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_17)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](32, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
-      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_17)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](34, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
+      }, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 1, null, View_MenuComponent_18)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](34, 16384, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"]], {
         ngIf: [0, "ngIf"]
       }, null)], function (_ck, _v) {
         var _co = _v.component;
@@ -72372,6 +72435,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               'label': 'Cátalogos'
             }, {
               'label': 'Estados'
+            }]);
+          } else if (item == 'TEMP') {
+            this.app.utilservice.itemsSource.next([{
+              'label': 'Templates'
+            }, {
+              'label': 'Facturación'
             }]);
           }
 
@@ -73075,7 +73144,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     !*** ./src/app/pages/layout/layout-routing.module.ts ***!
     \*******************************************************/
 
-  /*! exports provided: LayoutRoutingModule, ɵ0, ɵ1, ɵ2, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9, ɵ10, ɵ11, ɵ12, ɵ13, ɵ14, ɵ15, ɵ16, ɵ17, ɵ18, ɵ19, ɵ20, ɵ21, ɵ22, ɵ23, ɵ24 */
+  /*! exports provided: LayoutRoutingModule, ɵ0, ɵ1, ɵ2, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9, ɵ10, ɵ11, ɵ12, ɵ13, ɵ14, ɵ15, ɵ16, ɵ17, ɵ18, ɵ19, ɵ20, ɵ21, ɵ22, ɵ23, ɵ24, ɵ25, ɵ26 */
 
   /***/
   function srcAppPagesLayoutLayoutRoutingModuleTs(module, __webpack_exports__, __webpack_require__) {
@@ -73238,6 +73307,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     __webpack_require__.d(__webpack_exports__, "ɵ24", function () {
       return ɵ24;
     });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ɵ25", function () {
+      return ɵ25;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ɵ26", function () {
+      return ɵ26;
+    });
     /* harmony import */
 
 
@@ -73248,7 +73329,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var ɵ0 = function ɵ0() {
       return Promise.all(
       /*! import() | dashboard-dashboard-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~fdd997af"), __webpack_require__.e("dashboard-dashboard-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~62f67ea9"), __webpack_require__.e("dashboard-dashboard-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./dashboard/dashboard.module.ngfactory */
       "./src/app/pages/layout/dashboard/dashboard.module.ngfactory.js")).then(function (m) {
         return m.DashboardModuleNgFactory;
@@ -73257,7 +73338,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ1 = function ɵ1() {
       return Promise.all(
       /*! import() | crm-clientes-clientes-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~c8532bca"), __webpack_require__.e("crm-clientes-clientes-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("crm-clientes-clientes-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./crm/clientes/clientes.module.ngfactory */
       "./src/app/pages/layout/crm/clientes/clientes.module.ngfactory.js")).then(function (m) {
         return m.ClientesModuleNgFactory;
@@ -73266,7 +73347,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ2 = function ɵ2() {
       return Promise.all(
       /*! import() | crm-flores-flores-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-flores-edit-edit-module-ngfactory~crm-flores-flores-module-ngfactory"), __webpack_require__.e("crm-flores-flores-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-flores-edit-edit-module-ngfactory~crm-flores-flores-module-ngfactory"), __webpack_require__.e("crm-flores-flores-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./crm/flores/flores.module.ngfactory */
       "./src/app/pages/layout/crm/flores/flores.module.ngfactory.js")).then(function (m) {
         return m.FloresModuleNgFactory;
@@ -73275,7 +73356,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ3 = function ɵ3() {
       return Promise.all(
       /*! import() | crm-finca-finca-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~c8532bca"), __webpack_require__.e("crm-finca-finca-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("crm-finca-finca-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./crm/finca/finca.module.ngfactory */
       "./src/app/pages/layout/crm/finca/finca.module.ngfactory.js")).then(function (m) {
         return m.FincaModuleNgFactory;
@@ -73284,7 +73365,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ4 = function ɵ4() {
       return Promise.all(
       /*! import() | factura-factura-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~c8532bca"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~fdd997af"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~c309a3cb"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~fc750cdc"), __webpack_require__.e("default~factura-factura-module-ngfactory~prealerta-prealerta-module-ngfactory"), __webpack_require__.e("factura-factura-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~62f67ea9"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~c309a3cb"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~fc750cdc"), __webpack_require__.e("default~factura-factura-module-ngfactory~prealerta-prealerta-module-ngfactory"), __webpack_require__.e("factura-factura-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./factura/factura.module.ngfactory */
       "./src/app/pages/layout/factura/factura.module.ngfactory.js")).then(function (m) {
         return m.FacturaModuleNgFactory;
@@ -73293,7 +73374,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ5 = function ɵ5() {
       return Promise.all(
       /*! import() | pagoreclamo-pagoreclamo-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealerta-module-ngfactory~reporte-balanc~f8929b40"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~c309a3cb"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~fc750cdc"), __webpack_require__.e("default~crm-flores-edit-edit-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory"), __webpack_require__.e("pagoreclamo-pagoreclamo-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealerta-module-ngfactory~reporte-balanc~f8929b40"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~c309a3cb"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~fc750cdc"), __webpack_require__.e("default~crm-flores-edit-edit-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory"), __webpack_require__.e("pagoreclamo-pagoreclamo-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./pagoreclamo/pagoreclamo.module.ngfactory */
       "./src/app/pages/layout/pagoreclamo/pagoreclamo.module.ngfactory.js")).then(function (m) {
         return m.PagoreclamoModuleNgFactory;
@@ -73302,7 +73383,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ6 = function ɵ6() {
       return Promise.all(
       /*! import() | miperfil-miperfil-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("common"), __webpack_require__.e("miperfil-miperfil-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("common"), __webpack_require__.e("miperfil-miperfil-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./miperfil/miperfil.module.ngfactory */
       "./src/app/pages/layout/miperfil/miperfil.module.ngfactory.js")).then(function (m) {
         return m.MiperfilModuleNgFactory;
@@ -73311,7 +73392,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ7 = function ɵ7() {
       return Promise.all(
       /*! import() | crm-clientes-edit-edit-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-edit-edit-module-ngfactory~security-usuario-edit-edit-module-ngfactory"), __webpack_require__.e("crm-clientes-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-edit-edit-module-ngfactory~security-usuario-edit-edit-module-ngfactory"), __webpack_require__.e("crm-clientes-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./crm/clientes/edit/edit.module.ngfactory */
       "./src/app/pages/layout/crm/clientes/edit/edit.module.ngfactory.js")).then(function (m) {
         return m.EditModuleNgFactory;
@@ -73320,7 +73401,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ8 = function ɵ8() {
       return Promise.all(
       /*! import() | crm-flores-edit-edit-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-flores-edit-edit-module-ngfactory~crm-flores-flores-module-ngfactory"), __webpack_require__.e("default~crm-flores-edit-edit-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory"), __webpack_require__.e("crm-flores-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-flores-edit-edit-module-ngfactory~crm-flores-flores-module-ngfactory"), __webpack_require__.e("default~crm-flores-edit-edit-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory"), __webpack_require__.e("crm-flores-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./crm/flores/edit/edit.module.ngfactory */
       "./src/app/pages/layout/crm/flores/edit/edit.module.ngfactory.js")).then(function (m) {
         return m.EditModuleNgFactory;
@@ -73329,7 +73410,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ9 = function ɵ9() {
       return Promise.all(
       /*! import() | crm-finca-edit-edit-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("crm-finca-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("crm-finca-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./crm/finca/edit/edit.module.ngfactory */
       "./src/app/pages/layout/crm/finca/edit/edit.module.ngfactory.js")).then(function (m) {
         return m.EditModuleNgFactory;
@@ -73338,7 +73419,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ10 = function ɵ10() {
       return Promise.all(
       /*! import() | prealerta-prealerta-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~c8532bca"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~fdd997af"), __webpack_require__.e("default~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealerta-module-ngfactory~reporte-balanc~f8929b40"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~c309a3cb"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~fc750cdc"), __webpack_require__.e("default~factura-factura-module-ngfactory~prealerta-prealerta-module-ngfactory"), __webpack_require__.e("common"), __webpack_require__.e("prealerta-prealerta-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~62f67ea9"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealerta-module-ngfactory~reporte-balanc~f8929b40"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~c309a3cb"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~fc750cdc"), __webpack_require__.e("default~factura-factura-module-ngfactory~prealerta-prealerta-module-ngfactory"), __webpack_require__.e("common"), __webpack_require__.e("prealerta-prealerta-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./prealerta/prealerta.module.ngfactory */
       "./src/app/pages/layout/prealerta/prealerta.module.ngfactory.js")).then(function (m) {
         return m.PrealertaModuleNgFactory;
@@ -73347,7 +73428,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ11 = function ɵ11() {
       return Promise.all(
       /*! import() | crm-delivery-delivery-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~c8532bca"), __webpack_require__.e("crm-delivery-delivery-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("crm-delivery-delivery-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./crm/delivery/delivery.module.ngfactory */
       "./src/app/pages/layout/crm/delivery/delivery.module.ngfactory.js")).then(function (m) {
         return m.DeliveryModuleNgFactory;
@@ -73356,7 +73437,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ12 = function ɵ12() {
       return Promise.all(
       /*! import() | crm-delivery-edit-edit-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("crm-delivery-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("crm-delivery-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./crm/delivery/edit/edit.module.ngfactory */
       "./src/app/pages/layout/crm/delivery/edit/edit.module.ngfactory.js")).then(function (m) {
         return m.EditModuleNgFactory;
@@ -73365,7 +73446,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ13 = function ɵ13() {
       return Promise.all(
       /*! import() | crm-marking-marking-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~c8532bca"), __webpack_require__.e("crm-marking-marking-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("crm-marking-marking-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./crm/marking/marking.module.ngfactory */
       "./src/app/pages/layout/crm/marking/marking.module.ngfactory.js")).then(function (m) {
         return m.MarkingModuleNgFactory;
@@ -73374,7 +73455,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ14 = function ɵ14() {
       return Promise.all(
       /*! import() | crm-marking-edit-edit-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("crm-marking-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("crm-marking-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./crm/marking/edit/edit.module.ngfactory */
       "./src/app/pages/layout/crm/marking/edit/edit.module.ngfactory.js")).then(function (m) {
         return m.EditModuleNgFactory;
@@ -73383,7 +73464,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ15 = function ɵ15() {
       return Promise.all(
       /*! import() | reporte-balance-balance-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~c8532bca"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~fdd997af"), __webpack_require__.e("default~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealerta-module-ngfactory~reporte-balanc~f8929b40"), __webpack_require__.e("reporte-balance-balance-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~62f67ea9"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealerta-module-ngfactory~reporte-balanc~f8929b40"), __webpack_require__.e("reporte-balance-balance-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./reporte/balance/balance.module.ngfactory */
       "./src/app/pages/layout/reporte/balance/balance.module.ngfactory.js")).then(function (m) {
         return m.BalanceModuleNgFactory;
@@ -73392,7 +73473,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ16 = function ɵ16() {
       return Promise.all(
       /*! import() | reporte-documento-documento-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~c8532bca"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~fdd997af"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~c309a3cb"), __webpack_require__.e("common"), __webpack_require__.e("reporte-documento-documento-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~62f67ea9"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~c309a3cb"), __webpack_require__.e("common"), __webpack_require__.e("reporte-documento-documento-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./reporte/documento/documento.module.ngfactory */
       "./src/app/pages/layout/reporte/documento/documento.module.ngfactory.js")).then(function (m) {
         return m.DocumentoModuleNgFactory;
@@ -73401,7 +73482,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ17 = function ɵ17() {
       return Promise.all(
       /*! import() | security-usuario-usuario-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~c8532bca"), __webpack_require__.e("security-usuario-usuario-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("security-usuario-usuario-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./security/usuario/usuario.module.ngfactory */
       "./src/app/pages/layout/security/usuario/usuario.module.ngfactory.js")).then(function (m) {
         return m.UsuarioModuleNgFactory;
@@ -73410,7 +73491,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ18 = function ɵ18() {
       return Promise.all(
       /*! import() | security-usuario-edit-edit-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-edit-edit-module-ngfactory~security-usuario-edit-edit-module-ngfactory"), __webpack_require__.e("common"), __webpack_require__.e("security-usuario-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-edit-edit-module-ngfactory~security-usuario-edit-edit-module-ngfactory"), __webpack_require__.e("common"), __webpack_require__.e("security-usuario-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./security/usuario/edit/edit.module.ngfactory */
       "./src/app/pages/layout/security/usuario/edit/edit.module.ngfactory.js")).then(function (m) {
         return m.EditModuleNgFactory;
@@ -73428,7 +73509,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ20 = function ɵ20() {
       return Promise.all(
       /*! import() | reporte-sale-sale-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~c8532bca"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~fdd997af"), __webpack_require__.e("default~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealerta-module-ngfactory~reporte-balanc~f8929b40"), __webpack_require__.e("common"), __webpack_require__.e("reporte-sale-sale-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~62f67ea9"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealerta-module-ngfactory~reporte-balanc~f8929b40"), __webpack_require__.e("common"), __webpack_require__.e("reporte-sale-sale-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./reporte/sale/sale.module.ngfactory */
       "./src/app/pages/layout/reporte/sale/sale.module.ngfactory.js")).then(function (m) {
         return m.SaleModuleNgFactory;
@@ -73446,7 +73527,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ22 = function ɵ22() {
       return Promise.all(
       /*! import() | reporte-general-general-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~c8532bca"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~fdd997af"), __webpack_require__.e("default~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealerta-module-ngfactory~reporte-balanc~f8929b40"), __webpack_require__.e("reporte-general-general-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~62f67ea9"), __webpack_require__.e("default~factura-factura-module-ngfactory~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealert~ce4acc91"), __webpack_require__.e("default~pagoreclamo-pagoreclamo-module-ngfactory~prealerta-prealerta-module-ngfactory~reporte-balanc~f8929b40"), __webpack_require__.e("reporte-general-general-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./reporte/general/general.module.ngfactory */
       "./src/app/pages/layout/reporte/general/general.module.ngfactory.js")).then(function (m) {
         return m.GeneralModuleNgFactory;
@@ -73455,7 +73536,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ23 = function ɵ23() {
       return Promise.all(
       /*! import() | crm-estados-estados-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~6322d7a7"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~6e9d0988"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~c8532bca"), __webpack_require__.e("crm-estados-estados-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("crm-estados-estados-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./crm/estados/estados.module.ngfactory */
       "./src/app/pages/layout/crm/estados/estados.module.ngfactory.js")).then(function (m) {
         return m.EstadosModuleNgFactory;
@@ -73464,9 +73545,27 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ɵ24 = function ɵ24() {
       return Promise.all(
       /*! import() | crm-estados-edit-edit-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("crm-estados-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("crm-estados-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./crm/estados/edit/edit.module.ngfactory */
       "./src/app/pages/layout/crm/estados/edit/edit.module.ngfactory.js")).then(function (m) {
+        return m.EditModuleNgFactory;
+      });
+    },
+        ɵ25 = function ɵ25() {
+      return Promise.all(
+      /*! import() | templates-templates-module-ngfactory */
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("templates-templates-module-ngfactory")]).then(__webpack_require__.bind(null,
+      /*! ./templates/templates.module.ngfactory */
+      "./src/app/pages/layout/templates/templates.module.ngfactory.js")).then(function (m) {
+        return m.TemplatesModuleNgFactory;
+      });
+    },
+        ɵ26 = function ɵ26() {
+      return Promise.all(
+      /*! import() | templates-edit-edit-module-ngfactory */
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~125d160f"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~4b93540c"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-delivery-delivery-module-ngfactory~crm-estados-es~092406ad"), __webpack_require__.e("default~dashboard-dashboard-module-ngfactory~factura-factura-module-ngfactory~prealerta-prealerta-mo~62f67ea9"), __webpack_require__.e("templates-edit-edit-module-ngfactory")]).then(__webpack_require__.bind(null,
+      /*! ./templates/edit/edit.module.ngfactory */
+      "./src/app/pages/layout/templates/edit/edit.module.ngfactory.js")).then(function (m) {
         return m.EditModuleNgFactory;
       });
     };
@@ -73553,6 +73652,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         path: 'editarestados',
         loadChildren: ɵ24
+      }, {
+        path: 'template',
+        loadChildren: ɵ25
+      }, {
+        path: 'edittemplate',
+        loadChildren: ɵ26
       }]
     }];
 
@@ -74517,6 +74622,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }, {
             path: "editarestados",
             loadChildren: _layout_routing_module__WEBPACK_IMPORTED_MODULE_12__["ɵ24"]
+          }, {
+            path: "template",
+            loadChildren: _layout_routing_module__WEBPACK_IMPORTED_MODULE_12__["ɵ25"]
+          }, {
+            path: "edittemplate",
+            loadChildren: _layout_routing_module__WEBPACK_IMPORTED_MODULE_12__["ɵ26"]
           }]
         }]];
       }, [])]);

@@ -344,7 +344,7 @@ export class FacturaComponent implements OnInit {
             { name: "HB", code: "HB" },
             { name: "QB", code: "QB" },
         ]
-        
+
     }
 
     selectOptions(type: string) {
@@ -702,7 +702,7 @@ export class FacturaComponent implements OnInit {
         this.marks = [];
         this.selectclient = this.facturaForm.get('cliente').value;
         this.selectclient.paiscity = this.selectclient.pais + ' - ' + this.selectclient.ciudad;
-        this.selectmark=null;       
+        this.selectmark = null;
         await this.api.getmarks(this.facturaForm.get('cliente').value.entiId, localStorage.getItem("token")).then(mark => {
             if (mark.headerApp.code == 200) {
                 let temp: mark[] = [];
@@ -1024,10 +1024,14 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    facturar() {
+    async facturar() {
+        this.editInvoice = false;
         this.step = 2;
-        this.selectclient=null;
-        this.selectmark=null;
+        this.selectclient = null;
+        this.selectmark = null;
+        this.selectdraft = null;
+        this.idObjTmp = null;
+        this.claveacceso = null;
     }
 
     async back() {
@@ -1036,6 +1040,7 @@ export class FacturaComponent implements OnInit {
         this.items = [];
         this.selectclient = null;
         this.facturaForm.reset();
+        this.itemForm.reset();
         this.factura.tallos = 0;
         this.factura.total = 0;
         this.factura.boxes = 0;
@@ -1110,21 +1115,21 @@ export class FacturaComponent implements OnInit {
     }
 
     async edit(draft: Draft) {
+        this.utilService.isLoading.next(true);
+        await this.getServicios();
         this.editInvoice = true;
         this.selectdraft = draft;
-        this.step = 2; 
+        this.step = 2;
         this.idFactura = draft.cabecera.secuencial;
-        this.utilService.isLoading.next(true);
-        const cliente = await this.getClientbyName(draft.cabecera.cliente.nombres);
+        const cliente = await this.getClientbyName(draft.cabecera.cliente.nombres);       
         this.facturaForm.get('cliente').setValue(cliente);
         await this.onOptionsSelected();
         const mark = await this.getMarcbyName(draft.cabecera.cliente.entiId, draft.cabecera.mark);
-        this.selectmark=mark;
+        this.selectmark = mark;
         this.facturaForm.get('marca').setValue(mark);
         const empresacargo = await this.getEmpresaCargabyName(draft.cabecera.cargname);
         this.facturaForm.get('empresacargo').setValue(empresacargo);
         this.facturaForm.get('mawba').setValue(draft.cabecera.mawb);
-
         this.selectOptions('manual');
         this.items = [];
         await Promise.all(draft.detalles.map(async (item) => {
@@ -1237,8 +1242,6 @@ export class FacturaComponent implements OnInit {
             detalles: detail,
             idObjTmp: this.selectdraft == null ? null : this.selectdraft.idObjTmp
         };
-
-
     }
 
     async continue() {
@@ -1249,6 +1252,7 @@ export class FacturaComponent implements OnInit {
         if (!this.editInvoice && this.claveacceso != "") {
             this.invoice.cabecera['claveacceso'] = this.claveacceso;
         }
+
         this.spinner.show();
         await this.api.registerInvoiceDraft(this.invoice, localStorage.getItem("token")).then(async (data) => {
             this.spinner.hide();
@@ -1260,6 +1264,7 @@ export class FacturaComponent implements OnInit {
                 this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se guardo el borrador para seguir editando' });
             }
         }).catch(err => {
+            console.log(err);
             this.spinner.hide();
             if (err.error.code == 401) {
                 localStorage.clear();
@@ -1299,7 +1304,7 @@ export class FacturaComponent implements OnInit {
         return delivery;
     }
 
-    async choose() {        
+    async choose() {
         this.dialogViewTemplates = false;
         this.items = [];
         this.utilService.isLoading.next(true);
@@ -1348,7 +1353,7 @@ export class FacturaComponent implements OnInit {
             });
 
         })
-        
+
         this.selectdraft == null ? '' : this.line += 1;
         this.addrow = false;
         this.submitted = false;

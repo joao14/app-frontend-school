@@ -2276,6 +2276,75 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
     /***/
 
+  },
+
+  /***/
+  "./src/app/pipes/safe.pipe.ts":
+  /*!************************************!*\
+    !*** ./src/app/pipes/safe.pipe.ts ***!
+    \************************************/
+
+  /*! exports provided: SafePipe */
+
+  /***/
+  function srcAppPipesSafePipeTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "SafePipe", function () {
+      return SafePipe;
+    });
+
+    var SafePipe =
+    /*#__PURE__*/
+    function () {
+      function SafePipe(sanitizer) {
+        _classCallCheck(this, SafePipe);
+
+        this.sanitizer = sanitizer;
+      }
+
+      _createClass(SafePipe, [{
+        key: "transform",
+        value: function transform(url) {
+          return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        }
+      }]);
+
+      return SafePipe;
+    }();
+    /***/
+
+  },
+
+  /***/
+  "./src/app/shared.module.ts":
+  /*!**********************************!*\
+    !*** ./src/app/shared.module.ts ***!
+    \**********************************/
+
+  /*! exports provided: SharedModule */
+
+  /***/
+  function srcAppSharedModuleTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "SharedModule", function () {
+      return SharedModule;
+    });
+
+    var SharedModule = function SharedModule() {
+      _classCallCheck(this, SharedModule);
+    };
+    /***/
+
   }
 }]);
 //# sourceMappingURL=reporte-documento-documento-module-ngfactory-es5.js.map

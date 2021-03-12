@@ -495,6 +495,44 @@ class GeneralModule {
 }
 
 
+/***/ }),
+
+/***/ "./src/app/pipes/safe.pipe.ts":
+/*!************************************!*\
+  !*** ./src/app/pipes/safe.pipe.ts ***!
+  \************************************/
+/*! exports provided: SafePipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SafePipe", function() { return SafePipe; });
+class SafePipe {
+    constructor(sanitizer) {
+        this.sanitizer = sanitizer;
+    }
+    transform(url) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/shared.module.ts":
+/*!**********************************!*\
+  !*** ./src/app/shared.module.ts ***!
+  \**********************************/
+/*! exports provided: SharedModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SharedModule", function() { return SharedModule; });
+class SharedModule {
+}
+
+
 /***/ })
 
 }]);

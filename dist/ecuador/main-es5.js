@@ -103,7 +103,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         ɵ1 = function ɵ1() {
       return Promise.all(
       /*! import() | pages-login-login-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~pages-forgot-forgot-module-ngfactory~pages-layout-layout-module-ngfactory~pages-login-login-~1d59073f"), __webpack_require__.e("common"), __webpack_require__.e("pages-login-login-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~pages-forgot-forgot-module-ngfactory~pages-layout-layout-module-ngfactory~pages-login-login-~1d59073f"), __webpack_require__.e("common"), __webpack_require__.e("pages-login-login-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./pages/login/login.module.ngfactory */
       "./src/app/pages/login/login.module.ngfactory.js")).then(function (m) {
         return m.LoginModuleNgFactory;
@@ -112,7 +112,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         ɵ2 = function ɵ2() {
       return Promise.all(
       /*! import() | pages-forgot-forgot-module-ngfactory */
-      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~5574a69d"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~ec58702b"), __webpack_require__.e("default~pages-forgot-forgot-module-ngfactory~pages-layout-layout-module-ngfactory~pages-login-login-~1d59073f"), __webpack_require__.e("common"), __webpack_require__.e("pages-forgot-forgot-module-ngfactory")]).then(__webpack_require__.bind(null,
+      [__webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~7d4b9e82"), __webpack_require__.e("default~crm-clientes-clientes-module-ngfactory~crm-clientes-edit-edit-module-ngfactory~crm-delivery-~266c51af"), __webpack_require__.e("default~pages-forgot-forgot-module-ngfactory~pages-layout-layout-module-ngfactory~pages-login-login-~1d59073f"), __webpack_require__.e("common"), __webpack_require__.e("pages-forgot-forgot-module-ngfactory")]).then(__webpack_require__.bind(null,
       /*! ./pages/forgot/forgot.module.ngfactory */
       "./src/app/pages/forgot/forgot.module.ngfactory.js")).then(function (m) {
         return m.ForgotModuleNgFactory;
@@ -1564,7 +1564,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       addstatusprealert: URL + '/romi/apirm/prealert/state/new',
       updatestatusprealert: URL + '/romi/apirm/prealert/state/update',
       deletestatusprealert: URL + '/romi/apirm/prealert/state/del',
-      getXlsPrealert: URL + '/romi/apirm/prealert/generate/xls'
+      getXlsPrealert: URL + '/romi/apirm/prealert/generate/xls',
+      templates: URL + '/romi/apirm/template/list/all',
+      addtemplateshead: URL + '/romi/apirm/template/new',
+      addtemplatesdetaill: URL + '/romi/apirm/template/detail/new',
+      deletetemplate: URL + '/romi/apirm/template/delete/',
+      deletetemplatedetalle: URL + '/romi/apirm/template/delete/detail/',
+      updatetemplatedetalle: URL + '/romi/apirm/template/detail/update'
     };
     /***/
   },
