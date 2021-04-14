@@ -1,0 +1,86 @@
+<div class="ui-g">
+    <div class="ui-g-12">
+        <div class="card card-w-title">
+            <p-toast></p-toast>
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                [fullScreen]="true">
+                <p style="color: white"> Loading... </p>
+            </ngx-spinner>
+            <div>
+                <div class="ui-g form-group ui-fluid">
+                    <div class="ui-g-12 ui-lg-12 ui-md-12">
+                        <h1>
+                            {{'Pedidos a procesar' | translate}}</h1>
+                    </div>
+                    <div class="ui-g-12 ui-md-12">
+                        <div class="ui-g-12 ui-md-2 pedidos">
+                            <div *ngFor="let pedido of pedidos;let i = index" (click)="editPedido(pedido,i)" [class]="i==indice?'active':''">
+                                <label>
+                                    <div class="fase">{{getState(pedido.head?.fase)}}
+                                    </div>
+                                    <i class="fa fa-hand-o-right" aria-hidden="true"></i> {{pedido.head?.fecha}}
+                                </label>
+                                <hr>
+                            </div>
+                        </div>                       
+                        <div class="ui-g-12 ui-md-10">
+                            <p-fieldset [legend]="'Detalle del pedido' | translate">
+                                <div class="ui-g form-group ui-fluid">
+                                    <div class="ui-g-12 ui-md-6">
+                                        <label class="lbl">{{'Fecha solicitud' | translate }}</label>
+                                        <input type="text" pInputText [(value)]="select?.head.fecha" readonly/>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-6">
+                                        <label class="lbl">{{'Cliente' | translate }}</label>
+                                        <input type="text" pInputText [(value)]="select?.head.client.nombres" readonly/>
+                                    </div>
+                                    <hr>
+                                    <p-table [value]="select?.items" styleClass="p-datatable-sm">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>Variedad</th>
+                                                <th>Tamaño</th>
+                                                <th>Cantidad</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item>
+                                            <tr>
+                                                <td>{{item.flower}}</td>
+                                                <td>{{item.cm}}</td>
+                                                <td>{{item.totaltallos}}</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-12">
+                                    <div class="ui-g-12 ui-md-6">
+                                    </div>
+                                    <div class="ui-g-12 ui-md-3">
+                                        <button pButton label="Cancelar" icon="pi pi-times" (click)="cancel()"
+                                            class="ui-button-help"></button>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-3">
+                                        <button pButton label="Confirmar" icon="pi pi-check" (click)="confirmar()"
+                                            class="ui-button-warning"></button>
+                                    </div>
+                                </div>
+
+                            </p-fieldset>
+                        </div>
+                    </div>                   
+                </div>
+            </div>
+        </div>
+        <!--Confirmar cuadro de dialogo confirm-->
+        <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+            <p-footer>
+                <button type="button" pButton icon="pi pi-times" class="ui-button-danger" [label]="'No' | translate"
+                    (click)="cd.reject()"></button>
+                <button type="button" pButton icon="pi pi-check" class="ui-button-success" [label]="'Si' | translate"
+                    (click)="cd.accept()"></button>
+            </p-footer>
+        </p-confirmDialog>
+    </div>
+
+</div>

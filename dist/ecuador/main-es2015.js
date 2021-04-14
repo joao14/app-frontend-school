@@ -1154,7 +1154,7 @@ _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["platformBrowser"]().boot
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/alex/Documentos/AddSofTech/Aplicaciones web/ROSA MISTICA/ecuador-ng-9.0.0/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/alex/Documentos/AddSofTech/Rosa Mistica/rosa_mistica/src/main.ts */"./src/main.ts");
 
 
 /***/ })

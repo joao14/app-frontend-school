@@ -5906,13 +5906,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "facturar",
         value: function facturar() {
-          this.step = 2;
-          this.selectclient = null;
-          this.selectmark = null;
-        }
-      }, {
-        key: "back",
-        value: function back() {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0,
           /*#__PURE__*/
           regeneratorRuntime.mark(function _callee14() {
@@ -5920,7 +5913,33 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               while (1) {
                 switch (_context14.prev = _context14.next) {
                   case 0:
-                    _context14.next = 2;
+                    this.editInvoice = false;
+                    this.step = 2;
+                    this.selectclient = null;
+                    this.selectmark = null;
+                    this.selectdraft = null;
+                    this.idObjTmp = null;
+                    this.claveacceso = null;
+
+                  case 7:
+                  case "end":
+                    return _context14.stop();
+                }
+              }
+            }, _callee14, this);
+          }));
+        }
+      }, {
+        key: "back",
+        value: function back() {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0,
+          /*#__PURE__*/
+          regeneratorRuntime.mark(function _callee15() {
+            return regeneratorRuntime.wrap(function _callee15$(_context15) {
+              while (1) {
+                switch (_context15.prev = _context15.next) {
+                  case 0:
+                    _context15.next = 2;
                     return this.getinvoicesdraft();
 
                   case 2:
@@ -5928,6 +5947,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     this.items = [];
                     this.selectclient = null;
                     this.facturaForm.reset();
+                    this.itemForm.reset();
                     this.factura.tallos = 0;
                     this.factura.total = 0;
                     this.factura.boxes = 0;
@@ -5937,12 +5957,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     this.automatico = false;
                     this.dialogViewTemplates = false;
 
-                  case 14:
+                  case 15:
                   case "end":
-                    return _context14.stop();
+                    return _context15.stop();
                 }
               }
-            }, _callee14, this);
+            }, _callee15, this);
           }));
         }
       }, {
@@ -5950,13 +5970,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function viewdraft(draft) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0,
           /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee15() {
+          regeneratorRuntime.mark(function _callee16() {
             var _this16 = this;
 
             var head, detail, invoice;
-            return regeneratorRuntime.wrap(function _callee15$(_context15) {
+            return regeneratorRuntime.wrap(function _callee16$(_context16) {
               while (1) {
-                switch (_context15.prev = _context15.next) {
+                switch (_context16.prev = _context16.next) {
                   case 0:
                     head = {
                       codiesta: draft.cabecera.codiesta,
@@ -6001,7 +6021,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                       idObjTmp: draft.idObjTmp == null ? null : draft.idObjTmp
                     };
                     this.utilService.isLoading.next(true);
-                    _context15.next = 7;
+                    _context16.next = 7;
                     return this.api.generatePdfInvoiceDraft(invoice, localStorage.getItem('token')).then(function (data) {
                       if (data.headerApp.code == 200) {
                         location.href = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].url + data.data.xls;
@@ -6025,10 +6045,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                   case 8:
                   case "end":
-                    return _context15.stop();
+                    return _context16.stop();
                 }
               }
-            }, _callee15, this);
+            }, _callee16, this);
           }));
         }
       }, {
@@ -6039,79 +6059,83 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function edit(draft) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0,
           /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee17() {
+          regeneratorRuntime.mark(function _callee18() {
             var _this17 = this;
 
             var cliente, mark, empresacargo;
-            return regeneratorRuntime.wrap(function _callee17$(_context17) {
+            return regeneratorRuntime.wrap(function _callee18$(_context18) {
               while (1) {
-                switch (_context17.prev = _context17.next) {
+                switch (_context18.prev = _context18.next) {
                   case 0:
+                    this.utilService.isLoading.next(true);
+                    _context18.next = 3;
+                    return this.getServicios();
+
+                  case 3:
                     this.editInvoice = true;
                     this.selectdraft = draft;
                     this.step = 2;
                     this.idFactura = draft.cabecera.secuencial;
-                    this.utilService.isLoading.next(true);
-                    _context17.next = 7;
+                    _context18.next = 9;
                     return this.getClientbyName(draft.cabecera.cliente.nombres);
 
-                  case 7:
-                    cliente = _context17.sent;
+                  case 9:
+                    cliente = _context18.sent;
                     this.facturaForm.get('cliente').setValue(cliente);
-                    _context17.next = 11;
+                    _context18.next = 13;
                     return this.onOptionsSelected();
 
-                  case 11:
-                    _context17.next = 13;
+                  case 13:
+                    _context18.next = 15;
                     return this.getMarcbyName(draft.cabecera.cliente.entiId, draft.cabecera.mark);
 
-                  case 13:
-                    mark = _context17.sent;
+                  case 15:
+                    mark = _context18.sent;
                     this.selectmark = mark;
                     this.facturaForm.get('marca').setValue(mark);
-                    _context17.next = 18;
+                    _context18.next = 20;
                     return this.getEmpresaCargabyName(draft.cabecera.cargname);
 
-                  case 18:
-                    empresacargo = _context17.sent;
+                  case 20:
+                    empresacargo = _context18.sent;
                     this.facturaForm.get('empresacargo').setValue(empresacargo);
                     this.facturaForm.get('mawba').setValue(draft.cabecera.mawb);
                     this.selectOptions('manual');
                     this.items = [];
-                    _context17.next = 25;
+                    _context18.next = 27;
                     return Promise.all(draft.detalles.map(function (item) {
                       return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this17, void 0, void 0,
                       /*#__PURE__*/
-                      regeneratorRuntime.mark(function _callee16() {
+                      regeneratorRuntime.mark(function _callee17() {
                         var tamanio, caja, farm, flower;
-                        return regeneratorRuntime.wrap(function _callee16$(_context16) {
+                        return regeneratorRuntime.wrap(function _callee17$(_context17) {
                           while (1) {
-                            switch (_context16.prev = _context16.next) {
+                            switch (_context17.prev = _context17.next) {
                               case 0:
-                                _context16.next = 2;
+                                _context17.next = 2;
                                 return this.tamanios.filter(function (tamanio) {
                                   return tamanio.code == item.medidatallo;
                                 });
 
                               case 2:
-                                tamanio = _context16.sent;
-                                _context16.next = 5;
+                                tamanio = _context17.sent;
+                                _context17.next = 5;
                                 return this.cajas.filter(function (caja) {
                                   return caja.code == item.tipoempaque;
                                 });
 
                               case 5:
-                                caja = _context16.sent;
-                                _context16.next = 8;
+                                caja = _context17.sent;
+                                _context17.next = 8;
                                 return this.getFincabyName(item.farm);
 
                               case 8:
-                                farm = _context16.sent;
-                                _context16.next = 11;
+                                farm = _context17.sent;
+                                _context17.next = 11;
                                 return this.getFlowerbyName(item.flower);
 
                               case 11:
-                                flower = _context16.sent;
+                                flower = _context17.sent;
                                 this.items.push({
                                   caja: caja[0] == null ? '' : caja[0],
                                   pieza: item.cantidadcajas,
@@ -6128,14 +6152,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                               case 13:
                               case "end":
-                                return _context16.stop();
+                                return _context17.stop();
                             }
                           }
-                        }, _callee16, this);
+                        }, _callee17, this);
                       }));
                     }));
 
-                  case 25:
+                  case 27:
                     this.items.sort(function (a, b) {
                       if (a.line > b.line) {
                         return 1;
@@ -6158,12 +6182,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     });
                     this.utilService.isLoading.next(false);
 
-                  case 32:
+                  case 34:
                   case "end":
-                    return _context17.stop();
+                    return _context18.stop();
                 }
               }
-            }, _callee17, this);
+            }, _callee18, this);
           }));
         }
       }, {
@@ -6171,19 +6195,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function viewXlsx() {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0,
           /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee18() {
+          regeneratorRuntime.mark(function _callee19() {
             var _this18 = this;
 
-            return regeneratorRuntime.wrap(function _callee18$(_context18) {
+            return regeneratorRuntime.wrap(function _callee19$(_context19) {
               while (1) {
-                switch (_context18.prev = _context18.next) {
+                switch (_context19.prev = _context19.next) {
                   case 0:
-                    _context18.next = 2;
+                    _context19.next = 2;
                     return this.getInvoice();
 
                   case 2:
                     this.utilService.isLoading.next(true);
-                    _context18.next = 5;
+                    _context19.next = 5;
                     return this.api.generatePdfInvoiceDraft(this.invoice, localStorage.getItem('token')).then(function (data) {
                       if (data.headerApp.code == 200) {
                         location.href = src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].url + data.data.xls;
@@ -6207,10 +6231,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                   case 6:
                   case "end":
-                    return _context18.stop();
+                    return _context19.stop();
                 }
               }
-            }, _callee18, this);
+            }, _callee19, this);
           }));
         }
       }, {
@@ -6218,13 +6242,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function getInvoice() {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0,
           /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee20() {
+          regeneratorRuntime.mark(function _callee21() {
             var _this19 = this;
 
             var head, detail;
-            return regeneratorRuntime.wrap(function _callee20$(_context20) {
+            return regeneratorRuntime.wrap(function _callee21$(_context21) {
               while (1) {
-                switch (_context20.prev = _context20.next) {
+                switch (_context21.prev = _context21.next) {
                   case 0:
                     this.factura.items = this.items;
                     head = {
@@ -6250,16 +6274,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                       contdocu: this.selectdraft != null ? this.selectdraft.cabecera.contdocu : 0
                     };
                     detail = [];
-                    _context20.next = 5;
+                    _context21.next = 5;
                     return this.factura.items.forEach(function (data) {
                       return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this19, void 0, void 0,
                       /*#__PURE__*/
-                      regeneratorRuntime.mark(function _callee19() {
-                        return regeneratorRuntime.wrap(function _callee19$(_context19) {
+                      regeneratorRuntime.mark(function _callee20() {
+                        return regeneratorRuntime.wrap(function _callee20$(_context20) {
                           while (1) {
-                            switch (_context19.prev = _context19.next) {
+                            switch (_context20.prev = _context20.next) {
                               case 0:
-                                _context19.next = 2;
+                                _context20.next = 2;
                                 return detail.push({
                                   tipoempaque: data.caja == undefined ? "" : data.caja['code'],
                                   cantidadcajas: data.pieza == undefined || data.pieza == 0 ? "" : String(data.pieza),
@@ -6276,10 +6300,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                               case 2:
                               case "end":
-                                return _context19.stop();
+                                return _context20.stop();
                             }
                           }
-                        }, _callee19);
+                        }, _callee20);
                       }));
                     });
 
@@ -6292,10 +6316,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                   case 6:
                   case "end":
-                    return _context20.stop();
+                    return _context21.stop();
                 }
               }
-            }, _callee20, this);
+            }, _callee21, this);
           }));
         }
       }, {
@@ -6303,14 +6327,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function _continue() {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0,
           /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee22() {
+          regeneratorRuntime.mark(function _callee23() {
             var _this20 = this;
 
-            return regeneratorRuntime.wrap(function _callee22$(_context22) {
+            return regeneratorRuntime.wrap(function _callee23$(_context23) {
               while (1) {
-                switch (_context22.prev = _context22.next) {
+                switch (_context23.prev = _context23.next) {
                   case 0:
-                    _context22.next = 2;
+                    _context23.next = 2;
                     return this.getInvoice();
 
                   case 2:
@@ -6323,23 +6347,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     }
 
                     this.spinner.show();
-                    _context22.next = 7;
+                    _context23.next = 7;
                     return this.api.registerInvoiceDraft(this.invoice, localStorage.getItem("token")).then(function (data) {
                       return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this20, void 0, void 0,
                       /*#__PURE__*/
-                      regeneratorRuntime.mark(function _callee21() {
-                        return regeneratorRuntime.wrap(function _callee21$(_context21) {
+                      regeneratorRuntime.mark(function _callee22() {
+                        return regeneratorRuntime.wrap(function _callee22$(_context22) {
                           while (1) {
-                            switch (_context21.prev = _context21.next) {
+                            switch (_context22.prev = _context22.next) {
                               case 0:
                                 this.spinner.hide();
 
                                 if (!(data.headerApp.code == 200)) {
-                                  _context21.next = 8;
+                                  _context22.next = 8;
                                   break;
                                 }
 
-                                _context21.next = 4;
+                                _context22.next = 4;
                                 return this.getinvoicesdraft();
 
                               case 4:
@@ -6354,12 +6378,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                               case 8:
                               case "end":
-                                return _context21.stop();
+                                return _context22.stop();
                             }
                           }
-                        }, _callee21, this);
+                        }, _callee22, this);
                       }));
                     }).catch(function (err) {
+                      console.log(err);
+
                       _this20.spinner.hide();
 
                       if (err.error.code == 401) {
@@ -6371,10 +6397,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                   case 7:
                   case "end":
-                    return _context22.stop();
+                    return _context23.stop();
                 }
               }
-            }, _callee22, this);
+            }, _callee23, this);
           }));
         }
       }, {
@@ -6382,16 +6408,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function getMarcbyName(entiId, name) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0,
           /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee23() {
+          regeneratorRuntime.mark(function _callee24() {
             var _this21 = this;
 
             var marc;
-            return regeneratorRuntime.wrap(function _callee23$(_context23) {
+            return regeneratorRuntime.wrap(function _callee24$(_context24) {
               while (1) {
-                switch (_context23.prev = _context23.next) {
+                switch (_context24.prev = _context24.next) {
                   case 0:
                     marc = null;
-                    _context23.next = 3;
+                    _context24.next = 3;
                     return this.api.getMarcbyName(entiId, name.toUpperCase(), localStorage.getItem("token")).then(function (data) {
                       if (data.headerApp.code == 200) {
                         marc = data.data.mark;
@@ -6405,14 +6431,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     });
 
                   case 3:
-                    return _context23.abrupt("return", marc);
+                    return _context24.abrupt("return", marc);
 
                   case 4:
                   case "end":
-                    return _context23.stop();
+                    return _context24.stop();
                 }
               }
-            }, _callee23, this);
+            }, _callee24, this);
           }));
         }
       }, {
@@ -6420,16 +6446,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function getEmpresaCargabyName(name) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0,
           /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee24() {
+          regeneratorRuntime.mark(function _callee25() {
             var _this22 = this;
 
             var delivery;
-            return regeneratorRuntime.wrap(function _callee24$(_context24) {
+            return regeneratorRuntime.wrap(function _callee25$(_context25) {
               while (1) {
-                switch (_context24.prev = _context24.next) {
+                switch (_context25.prev = _context25.next) {
                   case 0:
                     delivery = null;
-                    _context24.next = 3;
+                    _context25.next = 3;
                     return this.api.getObjectbyName('Z', name.toUpperCase(), localStorage.getItem("token")).then(function (data) {
                       if (data.headerApp.code == 200) {
                         delivery = data.data.cargocompanie;
@@ -6443,14 +6469,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     });
 
                   case 3:
-                    return _context24.abrupt("return", delivery);
+                    return _context25.abrupt("return", delivery);
 
                   case 4:
                   case "end":
-                    return _context24.stop();
+                    return _context25.stop();
                 }
               }
-            }, _callee24, this);
+            }, _callee25, this);
           }));
         }
       }, {
@@ -6458,53 +6484,53 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function choose() {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0,
           /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee26() {
+          regeneratorRuntime.mark(function _callee27() {
             var _this23 = this;
 
-            return regeneratorRuntime.wrap(function _callee26$(_context26) {
+            return regeneratorRuntime.wrap(function _callee27$(_context27) {
               while (1) {
-                switch (_context26.prev = _context26.next) {
+                switch (_context27.prev = _context27.next) {
                   case 0:
                     this.dialogViewTemplates = false;
                     this.items = [];
                     this.utilService.isLoading.next(true);
-                    _context26.next = 5;
+                    _context27.next = 5;
                     return this.selectedTemplate.detalle.forEach(function (item) {
                       return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this23, void 0, void 0,
                       /*#__PURE__*/
-                      regeneratorRuntime.mark(function _callee25() {
+                      regeneratorRuntime.mark(function _callee26() {
                         var _this24 = this;
 
                         var tamanio, caja, farm, flower;
-                        return regeneratorRuntime.wrap(function _callee25$(_context25) {
+                        return regeneratorRuntime.wrap(function _callee26$(_context26) {
                           while (1) {
-                            switch (_context25.prev = _context25.next) {
+                            switch (_context26.prev = _context26.next) {
                               case 0:
-                                _context25.next = 2;
+                                _context26.next = 2;
                                 return this.tamanios.filter(function (tamanio) {
                                   return tamanio.code == item.medidatallo;
                                 });
 
                               case 2:
-                                tamanio = _context25.sent;
-                                _context25.next = 5;
+                                tamanio = _context26.sent;
+                                _context26.next = 5;
                                 return this.cajas.filter(function (caja) {
                                   return caja.code == item.tipoempaque;
                                 });
 
                               case 5:
-                                caja = _context25.sent;
-                                _context25.next = 8;
+                                caja = _context26.sent;
+                                _context26.next = 8;
                                 return this.getFincabyName(item.farm);
 
                               case 8:
-                                farm = _context25.sent;
-                                _context25.next = 11;
+                                farm = _context26.sent;
+                                _context26.next = 11;
                                 return this.getFlowerbyName(item.flor);
 
                               case 11:
-                                flower = _context25.sent;
-                                _context25.next = 14;
+                                flower = _context26.sent;
+                                _context26.next = 14;
                                 return this.items.push({
                                   caja: caja[0] == null ? '' : caja[0],
                                   pieza: item.cantidadcajas != null ? parseInt(item.cantidadcajas) : 0,
@@ -6547,10 +6573,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                               case 24:
                               case "end":
-                                return _context25.stop();
+                                return _context26.stop();
                             }
                           }
-                        }, _callee25, this);
+                        }, _callee26, this);
                       }));
                     });
 
@@ -6564,10 +6590,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                   case 11:
                   case "end":
-                    return _context26.stop();
+                    return _context27.stop();
                 }
               }
-            }, _callee26, this);
+            }, _callee27, this);
           }));
         }
       }, {

@@ -1,0 +1,35 @@
+.pedidos{
+    
+    border-style: solid;
+    border-color: black;
+    padding: 20px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+.fase{
+    font-weight: bold;
+    font-size: 12px;
+    background-color: #ff4456;
+    color: white;
+    padding: 4px;
+    width: 50%;
+    text-align: center;
+    border-radius: 8px;
+
+}
+
+.lbl {
+    font-weight: bold;
+    text-align: center;
+    font-size: 15px;
+}
+
+.active{
+    background-color: #ff919b;
+    color: white;
+    border-style: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}

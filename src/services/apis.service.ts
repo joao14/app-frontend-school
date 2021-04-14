@@ -961,6 +961,40 @@ export class ApisService {
 
     }
 
+    public pedidos(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.pedidos, opt).toPromise().then(pedidos => {
+                resolve(pedidos);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public addpedido(pedido: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.pedidoregister, pedido, opt).toPromise().then(pedido => {
+                resolve(pedido);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+
 
     httpPost(url, body) {
         const header = {

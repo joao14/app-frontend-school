@@ -35,6 +35,8 @@ const routes: Routes = [
             { path: 'editarestados', loadChildren: () => import('./crm/estados/edit/edit.module').then(m => m.EditModule) },
             { path: 'template', loadChildren: () => import('./templates/templates.module').then(m => m.TemplatesModule) },
             { path: 'edittemplate', loadChildren: () => import('./templates/edit/edit.module').then(m => m.EditModule) }, 
+            { path: 'order', loadChildren: () => import('./order/order.module').then(m => m.OrderModule) }, 
+            { path: 'pedido', loadChildren: () => import('./pedido/pedido.module').then(m => m.PedidoModule) }, 
         ]
     }  
 ];

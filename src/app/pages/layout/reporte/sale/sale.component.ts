@@ -110,8 +110,8 @@ export class SaleComponent implements OnInit {
     this.totaltallos = 0;
     this.invoices = [];
     this.utilService.isLoading.next(true);
-    await this.api.getsales(this.getFormatDate(this.dateIni).replace(/-/g, "") + " 00:00:00",
-      this.getFormatDate(this.dateFin).replace(/-/g, "") + " 23:59:59",
+    await this.api.getsales(this.getSimpleFormatDate(this.dateIni).replace(/-/g, "") + " 00:00:00",
+      this.getSimpleFormatDate(this.dateFin).replace(/-/g, "") + " 23:59:59",
       localStorage.getItem("token")).then(data => {
         console.log('DATA');
         console.log(data);
@@ -122,7 +122,7 @@ export class SaleComponent implements OnInit {
             this.total += parseInt(res.total);
             this.totalcajas += res.numeboxes;
           })
-        }else{
+        } else {
           this.messageService.add({ severity: 'warn', summary: 'Rosa Mística', detail: 'No se ha encontrado información al respecto' });
         }
       }).catch(err => {
@@ -167,6 +167,7 @@ export class SaleComponent implements OnInit {
       docu: this.selectfactura.pdf,
       fechaDocu: this.getFormatDate(new Date())
     }
+
     this.utilService.isLoading.next(true);
     await this.api.sendEmail(contentEmail, localStorage.getItem("token")).then(data => {
       if (data.headerApp.code == 200) {
@@ -185,8 +186,12 @@ export class SaleComponent implements OnInit {
     this.utilService.isLoading.next(false);
   }
 
+  getSimpleFormatDate(date: Date): string {
+    return (moment(date)).format('YYYY-MM-DD');
+  }
+
   getFormatDate(date: Date): string {
-    return (moment(date)).format('yyyy-MM-DD');
+    return (moment(date)).format('yyyy-MM-DD HH:mm:ss.SSS');
   }
 
 

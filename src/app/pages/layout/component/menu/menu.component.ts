@@ -573,10 +573,14 @@ export class MenuComponent implements OnInit, OnChanges {
                                             } else
                                                 if (item == 'STATUS') {
                                                     this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Estados' }])
-                                                }else
-                                                if (item == 'TEMP') {
-                                                    this.app.utilservice.itemsSource.next([{ 'label': 'Templates' }, { 'label': 'Facturación' }])
-                                                }
+                                                } else
+                                                    if (item == 'TEMP') {
+                                                        this.app.utilservice.itemsSource.next([{ 'label': 'Templates' }, { 'label': 'Facturación' }])
+                                                    } else if (item == 'ORDER') {
+                                                        this.app.utilservice.itemsSource.next([{ 'label': 'Ordenes' }])
+                                                    } else if (item == 'PEDIDO') {
+                                                        this.app.utilservice.itemsSource.next([{ 'label': 'Pedidos' }])
+                                                    }
 
         if (this.activeItem == item) {
             this.activeItem = "";

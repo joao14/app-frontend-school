@@ -239,7 +239,8 @@ export class DocumentoComponent implements OnInit {
       secuencia: this.prealerts[0]?.head.pralId,
       docu: this.selectclientprealert.pdf,
       fechaDocu: this.getFormatDate(new Date())
-    }
+    }    
+    
     this.utilService.isLoading.next(true);
     await this.api.sendEmail(contentEmail, localStorage.getItem("token")).then(data => {
       if (data.headerApp.code == 200) {

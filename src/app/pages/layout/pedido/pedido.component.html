@@ -1,0 +1,287 @@
+<div class="ui-g">
+    <div class="ui-g-12">
+        <div class="card card-w-title">
+            <p-toast></p-toast>
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                [fullScreen]="true">
+                <p style="color: white"> Loading... </p>
+            </ngx-spinner>
+            <div *ngIf="pedidos.length > 0 && step <= 1">
+                <h1>{{'Pedidos de asignación' | translate}}</h1>
+                <p-table [value]="pedidos" class="p-datatable-responsive-demo">
+                    <ng-template pTemplate="caption">
+                        <div class="p-d-flex p-ai-center p-jc-between">
+                            {{'Pedidos pendientes'| translate}} [ {{pedidos.length}} ]
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 8em;"></th>
+                            <th>{{'Fecha' | translate}}</th>
+                            <th>{{'Estado' | translate}}</th>
+                            <th>{{'Fase' | translate}}</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-item>
+                        <tr style="background-color: white;">
+                            <td><span class="p-column-title">
+                                    <button pButton type="button" class="ui-button-warning"
+                                        style="height: 30px; border-radius: 5px;" (click)="edit(item)">
+                                        <i class="pi pi-pencil" style="font-size: 1.7rem"></i>
+                                    </button>
+                                    &nbsp;
+                                    <button pButton type="button" class="ui-button-info"
+                                        style="height: 30px; border-radius: 5px;" (click)="track(item)">
+                                        <i class="pi pi-calendar-minus" style="font-size: 1.7rem"></i>
+                                    </button>
+                                </span>
+                            </td>
+                            <td><span class="p-column-title">{{item.head.fecha }}</span></td>
+                            <td><span class="p-column-title">{{item.head.state }}</span></td>
+                            <td><span class="p-column-title">{{getState(item.head.fase) }}</span></td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <hr>
+                <div class="ui-g form-group ui-fluid">
+                    <div class="ui-g-12 ui-md-9"></div>
+                    <div class="ui-g-12 ui-md-3">
+                        <button pButton type="button" icon="pi pi-chevron-circle-right" style="font-size: 1rem"
+                            [label]="'Nuevo pedido' | translate" class="ui-button-info ouput_btn_table"
+                            (click)="addpedido()">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="pedidos.length <= 0 || step ==2">
+                <div class="ui-g form-group ui-fluid">
+                    <div class="ui-g-12 ui-md-10">
+                        <h1 *ngIf="!editPedido && step > 1">
+                            {{'Crear pedido' | translate}}</h1>
+                        <h1 *ngIf="editPedido && step > 1">{{'Editando el pedido' | translate }} # {{selectpedido.head.pediId}}</h1>
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        <button pButton type="button" icon="pi pi-arrow-circle-left"
+                            [label]="'Lista de pedidos' | translate" icon="pi pi-arrow-circle-left"
+                            class="ui-button-warning ouput_btn_table" (click)="back()"></button>
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <label for="flor" class="lbl">{{'Fecha envío' | translate}}</label>
+                        <p-calendar [(ngModel)]="dateEnvio" [showIcon]="true" [readonlyInput]="true"
+                            [minDate]="dateEnvio" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'">
+                        </p-calendar>
+                    </div>
+                    <div class="ui-g-12 ui-md-8"></div>
+                </div>
+                <form [formGroup]="pedidoForm" (ngSubmit)="save()">
+                    <p-accordion>
+                        <p-accordionTab [header]="'Datos del pedido' | translate" [selected]="true">
+                            <div class="ui-g form-group ui-fluid">
+                                <div class="ui-g-12 ui-md-3">
+                                    <label for="flor" class="lbl">{{'Variedad' | translate}}</label>
+                                    <p-dropdown [options]="flores" formControlName="flor" optionLabel="flor.nombre"
+                                        [ngClass]="{ 'is-invalid': submitted && f.flor.errors }" class="form-control"
+                                        [filter]="true" [placeholder]="'Seleccione' | translate">
+                                    </p-dropdown>
+                                    <div *ngIf="submitted && f.flor.errors" class="invalid-feedback">
+                                        <div *ngIf="f.flor.errors.required">
+                                            {{'Variedad es requerido' | translate}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-3">
+                                    <label for="tamanio" class="lbl">{{'Tamaño' | translate}}</label>
+                                    <p-dropdown [options]="tamanios" [placeholder]="'Seleccione' | translate"
+                                        optionLabel="name" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.tamanio.errors }"
+                                        formControlName="tamanio">
+                                    </p-dropdown>
+                                    <div *ngIf="submitted && f.tamanio.errors" class="invalid-feedback">
+                                        <div *ngIf="f.tamanio.errors.required">{{'Tamaño es requerido' | translate}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-md-3">
+                                    <label for="cantidad" class="lbl">{{'Cantidad' | translate}}</label>
+                                    <input type="text" id="cantidad" pInputText formControlName="cantidad"
+                                        pKeyFilter="int" [ngClass]="{ 'is-invalid': submitted && f.cantidad.errors }"
+                                        placeholder="0" class="form-control">
+                                    <div *ngIf="submitted && f.cantidad.errors" class="invalid-feedback">
+                                        <div *ngIf="f.cantidad.errors.required">{{'Cantidad es requerido' | translate}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-md-3">
+                                    <br>
+                                    <button pButton type="submit" icon="pi pi-plus" class="ui-button-primary"
+                                        [label]="'Agregar' | translate"></button>
+                                </div>
+                            </div>
+                        </p-accordionTab>
+                    </p-accordion>
+                </form>
+                <p-table [value]="items" class="p-datatable-responsive-demo">
+                    <ng-template pTemplate="caption">
+                        <div class="p-d-flex p-ai-center p-jc-between">
+                            {{'Items del pedido'| translate}} [ {{items.length}} ]
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 8em;"></th>
+                            <th style="width: 15em;">{{'Variedad' | translate}}</th>
+                            <th>{{'CM' | translate}}</th>
+                            <th>{{'Cantidad' | translate}}</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-item>
+                        <tr style="background-color: white;">
+                            <td><span class="p-column-title">
+                                    <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
+                                        (click)="deleteItem(item)"></button>
+                                </span>
+                            </td> 
+                            <td><span class="p-column-title">{{item.variedad.flor.nombre | titlecase}}</span></td>
+                            <td><span class="p-column-title">{{item.stem.name}}</span></td>
+                            <td style="width: 10em;">{{item.cantidad}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>  
+                <br>
+                <div class="ui-g form-group ui-fluid">
+                    <div class="ui-grid-col-10"></div>
+                    <div class="ui-grid-col-2" *ngIf="!editPedido">
+                        <button pButton icon="pi pi-arrow-right" class="ui-button-help btn_enviar" (click)="finalizar()"
+                            [label]="'Finalizar' | translate" [disabled]="items.length <= 0"></button>
+                    </div>
+                    <div class="ui-grid-col-2" *ngIf="editPedido">
+                        <button pButton icon="pi pi-arrow-right" class="ui-button-help btn_enviar" (click)="modificar()"
+                            [label]="'Modificar' | translate" [disabled]="items.length <= 0"></button>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="step == 3">
+                <div class="ui-g form-group ui-fluid">
+                    <div class="ui-g-12 ui-md-8">
+                        <h1 *ngIf="!editPedido && step > 1">
+                            {{'Trackeo del pedido' | translate}} # {{selectpedido.head.pediId}}</h1>
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <button pButton type="button" icon="pi pi-arrow-circle-left" [label]="'Regresar' | translate"
+                            icon="pi pi-arrow-circle-left" class="ui-button-warning ouput_btn_table"
+                            (click)="back()"></button>
+                    </div>
+                </div>
+                <div class="ui-g form-group ui-fluid">
+                    <div class="ui-g-12 ui-md-1"></div>
+                    <div class="ui-g-12 ui-md-2">
+                        <div [class]="selectpedido.head.fase=='PE'?'step_active':'step_inactive'">
+                            <i class="pi pi-check" style="font-size: 2rem"></i>
+                            <br>
+                            <label>Pendiente</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        <div [class]="selectpedido.head.fase=='RE'?'step_active':'step_inactive'">
+                            <i class="pi pi-user" style="font-size: 2rem"></i>
+                            <br>
+                            <label>Revisión</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        <div [class]="selectpedido.head.fase=='PR'?'step_active':'step_inactive'">
+                            <i class="pi pi-calendar" style="font-size: 2rem"></i>
+                            <br>
+                            <label>Prealerta</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        <div [class]="selectpedido.head.fase=='FA'?'step_active':'step_inactive'">
+                            <i class="pi pi-file" style="font-size: 2rem"></i>
+                            <br>
+                            <label>Facturado</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        <div [class]="selectpedido.head.fase=='CA'?'step_active':'step_inactive'">
+                            <i class="pi pi-times" style="font-size: 2rem"></i>
+                            <br>
+                            <label>Cancelado</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-1"></div>
+                </div>
+                <!--switch-->
+                <div *ngIf="selectpedido.head.fase=='PE'">
+                    <div class="ui-g form-group ui-fluid">
+                        <div class="ui-g-12 ui-md-1"></div>
+                        <div class="ui-g-12 ui-md-10">
+                            <div class="ui-g form-group ui-fluid">
+                                <div class="ui-g-12 ui-md-3">
+                                    <label for="flor" class="lbl">{{'Fecha envío' | translate}}</label>
+                                    <div class="ui-inputgroup">
+                                        <input type="text" id="cantidad" pInputText [value]="selectpedido?.head.fecha"
+                                            pKeyFilter="int"
+                                            [ngClass]="{ 'is-invalid': submitted && f.cantidad.errors }" placeholder="0"
+                                            class="form-control">
+                                        <span class="ui-inputgroup-addon"><i class="pi pi-calendar"></i></span>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-md-9"></div>
+                            </div>
+                            <br>
+                            <p-table [value]="items" class="p-datatable-responsive-demo">
+                                <ng-template pTemplate="caption">
+                                    <div class="p-d-flex p-ai-center p-jc-between">
+                                        {{'Items del pedido'| translate}} [ {{items.length}} ]
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 40em;">{{'Variedad' | translate}}</th>
+                                        <th>{{'CM' | translate}}</th>
+                                        <th>{{'Cantidad' | translate}}</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-item>
+                                    <tr style="background-color: white;">
+                                        <td><span class="p-column-title">{{item.variedad.nombre |
+                                                titlecase}}</span></td>
+                                        <td><span class="p-column-title">{{item.stem}}</span></td>
+                                        <td style="width: 10em;">{{item.cantidad}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                        <div class="ui-g-12 ui-md-1"></div>
+                    </div>
+                </div>
+                <div *ngIf="selectpedido.head.fase=='RE'">
+                    Revisiòn
+                </div>
+                <div *ngIf="selectpedido.head.fase=='PR'">
+                    Pre alerta
+                </div>
+                <div *ngIf="selectpedido.head.fase=='FA'">
+                    Facturado
+                </div>
+                <div *ngIf="selectpedido.head.fase=='CA'">
+                    Cancelado
+                </div>
+            </div>
+        </div>
+
+        <!--Confirmar cuadro de dialogo confirm-->
+        <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+            <p-footer>
+                <button type="button" pButton icon="pi pi-times" class="ui-button-danger" [label]="'No' | translate"
+                    (click)="cd.reject()"></button>
+                <button type="button" pButton icon="pi pi-check" class="ui-button-success" [label]="'Si' | translate"
+                    (click)="cd.accept()"></button>
+            </p-footer>
+        </p-confirmDialog>
+
+    </div>
+
+</div>

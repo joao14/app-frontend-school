@@ -1,0 +1,20 @@
+export interface Item {
+    cargcompId: string,
+    cargname: string,
+    cm: string,
+    farm: string,
+    farmId: string,
+    fincapropia: string,
+    florId: number,
+    flower: string,
+    hbqb: number,
+    line: number,
+    marcId: string,
+    mark: string,
+    pcomp: string,
+    pvp: string,
+    shippingdate: string,
+    status: string,
+    tallos: number,
+    totaltallos: number
+}

@@ -1455,9 +1455,15 @@ class FacturaComponent {
         });
     }
     facturar() {
-        this.step = 2;
-        this.selectclient = null;
-        this.selectmark = null;
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.editInvoice = false;
+            this.step = 2;
+            this.selectclient = null;
+            this.selectmark = null;
+            this.selectdraft = null;
+            this.idObjTmp = null;
+            this.claveacceso = null;
+        });
     }
     back() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -1466,6 +1472,7 @@ class FacturaComponent {
             this.items = [];
             this.selectclient = null;
             this.facturaForm.reset();
+            this.itemForm.reset();
             this.factura.tallos = 0;
             this.factura.total = 0;
             this.factura.boxes = 0;
@@ -1539,11 +1546,12 @@ class FacturaComponent {
     }
     edit(draft) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.utilService.isLoading.next(true);
+            yield this.getServicios();
             this.editInvoice = true;
             this.selectdraft = draft;
             this.step = 2;
             this.idFactura = draft.cabecera.secuencial;
-            this.utilService.isLoading.next(true);
             const cliente = yield this.getClientbyName(draft.cabecera.cliente.nombres);
             this.facturaForm.get('cliente').setValue(cliente);
             yield this.onOptionsSelected();
@@ -1681,6 +1689,7 @@ class FacturaComponent {
                     this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Se guardo el borrador para seguir editando' });
                 }
             })).catch(err => {
+                console.log(err);
                 this.spinner.hide();
                 if (err.error.code == 401) {
                     localStorage.clear();

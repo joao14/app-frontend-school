@@ -1888,7 +1888,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     this.invoices = [];
                     this.utilService.isLoading.next(true);
                     _context2.next = 7;
-                    return this.api.getsales(this.getFormatDate(this.dateIni).replace(/-/g, "") + " 00:00:00", this.getFormatDate(this.dateFin).replace(/-/g, "") + " 23:59:59", localStorage.getItem("token")).then(function (data) {
+                    return this.api.getsales(this.getSimpleFormatDate(this.dateIni).replace(/-/g, "") + " 00:00:00", this.getSimpleFormatDate(this.dateFin).replace(/-/g, "") + " 23:59:59", localStorage.getItem("token")).then(function (data) {
                       console.log('DATA');
                       console.log(data);
 
@@ -2016,9 +2016,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           }));
         }
       }, {
+        key: "getSimpleFormatDate",
+        value: function getSimpleFormatDate(date) {
+          return moment__WEBPACK_IMPORTED_MODULE_1__(date).format('YYYY-MM-DD');
+        }
+      }, {
         key: "getFormatDate",
         value: function getFormatDate(date) {
-          return moment__WEBPACK_IMPORTED_MODULE_1__(date).format('yyyy-MM-DD');
+          return moment__WEBPACK_IMPORTED_MODULE_1__(date).format('yyyy-MM-DD HH:mm:ss.SSS');
         }
       }]);
 
