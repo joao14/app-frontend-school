@@ -85,7 +85,7 @@ export class PedidoComponent implements OnInit {
         break;
       }
       case 'PE': {
-        type = 'Pendiente'
+        type = 'Generado'
         break;
       }
       case 'RE': {
@@ -237,14 +237,14 @@ export class PedidoComponent implements OnInit {
 
   }
 
-  async modificar() {    
+  async modificar() {
     let head = {
       pediId: this.selectpedido.head.pediId,
-      fecha: this.selectpedido.head.fecha,
+      fecha: this.selectpedido.head.fecha + '.000',
       usuaId: this.selectpedido.head.usuaId,
       estado: this.selectpedido.head.estado,
       fase: this.selectpedido.head.fase,
-      client: this.selectpedido.head.client
+      clieId: this.selectpedido.head.client.clieId
     }
 
     let items = []
@@ -252,7 +252,7 @@ export class PedidoComponent implements OnInit {
       items.push(
         {
           line: index,
-          shippingdate: this.selectpedido.head.fecha,
+          shippingdate: this.selectpedido.head.fecha+ '.000',
           fincapropia: null,
           farmId: null,
           marcId: null,

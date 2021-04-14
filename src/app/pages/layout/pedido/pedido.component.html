@@ -7,18 +7,18 @@
                 <p style="color: white"> Loading... </p>
             </ngx-spinner>
             <div *ngIf="pedidos.length > 0 && step <= 1">
-                <h1>{{'Pedidos de asignación' | translate}}</h1>
+                <h1>{{'Pedidos' | translate}}</h1>
                 <p-table [value]="pedidos" class="p-datatable-responsive-demo">
                     <ng-template pTemplate="caption">
                         <div class="p-d-flex p-ai-center p-jc-between">
-                            {{'Pedidos pendientes'| translate}} [ {{pedidos.length}} ]
+                            {{'Pedidos en trámite'| translate}} [ {{pedidos.length}} ]
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="width: 8em;"></th>
                             <th>{{'Fecha' | translate}}</th>
-                            <th>{{'Estado' | translate}}</th>
+                            <th>{{'# Pedido' | translate}}</th>
                             <th>{{'Fase' | translate}}</th>
                         </tr>
                     </ng-template>
@@ -37,7 +37,7 @@
                                 </span>
                             </td>
                             <td><span class="p-column-title">{{item.head.fecha }}</span></td>
-                            <td><span class="p-column-title">{{item.head.state }}</span></td>
+                            <td><span class="p-column-title">{{item.head.pediId }}</span></td>
                             <td><span class="p-column-title">{{getState(item.head.fase) }}</span></td>
                         </tr>
                     </ng-template>
@@ -179,7 +179,7 @@
                         <div [class]="selectpedido.head.fase=='PE'?'step_active':'step_inactive'">
                             <i class="pi pi-check" style="font-size: 2rem"></i>
                             <br>
-                            <label>Pendiente</label>
+                            <label>Generado</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-2">
