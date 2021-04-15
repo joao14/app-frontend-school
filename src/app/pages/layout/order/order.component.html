@@ -6,7 +6,7 @@
                 [fullScreen]="true">
                 <p style="color: white"> Loading... </p>
             </ngx-spinner>
-            <div>
+            <div *ngIf="step=='PE'">
                 <div class="ui-g form-group ui-fluid">
                     <div class="ui-g-12 ui-lg-12 ui-md-12">
                         <h1>
@@ -14,7 +14,8 @@
                     </div>
                     <div class="ui-g-12 ui-md-12">
                         <div class="ui-g-12 ui-md-2 pedidos">
-                            <div *ngFor="let pedido of pedidos;let i = index" (click)="editPedido(pedido,i)" [class]="i==indice?'active':''">
+                            <div *ngFor="let pedido of pedidos;let i = index" (click)="editPedido(pedido,i)"
+                                [class]="i==indice?'active':''">
                                 <label>
                                     <div class="fase">{{getState(pedido.head?.fase)}}
                                     </div>
@@ -22,17 +23,18 @@
                                 </label>
                                 <hr>
                             </div>
-                        </div>                       
+                        </div>
                         <div class="ui-g-12 ui-md-10">
                             <p-fieldset [legend]="'Detalle del pedido' | translate">
                                 <div class="ui-g form-group ui-fluid">
                                     <div class="ui-g-12 ui-md-6">
                                         <label class="lbl">{{'Fecha solicitud' | translate }}</label>
-                                        <input type="text" pInputText [(value)]="select?.head.fecha" readonly/>
+                                        <input type="text" pInputText [(value)]="select?.head.fecha" readonly />
                                     </div>
                                     <div class="ui-g-12 ui-md-6">
                                         <label class="lbl">{{'Cliente' | translate }}</label>
-                                        <input type="text" pInputText [(value)]="select?.head.client.nombres" readonly/>
+                                        <input type="text" pInputText [(value)]="select?.head.client.nombres"
+                                            readonly />
                                     </div>
                                     <hr>
                                     <p-table [value]="select?.items" styleClass="p-datatable-sm">
@@ -57,18 +59,242 @@
                                     <div class="ui-g-12 ui-md-6">
                                     </div>
                                     <div class="ui-g-12 ui-md-3">
-                                        <button pButton label="Cancelar" icon="pi pi-times" (click)="cancel()"
-                                            class="ui-button-help"></button>
+                                        <button pButton label="Rechazar pedido" icon="pi pi-trash" (click)="cancel()"
+                                            [disabled]="select==null" class="ui-button-help"></button>
                                     </div>
                                     <div class="ui-g-12 ui-md-3">
-                                        <button pButton label="Confirmar" icon="pi pi-check" (click)="confirmar()"
-                                            class="ui-button-warning"></button>
+                                        <button pButton label="Pasar a revision" icon="pi pi-arrow-right"
+                                            iconPos="right" (click)="confirmar()" [disabled]="select==null"
+                                            class="ui-button-info"></button>
                                     </div>
                                 </div>
-
                             </p-fieldset>
                         </div>
-                    </div>                   
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="step=='RE'">
+                <div class="ui-g form-group ui-fluid">
+                    <p-accordion>
+                        <p-accordionTab [header]="'Datos de la prealerta' | translate" [selected]="true">
+                            <form [formGroup]="prealertForm" (ngSubmit)="save()">
+                                <div class="ui-g form-group ui-fluid">
+
+                                    <div class="ui-g-12 ui-md-2">
+                                        <label for="Datos de envío" class="lbl">{{'Fecha de envio' | translate }}
+                                        </label>
+                                        <p-calendar formControlName="fecha" class="form-control" dateFormat="yy/mm/dd"
+                                            [readonlyInput]="true" [minDate]="minDateValue"
+                                            [ngClass]="{ 'is-invalid': submitted && f.fecha.errors }">
+                                        </p-calendar>
+                                        <div *ngIf="submitted && f.fecha.errors" class="invalid-feedback">
+                                            <div *ngIf="f.fecha.errors.required">{{'Fecha es requerido' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-3">
+                                        <label for="cliente" class="lbl">{{'Cliente' | translate}}</label>
+                                        <p-dropdown [options]="clientes" formControlName="cliente" optionLabel="nombres"
+                                            class="form-control" (onChange)='onOptionsSelected()' [filter]="true"
+                                            placeholder="Seleccione"></p-dropdown>
+                                        <div *ngIf="submitted && f.cliente.errors" class="invalid-feedback">
+                                            <div *ngIf="f.cliente.errors.required">
+                                                {{'Cliente es requerido' | translate}}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-2">
+                                        <label class="lbl">{{'Finca' | translate }}</label>
+                                        <p-dropdown [options]="fincas" formControlName="finca" optionLabel="nombres"
+                                            [filter]="true" placeholder="Seleccione" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.finca.errors }"></p-dropdown>
+                                        <div *ngIf="submitted && f.finca.errors" class="invalid-feedback">
+                                            <div *ngIf="f.finca.errors.required">{{'Finca es requerido' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-2">
+                                        <label class="lbl">{{'Finca propia' | translate }}</label>
+                                        <div class="ui-field-checkbox">
+                                            <p-checkbox formControlName="fincapropia" binary="true" inputId="binary">
+                                            </p-checkbox> &nbsp;
+                                            <label for="binary">{{'Rosa Mística' | translate }}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-3">
+                                        <label for="marca" class="lbl">{{'Marca' | translate}}</label>
+                                        <p-dropdown [ngClass]="{ 'is-invalid': submitted && f.marca.errors }"
+                                            [options]="marks" optionLabel="nombre" class="form-control"
+                                            formControlName="marca" [filter]="true" placeholder="Seleccione">
+                                        </p-dropdown>
+                                        <div *ngIf="submitted && f.marca.errors" class="invalid-feedback">
+                                            <div *ngIf="f.marca.errors.required">{{'Marca es requerido' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-7">
+
+                                        <div class="ui-g-12 ui-md-2">
+                                            <label for="hbbq" class="lbl">{{'HB/QB' | translate}}</label>
+                                            <input type="text" pInputText formControlName="HBBQ" class="form-control"
+                                                pKeyFilter="int" placeholder="0">
+                                        </div>
+
+
+                                        <div class="ui-g-12 ui-md-5">
+                                            <label for="rosamistica" class="lbl">{{'Variedad' | translate}}</label>
+                                            <p-dropdown [options]="flores" formControlName="rosamistica"
+                                                optionLabel="nombre" [filter]="true" placeholder="Seleccione"
+                                                class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.rosamistica.errors }">
+                                            </p-dropdown>
+                                            <div *ngIf="submitted && f.rosamistica.errors" class="invalid-feedback">
+                                                <div *ngIf="f.rosamistica.errors.required">
+                                                    {{'Variedad es requerido' | translate}}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="ui-g-12 ui-md-3">
+                                            <label for="tallos" class="lbl">{{'Tallos' | translate}}</label>
+                                            <input type="text" pInputText class="form-control" formControlName="tallos"
+                                                pKeyFilter="int" placeholder="0" (focusout)="calculate()"
+                                                [ngClass]="{ 'is-invalid': submitted && f.tallos.errors }">
+                                            <div *ngIf="submitted && f.tallos.errors" class="invalid-feedback">
+                                                <div *ngIf="f.tallos.errors.required">
+                                                    {{'Tallos es requerido' | translate}}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="ui-g-12 ui-md-2">
+                                            <label for="totaltallos" style="color: #ff4456;font-weight: bold;"
+                                                class="lbl">{{'T. Tallos' | translate}}</label>
+                                            <input type="text" pInputText class="form-control"
+                                                formControlName="totaltallos" pKeyFilter="int" placeholder="0" readonly
+                                                pTooltip="Este valor se auto calculara" tooltipPosition="bottom"
+                                                style="font-size: 14px;font-weight: bold;text-align: center;background-color: #FFFAF0;"
+                                                [ngClass]="{ 'is-invalid': submitted && f.totaltallos.errors }">
+                                            <div *ngIf="submitted && f.totaltallos.errors" class="invalid-feedback">
+                                                <div *ngIf="f.totaltallos.errors.required">
+                                                    {{'Total tallos es requerido' | translate}}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="ui-g-12 ui-md-6">
+                                            <label for="carga" class="lbl">{{'Empresa carga' | translate }}</label>
+                                            <p-dropdown [options]="deliveries" formControlName="carga"
+                                                optionLabel="nombres" [filter]="true" placeholder="Seleccione"
+                                                class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.carga.errors }"></p-dropdown>
+                                            <div *ngIf="submitted && f.carga.errors" class="invalid-feedback">
+                                                <div *ngIf="f.carga.errors.required">
+                                                    {{'Empresa carga es requerido' | translate}}</div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="ui-g-12 ui-md-6">
+                                            <label class="lbl">{{'Estado' | translate}}</label>
+                                            <p-dropdown [options]="status" placeholder="Seleccione" class="form-control"
+                                                optionLabel="nombre" formControlName="estado"
+                                                [ngClass]="{ 'is-invalid': submitted && f.estado.errors }">
+                                            </p-dropdown>
+                                            <div *ngIf="submitted && f.estado.errors" class="invalid-feedback">
+                                                <div *ngIf="f.estado.errors.required">
+                                                    {{'Estado es requerido' | translate}}</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="ui-g-12 ui-md-5">
+                                        <p-fieldset legend="Valores">
+                                            <div class="ui-g-12 ui-md-12" [ngClass]="{'isvalueForm':estado}">
+
+                                                <div class="ui-g-12 ui-md-3">
+                                                    <label for="tamanio" class="lbl">{{'Tamaño' | translate}}</label>
+                                                    <p-dropdown [options]="tamanios" formControlName="tamanio"
+                                                        optionLabel="name" [filter]="true" class="form-control"
+                                                        placeholder="Seleccione">
+                                                    </p-dropdown>
+                                                </div>
+
+                                                <div class="ui-g-12 ui-md-4">
+                                                    <label class="lbl">{{'Precio compra' | translate}}</label>
+                                                    <input type="text" pInputText class="form-control"
+                                                        formControlName="preciocomp" pKeyFilter="pnum"
+                                                        placeholder="$0.00">
+                                                </div>
+
+                                                <div class="ui-g-12 ui-md-3">
+                                                    <label class="lbl">{{'Precio venta' | translate }}</label>
+                                                    <input type="text" pInputText pKeyFilter="pnum" class="form-control"
+                                                        placeholder="$0.00" formControlName="preciovent">
+
+                                                </div>
+
+                                                <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                                                    <br>
+                                                    <button pButton type="button" style="width: 50%;" label="+"
+                                                        (click)="add()"></button>
+                                                </div>
+                                                <div class="ui-g-12 ui-md-12" *ngIf="estado"
+                                                    style="color: #ff4456;font-weight: bold;">
+                                                    {{'Falta agregar campos' | translate }}
+                                                </div>
+                                            </div>
+
+                                            <div *ngFor="let numero of cantidadPrice" class="ui-g-12 ui-md-12">
+
+                                                <div class="ui-g-12 ui-md-3">
+                                                    <input type="text" [value]="numero.tamanio" pInputText readonly>
+                                                </div>
+
+                                                <div class="ui-g-12 ui-md-4">
+                                                    <input type="text" pInputText [value]="numero.preccomp" readonly>
+                                                </div>
+
+                                                <div class="ui-g-12 ui-md-3">
+                                                    <input type="text" pInputText [value]="numero.precvent" readonly>
+                                                </div>
+                                                <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                                                    <button pButton type="button" label="X" style="width: 50%;"
+                                                        (click)="remove(numero)"></button>
+                                                </div>
+                                            </div>
+
+
+
+                                        </p-fieldset>
+                                    </div>
+
+
+                                    <div class="ui-g-12 ui-md-12">
+                                        <div class="ui-g-12 ui-md-10"></div>
+                                        <div class="ui-g-12 ui-md-2">
+                                            <button pButton icon="pi pi-plus" class="ui-button-primary ouput_btn_table"
+                                                [label]="'Agregar' | translate"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </p-accordionTab>
+                    </p-accordion>
+                </div>
+                <div class="ui-g form-group ui-fluid">
+                    <div class="ui-g-12 ui-md-6">
+                    </div>
+                    <div class="ui-g-12 ui-md-3">
+                        <button pButton label="Rechazar pedido" icon="pi pi-trash" (click)="cancel()"
+                            [disabled]="select==null" class="ui-button-help"></button>
+                    </div>
+                    <div class="ui-g-12 ui-md-3">
+                        <button pButton label="Pasar a prealerta" icon="pi pi-arrow-right" iconPos="right"
+                            (click)="prealerta()" [disabled]="select==null" class="ui-button-info"></button>
+                    </div>
                 </div>
             </div>
         </div>

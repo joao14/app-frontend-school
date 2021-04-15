@@ -139,11 +139,7 @@ export class PedidoComponent implements OnInit {
       console.log(data);
       if (data.headerApp.code == 200) {
         this.pedidos = data.data.orders;
-        if (this.pedidos.length > 0) {
-          this.step = 1
-        } else {
-          this.step = 2
-        }
+        this.step = 1
       }
     }).catch(err => {
       if (err.error.code == 401) {
@@ -151,6 +147,31 @@ export class PedidoComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     })
+    console.log('Consultando los datos del cliente.....');
+    console.log(this.user.empresa.entiid);
+    console.log('**********');
+
+    await this.api.pedidosbyclient(this.user.empresa.entiid, 'PERE', localStorage.getItem('token')).then(async (data) => {
+      console.log('data pedidos por cliente');
+      console.log(data);
+      /*if (data.headerApp.code == 200) {
+        this.pedidos = data.data.orders;
+        if (this.pedidos.length > 0) {
+          this.step = 1
+        } else {
+          this.step = 2
+        }
+      }*/
+    }).catch(err => {
+      console.log('ERROR');
+      console.log(err);
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+
+
     this.util.isLoading.next(false);
   }
 
@@ -185,18 +206,14 @@ export class PedidoComponent implements OnInit {
     this.util.isLoading.next(true)
     await Promise.all(pedido.items.map(async (item) => {
       const flower = await this.getFlowerbyName(item.flower)
-      console.log('Return');
-      console.log(flower);
       this.items.push(
         {
           variedad: { 'flor': flower, 'recursos': [] },
           stem: { name: item.cm, code: item.cm },
           cantidad: item.totaltallos
         })
-    }));
+    }))
     this.util.isLoading.next(false)
-    console.log('ITEMS');
-    console.log(this.items);
 
   }
 
@@ -208,6 +225,8 @@ export class PedidoComponent implements OnInit {
   async back() {
     this.step = 1
     this.selectpedido = null
+    this.items = []
+    this.pedidos = []
     await this.getServicios()
   }
 
@@ -252,7 +271,7 @@ export class PedidoComponent implements OnInit {
       items.push(
         {
           line: index,
-          shippingdate: this.selectpedido.head.fecha+ '.000',
+          shippingdate: this.selectpedido.head.fecha + '.000',
           fincapropia: null,
           farmId: null,
           marcId: null,
@@ -277,23 +296,98 @@ export class PedidoComponent implements OnInit {
 
     console.log('ORDENES DE ITEMS');
     console.log(order);
-    this.util.isLoading.next(true)
-    await this.api.addpedido(order, localStorage.getItem('token')).then(async (data) => {
-      console.log('Se actualizado correctamente');
-      console.log(data);
-      if (data.headerApp.code == 200) {
-        await this.inicializar()
-        await this.getServicios()
-      }
+    this.confirmationService.confirm({
+      message: "Are you sure to update this order?",
+      accept: async () => {
+        this.util.isLoading.next(true)
+        await this.api.addpedido(order, localStorage.getItem('token')).then(async (data) => {
+          console.log('Se actualizado correctamente');
+          console.log(data);
+          if (data.headerApp.code == 200) {
+            await this.inicializar()
+            await this.getServicios()
+          }
 
-    }).catch(err => {
-      console.log(err);
-      if (err.error.code == 401 || err.error.code == 0) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401 || err.error.code == 0) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+        this.util.isLoading.next(false)
+
       }
     })
-    this.util.isLoading.next(false)
+
+  }
+
+  async cancelar() {
+    let head = {
+      pediId: this.selectpedido.head.pediId,
+      fecha: this.selectpedido.head.fecha + '.000',
+      usuaId: this.selectpedido.head.usuaId,
+      estado: this.selectpedido.head.estado,
+      fase: 'CA',
+      clieId: this.selectpedido.head.client.clieId
+    }
+
+    let items = []
+    this.items.forEach(async (item, index) => {
+      items.push(
+        {
+          line: index,
+          shippingdate: this.selectpedido.head.fecha + '.000',
+          fincapropia: null,
+          farmId: null,
+          marcId: null,
+          hbqb: 0,
+          florId: item.variedad['flor'].florId,
+          cm: item.stem['code'],
+          tallos: 0,
+          totaltallos: item.cantidad,
+          pcomp: "0.00",
+          cargcompId: null,
+          pvp: "0.00",
+          status: 'LOOKING'
+        }
+      )
+
+    });
+
+    let order = {
+      pedido: head,
+      detalle: items
+    }
+
+    console.log('ORDENES DE CANCELAR,,,,');
+    console.log(order);
+
+    this.confirmationService.confirm({
+      message: "Are you sure to cancel this order?",
+      accept: async () => {
+        console.log('ORDER ACCEPTED');
+        this.util.isLoading.next(true)
+        await this.api.addpedido(order, localStorage.getItem('token')).then(async (data) => {
+          console.log('Se cancelo correctamente');
+          console.log(data);
+          if (data.headerApp.code == 200) {
+            await this.inicializar()
+            await this.getServicios()
+          }
+
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401 || err.error.code == 0) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+        this.util.isLoading.next(false)
+      }
+    })
+
+
   }
 
   async finalizar() {
@@ -338,23 +432,29 @@ export class PedidoComponent implements OnInit {
 
     console.log('FINISH ORDER TO SEND');
     console.log(order);
-    this.util.isLoading.next(true)
-    await this.api.addpedido(order, localStorage.getItem('token')).then(async (data) => {
-      console.log('Se ha guarado correctamente');
-      console.log(data);
-      if (data.headerApp.code == 200) {
-        await this.inicializar()
-        await this.getServicios()
-      }
+    this.confirmationService.confirm({
+      message: "Are you sure to create a new order?",
+      accept: async () => {
+        this.util.isLoading.next(true)
+        await this.api.addpedido(order, localStorage.getItem('token')).then(async (data) => {
+          console.log('Se ha guarado correctamente');
+          console.log(data);
+          if (data.headerApp.code == 200) {
+            await this.inicializar()
+            await this.getServicios()
+          }
 
-    }).catch(err => {
-      console.log(err);
-      if (err.error.code == 401 || err.error.code == 0) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401 || err.error.code == 0) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+        this.util.isLoading.next(false)
       }
     })
-    this.util.isLoading.next(false)
+
 
   }
 

@@ -58,7 +58,8 @@
                     <div class="ui-g-12 ui-md-10">
                         <h1 *ngIf="!editPedido && step > 1">
                             {{'Crear pedido' | translate}}</h1>
-                        <h1 *ngIf="editPedido && step > 1">{{'Editando el pedido' | translate }} # {{selectpedido.head.pediId}}</h1>
+                        <h1 *ngIf="editPedido && step > 1">{{'Editando el pedido' | translate }} #
+                            {{selectpedido.head.pediId}}</h1>
                     </div>
                     <div class="ui-g-12 ui-md-2">
                         <button pButton type="button" icon="pi pi-arrow-circle-left"
@@ -141,21 +142,25 @@
                                     <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
                                         (click)="deleteItem(item)"></button>
                                 </span>
-                            </td> 
+                            </td>
                             <td><span class="p-column-title">{{item.variedad.flor.nombre | titlecase}}</span></td>
                             <td><span class="p-column-title">{{item.stem.name}}</span></td>
                             <td style="width: 10em;">{{item.cantidad}}</td>
                         </tr>
                     </ng-template>
-                </p-table>  
+                </p-table>
                 <br>
                 <div class="ui-g form-group ui-fluid">
-                    <div class="ui-grid-col-10"></div>
-                    <div class="ui-grid-col-2" *ngIf="!editPedido">
+                    <div [class]="editPedido?'ui-g-12 ui-md-8':'ui-g-12 ui-md-10'"></div>
+                    <div class="ui-g-12 ui-md-2" *ngIf="!editPedido">
                         <button pButton icon="pi pi-arrow-right" class="ui-button-help btn_enviar" (click)="finalizar()"
                             [label]="'Finalizar' | translate" [disabled]="items.length <= 0"></button>
                     </div>
-                    <div class="ui-grid-col-2" *ngIf="editPedido">
+                    <div class="ui-g-12 ui-md-2" *ngIf="editPedido">
+                        <button pButton icon="pi pi-trash" class="ui-button-info btn_enviar" (click)="cancelar()"
+                            [label]="'Cancelar' | translate"></button>
+                    </div>
+                    <div class="ui-g-12 ui-md-2" *ngIf="editPedido">
                         <button pButton icon="pi pi-arrow-right" class="ui-button-help btn_enviar" (click)="modificar()"
                             [label]="'Modificar' | translate" [disabled]="items.length <= 0"></button>
                     </div>
@@ -163,11 +168,11 @@
             </div>
             <div *ngIf="step == 3">
                 <div class="ui-g form-group ui-fluid">
-                    <div class="ui-g-12 ui-md-8">
+                    <div class="ui-g-12 ui-md-9">
                         <h1 *ngIf="!editPedido && step > 1">
                             {{'Trackeo del pedido' | translate}} # {{selectpedido.head.pediId}}</h1>
                     </div>
-                    <div class="ui-g-12 ui-md-4">
+                    <div class="ui-g-12 ui-md-3">
                         <button pButton type="button" icon="pi pi-arrow-circle-left" [label]="'Regresar' | translate"
                             icon="pi pi-arrow-circle-left" class="ui-button-warning ouput_btn_table"
                             (click)="back()"></button>

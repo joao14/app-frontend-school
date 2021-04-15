@@ -64,5 +64,6 @@ export const environment = {
     deletetemplatedetalle: URL + '/romi/apirm/template/delete/detail/',
     updatetemplatedetalle: URL + '/romi/apirm/template/detail/update',
     pedidos: URL +'/romi/apirm/order/list/pendings',
+    pedidobyclient: URL +'/romi/apirm/order/list/',
     pedidoregister: URL + '/romi/apirm/order/register',
 };
