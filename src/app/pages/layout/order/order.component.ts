@@ -26,6 +26,28 @@ export interface Numeros {
   precvent: number;
 }
 
+export interface Item {
+  fecha: string,
+  cliente: client;
+  fincapropia: string;
+  finca: finca;
+  marca: mark;
+  HBBQ: string;
+  rosamistica: flower;
+  tamanio: string;
+  tallos: number;
+  totaltallos: number;
+  preciovent: string;
+  preciocomp: string;
+  carga: string;
+  status: Status;
+}
+
+export interface stepPrealert {
+  pedido: any,
+  estado: boolean
+}
+
 
 @Component({
   selector: 'app-order',
@@ -37,6 +59,7 @@ export class OrderComponent implements OnInit {
 
   pedidos: Array<Pedido> = []
   select: Pedido
+  prealertStep: Array<stepPrealert> = []
   indice: number
   step: string
   prealertForm: FormGroup
@@ -52,6 +75,10 @@ export class OrderComponent implements OnInit {
   tamanios: any[] = []
   cantidadPrice: Numeros[] = [];
   hbqb: number;
+  items: Item[] = []
+  item: Item
+  total: number
+  selectitem: number
 
   constructor(private api: ApisService, private util: UtilService, private router: Router, private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService, private messageService: MessageService) {
@@ -74,15 +101,18 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.step = "PE"
-    this.getPedidos()
-
+    this.inicializar()
+    await this.getPedidos()
+    await this.getServicios()
   }
 
   inicializar() {
 
-    /*this.item = {
+    this.selectitem = -1
+
+    this.item = {
       fecha: '',
       cliente: null,
       fincapropia: "",
@@ -97,7 +127,7 @@ export class OrderComponent implements OnInit {
       preciocomp: "",
       carga: "",
       status: null
-    }*/
+    }
 
     this.tamanios = [
       { name: 'CL', code: 'CL' },
@@ -135,8 +165,6 @@ export class OrderComponent implements OnInit {
     console.log(pedido);
     this.select = pedido
     this.indice = indice
-
-
   }
 
   async onOptionsSelected() {
@@ -201,8 +229,19 @@ export class OrderComponent implements OnInit {
     this.confirmationService.confirm({
       message: "Are you sure to continue for revision this order?",
       accept: async () => {
-        console.log('ORDER ACCEPTED');
+        console.log('ORDER ACCEPTED..');
         this.step = "RE"
+        console.log(this.select);
+        this.prealertStep=[]
+        this.select.items.forEach(item => {
+          this.prealertStep.push({
+            pedido: item,
+            estado: false
+          })
+        });
+        console.log('FINAL');
+        console.log(this.prealertStep);
+        
       }
     })
   }
@@ -223,6 +262,77 @@ export class OrderComponent implements OnInit {
   }
 
   save() {
+    console.log('Vamos a guardar..');
+    if (this.cantidadPrice.length <= 0) {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Debe agregar valores a la prealerta' });
+      this.estado = true;
+      return;
+    }
+    this.estado = false;
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.prealertForm.invalid) {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios' });
+      return;
+    }
+
+    let pvp = "";
+    let pcomp = "";
+    let cm = "";
+
+    console.log('------Cantidad Precio-------');
+    console.log(this.cantidadPrice);
+
+
+    this.cantidadPrice.forEach(data => {
+      pvp = pvp + data.precvent + " ",
+        pcomp = pcomp + data.preccomp + " ",
+        cm = cm + data.tamanio + " "
+    });
+
+
+    this.item = {
+      fecha: this.prealertForm.get('fecha').value,
+      cliente: this.prealertForm.get('cliente').value,
+      fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
+      finca: this.prealertForm.get('finca').value,
+      marca: this.prealertForm.get('marca').value,
+      HBBQ: this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : '0',
+      rosamistica: this.prealertForm.get('rosamistica').value,
+      tamanio: cm,
+      tallos: this.prealertForm.get('tallos').value,
+      totaltallos: ((this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : this.hbqb) * this.prealertForm.get('tallos').value),
+      preciovent: pvp,
+      preciocomp: pcomp,
+      carga: this.prealertForm.get('carga').value,
+      status: this.prealertForm.get('estado').value
+    }
+
+    console.log('ITEMS');
+    console.log(this.item);
+
+
+    this.prealertForm.get('HBBQ').value ? this.hbqb = this.prealertForm.get('HBBQ').value : '';
+
+    this.items.push(this.item);
+    console.log('ITEMS FINAL');
+    console.log(this.items);
+    this.cantidadPrice = [];
+    this.total = 0;
+    this.items.forEach(item => {
+      this.total += parseInt(item.totaltallos + "");
+    });
+    this.submitted = false;
+    if (!this.prealertForm.get('repeat').value) {
+      this.prealertForm.reset();
+    } else {
+      this.prealertForm.get('HBBQ').setValue(null);
+      this.prealertForm.get('rosamistica').setValue(null);
+      this.prealertForm.get('tallos').setValue(null);
+      this.prealertForm.get('totaltallos').setValue(null);
+    }
+
+    this.prealertForm.get('fecha').setValue(new Date());
 
   }
 
@@ -274,7 +384,7 @@ export class OrderComponent implements OnInit {
             temp.push(element.flor);
           }
         });
-        this.flores = temp;
+        this.flores = temp;       
       }
     }).catch(err => {
 
@@ -325,6 +435,7 @@ export class OrderComponent implements OnInit {
   }
 
   add() {
+    console.log('AGREGAR');
 
     if ((this.prealertForm.get('tamanio').value == '' || this.prealertForm.get('tamanio').value == null) || this.prealertForm.get('preciocomp').value == '' || this.prealertForm.get('preciovent').value == '') {
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Falta agregar campos para añadir el valor' });
@@ -336,12 +447,155 @@ export class OrderComponent implements OnInit {
       preccomp: this.prealertForm.get('preciocomp').value,
       precvent: this.prealertForm.get('preciovent').value
     })
+    console.log('????');
+
+    console.log(this.cantidadPrice);
+
     this.estado = false;
     this.prealertForm.get('tamanio').setValue(null);
     this.prealertForm.get('preciocomp').setValue(null);
     this.prealertForm.get('preciovent').setValue(null)
 
   }
+
+  async complete(pedido: any, selectpedido: Pedido) {
+    this.util.isLoading.next(true)
+    const flower = await this.getFlowerbyName(pedido.flower)
+    const client = await this.getClientbyName(selectpedido.head.client.nombres)
+    this.prealertForm.get('fecha').setValue(new Date(pedido.shippingdate))
+    this.prealertForm.get('rosamistica').setValue(flower)
+    this.prealertForm.get('totaltallos').setValue(pedido.totaltallos)
+    this.prealertForm.get('cliente').setValue(client)
+    this.prealertForm.get('tamanio').setValue({ 'name': pedido.cm, 'code': pedido.cm })
+    await this.onOptionsSelected()
+    this.util.isLoading.next(false)
+  }
+
+  async getClientbyName(name: string): Promise<any> {
+    let cliente: client = null;
+    await this.api.getObjectbyName('C', name.toUpperCase(), localStorage.getItem("token")).then(data => {
+      if (data.headerApp.code == 200) {
+        cliente = data.data.cliente;
+      }
+    }).catch(err => {
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    return cliente;
+  }
+
+  async getMarcbyName(entiId: number, name: string): Promise<any> {
+    let marc: mark = null;
+    await this.api.getMarcbyName(entiId, name.toUpperCase(), localStorage.getItem("token")).then(data => {
+      if (data.headerApp.code == 200) {
+        marc = data.data.mark;
+      }
+    }).catch(err => {
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    return marc;
+  }
+
+  async getFlowerbyName(name: string): Promise<any> {
+    let flower: flower = null;
+    await this.api.getflowerbyname(name, localStorage.getItem("token")).then(data => {
+      if (data.headerApp.code == 200) {
+        flower = data.data.flower;
+      }
+    }).catch(err => {
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    return flower;
+  }
+
+
+  viewxlsx() {
+    /*let head: Cabecera = {
+      fecha: this.getFormatDate(new Date()),
+      usuaId: this.user.usuaid,
+      pralCerrado: "N",
+      estado: "B",
+      pralId: this.idPrealert == undefined ? 0 : this.idPrealert
+    }
+
+    let detail: Array<Detail> = [];
+    let contador = 0;
+    this.items.forEach(data => {
+      detail.push({
+        line: contador,
+        shippingdate: this.getFormatDate(new Date(data.fecha)),
+        clieId: data.cliente.entiId,
+        fincapropia: data.fincapropia == 'N' ? 'N' : 'S',
+        farmId: data.finca.entiId,
+        marcId: data.marca.marcId,
+        hbqb: data.HBBQ == null ? '' : data.HBBQ,
+        florId: data.rosamistica['florId'],
+        cm: data.tamanio,
+        tallos: data.tallos,
+        totaltallos: data.totaltallos,
+        pcomp: data.preciocomp,
+        cargcompId: parseInt(data.carga['entiId']),
+        pvp: data.preciovent,
+        status: data.status.nombre
+      })
+      contador++; 
+    })
+
+    this.prealert = {
+      prealerta: head,
+      detalle: detail
+    }
+
+    this.utilService.isLoading.next(true);
+    this.api.getExcelPrealertDraft(this.prealert, localStorage.getItem('token')).then((data) => {
+      if (data.headerApp.code == 200) {
+        location.href = environment.url + data.data.xls;
+        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'El archivo se ha descargado correctamente' });
+      }
+    }).catch(err => {
+      console.log(err);
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    this.utilService.isLoading.next(false);
+
+*/
+
+  }
+
+  rowexpasion(indice: number) {
+
+    if (this.selectitem == indice)
+      this.selectitem = -1;
+    else
+      this.selectitem = indice;
+
+  }
+
+  deleteItem(prealert: any) {
+    /*if (this.editPrealert && this.items.length <= 1) {
+      this.messageService.add({ severity: 'warn', summary: 'Rosa Mística', detail: 'No se puede dejar sin items la prelaerta' });
+      return
+    }
+    this.items = this.items.filter((element) => element != prealert);
+    this.total = 0;
+    this.items.forEach(item => {
+      this.total += parseInt(item.totaltallos + "");
+    });*/
+
+  }
+
+
 
   calculate() {
     this.prealertForm.get('totaltallos').setValue((this.prealertForm.get('HBBQ').value == null || this.prealertForm.get('HBBQ').value == 0 ? this.hbqb : this.prealertForm.get('HBBQ').value) * this.prealertForm.get('tallos').value)

@@ -116,8 +116,6 @@ export class PedidoComponent implements OnInit {
   async getServicios() {
     this.util.isLoading.next(true);
     await this.api.getflowers(localStorage.getItem("token")).then(flor => {
-      console.log('DATA');
-      console.log(flor);
       this.flores = [];
       if (flor.headerApp.code === 200) {
         flor.data.flowers.forEach(flor => {
@@ -134,36 +132,16 @@ export class PedidoComponent implements OnInit {
       }
     })
 
-    await this.api.pedidos(localStorage.getItem('token')).then(async (data) => {
-      console.log('data pedidos');
-      console.log(data);
-      if (data.headerApp.code == 200) {
-        this.pedidos = data.data.orders;
-        this.step = 1
-      }
-    }).catch(err => {
-      if (err.error.code == 401) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    })
-    console.log('Consultando los datos del cliente.....');
-    console.log(this.user.empresa.entiid);
-    console.log('**********');
-
     await this.api.pedidosbyclient(this.user.empresa.entiid, 'PERE', localStorage.getItem('token')).then(async (data) => {
       console.log('data pedidos por cliente');
       console.log(data);
-      /*if (data.headerApp.code == 200) {
-        this.pedidos = data.data.orders;
-        if (this.pedidos.length > 0) {
-          this.step = 1
-        } else {
+      if (data.headerApp.code == 200) {
+        this.pedidos = data.data.orders
+      } else
+        if (data.headerApp.code == 204) {
           this.step = 2
         }
-      }*/
     }).catch(err => {
-      console.log('ERROR');
       console.log(err);
       if (err.error.code == 401) {
         localStorage.clear();

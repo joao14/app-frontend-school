@@ -55,13 +55,13 @@
             </div>
             <div *ngIf="pedidos.length <= 0 || step ==2">
                 <div class="ui-g form-group ui-fluid">
-                    <div class="ui-g-12 ui-md-10">
+                    <div [class]="pedidos.length > 0? 'ui-g-12 ui-md-10':'ui-g-12 ui-md-12'">
                         <h1 *ngIf="!editPedido && step > 1">
                             {{'Crear pedido' | translate}}</h1>
                         <h1 *ngIf="editPedido && step > 1">{{'Editando el pedido' | translate }} #
                             {{selectpedido.head.pediId}}</h1>
                     </div>
-                    <div class="ui-g-12 ui-md-2">
+                    <div class="ui-g-12 ui-md-2" *ngIf="pedidos.length > 0">
                         <button pButton type="button" icon="pi pi-arrow-circle-left"
                             [label]="'Lista de pedidos' | translate" icon="pi pi-arrow-circle-left"
                             class="ui-button-warning ouput_btn_table" (click)="back()"></button>
