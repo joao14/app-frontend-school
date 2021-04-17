@@ -16,7 +16,17 @@
     width: 50%;
     text-align: center;
     border-radius: 8px;
+}
 
+.fase_active{
+    font-weight: bold;
+    font-size: 12px;
+    background-color: #007ad9;
+    color: white;
+    padding: 4px;
+    width: 50%;
+    text-align: center;
+    border-radius: 8px;
 }
 
 .lbl {

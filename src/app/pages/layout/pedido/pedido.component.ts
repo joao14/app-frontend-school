@@ -10,9 +10,6 @@ import { user } from 'src/models/user';
 import { ApisService } from 'src/services/apis.service';
 import { UtilService } from 'src/services/util.service';
 import * as moment from 'moment';
-import { of } from 'rxjs';
-import { NgWizardConfig, NgWizardService, StepChangedArgs, StepValidationArgs, STEP_STATE, THEME } from 'ng-wizard';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 export interface detail {
   variedad: any,
@@ -41,7 +38,7 @@ export class PedidoComponent implements OnInit {
   dateEnvio: Date = new Date()
   selectpedido: Pedido
 
-  constructor(private api: ApisService, private util: UtilService, private router: Router, private messageService: MessageService, private ngWizardService: NgWizardService,
+  constructor(private api: ApisService, private util: UtilService, private router: Router, private messageService: MessageService,
     private confirmationService: ConfirmationService, private formBuilder: FormBuilder, private spinner: NgxSpinnerService) {
     this.pedidoForm = this.formBuilder.group({
       flor: [null, Validators.required],

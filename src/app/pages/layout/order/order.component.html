@@ -14,10 +14,14 @@
                     </div>
                     <div class="ui-g-12 ui-md-12">
                         <div class="ui-g-12 ui-md-2 pedidos">
+                            <div *ngIf="pedidos.length <= 0">
+                                <label>Sin pedidos pendientes</label>
+                            </div>
                             <div *ngFor="let pedido of pedidos;let i = index" (click)="editPedido(pedido,i)"
                                 [class]="i==indice?'active':''">
                                 <label>
-                                    <div class="fase">{{getState(pedido.head?.fase)}}
+                                    <div [class]="pedido.head?.fase=='PE'?'fase':'fase_active'">
+                                        {{getState(pedido.head?.fase)}}
                                     </div>
                                     <i class="fa fa-hand-o-right" aria-hidden="true"></i> {{pedido.head?.fecha}}
                                 </label>
@@ -62,7 +66,12 @@
                                         <button pButton label="Rechazar pedido" icon="pi pi-trash" (click)="cancel()"
                                             [disabled]="select==null" class="ui-button-help"></button>
                                     </div>
-                                    <div class="ui-g-12 ui-md-3">
+                                    <div class="ui-g-12 ui-md-3" *ngIf="select?.head.fase=='RE'">
+                                        <button pButton label="Continuar con revision" icon="pi pi-arrow-right"
+                                            iconPos="right" (click)="continuarrevision()" [disabled]="select==null"
+                                            class="ui-button-info"></button>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-3" *ngIf="select?.head.fase=='PE' || select==null">
                                         <button pButton label="Pasar a revision" icon="pi pi-arrow-right"
                                             iconPos="right" (click)="confirmar()" [disabled]="select==null"
                                             class="ui-button-info"></button>
@@ -75,6 +84,16 @@
             </div>
             <div *ngIf="step=='RE'">
                 <div class="ui-g form-group ui-fluid">
+                    <div class="ui-g-12 ui-md-10">
+                        <h1>
+                            {{'Poceso para prealerta' | translate}}</h1>
+                    </div>
+                    <div class="ui-g-12 ui-md-2">
+                        <button pButton type="button" icon="pi pi-arrow-circle-left"
+                            [label]="'Lista de pedidos' | translate" icon="pi pi-arrow-circle-left"
+                            class="ui-button-warning ouput_btn_table" (click)="back()"></button>
+                    </div>
+                    <hr>
                     <p-table [value]="select?.items" styleClass="p-datatable-sm">
                         <ng-template pTemplate="header">
                             <tr>
@@ -187,7 +206,8 @@
                                         <div class="ui-g-12 ui-md-3">
                                             <label for="tallos" class="lbl">{{'Tallos' | translate}}</label>
                                             <input type="text" pInputText class="form-control" formControlName="tallos"
-                                                pKeyFilter="int" placeholder="0" [ngClass]="{ 'is-invalid': submitted && f.tallos.errors }">
+                                                pKeyFilter="int" placeholder="0"
+                                                [ngClass]="{ 'is-invalid': submitted && f.tallos.errors }">
                                             <div *ngIf="submitted && f.tallos.errors" class="invalid-feedback">
                                                 <div *ngIf="f.tallos.errors.required">
                                                     {{'Tallos es requerido' | translate}}</div>
@@ -293,7 +313,7 @@
                                     </div>
 
 
-                                    <div class="ui-g-12 ui-md-12">
+                                    <div class="ui-g-12 ui-md-12" *ngIf="select.items.length>items.length">
                                         <div class="ui-g-12 ui-md-10"></div>
                                         <div class="ui-g-12 ui-md-2">
                                             <button pButton icon="pi pi-plus" class="ui-button-primary ouput_btn_table"
@@ -309,10 +329,9 @@
                 <p-table [value]="items" class="p-datatable-responsive-demo">
                     <ng-template pTemplate="caption">
                         <div class="p-d-flex p-ai-center p-jc-between">
-                            <button pButton type="button" class="ui-button-success" (click)="viewxlsx()" 
-                                *ngIf="items.length >=1 "
-                                style="height: 30px; border-radius: 5px;">
-                                <i class="pi pi-download" style="font-size: 1.7rem"></i> 
+                            <button pButton type="button" class="ui-button-success" (click)="viewxlsx()"
+                                *ngIf="items.length >=1 " style="height: 30px; border-radius: 5px;">
+                                <i class="pi pi-download" style="font-size: 1.7rem"></i>
                             </button> &nbsp;
                             {{'Items de la prealerta' | translate }} [ {{items.length}} ]
                         </div>
@@ -354,7 +373,8 @@
                             </td>
                             <td><span class="p-column-title">{{data.fecha | date :'dd-MMM-yyyy' }}</span></td>
                             <td><span class="p-column-title">{{data.cliente.nombres | titlecase }}</span></td>
-                            <td><span class="p-column-title">{{data.fincapropia=='S'? 'Rosa Mística' : 'N/A' }}</span></td>
+                            <td><span class="p-column-title">{{data.fincapropia=='S'? 'Rosa Mística' : 'N/A' }}</span>
+                            </td>
                             <td><span class="p-column-title">{{data.finca.nombres | titlecase }}</span></td>
                             <td><span class="p-column-title">{{data.marca.nombre | titlecase }}</span></td>
                             <td><span class="p-column-title">{{data.status.nombre | titlecase}}</span></td>
@@ -411,7 +431,8 @@
                     </div>
                     <div class="ui-g-12 ui-md-3">
                         <button pButton label="Pasar a prealerta" icon="pi pi-arrow-right" iconPos="right"
-                            (click)="prealerta()" [disabled]="select==null" class="ui-button-info"></button>
+                            (click)="prealerta()" [disabled]="items.length < select?.items.length"
+                            class="ui-button-info"></button>
                     </div>
                 </div>
             </div>

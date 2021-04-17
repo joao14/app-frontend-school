@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,6 +11,9 @@ import { mark } from 'src/models/mark';
 import { Pedido } from 'src/models/pedido';
 import { ApisService } from 'src/services/apis.service';
 import { UtilService } from 'src/services/util.service';
+import * as moment from 'moment';
+import { user } from 'src/models/user';
+import { environment } from 'src/environments/environment';
 
 export interface Status {
   titrId: number,
@@ -48,6 +52,32 @@ export interface stepPrealert {
   estado: boolean
 }
 
+export interface Cabecera {
+  fecha: string;
+  usuaId: number;
+  pralCerrado: string;
+  estado: string;
+  pralId: number;
+}
+
+export interface Detail {
+  line: number;
+  shippingdate: string;
+  clieId: number;
+  fincapropia: string;
+  farmId: number;
+  marcId: number;
+  hbqb: string;
+  florId: number;
+  cm: string;
+  tallos: number;
+  totaltallos: number;
+  pcomp: string;
+  cargcompId: number;
+  pvp: string;
+  status: string;
+}
+
 
 @Component({
   selector: 'app-order',
@@ -79,6 +109,7 @@ export class OrderComponent implements OnInit {
   item: Item
   total: number
   selectitem: number
+  user: user
 
   constructor(private api: ApisService, private util: UtilService, private router: Router, private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService, private messageService: MessageService) {
@@ -102,6 +133,7 @@ export class OrderComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('user'));
     this.step = "PE"
     this.inicializar()
     await this.getPedidos()
@@ -145,6 +177,7 @@ export class OrderComponent implements OnInit {
 
   async getPedidos() {
     this.util.isLoading.next(true);
+    this.pedidos = []
     await this.api.pedidos(localStorage.getItem('token')).then(async (data) => {
       console.log('data');
       console.log(data);
@@ -225,23 +258,67 @@ export class OrderComponent implements OnInit {
 
   }
 
+  continuarrevision() {
+    this.step = "RE"
+  }
+
   confirmar() {
     this.confirmationService.confirm({
       message: "Are you sure to continue for revision this order?",
       accept: async () => {
-        console.log('ORDER ACCEPTED..');
-        this.step = "RE"
-        console.log(this.select);
-        this.prealertStep=[]
-        this.select.items.forEach(item => {
-          this.prealertStep.push({
-            pedido: item,
-            estado: false
+        console.log('ORDER ACCEPTEDddddd..');
+        let head = {
+          clieId: this.select.head.client.clieId,
+          estado: this.select.head.estado,
+          fase: "RE",
+          fecha: this.select.head.fecha + ".000",
+          pediId: this.select.head.pediId,
+          usuaId: this.select.head.usuaId
+        }
+        console.log('Procesando...');
+        let items: Array<any> = []
+
+        this.select.items.forEach(element => {
+          items.push({
+            cargcompId: element.cargcompId,
+            cm: element.cm,
+            farmId: element.farmId,
+            fincapropia: element.fincapropia,
+            florId: element.florId,
+            hbqb: element.hbqb,
+            line: element.line,
+            marcId: element.marcId,
+            pcomp: element.pcomp,
+            pvp: element.pvp,
+            shippingdate: element.shippingdate + '.000',
+            status: element.status,
+            tallos: element.tallos,
+            totaltallos: element.totaltallos
           })
         });
-        console.log('FINAL');
-        console.log(this.prealertStep);
-        
+        let pedido = {
+          pedido: head,
+          detalle: items
+        }
+        console.log(pedido);
+        this.util.isLoading.next(true)
+        await this.api.addpedido(pedido, localStorage.getItem('token')).then(async (data) => {
+          console.log('Se ha guardado la siguiente fase correctamente')
+          console.log(data);
+          if (data.headerApp.code == 200) {
+            this.step = "RE"
+          }
+
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401 || err.error.code == 0) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+        this.util.isLoading.next(false)
+
+
       }
     })
   }
@@ -252,12 +329,130 @@ export class OrderComponent implements OnInit {
       accept: async () => {
         console.log('ORDER ACCEPTED');
         this.step = "RE"
+        console.log('SELECT');
+        console.log(this.select);
+        console.log('ITEMS');
+        console.log(this.items);
+
+        let head = {
+          clieId: this.select.head.client.clieId,
+          estado: this.select.head.estado,
+          fase: "PR",
+          fecha: this.select.head.fecha + ".000",
+          pediId: this.select.head.pediId,
+          usuaId: this.select.head.usuaId
+        }
+        console.log('Procesando...');
+        let items: Array<any> = []
+        this.items.forEach(async (element, index) => {
+          items.push({
+            cargcompId: element.carga['entiId'],
+            cm: element.tamanio,
+            farmId: element.finca['entiId'],
+            fincapropia: element.fincapropia,
+            florId: element.rosamistica['florId'],
+            hbqb: element.HBBQ,
+            line: index,
+            marcId: element.marca['entiId'],
+            pcomp: element.preciocomp,
+            pvp: element.preciovent,
+            shippingdate: this.select.head.fecha + '.000',
+            status: element.status.nombre,
+            tallos: element.tallos,
+            totaltallos: element.totaltallos
+          })
+        });
+        let pedido = {
+          pedido: head,
+          detalle: items
+        }
+        console.log('PEDIDO FINALlll');
+        console.log(pedido);
+        this.util.isLoading.next(true)
+        await this.api.addpedido(pedido, localStorage.getItem('token')).then(async (data) => {
+          console.log('Se ha guardado la siguiente fase correctamente')
+          console.log(data);
+          if (data.headerApp.code == 200) {
+            this.step = 'PE'
+            this.select = null
+            this.items = []
+            this.getPedidos()
+          }
+
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401 || err.error.code == 0) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+        this.util.isLoading.next(false)
+
+
       }
     })
   }
 
   cancel() {
-    console.log('Cancelar');
+    console.log('Cancelar RX');
+    this.confirmationService.confirm({
+      message: "Are you sure to cancel this order?",
+      accept: async () => {
+        console.log('ORDER ACCEPTEDddddd..');
+        this.step = "RX"
+        let head = {
+          clieId: this.select.head.client.clieId,
+          estado: this.select.head.estado,
+          fase: "RE",
+          fecha: this.select.head.fecha + ".000",
+          pediId: this.select.head.pediId,
+          usuaId: this.select.head.usuaId
+        }
+        console.log('Procesando...');
+        let items: Array<any> = []
+
+        this.select.items.forEach(element => {
+          items.push({
+            cargcompId: element.cargcompId,
+            cm: element.cm,
+            farmId: element.farmId,
+            fincapropia: element.fincapropia,
+            florId: element.florId,
+            hbqb: element.hbqb,
+            line: element.line,
+            marcId: element.marcId,
+            pcomp: element.pcomp,
+            pvp: element.pvp,
+            shippingdate: element.shippingdate + '.000',
+            status: element.status,
+            tallos: element.tallos,
+            totaltallos: element.totaltallos
+          })
+        });
+        let pedido = {
+          pedido: head,
+          detalle: items
+        }
+        console.log(pedido);
+        this.util.isLoading.next(true)
+        await this.api.addpedido(pedido, localStorage.getItem('token')).then(async (data) => {
+          console.log('Se ha guardado la siguiente fase correctamente')
+          console.log(data);
+          if (data.headerApp.code == 200) {
+            await this.getPedidos()
+          }
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401 || err.error.code == 0) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+        this.util.isLoading.next(false)
+
+
+      }
+    })
 
   }
 
@@ -273,6 +468,11 @@ export class OrderComponent implements OnInit {
     // stop here if form is invalid
     if (this.prealertForm.invalid) {
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios' });
+      return;
+    }
+
+    if (this.items.length >= this.select.items.length) {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Esta agrenago màs items de los que el cliente pidiò.' });
       return;
     }
 
@@ -384,7 +584,7 @@ export class OrderComponent implements OnInit {
             temp.push(element.flor);
           }
         });
-        this.flores = temp;       
+        this.flores = temp;
       }
     }).catch(err => {
 
@@ -518,12 +718,12 @@ export class OrderComponent implements OnInit {
 
 
   viewxlsx() {
-    /*let head: Cabecera = {
+    let head: Cabecera = {
       fecha: this.getFormatDate(new Date()),
       usuaId: this.user.usuaid,
       pralCerrado: "N",
       estado: "B",
-      pralId: this.idPrealert == undefined ? 0 : this.idPrealert
+      pralId: 0
     }
 
     let detail: Array<Detail> = [];
@@ -546,16 +746,16 @@ export class OrderComponent implements OnInit {
         pvp: data.preciovent,
         status: data.status.nombre
       })
-      contador++; 
+      contador++;
     })
 
-    this.prealert = {
+    let prealert = {
       prealerta: head,
       detalle: detail
     }
 
-    this.utilService.isLoading.next(true);
-    this.api.getExcelPrealertDraft(this.prealert, localStorage.getItem('token')).then((data) => {
+    this.util.isLoading.next(true);
+    this.api.getExcelPrealertDraft(prealert, localStorage.getItem('token')).then((data) => {
       if (data.headerApp.code == 200) {
         location.href = environment.url + data.data.xls;
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'El archivo se ha descargado correctamente' });
@@ -567,9 +767,7 @@ export class OrderComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     })
-    this.utilService.isLoading.next(false);
-
-*/
+    this.util.isLoading.next(false);
 
   }
 
@@ -583,18 +781,26 @@ export class OrderComponent implements OnInit {
   }
 
   deleteItem(prealert: any) {
-    /*if (this.editPrealert && this.items.length <= 1) {
+    /*if (this.items.length <= 1) {
       this.messageService.add({ severity: 'warn', summary: 'Rosa Mística', detail: 'No se puede dejar sin items la prelaerta' });
       return
-    }
+    }*/
     this.items = this.items.filter((element) => element != prealert);
     this.total = 0;
     this.items.forEach(item => {
       this.total += parseInt(item.totaltallos + "");
-    });*/
+    });
 
   }
 
+  back() {
+    this.step = 'PE'
+    this.getPedidos()
+  }
+
+  getFormatDate(date: Date): string {
+    return (moment(date)).format('yyyy-MM-DD HH:mm:ss.SSS');
+  }
 
 
   calculate() {
