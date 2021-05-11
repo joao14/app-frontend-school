@@ -200,6 +200,7 @@ export class PrealertaComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('user'));
     await this.inicializate();
     await this.prealertdraft();
+    await this.prealertbypedido()
     await this.getServicios();
   }
 
@@ -215,7 +216,7 @@ export class PrealertaComponent implements OnInit {
     this.validate = false;
     this.dialogVisible = false;
     this.response = null;
-    this.pralId="";
+    this.pralId = "";
     this.hbqb = 0;
     this.item = {
       fecha: '',
@@ -261,9 +262,30 @@ export class PrealertaComponent implements OnInit {
   async prealertdraft() {
     this.prealertsdraft = [];
     this.utilService.isLoading.next(true);
-    await this.api.getprealertsdraft(localStorage.getItem('token')).then(prealert => {      
+    await this.api.getprealertsdraft(localStorage.getItem('token')).then(prealert => {
       if (prealert.headerApp.code == 200) {
         this.prealertsdraft = prealert.data.prealerts;
+      }
+    }).catch(err => {
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    this.utilService.isLoading.next(false);
+  }
+
+  async prealertbypedido() {
+    console.log('Begin....');
+
+    this.prealertsdraft = [];
+    this.utilService.isLoading.next(true);
+    await this.api.pedidosbyclient(this.user.empresa.entiid, 'PR', localStorage.getItem('token')).then(pedido => {
+      console.log('Estos son');
+      console.log(pedido);
+
+      if (pedido.headerApp.code == 200) {
+        //this.prealertsdraft = pedido.data.prealerts;
       }
     }).catch(err => {
       if (err.error.code == 401) {
@@ -307,7 +329,7 @@ export class PrealertaComponent implements OnInit {
     let cm = "";
 
     this.cantidadPrice.forEach(data => {
-        pvp = pvp + data.precvent + " ",
+      pvp = pvp + data.precvent + " ",
         pcomp = pcomp + data.preccomp + " ",
         cm = cm + data.tamanio + " "
     });
@@ -612,8 +634,8 @@ export class PrealertaComponent implements OnInit {
       detalle: detail
     }
 
-    if(!this.editPrealert && this.pralId!=""){
-      this.prealert.prealerta.pralId=parseInt(this.pralId)
+    if (!this.editPrealert && this.pralId != "") {
+      this.prealert.prealerta.pralId = parseInt(this.pralId)
     }
 
     this.confirmationService.confirm({
@@ -627,7 +649,7 @@ export class PrealertaComponent implements OnInit {
             this.dialogVisible = true;
             this.total = 0;
             this.idPrealert = 0;
-            this.pralId="";
+            this.pralId = "";
             this.prealert = null;
             this.editPrealert = false;
             this.items = [];
@@ -669,11 +691,11 @@ export class PrealertaComponent implements OnInit {
     return status;
   }
 
-  async getStatus(nombre: string) {   
-    await this.api.getstatusprealert(localStorage.getItem("token")).then(status => {      
+  async getStatus(nombre: string) {
+    await this.api.getstatusprealert(localStorage.getItem("token")).then(status => {
       if (status.headerApp.code === 200) {
         status.data.estados.forEach(element => {
-          if (element.nombre == nombre) {            
+          if (element.nombre == nombre) {
             this.tempStatus = element;
             return;
           }
@@ -954,7 +976,7 @@ export class PrealertaComponent implements OnInit {
         pvp: data.preciovent,
         status: data.status.nombre
       })
-      contador++; 
+      contador++;
     })
 
     this.prealert = {
@@ -999,7 +1021,7 @@ export class PrealertaComponent implements OnInit {
         const rosamistica = await this.getFlowerbyName(item.flower);
         const carga = await this.getEmpresaCargabyName(item.cargname);
         await this.getStatus(item.status);
-        
+
         let temp = {
           fecha: item.shippingdate,
           cliente: cliente,
@@ -1069,12 +1091,12 @@ export class PrealertaComponent implements OnInit {
       detalle: detail
     }
 
-    if(!this.editPrealert && this.pralId!=""){
-      this.prealert.prealerta.pralId=parseInt(this.pralId)
+    if (!this.editPrealert && this.pralId != "") {
+      this.prealert.prealerta.pralId = parseInt(this.pralId)
     }
-    
+
     this.spinner.show();
-    await this.api.registerPrealert(this.prealert, localStorage.getItem("token")).then(async (data) => {     
+    await this.api.registerPrealert(this.prealert, localStorage.getItem("token")).then(async (data) => {
       this.spinner.hide();
       if (data.headerApp.code == 200) {
         /*this.total = 0;
@@ -1085,7 +1107,7 @@ export class PrealertaComponent implements OnInit {
         this.optionSelect == 'manual';
         this.step = 1;*/
         await this.prealertdraft();
-        this.pralId=data.data.prealert.pralId;        
+        this.pralId = data.data.prealert.pralId;
         this.step = 2;
         //this.prealertForm.get('fecha').setValue(new Date());
         this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'La prealerta se ha guardado como borrador' });
@@ -1099,9 +1121,9 @@ export class PrealertaComponent implements OnInit {
     this.utilService.isLoading.next(false);
   }
 
-  editrow(item: any) {    
+  editrow(item: any) {
     this.editvisible = true;
-    this.activeitembyedit = { ...item };    
+    this.activeitembyedit = { ...item };
   }
 
 

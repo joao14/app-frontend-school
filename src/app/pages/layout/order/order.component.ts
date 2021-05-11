@@ -78,6 +78,13 @@ export interface Detail {
   status: string;
 }
 
+export interface PedidoTemporal {
+  flower: string;
+  cm: string;
+  totaltallos: string;
+  detalle: string;
+}
+
 
 @Component({
   selector: 'app-order',
@@ -110,6 +117,8 @@ export class OrderComponent implements OnInit {
   total: number
   selectitem: number
   user: user
+  pedidotemporal: Array<PedidoTemporal> = []
+  temporal: any
 
   constructor(private api: ApisService, private util: UtilService, private router: Router, private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService, private messageService: MessageService) {
@@ -198,6 +207,15 @@ export class OrderComponent implements OnInit {
     console.log(pedido);
     this.select = pedido
     this.indice = indice
+    this.pedidotemporal = []
+    this.select.items.forEach(element => {
+      this.pedidotemporal.push({
+        flower: element.flower,
+        cm: element.cm,
+        totaltallos: String(element.totaltallos),
+        detalle: 'Sin completar'
+      })
+    });
   }
 
   async onOptionsSelected() {
@@ -266,7 +284,6 @@ export class OrderComponent implements OnInit {
     this.confirmationService.confirm({
       message: "Are you sure to continue for revision this order?",
       accept: async () => {
-        console.log('ORDER ACCEPTEDddddd..');
         let head = {
           clieId: this.select.head.client.clieId,
           estado: this.select.head.estado,
@@ -275,7 +292,6 @@ export class OrderComponent implements OnInit {
           pediId: this.select.head.pediId,
           usuaId: this.select.head.usuaId
         }
-        console.log('Procesando...');
         let items: Array<any> = []
 
         this.select.items.forEach(element => {
@@ -307,6 +323,7 @@ export class OrderComponent implements OnInit {
           console.log(data);
           if (data.headerApp.code == 200) {
             this.step = "RE"
+
           }
 
         }).catch(err => {
@@ -472,7 +489,7 @@ export class OrderComponent implements OnInit {
     }
 
     if (this.items.length >= this.select.items.length) {
-      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Esta agrenago màs items de los que el cliente pidiò.' });
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Esta agregando màs items de los que el cliente pidiò.' });
       return;
     }
 
@@ -533,6 +550,16 @@ export class OrderComponent implements OnInit {
     }
 
     this.prealertForm.get('fecha').setValue(new Date());
+
+    //Validate complete 
+    this.pedidotemporal.filter(tmp => {
+      if (tmp == this.temporal) {
+        console.log('...Si se encontro...');
+
+      }
+    })
+
+
 
   }
 
@@ -659,6 +686,9 @@ export class OrderComponent implements OnInit {
   }
 
   async complete(pedido: any, selectpedido: Pedido) {
+    console.log('DETALLE');
+    console.log(pedido);
+    console.log(selectpedido);    
     this.util.isLoading.next(true)
     const flower = await this.getFlowerbyName(pedido.flower)
     const client = await this.getClientbyName(selectpedido.head.client.nombres)
@@ -669,6 +699,16 @@ export class OrderComponent implements OnInit {
     this.prealertForm.get('tamanio').setValue({ 'name': pedido.cm, 'code': pedido.cm })
     await this.onOptionsSelected()
     this.util.isLoading.next(false)
+    this.temporal = {
+      flower: pedido.flower,
+      cm: pedido.cm,
+      totaltallos: pedido.totaltallos,
+      detalle: pedido.detalle
+    }
+    console.log('...PEDIDO TEMPORAL...');
+    console.log(this.temporal);
+
+
   }
 
   async getClientbyName(name: string): Promise<any> {

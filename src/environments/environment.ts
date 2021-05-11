@@ -2,7 +2,7 @@
 const IP: string = "http://35.243.246.83:"
 const PUERTO: string = "8780"
 //const PUERTO: string = "8443"
-       
+          
 const URL: string = IP + PUERTO;
  
 export const environment = {
@@ -64,6 +64,6 @@ export const environment = {
     deletetemplatedetalle: URL + '/romi/apirm/template/delete/detail/',
     updatetemplatedetalle: URL + '/romi/apirm/template/detail/update',
     pedidos: URL +'/romi/apirm/order/list/pendings',
-    pedidobyclient: URL +'/romi/apirm/order/list/',
+    pedidobyclient: URL +'/romi/apirm/orders/',
     pedidoregister: URL + '/romi/apirm/order/register',
 };

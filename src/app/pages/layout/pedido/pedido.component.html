@@ -8,7 +8,8 @@
             </ngx-spinner>
             <div *ngIf="pedidos.length > 0 && step <= 1">
                 <h1>{{'Pedidos' | translate}}</h1>
-                <p-table [value]="pedidos" class="p-datatable-responsive-demo">
+                <p-table [value]="pedidos" class="p-datatable-responsive-demo" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
                     <ng-template pTemplate="caption">
                         <div class="p-d-flex p-ai-center p-jc-between">
                             {{'Pedidos en trámite'| translate}} [ {{pedidos.length}} ]
@@ -25,7 +26,7 @@
                     <ng-template pTemplate="body" let-rowData let-item>
                         <tr style="background-color: white;">
                             <td><span class="p-column-title">
-                                    <button pButton type="button" class="ui-button-warning"
+                                    <button pButton type="button" class="ui-button-warning" *ngIf="item.head.fase=='PE'"
                                         style="height: 30px; border-radius: 5px;" (click)="edit(item)">
                                         <i class="pi pi-pencil" style="font-size: 1.7rem"></i>
                                     </button>
@@ -68,8 +69,8 @@
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <label for="flor" class="lbl">{{'Fecha envío' | translate}}</label>
-                        <p-calendar [(ngModel)]="dateEnvio" [showIcon]="true" [readonlyInput]="true"
-                            [minDate]="dateEnvio" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'">
+                        <p-calendar [(ngModel)]="dateEnvio" [showIcon]="true" [readonlyInput]="true" (onSelect)="choose($event)"
+                            [minDate]="minDate" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'">
                         </p-calendar>
                     </div>
                     <div class="ui-g-12 ui-md-8"></div>
@@ -78,6 +79,19 @@
                     <p-accordion>
                         <p-accordionTab [header]="'Datos del pedido' | translate" [selected]="true">
                             <div class="ui-g form-group ui-fluid">
+                                <div class="ui-g-12 ui-md-3">
+                                    <label for="flor" class="lbl">{{'Fecha' | translate}}</label>
+                                    <p-calendar formControlName="fecha" [showIcon]="true" [readonlyInput]="true"
+                                        [ngClass]="{ 'is-invalid': submitted && f.fecha.errors }" class="form-control"
+                                        [minDate]="minDate" [showTransitionOptions]="'0ms'"
+                                        [hideTransitionOptions]="'0ms'">
+                                    </p-calendar>
+                                    <div *ngIf="submitted && f.fecha.errors" class="invalid-feedback">
+                                        <div *ngIf="f.fecha.errors.required">
+                                            {{'Fecha es requerida' | translate}}
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="ui-g-12 ui-md-3">
                                     <label for="flor" class="lbl">{{'Variedad' | translate}}</label>
                                     <p-dropdown [options]="flores" formControlName="flor" optionLabel="flor.nombre"
@@ -91,7 +105,7 @@
                                     </div>
                                 </div>
 
-                                <div class="ui-g-12 ui-md-3">
+                                <div class="ui-g-12 ui-md-2">
                                     <label for="tamanio" class="lbl">{{'Tamaño' | translate}}</label>
                                     <p-dropdown [options]="tamanios" [placeholder]="'Seleccione' | translate"
                                         optionLabel="name" class="form-control"
@@ -103,7 +117,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="ui-g-12 ui-md-3">
+                                <div class="ui-g-12 ui-md-2">
                                     <label for="cantidad" class="lbl">{{'Cantidad' | translate}}</label>
                                     <input type="text" id="cantidad" pInputText formControlName="cantidad"
                                         pKeyFilter="int" [ngClass]="{ 'is-invalid': submitted && f.cantidad.errors }"
@@ -113,7 +127,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="ui-g-12 ui-md-3">
+                                <div class="ui-g-12 ui-md-2">
                                     <br>
                                     <button pButton type="submit" icon="pi pi-plus" class="ui-button-primary"
                                         [label]="'Agregar' | translate"></button>
@@ -131,6 +145,7 @@
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="width: 8em;"></th>
+                            <th>{{'Fecha' | translate}}</th>
                             <th style="width: 15em;">{{'Variedad' | translate}}</th>
                             <th>{{'CM' | translate}}</th>
                             <th>{{'Cantidad' | translate}}</th>
@@ -143,6 +158,7 @@
                                         (click)="deleteItem(item)"></button>
                                 </span>
                             </td>
+                            <td><span class="p-column-title">{{item.fecha | date: 'dd/MM/yyyy'}}</span></td>
                             <td><span class="p-column-title">{{item.variedad.flor.nombre | titlecase}}</span></td>
                             <td><span class="p-column-title">{{item.stem.name}}</span></td>
                             <td style="width: 10em;">{{item.cantidad}}</td>
@@ -181,28 +197,31 @@
                 <div class="ui-g form-group ui-fluid">
                     <div class="ui-g-12 ui-md-1"></div>
                     <div class="ui-g-12 ui-md-2">
-                        <div [class]="selectpedido.head.fase=='PE'?'step_active':'step_inactive'">
+                        <div
+                            [class]="selectpedido.head.fase=='PE' || selectpedido.head.fase=='RE' || selectpedido.head.fase=='PR' || selectpedido.head.fase=='FA' ?'step_active':'step_inactive'">
                             <i class="pi pi-check" style="font-size: 2rem"></i>
                             <br>
                             <label>Generado</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-2">
-                        <div [class]="selectpedido.head.fase=='RE'?'step_active':'step_inactive'">
+                        <div
+                            [class]="selectpedido.head.fase=='RE' || selectpedido.head.fase=='PR' || selectpedido.head.fase=='FA' ?'step_active':'step_inactive'">
                             <i class="pi pi-user" style="font-size: 2rem"></i>
                             <br>
                             <label>Revisión</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-2">
-                        <div [class]="selectpedido.head.fase=='PR'?'step_active':'step_inactive'">
+                        <div
+                            [class]="selectpedido.head.fase=='PR' || selectpedido.head.fase=='FA' ?'step_active':'step_inactive'">
                             <i class="pi pi-calendar" style="font-size: 2rem"></i>
                             <br>
                             <label>Prealerta</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-2">
-                        <div [class]="selectpedido.head.fase=='FA'?'step_active':'step_inactive'">
+                        <div [class]="selectpedido.head.fase=='FA' ?'step_active':'step_inactive'">
                             <i class="pi pi-file" style="font-size: 2rem"></i>
                             <br>
                             <label>Facturado</label>
@@ -218,61 +237,46 @@
                     <div class="ui-g-12 ui-md-1"></div>
                 </div>
                 <!--switch-->
-                <div *ngIf="selectpedido.head.fase=='PE'">
-                    <div class="ui-g form-group ui-fluid">
-                        <div class="ui-g-12 ui-md-1"></div>
-                        <div class="ui-g-12 ui-md-10">
-                            <div class="ui-g form-group ui-fluid">
-                                <div class="ui-g-12 ui-md-3">
-                                    <label for="flor" class="lbl">{{'Fecha envío' | translate}}</label>
-                                    <div class="ui-inputgroup">
-                                        <input type="text" id="cantidad" pInputText [value]="selectpedido?.head.fecha"
-                                            pKeyFilter="int"
-                                            [ngClass]="{ 'is-invalid': submitted && f.cantidad.errors }" placeholder="0"
-                                            class="form-control">
-                                        <span class="ui-inputgroup-addon"><i class="pi pi-calendar"></i></span>
-                                    </div>
+                <div class="ui-g form-group ui-fluid">
+                    <div class="ui-g-12 ui-md-1"></div>
+                    <div class="ui-g-12 ui-md-10">
+                        <div class="ui-g form-group ui-fluid">
+                            <div class="ui-g-12 ui-md-3">
+                                <label for="flor" class="lbl">{{'Fecha envío' | translate}}</label>
+                                <div class="ui-inputgroup">
+                                    <input type="text" id="cantidad" pInputText [value]="selectpedido?.head.fecha"
+                                        pKeyFilter="int" [ngClass]="{ 'is-invalid': submitted && f.cantidad.errors }"
+                                        placeholder="0" class="form-control">
+                                    <span class="ui-inputgroup-addon"><i class="pi pi-calendar"></i></span>
                                 </div>
-                                <div class="ui-g-12 ui-md-9"></div>
                             </div>
-                            <br>
-                            <p-table [value]="items" class="p-datatable-responsive-demo">
-                                <ng-template pTemplate="caption">
-                                    <div class="p-d-flex p-ai-center p-jc-between">
-                                        {{'Items del pedido'| translate}} [ {{items.length}} ]
-                                    </div>
-                                </ng-template>
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th style="width: 40em;">{{'Variedad' | translate}}</th>
-                                        <th>{{'CM' | translate}}</th>
-                                        <th>{{'Cantidad' | translate}}</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-item>
-                                    <tr style="background-color: white;">
-                                        <td><span class="p-column-title">{{item.variedad.nombre |
-                                                titlecase}}</span></td>
-                                        <td><span class="p-column-title">{{item.stem}}</span></td>
-                                        <td style="width: 10em;">{{item.cantidad}}</td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
+                            <div class="ui-g-12 ui-md-9"></div>
                         </div>
-                        <div class="ui-g-12 ui-md-1"></div>
+                        <br>
+                        <p-table [value]="items" class="p-datatable-responsive-demo">
+                            <ng-template pTemplate="caption">
+                                <div class="p-d-flex p-ai-center p-jc-between">
+                                    {{'Items del pedido'| translate}} [ {{items.length}} ]
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 40em;">{{'Variedad' | translate}}</th>
+                                    <th>{{'CM' | translate}}</th>
+                                    <th>{{'Cantidad' | translate}}</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-item>
+                                <tr style="background-color: white;">
+                                    <td><span class="p-column-title">{{item.variedad.nombre |
+                                            titlecase}}</span></td>
+                                    <td><span class="p-column-title">{{item.stem}}</span></td>
+                                    <td style="width: 10em;">{{item.cantidad}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
-                </div>
-                <div *ngIf="selectpedido.head.fase=='RE'">
-                    Revisiòn
-                </div>
-                <div *ngIf="selectpedido.head.fase=='PR'">
-                    Pre alerta
-                </div>
-                <div *ngIf="selectpedido.head.fase=='FA'">
-                    Facturado
-                </div>
-                <div *ngIf="selectpedido.head.fase=='CA'">
-                    Cancelado
+                    <div class="ui-g-12 ui-md-1"></div>
                 </div>
             </div>
         </div>

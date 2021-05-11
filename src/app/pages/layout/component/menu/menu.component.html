@@ -110,7 +110,7 @@
                             <span>{{ 'Templates' | translate }} </span>
                         </a>
                     </li> 
-                    <li *ngIf="typerol=='ADM' || typerol=='CLI'">
+                    <li *ngIf="typerol=='CLI'">
                         <a routerLink="/pedido" routerLinkActive="active" style="font-size: 14px;"
                         [class]="activeItem=='PEDIDO'?'active-item':'no-active-item'"
                         (click)="selectItemMenu('PEDIDO')">

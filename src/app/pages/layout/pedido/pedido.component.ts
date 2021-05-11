@@ -12,6 +12,7 @@ import { UtilService } from 'src/services/util.service';
 import * as moment from 'moment';
 
 export interface detail {
+  fecha: Date,
   variedad: any,
   stem: any,
   cantidad: number
@@ -37,10 +38,13 @@ export class PedidoComponent implements OnInit {
   items: Array<detail> = []
   dateEnvio: Date = new Date()
   selectpedido: Pedido
+  etapa: number
+  minDate: Date = new Date()
 
   constructor(private api: ApisService, private util: UtilService, private router: Router, private messageService: MessageService,
     private confirmationService: ConfirmationService, private formBuilder: FormBuilder, private spinner: NgxSpinnerService) {
     this.pedidoForm = this.formBuilder.group({
+      fecha: [this.dateEnvio, Validators.required],
       flor: [null, Validators.required],
       tamanio: [null, Validators.required],
       cantidad: ['', Validators.required],
@@ -55,6 +59,7 @@ export class PedidoComponent implements OnInit {
   }
 
   inicializar() {
+    this.etapa = 0
     this.step = 1;
     this.editPedido = false
     this.submitted = false
@@ -104,7 +109,6 @@ export class PedidoComponent implements OnInit {
     }
 
     return type
-
   }
 
   /**
@@ -129,7 +133,7 @@ export class PedidoComponent implements OnInit {
       }
     })
 
-    await this.api.pedidosbyclient(this.user.empresa.entiid, 'PERE', localStorage.getItem('token')).then(async (data) => {
+    await this.api.pedidosbyclient(this.user.empresa.entiid, 'A', localStorage.getItem('token')).then(async (data) => {
       console.log('data pedidos por cliente');
       console.log(data);
       if (data.headerApp.code == 200) {
@@ -173,16 +177,20 @@ export class PedidoComponent implements OnInit {
   }
 
   async edit(pedido: Pedido) {
+    console.log('PEDIDO');
+    console.log(pedido);
     this.editPedido = true
     this.step = 2
     this.selectpedido = pedido
     this.items = []
-    this.dateEnvio = new Date(pedido.head.fecha)
+    this.dateEnvio = new Date(pedido.head.fechrequ)
+    this.pedidoForm.get('fecha').setValue(this.dateEnvio)
     this.util.isLoading.next(true)
     await Promise.all(pedido.items.map(async (item) => {
       const flower = await this.getFlowerbyName(item.flower)
       this.items.push(
         {
+          fecha: new Date(item.shippingdate),
           variedad: { 'flor': flower, 'recursos': [] },
           stem: { name: item.cm, code: item.cm },
           cantidad: item.totaltallos
@@ -206,29 +214,22 @@ export class PedidoComponent implements OnInit {
   }
 
   save() {
-    console.log('Agregando...');
+   
     this.submitted = true;
     if (this.pedidoForm.invalid) {
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios para gregar un item al pedido' });
       return;
     }
 
-    console.log('NEXT');
-    console.log(this.pedidoForm.get('flor'));
-
-
     this.items.push({
+      fecha: this.pedidoForm.get('fecha').value,
       variedad: this.pedidoForm.get('flor').value,
       stem: this.pedidoForm.get('tamanio').value,
       cantidad: this.pedidoForm.get('cantidad').value,
     })
     this.submitted = false
     this.pedidoForm.reset()
-
-    console.log('...ITEMS.....');
-    console.log(this.items);
-
-
+    this.pedidoForm.get('fecha').setValue(this.dateEnvio)
   }
 
   async modificar() {
@@ -246,7 +247,7 @@ export class PedidoComponent implements OnInit {
       items.push(
         {
           line: index,
-          shippingdate: this.selectpedido.head.fecha + '.000',
+          shippingdate: item.fecha + '.000',
           fincapropia: null,
           farmId: null,
           marcId: null,
@@ -312,7 +313,7 @@ export class PedidoComponent implements OnInit {
       items.push(
         {
           line: index,
-          shippingdate: this.selectpedido.head.fecha + '.000',
+          shippingdate: item.fecha + '.000',
           fincapropia: null,
           farmId: null,
           marcId: null,
@@ -370,7 +371,8 @@ export class PedidoComponent implements OnInit {
     console.log('Todo va bien...');
     let head = {
       pediId: 0,
-      fecha: this.getFormatDate(new Date(this.dateEnvio + '')),
+      fecha: this.getFormatDate(new Date()),
+      fechrequ: this.getFormatDate(new Date(this.dateEnvio + '')),
       usuaId: this.user.usuaid,
       estado: 'A',
       fase: 'PE',
@@ -382,7 +384,7 @@ export class PedidoComponent implements OnInit {
       items.push(
         {
           line: index,
-          shippingdate: this.getFormatDate(new Date(this.dateEnvio + '')),
+          shippingdate: this.getFormatDate(new Date(item.fecha + '')),
           fincapropia: null,
           farmId: null,
           marcId: null,
@@ -448,6 +450,7 @@ export class PedidoComponent implements OnInit {
 
       this.items.push(
         {
+          fecha: new Date(item.shippingdate),
           variedad: flower,
           stem: item.cm,
           cantidad: item.totaltallos
@@ -475,12 +478,17 @@ export class PedidoComponent implements OnInit {
   }
 
 
+
   get f() {
     return this.pedidoForm.controls;
   }
 
   getFormatDate(date: Date): string {
     return (moment(date)).format('yyyy-MM-DD HH:mm:ss.SSS');
+  }
+
+  choose($event){
+    this.pedidoForm.get('fecha').setValue($event)
   }
 
 

@@ -978,7 +978,7 @@ export class ApisService {
 
     }
 
-    public pedidosbyclient(clieId: number, fase: string, token: string): Promise<any> {        
+    public pedidosbyclient(clieId: number, estado: string, token: string): Promise<any> {        
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -986,7 +986,7 @@ export class ApisService {
             })
         }
         return new Promise<any>((resolve, reject) => {
-            this.http.get<any>(environment.pedidobyclient + clieId + '/' + fase +'/20210414000000/20210414000000', opt).toPromise().then(pedidos => {
+            this.http.get<any>(environment.pedidobyclient + clieId + '/' + estado +'/20210414000000/20210414000000', opt).toPromise().then(pedidos => {
                 resolve(pedidos);
             }).catch(error => {
                 reject(error);

@@ -86,7 +86,7 @@
                 <div class="ui-g form-group ui-fluid">
                     <div class="ui-g-12 ui-md-10">
                         <h1>
-                            {{'Poceso para prealerta' | translate}}</h1>
+                            {{'Proceso para prealerta' | translate}}</h1>
                     </div>
                     <div class="ui-g-12 ui-md-2">
                         <button pButton type="button" icon="pi pi-arrow-circle-left"
@@ -94,13 +94,14 @@
                             class="ui-button-warning ouput_btn_table" (click)="back()"></button>
                     </div>
                     <hr>
-                    <p-table [value]="select?.items" styleClass="p-datatable-sm">
+                    <p-table [value]="pedidotemporal" styleClass="p-datatable-sm">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th style="width: 8em;"></th>
                                 <th>Variedad</th>
                                 <th>Tamaño</th>
                                 <th>Cantidad</th>
+                                <th>Detalle</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-item>
@@ -115,6 +116,7 @@
                                 <td>{{item.flower}}</td>
                                 <td>{{item.cm}}</td>
                                 <td>{{item.totaltallos}}</td>
+                                <td>{{item.detalle}}</td>
                             </tr>
                         </ng-template>
                     </p-table>
