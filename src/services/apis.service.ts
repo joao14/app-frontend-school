@@ -1011,6 +1011,22 @@ export class ApisService {
         });
     }
 
+    public sendnotification(pedido: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.notificationprealert, pedido, opt).toPromise().then(notification => {
+                resolve(notification);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
 
 
     httpPost(url, body) {

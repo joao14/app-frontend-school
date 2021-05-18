@@ -247,7 +247,7 @@ export class PedidoComponent implements OnInit {
       items.push(
         {
           line: index,
-          shippingdate: item.fecha + '.000',
+          shippingdate: this.getFormatDate(item.fecha),
           fincapropia: null,
           farmId: null,
           marcId: null,

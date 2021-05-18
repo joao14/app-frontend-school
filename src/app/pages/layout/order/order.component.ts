@@ -79,6 +79,7 @@ export interface Detail {
 }
 
 export interface PedidoTemporal {
+  fecha: Date;
   flower: string;
   cm: string;
   totaltallos: string;
@@ -210,10 +211,11 @@ export class OrderComponent implements OnInit {
     this.pedidotemporal = []
     this.select.items.forEach(element => {
       this.pedidotemporal.push({
+        fecha: new Date(element.shippingdate),
         flower: element.flower,
         cm: element.cm,
         totaltallos: String(element.totaltallos),
-        detalle: 'Sin completar'
+        detalle: 'SC'
       })
     });
   }
@@ -342,7 +344,7 @@ export class OrderComponent implements OnInit {
 
   prealerta() {
     this.confirmationService.confirm({
-      message: "Are you sure to continue for prealert?",
+      message: "Are you sure to continue to next step?",
       accept: async () => {
         console.log('ORDER ACCEPTED');
         this.step = "RE"
@@ -354,7 +356,7 @@ export class OrderComponent implements OnInit {
         let head = {
           clieId: this.select.head.client.clieId,
           estado: this.select.head.estado,
-          fase: "PR",
+          fase: "BF",
           fecha: this.select.head.fecha + ".000",
           pediId: this.select.head.pediId,
           usuaId: this.select.head.usuaId
@@ -416,11 +418,11 @@ export class OrderComponent implements OnInit {
       message: "Are you sure to cancel this order?",
       accept: async () => {
         console.log('ORDER ACCEPTEDddddd..');
-        this.step = "RX"
+        this.step = "PE"
         let head = {
           clieId: this.select.head.client.clieId,
           estado: this.select.head.estado,
-          fase: "RE",
+          fase: "RX",
           fecha: this.select.head.fecha + ".000",
           pediId: this.select.head.pediId,
           usuaId: this.select.head.usuaId
@@ -456,6 +458,8 @@ export class OrderComponent implements OnInit {
           console.log('Se ha guardado la siguiente fase correctamente')
           console.log(data);
           if (data.headerApp.code == 200) {
+            this.indice = null
+            this.select = null
             await this.getPedidos()
           }
         }).catch(err => {
@@ -474,7 +478,6 @@ export class OrderComponent implements OnInit {
   }
 
   save() {
-    console.log('Vamos a guardar..');
     if (this.cantidadPrice.length <= 0) {
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Debe agregar valores a la prealerta' });
       this.estado = true;
@@ -496,10 +499,6 @@ export class OrderComponent implements OnInit {
     let pvp = "";
     let pcomp = "";
     let cm = "";
-
-    console.log('------Cantidad Precio-------');
-    console.log(this.cantidadPrice);
-
 
     this.cantidadPrice.forEach(data => {
       pvp = pvp + data.precvent + " ",
@@ -550,12 +549,16 @@ export class OrderComponent implements OnInit {
     }
 
     this.prealertForm.get('fecha').setValue(new Date());
-
-    //Validate complete 
-    this.pedidotemporal.filter(tmp => {
-      if (tmp == this.temporal) {
-        console.log('...Si se encontro...');
-
+    //Validate registro completado 
+    this.pedidotemporal.forEach((tmp, index) => {
+      if (JSON.stringify(tmp) == JSON.stringify(this.temporal)) {
+        this.pedidotemporal[index] = {
+          fecha: tmp.fecha,
+          flower: tmp.flower,
+          cm: tmp.cm,
+          totaltallos: tmp.totaltallos,
+          detalle: 'C'
+        }
       }
     })
 
@@ -686,13 +689,10 @@ export class OrderComponent implements OnInit {
   }
 
   async complete(pedido: any, selectpedido: Pedido) {
-    console.log('DETALLE');
-    console.log(pedido);
-    console.log(selectpedido);    
     this.util.isLoading.next(true)
     const flower = await this.getFlowerbyName(pedido.flower)
     const client = await this.getClientbyName(selectpedido.head.client.nombres)
-    this.prealertForm.get('fecha').setValue(new Date(pedido.shippingdate))
+    this.prealertForm.get('fecha').setValue(new Date(pedido.fecha))
     this.prealertForm.get('rosamistica').setValue(flower)
     this.prealertForm.get('totaltallos').setValue(pedido.totaltallos)
     this.prealertForm.get('cliente').setValue(client)
@@ -700,15 +700,12 @@ export class OrderComponent implements OnInit {
     await this.onOptionsSelected()
     this.util.isLoading.next(false)
     this.temporal = {
+      fecha: pedido.fecha,
       flower: pedido.flower,
       cm: pedido.cm,
       totaltallos: pedido.totaltallos,
       detalle: pedido.detalle
     }
-    console.log('...PEDIDO TEMPORAL...');
-    console.log(this.temporal);
-
-
   }
 
   async getClientbyName(name: string): Promise<any> {
@@ -825,6 +822,33 @@ export class OrderComponent implements OnInit {
       this.messageService.add({ severity: 'warn', summary: 'Rosa Mística', detail: 'No se puede dejar sin items la prelaerta' });
       return
     }*/
+    console.log('Data');
+    console.log(prealert);
+    let temporal = {
+      fecha: prealert.fecha,
+      flower: prealert.rosamistica.nombre,
+      cm: prealert.tamanio.trim(),
+      totaltallos: String(prealert.totaltallos),
+      detalle: 'C'
+    }
+    console.log('TEMPORAL***');
+    console.log(temporal);
+    console.log('DATOS**');
+    console.log(this.pedidotemporal);
+    this.pedidotemporal.forEach((pedido, index) => {
+      if (JSON.stringify(pedido) == JSON.stringify(temporal)) {
+        console.log('...Si se encoentro para eliminar...');
+        console.log(pedido);
+        this.pedidotemporal[index] = {
+          fecha: pedido.fecha,
+          flower: pedido.flower,
+          cm: pedido.cm,
+          totaltallos: pedido.totaltallos,
+          detalle: 'SC'
+        }
+      }
+    })
+
     this.items = this.items.filter((element) => element != prealert);
     this.total = 0;
     this.items.forEach(item => {
@@ -849,6 +873,79 @@ export class OrderComponent implements OnInit {
 
   remove(cantidad: Numeros) {
     this.cantidadPrice = this.cantidadPrice.filter(numero => numero != cantidad);
+  }
+
+  async notificar() {
+    console.log('Notificar el despacho');
+    console.log(this.select);
+
+    this.confirmationService.confirm({
+      message: "Are you sure to continue to dispatched?",
+      accept: async () => {
+        let head = {
+          pediId: this.select.head.pediId,
+          fecha: this.select.head.fecha,
+          fechrequ: this.select.head.fechrequ,
+          fechdesp: this.select.head.fechdesp,
+          fecharri: this.select.head.fecharri,
+          usuaId: this.select.head.usuaId,
+          estado: this.select.head.estado,
+          fase: "RE",
+          clieId: this.select.head.client.clieId
+        }
+
+        let items: Array<any> = []
+        this.items.forEach(async (element, index) => {
+          items.push({
+            cargcompId: element.carga['entiId'],
+            cm: element.tamanio,
+            farmId: element.finca['entiId'],
+            fincapropia: element.fincapropia,
+            florId: element.rosamistica['florId'],
+            hbqb: element.HBBQ,
+            line: index,
+            marcId: element.marca['entiId'],
+            pcomp: element.preciocomp,
+            pvp: element.preciovent,
+            shippingdate: this.select.head.fecha + '.000',
+            status: element.status.nombre,
+            tallos: element.tallos,
+            totaltallos: element.totaltallos
+          })
+        });
+        let pedido = {
+          pedido: head,
+          detalle: items 
+        }
+        console.log('PEDIDO FINALlll DE NOTIFICACION');
+        console.log(pedido);
+
+        this.util.isLoading.next(true)
+        await this.api.sendnotification(pedido, localStorage.getItem('token')).then(async (data) => {
+          console.log('Se ha guardado la siguiente fase correctamente....')
+          console.log(data);
+          if (data.headerApp.code == 200) {
+            //this.step = 'PE'
+            //this.select = null
+            //this.items = []
+            //this.getPedidos()
+          }
+
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401 || err.error.code == 0) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+        this.util.isLoading.next(false)
+
+      }
+    })
+
+
+
+
   }
 
   get f() {

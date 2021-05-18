@@ -196,38 +196,30 @@
                 </div>
                 <div class="ui-g form-group ui-fluid">
                     <div class="ui-g-12 ui-md-1"></div>
-                    <div class="ui-g-12 ui-md-2">
+                    <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase!='CA'">
                         <div
-                            [class]="selectpedido.head.fase=='PE' || selectpedido.head.fase=='RE' || selectpedido.head.fase=='PR' || selectpedido.head.fase=='FA' ?'step_active':'step_inactive'">
+                            [class]="selectpedido.head.fase=='PE' || selectpedido.head.fase=='RE' ||  selectpedido.head.fase=='BF' ?'step_active':'step_inactive'">
                             <i class="pi pi-check" style="font-size: 2rem"></i>
                             <br>
                             <label>Generado</label>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-md-2">
+                    <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase!='CA'">
                         <div
-                            [class]="selectpedido.head.fase=='RE' || selectpedido.head.fase=='PR' || selectpedido.head.fase=='FA' ?'step_active':'step_inactive'">
+                            [class]="selectpedido.head.fase=='RE' || selectpedido.head.fase=='BF' ?'step_active':'step_inactive'">
                             <i class="pi pi-user" style="font-size: 2rem"></i>
                             <br>
                             <label>Revisión</label>
                         </div>
-                    </div>
-                    <div class="ui-g-12 ui-md-2">
-                        <div
-                            [class]="selectpedido.head.fase=='PR' || selectpedido.head.fase=='FA' ?'step_active':'step_inactive'">
-                            <i class="pi pi-calendar" style="font-size: 2rem"></i>
-                            <br>
-                            <label>Prealerta</label>
-                        </div>
-                    </div>
-                    <div class="ui-g-12 ui-md-2">
-                        <div [class]="selectpedido.head.fase=='FA' ?'step_active':'step_inactive'">
+                    </div>                    
+                    <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase!='CA'">
+                        <div [class]="selectpedido.head.fase=='BF' ?'step_active':'step_inactive'">
                             <i class="pi pi-file" style="font-size: 2rem"></i>
                             <br>
                             <label>Facturado</label>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-md-2">
+                    <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase=='CA'">
                         <div [class]="selectpedido.head.fase=='CA'?'step_active':'step_inactive'">
                             <i class="pi pi-times" style="font-size: 2rem"></i>
                             <br>

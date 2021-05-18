@@ -84,20 +84,33 @@
             </div>
             <div *ngIf="step=='RE'">
                 <div class="ui-g form-group ui-fluid">
-                    <div class="ui-g-12 ui-md-10">
-                        <h1>
-                            {{'Proceso para prealerta' | translate}}</h1>
+                    <div class="ui-g-12 ui-md-8">
+                        <h1 class="label">
+                            {{'Gestión de pedido' | translate}} &nbsp; # {{ select?.head.pediId }} </h1>
                     </div>
-                    <div class="ui-g-12 ui-md-2">
-                        <button pButton type="button" icon="pi pi-arrow-circle-left"
-                            [label]="'Lista de pedidos' | translate" icon="pi pi-arrow-circle-left"
-                            class="ui-button-warning ouput_btn_table" (click)="back()"></button>
+                    <div class="ui-g-12 ui-md-4">
+                        <button pButton type="button" icon="pi pi-arrow-circle-left" [label]="'Regresar' | translate"
+                            icon="pi pi-arrow-circle-left" class="ui-button-warning ouput_btn_table"
+                            (click)="back()"></button>
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <h1 class="label">
+                            {{'Cliente :' | translate}} &nbsp; {{ select?.head.client.nombres }}</h1>
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <h1 class="label">
+                            {{'Fecha :' | translate}} &nbsp; {{ select?.head.fecha }}</h1>
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <h1 class="label">
+                            {{'Estado :' | translate}} &nbsp; <span [ngClass]="{'active-state': select?.head.estado=='A', 'inactive-state' : select?.head.estado!='A' }">{{ select?.head.estado=='A'?'Activo':'Inactivo' }}</span></h1>
                     </div>
                     <hr>
                     <p-table [value]="pedidotemporal" styleClass="p-datatable-sm">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th style="width: 8em;"></th>
+                                <th>Fecha</th>
                                 <th>Variedad</th>
                                 <th>Tamaño</th>
                                 <th>Cantidad</th>
@@ -108,21 +121,24 @@
                             <tr style="background-color: white;">
                                 <td><span class="p-column-title">
                                         <button pButton type="button" class="ui-button-warning"
-                                            style="height: 30px; border-radius: 5px;" (click)="complete(item, select)">
+                                            *ngIf="item.detalle=='SC'"
+                                            style="height: 30px; border-radius: 5px;width: 50%;"
+                                            (click)="complete(item, select)">
                                             <i class="pi pi-pencil" style="font-size: 1.7rem"></i>
                                         </button>
                                     </span>
                                 </td>
+                                <td>{{item.fecha | date:'dd-MMM-yyyy'}}</td>
                                 <td>{{item.flower}}</td>
                                 <td>{{item.cm}}</td>
                                 <td>{{item.totaltallos}}</td>
-                                <td>{{item.detalle}}</td>
+                                <td>{{item.detalle=='SC'?'Sin completar':'Completo'}}</td>
                             </tr>
                         </ng-template>
                     </p-table>
                     <hr>
                     <p-accordion>
-                        <p-accordionTab [header]="'Datos de la prealerta' | translate" [selected]="true">
+                        <p-accordionTab [header]="'Datos' | translate" [selected]="true">
                             <form [formGroup]="prealertForm" (ngSubmit)="save()">
                                 <div class="ui-g form-group ui-fluid">
 
@@ -139,7 +155,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="ui-g-12 ui-md-3">
+                                    <!--<div class="ui-g-12 ui-md-3">
                                         <label for="cliente" class="lbl">{{'Cliente' | translate}}</label>
                                         <p-dropdown [options]="clientes" formControlName="cliente" optionLabel="nombres"
                                             class="form-control" [filter]="true" readonly="true"
@@ -148,9 +164,9 @@
                                             <div *ngIf="f.cliente.errors.required">
                                                 {{'Cliente es requerido' | translate}}</div>
                                         </div>
-                                    </div>
+                                    </div>-->
 
-                                    <div class="ui-g-12 ui-md-2">
+                                    <div class="ui-g-12 ui-md-3">
                                         <label class="lbl">{{'Finca' | translate }}</label>
                                         <p-dropdown [options]="fincas" formControlName="finca" optionLabel="nombres"
                                             [filter]="true" placeholder="Seleccione" class="form-control"
@@ -161,7 +177,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="ui-g-12 ui-md-2">
+                                    <div class="ui-g-12 ui-md-1"></div>
+
+                                    <div class="ui-g-12 ui-md-3">
                                         <label class="lbl">{{'Finca propia' | translate }}</label>
                                         <div class="ui-field-checkbox">
                                             <p-checkbox formControlName="fincapropia" binary="true" inputId="binary">
@@ -425,17 +443,23 @@
                     </ng-template>
                 </p-table>
                 <div class="ui-g form-group ui-fluid">
-                    <div class="ui-g-12 ui-md-6">
+                    <div class="ui-g-12 ui-md-3">
                     </div>
                     <div class="ui-g-12 ui-md-3">
                         <button pButton label="Rechazar pedido" icon="pi pi-trash" (click)="cancel()"
                             [disabled]="select==null" class="ui-button-help"></button>
                     </div>
                     <div class="ui-g-12 ui-md-3">
-                        <button pButton label="Pasar a prealerta" icon="pi pi-arrow-right" iconPos="right"
+                        <button pButton label="Notificar" icon="pi pi-th-large" iconPos="right"
+                            (click)="notificar()" [disabled]="items.length < select?.items.length"
+                            class="ui-button-success"></button>
+                    </div>
+                    <div class="ui-g-12 ui-md-3">
+                        <button pButton label="Enviar a facturar" icon="pi pi-arrow-right" iconPos="right"
                             (click)="prealerta()" [disabled]="items.length < select?.items.length"
                             class="ui-button-info"></button>
                     </div>
+
                 </div>
             </div>
         </div>
