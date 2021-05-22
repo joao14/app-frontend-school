@@ -86,6 +86,27 @@ export interface PedidoTemporal {
   detalle: string;
 }
 
+export interface ItemTemporal {
+  cargcompId: string,
+  cargname: string,
+  cm: string,
+  farm: string,
+  farmId: string,
+  fincapropia: string,
+  florId: string,
+  flower: string,
+  hbqb: number,
+  line: number,
+  marcId: string,
+  mark: string,
+  pcomp: string,
+  pvp: string,
+  shippingdate: string,
+  status: string,
+  tallos: number
+  totaltallos: number
+}
+
 
 @Component({
   selector: 'app-order',
@@ -120,6 +141,8 @@ export class OrderComponent implements OnInit {
   user: user
   pedidotemporal: Array<PedidoTemporal> = []
   temporal: any
+  editvisible: boolean
+  selectItem_: ItemTemporal
 
   constructor(private api: ApisService, private util: UtilService, private router: Router, private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService, private messageService: MessageService) {
@@ -138,7 +161,8 @@ export class OrderComponent implements OnInit {
       preciocomp: [''],
       carga: ['', Validators.required],
       estado: ['', Validators.required],
-      repeat: ['']
+      repeat: [''],
+      line: ['']
     });
   }
 
@@ -153,7 +177,7 @@ export class OrderComponent implements OnInit {
   inicializar() {
 
     this.selectitem = -1
-
+    this.selectItem_ = null
     this.item = {
       fecha: '',
       cliente: null,
@@ -201,6 +225,9 @@ export class OrderComponent implements OnInit {
       }
     })
     this.util.isLoading.next(false);
+    console.log('****');
+    console.log(this.pedidos);
+
   }
 
   editPedido(pedido: Pedido, indice: number) {
@@ -209,6 +236,7 @@ export class OrderComponent implements OnInit {
     this.select = pedido
     this.indice = indice
     this.pedidotemporal = []
+
     this.select.items.forEach(element => {
       this.pedidotemporal.push({
         fecha: new Date(element.shippingdate),
@@ -222,7 +250,7 @@ export class OrderComponent implements OnInit {
 
   async onOptionsSelected() {
     this.marks = [];
-    await this.api.getmarks(this.prealertForm.get('cliente').value.entiId, localStorage.getItem("token")).then(mark => {
+    await this.api.getmarks(this.select.head.client.clieId, localStorage.getItem("token")).then(mark => {
       if (mark.headerApp.code == 200) {
         let temp: mark[] = [];
         mark.data.marks.forEach(element => {
@@ -278,8 +306,67 @@ export class OrderComponent implements OnInit {
 
   }
 
+  async editrow(item: any) {
+    console.log('Vamos a editar');
+    console.log(item);
+    this.editvisible = true
+    this.selectItem_ = item
+    console.log('NEXT');
+    const flower = await this.getFlowerbyName(item.flower)
+    const client = await this.getClientbyName(this.select.head.client.nombres)
+    this.prealertForm.get('fecha').setValue(new Date(item.shippingdate))
+    this.prealertForm.get('rosamistica').setValue(flower)
+    this.prealertForm.get('totaltallos').setValue(item.totaltallos)
+    this.prealertForm.get('cliente').setValue(client)
+    this.prealertForm.get('tamanio').setValue({ 'name': item.cm, 'code': item.cm })
+    this.prealertForm.get('line').setValue(item.line)
+    await this.onOptionsSelected()
+    console.log(this.selectItem_);
+
+  }
+
   continuarrevision() {
     this.step = "RE"
+    /*console.log('Revisando los valores....')
+    console.log(this.select);
+
+    this.select.items.forEach(item => {
+      console.log(item);
+      let item_ = {
+        fecha: item.shippingdate+'.000',
+        cliente: item.,
+        fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
+        finca: this.prealertForm.get('finca').value,
+        marca: this.prealertForm.get('marca').value,
+        HBBQ: this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : '0',
+        rosamistica: this.prealertForm.get('rosamistica').value,
+        tamanio: cm,
+        tallos: this.prealertForm.get('tallos').value,
+        totaltallos: ((this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : this.hbqb) * this.prealertForm.get('tallos').value),
+        preciovent: pvp,
+        preciocomp: pcomp,
+        carga: this.prealertForm.get('carga').value,
+        status: this.prealertForm.get('estado').value
+      }
+
+    })*/
+
+    /*this.item = {
+      fecha: this.prealertForm.get('fecha').value,
+      cliente: this.prealertForm.get('cliente').value,
+      fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
+      finca: this.prealertForm.get('finca').value,
+      marca: this.prealertForm.get('marca').value,
+      HBBQ: this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : '0',
+      rosamistica: this.prealertForm.get('rosamistica').value,
+      tamanio: cm,
+      tallos: this.prealertForm.get('tallos').value,
+      totaltallos: ((this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : this.hbqb) * this.prealertForm.get('tallos').value),
+      preciovent: pvp,
+      preciocomp: pcomp,
+      carga: this.prealertForm.get('carga').value,
+      status: this.prealertForm.get('estado').value
+    }*/
   }
 
   confirmar() {
@@ -477,7 +564,7 @@ export class OrderComponent implements OnInit {
 
   }
 
-  save() {
+  async save() {
     if (this.cantidadPrice.length <= 0) {
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Debe agregar valores a la prealerta' });
       this.estado = true;
@@ -505,9 +592,93 @@ export class OrderComponent implements OnInit {
         pcomp = pcomp + data.preccomp + " ",
         cm = cm + data.tamanio + " "
     });
+    console.log('ITEMSSS.....');
+
+    await Promise.all(this.select.items.map(async (item, index) => {
+      if (item.line == this.prealertForm.get('line').value) {
+        console.log('Si encontro :)');
+        console.log(item);
+        console.log(this.prealertForm.get('finca').value)
+        console.log(this.prealertForm.get('marca').value)
+        console.log(this.prealertForm.get('carga').value)
+        console.log(this.prealertForm.get('HBBQ').value)
+        console.log(this.prealertForm.get('rosamistica').value)
+        console.log('BREAK...');
 
 
-    this.item = {
+        const farm = await this.getFincabyName(this.prealertForm.get('finca').value.nombres)
+        console.log(farm);
+
+        const mark = await this.getMarcbyName(this.select.head.client.clieId, this.prealertForm.get('marca').value.nombre)
+        console.log(mark);
+
+        const empresacargo = await this.getEmpresaCargabyName(this.prealertForm.get('carga').value.nombres)
+        console.log(empresacargo);
+
+        const rosamistica = await this.getFlowerbyName(this.prealertForm.get('rosamistica').value.nombre)
+        console.log('ROSA MISTICA');
+        console.log(rosamistica);
+
+
+        this.select.items[index] = {
+          //let data = {
+          shippingdate: this.getFormatDate(new Date(this.prealertForm.get('fecha').value)),
+          fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
+          farm: farm.nombres,
+          farmId: farm.entiId,
+          marcId: mark.marcId,
+          mark: mark.nombre,
+          hbqb: this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : '0',
+          florId: rosamistica.florId,
+          flower: rosamistica.nombre,
+          cm: cm,
+          tallos: this.prealertForm.get('tallos').value,
+          totaltallos: ((this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : this.hbqb) * this.prealertForm.get('tallos').value),
+          pvp: pvp,
+          pcomp: pcomp,
+          cargcompId: empresacargo.entiId,
+          cargname: empresacargo.nombres,
+          status: this.prealertForm.get('estado').value,
+          line: this.prealertForm.get('line').value
+        }
+
+        console.log('DATA RETURN....');
+        console.log(this.select.items);
+
+      }
+    }));
+
+
+    /*let temp = {
+      fecha: this.prealertForm.get('fecha').value,
+      cliente: this.prealertForm.get('cliente').value,
+      fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
+      finca: this.prealertForm.get('finca').value,
+      marca: this.prealertForm.get('marca').value,
+      HBBQ: this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : '0',
+      rosamistica: this.prealertForm.get('rosamistica').value,
+      tamanio: cm,
+      tallos: this.prealertForm.get('tallos').value,
+      totaltallos: ((this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : this.hbqb) * this.prealertForm.get('tallos').value),
+      preciovent: pvp,
+      preciocomp: pcomp,
+      carga: this.prealertForm.get('carga').value,
+      status: this.prealertForm.get('estado').value
+    }*/
+
+    this.submitted = false;
+    this.editvisible = false
+    this.cantidadPrice = [];
+    this.total = 0;
+    this.items.forEach(item => {
+      this.total += parseInt(item.totaltallos + "");
+    });
+    this.prealertForm.reset();
+    console.log('Temporal ITEMS');
+    console.log(this.select);
+
+
+    /*this.item = {
       fecha: this.prealertForm.get('fecha').value,
       cliente: this.prealertForm.get('cliente').value,
       fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
@@ -560,7 +731,7 @@ export class OrderComponent implements OnInit {
           detalle: 'C'
         }
       }
-    })
+    })*/
 
 
 
@@ -817,6 +988,40 @@ export class OrderComponent implements OnInit {
 
   }
 
+  async getFincabyName(name: string): Promise<any> {
+    let finca: finca = null;
+    await this.api.getObjectbyName('F', name.toUpperCase(), localStorage.getItem("token")).then(data => {
+      if (data.headerApp.code == 200) {
+        finca = data.data.farm;
+      }
+    }).catch(err => {
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    return finca;
+  }
+
+  async getEmpresaCargabyName(name: string): Promise<any> {
+    let delivery: delivery = null;
+    await this.api.getObjectbyName('Z', name.toUpperCase(), localStorage.getItem("token")).then(data => {
+      if (data.headerApp.code == 200) {
+        delivery = data.data.cargocompanie;
+      }
+    }).catch(err => {
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    return delivery;
+  }
+
+
+
+
+
   deleteItem(prealert: any) {
     /*if (this.items.length <= 1) {
       this.messageService.add({ severity: 'warn', summary: 'Rosa Mística', detail: 'No se puede dejar sin items la prelaerta' });
@@ -884,15 +1089,18 @@ export class OrderComponent implements OnInit {
       accept: async () => {
         let head = {
           pediId: this.select.head.pediId,
-          fecha: this.select.head.fecha,
-          fechrequ: this.select.head.fechrequ,
-          fechdesp: this.select.head.fechdesp,
-          fecharri: this.select.head.fecharri,
+          fecha: this.select.head.fecha != null ? this.select.head.fecha + '.000' : this.select.head.fecha,
+          fechrequ: this.select.head.fechrequ != null ? this.select.head.fechrequ + '.000' : this.select.head.fechrequ,
+          fechdesp: this.select.head.fechdesp != null ? this.select.head.fechrequ + '.000' : this.select.head.fechdesp,
+          fecharri: this.select.head.fecharri != null ? this.select.head.fecharri + '.000' : this.select.head.fecharri,
           usuaId: this.select.head.usuaId,
           estado: this.select.head.estado,
           fase: "RE",
           clieId: this.select.head.client.clieId
         }
+
+        console.log('ITEMS...');
+        console.log(this.items);
 
         let items: Array<any> = []
         this.items.forEach(async (element, index) => {
@@ -904,7 +1112,7 @@ export class OrderComponent implements OnInit {
             florId: element.rosamistica['florId'],
             hbqb: element.HBBQ,
             line: index,
-            marcId: element.marca['entiId'],
+            marcId: element.marca['marcId'],
             pcomp: element.preciocomp,
             pvp: element.preciovent,
             shippingdate: this.select.head.fecha + '.000',
@@ -915,7 +1123,7 @@ export class OrderComponent implements OnInit {
         });
         let pedido = {
           pedido: head,
-          detalle: items 
+          detalle: items
         }
         console.log('PEDIDO FINALlll DE NOTIFICACION');
         console.log(pedido);

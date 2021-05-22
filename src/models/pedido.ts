@@ -16,5 +16,9 @@ export interface Pedido{
             nombres: string
         }
     },
-    items: Array<Item>
+    items: Array<Item>,
+    prealerts:Array<{
+        fechcrea: string,
+        pdf: string
+    }>
 }
