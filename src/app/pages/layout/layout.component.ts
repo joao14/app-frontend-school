@@ -62,7 +62,9 @@ export class LayoutComponent implements OnInit {
 
     ngOnInit() {
         this.typerol = JSON.parse(localStorage.getItem('user')).roles[0].shorcut;
-       
+        console.log('TIPO DE ROL');
+        console.log(this.typerol);        
+        
         localStorage.setItem("rolactive", this.typerol);
         this.utilservice.typerolselected.next(this.typerol);
 

@@ -6,24 +6,201 @@
                 [fullScreen]="true">
                 <p style="color: white"> Loading... </p>
             </ngx-spinner>
+
+            <div *ngIf="step=='NEW'">
+                <div class="ui-g form-group ui-fluid">
+
+                    <div class="ui-g-12">
+                        <div class="ui-g-12 ui-md-10">
+                            <h1 class="label">
+                                {{'Crear pedido' | translate}} </h1>
+                        </div>
+                        <div class="ui-g-12 ui-md-2">
+                            <button pButton type="button" [label]="'Regresar' | translate"
+                                icon="pi pi-arrow-circle-left" class="ui-button-warning btn" (click)="back()"></button>
+                        </div>
+                    </div>
+                    <div class="ui-g-12">
+                        <div class="ui-g-12 ui-md-4">
+                            <label for="flor" class="lbl">{{'Shipping date' | translate}}</label>
+                            <p-calendar [(ngModel)]="dateEnvio" [showIcon]="true" [readonlyInput]="true"
+                                (onSelect)="choose($event)" [minDate]="minDate" [showTransitionOptions]="'0ms'"
+                                [hideTransitionOptions]="'0ms'">
+                            </p-calendar>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-4">
+                            <label for="flor" class="lbl">{{'Cliente' | translate}}</label>
+                            <p-dropdown [options]="clientes" optionLabel="nombres" [(ngModel)]="clientselect"
+                                class="form-control" [filter]="true" [placeholder]="'Seleccione' | translate">
+                            </p-dropdown>
+                        </div>
+                        <div class="ui-g-12 ui-md-4"></div>
+                    </div>
+                    <div class="ui-g-12">
+                        <form [formGroup]="pedidoForm" (ngSubmit)="saveNewOrder()">
+                            <p-accordion>
+                                <p-accordionTab [header]="'Datos del pedido' | translate" [selected]="true">
+                                    <div class="ui-g form-group ui-fluid">
+                                        <div class="ui-g-12 ui-md-3">
+                                            <label for="flor" class="lbl">{{'Shipping Date' | translate}}</label>
+                                            <p-calendar formControlName="fecha" [showIcon]="true"
+                                                [ngClass]="{ 'is-invalid': submittedpedido && fp.fecha.errors }"
+                                                class="form-control" [minDate]="minDate" [showTransitionOptions]="'0ms'"
+                                                [hideTransitionOptions]="'0ms'">
+                                            </p-calendar>
+                                            <div *ngIf="submittedpedido && fp.fecha.errors" class="invalid-feedback">
+                                                <div *ngIf="fp.fecha.errors.required">
+                                                    {{'Shipping date' | translate}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ui-g-12 ui-md-3">
+                                            <label for="flor" class="lbl">{{'Variedad' | translate}}</label>
+                                            <p-dropdown [options]="flores" formControlName="flor" optionLabel="nombre"
+                                                [ngClass]="{ 'is-invalid': submittedpedido && fp.flor.errors }"
+                                                class="form-control" [filter]="true"
+                                                [placeholder]="'Seleccione' | translate">
+                                            </p-dropdown>
+                                            <div *ngIf="submittedpedido && fp.flor.errors" class="invalid-feedback">
+                                                <div *ngIf="fp.flor.errors.required">
+                                                    {{'Variedad es requerido' | translate}}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="ui-g-12 ui-md-2">
+                                            <label for="tamanio" class="lbl">{{'Tamaño' | translate}}</label>
+                                            <p-dropdown [options]="tamanios" [placeholder]="'Seleccione' | translate"
+                                                optionLabel="name" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submittedpedido && fp.tamanio.errors }"
+                                                formControlName="tamanio">
+                                            </p-dropdown>
+                                            <div *ngIf="submittedpedido && fp.tamanio.errors" class="invalid-feedback">
+                                                <div *ngIf="fp.tamanio.errors.required">{{'Tamaño es requerido' |
+                                                    translate}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ui-g-12 ui-md-2">
+                                            <label for="cantidad" class="lbl">{{'Cantidad' | translate}}</label>
+                                            <input type="text" id="cantidad" pInputText formControlName="cantidad"
+                                                pKeyFilter="int"
+                                                [ngClass]="{ 'is-invalid': submittedpedido && f.cantidad.errors }"
+                                                placeholder="0" class="form-control">
+                                            <div *ngIf="submittedpedido && fp.cantidad.errors" class="invalid-feedback">
+                                                <div *ngIf="fp.cantidad.errors.required">{{'Cantidad es requerido' |
+                                                    translate}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ui-g-12 ui-md-2">
+                                            <br>
+                                            <button pButton type="submit" icon="pi pi-plus"
+                                                class="ui-button-primary btn" [label]="'Agregar' | translate"></button>
+                                        </div>
+                                    </div>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </form>
+                    </div>
+                    <p-table [value]="items" class="p-datatable-responsive-demo">
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex p-ai-center p-jc-between">
+                                {{'Items del pedido'| translate}} [ {{items.length}} ]
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 8em;"></th>
+                                <th>{{'Fecha' | translate}}</th>
+                                <th style="width: 15em;">{{'Variedad' | translate}}</th>
+                                <th>{{'CM' | translate}}</th>
+                                <th>{{'Cantidad' | translate}}</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-item>
+                            <tr style="background-color: white;">
+                                <td><span class="p-column-title">
+                                        <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
+                                            (click)="deleteItemcreateorder(item)"></button>
+                                    </span>
+                                </td>
+                                <td><span class="p-column-title">{{item.fecha | date: 'dd/MM/yyyy'}}</span></td>
+                                <td><span class="p-column-title">{{item.variedad.nombre | titlecase}}</span></td>
+                                <td><span class="p-column-title">{{item.stem.name}}</span></td>
+                                <td style="width: 10em;">{{item.cantidad}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    <br>
+                    <div class="ui-g-12">
+                        <div class="ui-g-12 ui-md-10"></div>
+                        <div class="ui-g-12 ui-md-2">
+                            <button pButton icon="pi pi-arrow-right" class="ui-button-info btn" (click)="finalizar()"
+                                [label]="'Finalizar' | translate" [disabled]="items.length <= 0"></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <div *ngIf="step=='PE'">
                 <div class="ui-g form-group ui-fluid">
-                    <div class="ui-g-12 ui-lg-12 ui-md-12">
-                        <h1>
-                            {{'Pedidos a procesar' | translate}}</h1>
+                    <div class="ui-g-12">
+                        <div class="ui-g-12 ui-md-2">
+                            <h1 class="label">
+                                {{'Pedidos a procesar' | translate}}</h1>
+                        </div>
+                        <div class="ui-g-12 ui-md-2">
+                            <button pButton label="Nuevo pedido" icon="pi pi-clone" iconPos="right" (click)="new()"
+                                class="ui-button-success btn"></button>
+                        </div>
+                        <div class="ui-g-12 ui-md-1"></div>
+                        <div class="ui-g-12 ui-md-7">
+                            <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                                <label>Pendiente</label>&nbsp; <button pButton type="button" label=" "
+                                    style="border-radius: 5px;"></button>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                                <label>Revisiòn </label> &nbsp; <button pButton type="button" label=" "
+                                    style="background-color: #007ad9;border-color: #007ad9;border-radius: 5px;"></button>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                                <label>Despachado</label> &nbsp; <button pButton type="button" label=" "
+                                    style="background-color: #5e8f32;border-color: #5e8f32;border-radius: 5px;"></button>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                                <label>Facturado</label> &nbsp; <button pButton type="button" label=" "
+                                    style="background-color: #f5b60f;border-color: #f5b60f;border-radius: 5px;"></button>
+                            </div>
+
+                        </div>
                     </div>
+
                     <div class="ui-g-12 ui-md-12">
                         <div class="ui-g-12 ui-md-2 pedidos">
+                            <div>
+                                <input type="text" placeholder="Buscar por cliente" pInputText
+                                    (keyup)="applyFilter($event )" />
+                            </div>
+                            <br>
                             <div *ngIf="pedidos.length <= 0">
-                                <label>Sin pedidos pendientes</label>
+                                <label>Pedidos no encontrados</label>
                             </div>
                             <div *ngFor="let pedido of pedidos;let i = index" (click)="editPedido(pedido,i)"
                                 [class]="i==indice?'active':''">
                                 <label>
-                                    <div [class]="pedido.head?.fase=='PE'?'fase':'fase_active'">
+                                    <div
+                                        [ngClass]="{'pendiente': pedido.head?.fase=='PE', 'revision' : pedido.head?.fase=='RE' , 'despachado' : pedido.head?.fase=='DE' }">
                                         {{getState(pedido.head?.fase)}}
                                     </div>
-                                    <i class="fa fa-hand-o-right" aria-hidden="true"></i> {{pedido.head?.fecha}}
+                                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                    <br>Fecha: {{pedido.head?.fecha | date: 'dd-MMM-yyyy'}} <br> Cliente:
+                                    {{pedido.head?.client.nombres}} <br> Pedido: {{pedido.head?.pediId}}
                                 </label>
                                 <hr>
                             </div>
@@ -31,14 +208,19 @@
                         <div class="ui-g-12 ui-md-10">
                             <p-fieldset [legend]="'Detalle del pedido' | translate">
                                 <div class="ui-g form-group ui-fluid">
-                                    <div class="ui-g-12 ui-md-6">
-                                        <label class="lbl">{{'Fecha solicitud' | translate }}</label>
-                                        <input type="text" pInputText [(value)]="select?.head.fecha" readonly />
-                                    </div>
-                                    <div class="ui-g-12 ui-md-6">
+
+                                    <div class="ui-g-12 ui-md-4">
                                         <label class="lbl">{{'Cliente' | translate }}</label>
                                         <input type="text" pInputText [(value)]="select?.head.client.nombres"
                                             readonly />
+                                    </div>
+                                    <div class="ui-g-12 ui-md-4">
+                                        <label class="lbl">{{'Nº Pedido' | translate }}</label>
+                                        <input type="text" pInputText [(value)]="select?.head.pediId" readonly />
+                                    </div>
+                                    <div class="ui-g-12 ui-md-4">
+                                        <label class="lbl">{{'Fecha solicitud' | translate }}</label>
+                                        <input type="text" pInputText [(value)]="select?.head.fecha" readonly />
                                     </div>
                                     <hr>
                                     <p-table [value]="select?.items" styleClass="p-datatable-sm">
@@ -64,17 +246,18 @@
                                     </div>
                                     <div class="ui-g-12 ui-md-3">
                                         <button pButton label="Rechazar pedido" icon="pi pi-trash" (click)="cancel()"
-                                            [disabled]="select==null" class="ui-button-help"></button>
+                                            [disabled]="select==null" class="ui-button-help btn"></button>
                                     </div>
-                                    <div class="ui-g-12 ui-md-3" *ngIf="select?.head.fase=='RE'">
-                                        <button pButton label="Continuar con revision" icon="pi pi-arrow-right"
-                                            iconPos="right" (click)="continuarrevision()" [disabled]="select==null"
-                                            class="ui-button-info"></button>
+                                    <div class="ui-g-12 ui-md-3"
+                                        *ngIf="select?.head.fase=='RE' || select?.head.fase=='DE'">
+                                        <button pButton label="Continuar" icon="pi pi-arrow-right" iconPos="right"
+                                            (click)="continuarrevision()" [disabled]="select==null"
+                                            class="ui-button-info btn"></button>
                                     </div>
                                     <div class="ui-g-12 ui-md-3" *ngIf="select?.head.fase=='PE' || select==null">
                                         <button pButton label="Pasar a revision" icon="pi pi-arrow-right"
                                             iconPos="right" (click)="confirmar()" [disabled]="select==null"
-                                            class="ui-button-info"></button>
+                                            class="ui-button-info btn"></button>
                                     </div>
                                 </div>
                             </p-fieldset>
@@ -82,399 +265,768 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="step=='RE'">
+            <div *ngIf="step=='RE' || step=='DE'">
                 <div class="ui-g form-group ui-fluid">
                     <div class="ui-g-12 ui-md-10">
+                        <!--Detallle de la cabecera-->
+                        <div class="ui-g-12 ui-md-6">
+                            <h1 class="label">
+                                {{'Gestión de pedido' | translate}} &nbsp; # {{ select?.head.pediId }} </h1>
+                        </div>
+                        <div class="ui-g-12 ui-md-3">
+                            <label class="lbl">{{'Estado:' | translate}}</label>
+                            &nbsp;
+                            <span
+                                [ngClass]="{'active-state': select?.head.estado=='A', 'inactive-state' : select?.head.estado!='A' }">{{
+                                select?.head.estado=='A'?'Activo':'Inactivo' }}</span>
+                        </div>
+                        <div class="ui-g-12 ui-md-3">
+                            <label class="lbl"> {{'Fecha :' | translate}}</label>
+                            <input type="text" pInputText [(ngModel)]="select?.head.fecha" readonly />
+                        </div>
+                        <div class="ui-g-12">
 
-                        <div class="ui-g">
-                            <div class="ui-md-8">
-                                <h1 class="label">
-                                    {{'Gestión de pedido' | translate}} &nbsp; # {{ select?.head.pediId }} </h1>
+                            <div class="ui-g-12 ui-md-3">
+                                <label class="lbl">
+                                    {{'Cliente' | translate}} </label>
+                                <input type="text" pInputText [(ngModel)]="select?.head.client.nombres" readonly />
                             </div>
-                            <div class="ui-md-4">
-                                <button pButton type="button" icon="pi pi-arrow-circle-left"
-                                    [label]="'Regresar' | translate" icon="pi pi-arrow-circle-left"
-                                    class="ui-button-warning ouput_btn_table" (click)="back()"></button>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <label for="marca" class="lbl">{{'Marca' | translate}}</label>
+                                <p-dropdown [options]="marks" optionLabel="nombre" class="form-control" [filter]="true"
+                                    [(ngModel)]="markselected" (onChange)='onOptionsSelectedMarca()'
+                                    [readonly]="step=='DE'" placeholder="Seleccione">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <label for="marca" class="lbl">{{'Empresa cargo' | translate}}</label>
+                                <p-dropdown [options]="deliveries" optionLabel="nombres" class="form-control"
+                                    (onChange)='onOptionsSelecteDelivery()' [(ngModel)]="empresacargoselected"
+                                    [readonly]="step=='DE'" [filter]="true" placeholder="Seleccione">
+                                </p-dropdown>
+                            </div>
+
+
+                            <div class="ui-g-12 ui-md-3">
+                                <label for="marca" class="lbl">{{'N° guía' | translate}}</label>
+                                <input type="text" pInputText [(ngModel)]="mawba" [readonly]="step=='DE'" />
+                            </div>
+
+                        </div>
+
+                        <div class="ui-g-12" *ngIf="step=='DE'">
+                            <div class="ui-g-12 ui-md-4">
+                                <h1 class="label">
+                                    {{'Fecha despacho :' | translate}} </h1>
+                            </div>
+                            <div class="ui-g-12 ui-md-4">
+                                <p-calendar dateFormat="yy/mm/dd" [minDate]="minDateValue" [(ngModel)]="fechadespacho">
+                                </p-calendar>
                             </div>
                         </div>
-                        <div class="ui-g">
-                            <div class="ui-md-4">
+                        <div class="ui-g-12" *ngIf="step=='DE'">
+                            <div class="ui-g-12 ui-md-4">
                                 <h1 class="label">
-                                    {{'Cliente :' | translate}} &nbsp; {{ select?.head.client.nombres }}</h1>
+                                    {{'Fecha recibido :' | translate}}</h1>
                             </div>
-                            <div class="ui-md-4">
-                                <h1 class="label">
-                                    {{'Fecha :' | translate}} &nbsp; {{ select?.head.fecha }}</h1>
-                            </div>
-                            <div class="ui-md-4">
-                                <h1 class="label">
-                                    {{'Estado :' | translate}} &nbsp; <span
-                                        [ngClass]="{'active-state': select?.head.estado=='A', 'inactive-state' : select?.head.estado!='A' }">{{
-                                        select?.head.estado=='A'?'Activo':'Inactivo' }}</span></h1>
+                            <div class="ui-g-12 ui-md-4">
+                                <p-calendar dateFormat="yy/mm/dd" [minDate]="minDateValue" [(ngModel)]="fecharecibido">
+                                </p-calendar>
                             </div>
                         </div>
-                        <!--<p-table [value]="pedidotemporal" styleClass="p-datatable-sm">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th style="width: 8em;"></th>
-                                    <th>Fecha</th>
-                                    <th>Variedad</th>
-                                    <th>Tamaño</th>
-                                    <th>Cantidad</th>
-                                    <th>Detalle</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-item>
-                                <tr style="background-color: white;">
-                                    <td><span class="p-column-title">
-                                            <button pButton type="button" class="ui-button-warning"
-                                                *ngIf="item.detalle=='SC'"
-                                                style="height: 30px; border-radius: 5px;width: 50%;"
-                                                (click)="complete(item, select)">
-                                                <i class="pi pi-pencil" style="font-size: 1.7rem"></i>
-                                            </button>
-                                        </span>
-                                    </td>
-                                    <td>{{item.fecha | date:'dd-MMM-yyyy'}}</td>
-                                    <td>{{item.flower}}</td>
-                                    <td>{{item.cm}}</td>
-                                    <td>{{item.totaltallos}}</td>
-                                    <td>{{item.detalle=='SC'?'Sin completar':'Completo'}}</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                        <hr>-->
-                        <p-table [value]="select.items" class="p-datatable-responsive-demo">
-                            <ng-template pTemplate="caption">
-                                <div class="p-d-flex p-ai-center p-jc-between">
-                                    {{'Items del pedido' | translate }}
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th style="width: 4em;"></th>
-                                    <th style="width: 4em;"></th>
-                                    <th style="width: 4em;"></th>
-                                    <!--<th style="width: 4em;"></th>-->
-                                    <th style="width: 15em;">{{'Fecha' | translate }}</th>
-                                    <th>{{'Finca propia' | translate}}</th>
-                                    <th>{{'Finca' | translate}}</th>
-                                    <th>{{'Marca' | translate }}</th>
-                                    <th>{{'Estado' | translate}}</th>
-                                    <th>{{'Flor' | translate}}</th>
-                                    <th>{{'HB/QB' | translate}}</th>
-                                    <th>{{'Tallos' | translate}}</th>
-                                    <th>{{'T. Tallos' | translate}}</th>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
-                                <tr>
-                                    <td>
-                                        <span class="p-column-title">
-                                            <button pButton type="button" class="ui-button-danger" icon="pi pi-pencil"
-                                                (click)="editrow(data)"></button>
-                                        </span>
-                                    </td>
-                                    <td><span class="p-column-title">
-                                            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
-                                                (click)="deleteItem(data)"></button>
-                                        </span>
-                                    </td>
-                                    <td><span class="p-column-title">
-                                            <button pButton type="button" class="ui-button-primary"
-                                                [icon]="selectitem==rowIndex ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
-                                                (click)="rowexpasion(rowIndex)"></button>
-                                        </span>
-                                    </td>
-                                    <td><span class="p-column-title">{{data.shippingdate | date :'dd-MMM-yyyy' }}</span>
-                                    </td>
-                                    <td><span class="p-column-title">{{data.fincapropia=='S'? 'Rosa Mística' : 'N/A'
-                                            }}</span>
-                                    </td>
-                                    <td><span class="p-column-title">{{data.farmId == null ? '' : data.farm }}</span>
-                                    </td>
-                                    <td><span class="p-column-title">{{data.mark ==null ? '' : data.mark }}</span></td>
-                                    <td><span class="p-column-title">{{data.status == null || data.status == "LOOKING" ?
-                                            'N/A' : data.status.nombre}}</span></td>
-                                    <td><span class="p-column-title">{{data.flower }}</span></td>
-                                    <td><span class="p-column-title">{{data.hbqb}}</span></td>
-                                    <td><span class="p-column-title">{{data.tallos}}</span></td>
-                                    <td><span class="p-column-title">{{data.totaltallos}}</span></td>
-                                </tr>
-                                <tr *ngIf="selectitem==rowIndex " class="detalle_table">
-                                    <td colspan="12">
-                                        <div class="ui-g form-group ui-fluid">
+                        <br>
+                        <div class="ui-g-12 ui-md-10"
+                            *ngIf="step=='RE' && (!createvisible && !editvisible)">
+                        </div>
+                        <div class="ui-g-12 ui-md-2" *ngIf="step=='RE' && (!createvisible && !editvisible)">
+                            <button pButton type="button" class="ui-button-warning" label="Nuevo" icon="pi pi-clone"
+                                iconPos="right" style="height: 30px; border-radius: 5px;"
+                                (click)="createvisible = true">
+                            </button>
+                        </div>
+                        <div class="ui-g-12">
+                            <p-table [value]="select.items" class="p-datatable-responsive-demo">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 5em;" *ngIf="step!='DE'"></th>
+                                        <th style="width: 5em;" *ngIf="step!='DE'"></th>
+                                        <th style="width: 5em;"></th>
+                                        <!--<th style="width: 4em;"></th>-->
+                                        <th style="width: 15em;">{{'Fecha' | translate }}</th>
+                                        <th>{{'Finca propia' | translate}}</th>
+                                        <th>{{'Finca' | translate}}</th>
+                                        <th>{{'Marca' | translate }}</th>
+                                        <th>{{'Estado' | translate}}</th>
+                                        <th>{{'Flor' | translate}}</th>
+                                        <th>{{'HB/QB' | translate}}</th>
+                                        <th>{{'Tallos' | translate}}</th>
+                                        <th>{{'T. Tallos' | translate}}</th>
+                                        <th>{{'Proceso' | translate}}</th>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+                                    <tr style="background-color: white;">
+                                        <td *ngIf="step!='DE'">
+                                            <span class="p-column-title">
+                                                <button pButton type="button" class="ui-button-warning"
+                                                    [disabled]="createvisible || editvisible"
+                                                    style="height: 30px; border-radius: 5px;" (click)="editrow(data)">
+                                                    <i class="pi pi-pencil" style="font-size: 1.7rem"></i>
+                                                </button>
+                                            </span>
+                                        </td>
+                                        <td *ngIf="step!='DE'"><span class="p-column-title">
+                                                <button pButton type="button" class="ui-button-primary"
+                                                    style="height: 30px; border-radius: 5px;"
+                                                    [disabled]="createvisible || editvisible"
+                                                    (click)="deleteItem(data)">
+                                                    <i class="pi pi-trash" style="font-size: 1.7rem"></i>
+                                                </button>
+                                            </span>
+                                        </td>
+                                        <td><span class="p-column-title">
+                                                <button pButton type="button" class="ui-button-info"
+                                                    style="height: 30px; border-radius: 5px;"
+                                                    (click)="rowexpasion(rowIndex)">
+                                                    <i [class]="selectitem==rowIndex ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+                                                        style="font-size: 1.7rem"></i>
+                                                </button>
+                                            </span>
+                                        </td>
+                                        <td><span class="p-column-title">{{data.shippingdate | date :'dd-MMM-yyyy'
+                                                }}</span>
+                                        </td>
+                                        <td><span class="p-column-title">{{data.fincapropia=='S'? 'Rosa Mística' : 'N/A'
+                                                }}</span>
+                                        </td>
+                                        <td style="overflow-wrap: break-word;"><span
+                                                class="p-column-title">{{data.farmId ==
+                                                null ? '' : data.farm }}</span>
+                                        </td>
+                                        <td style="overflow-wrap: break-word;"><span class="p-column-title">{{data.mark
+                                                ==null ? '' : data.mark }}</span></td>
+                                        <td style="overflow-wrap: break-word;"><span
+                                                class="p-column-title">{{data.status ==
+                                                null || data.status.nombre == null ?
+                                                data.status : data.status.nombre}}</span></td>
+                                        <td style="overflow-wrap: break-word;"><span
+                                                class="p-column-title">{{data.flower
+                                                }}</span></td>
+                                        <td><span class="p-column-title">{{data.hbqb}}</span></td>
+                                        <td><span class="p-column-title">{{data.tallos}}</span></td>
+                                        <td><span class="p-column-title">{{data.totaltallos}}</span></td>
+                                        <td style="overflow-wrap: break-word;"><span
+                                                class="p-column-title">{{data.farmId ==
+                                                null ? 'Incompleto' : 'Completo'}}</span></td>
+                                    </tr>
+                                    <tr *ngIf="selectitem==rowIndex " class="detalle_table">
+                                        <td [attr.colspan]="step=='DE' ? '11' : '13'">
+                                            <div class="ui-g form-group ui-fluid">
 
-                                            <!--<div class="ui-g-12 ui-md-2">
+                                                <!--<div class="ui-g-12 ui-md-2">
                                         <label class="lbl">{{'HB/QB' | translate}}</label>
                                         <input type="text" pInputText [(ngModel)]="data.HBBQ" readonly>
                                     </div>-->
+                                                <div class="ui-g-12 ui-md-3">
+                                                    <label class="lbl">{{'Caja' | translate}}</label>
+                                                    <input type="text" pInputText [(ngModel)]="data.tipoempaque"
+                                                        readonly>
+                                                </div>
 
-                                            <div class="ui-g-12 ui-md-3">
-                                                <label class="lbl">{{'Tamaño' | translate}}</label>
-                                                <input type="text" pInputText [(ngModel)]="data.cm" readonly>
-                                            </div>
+                                                <div class="ui-g-12 ui-md-3">
+                                                    <label class="lbl">{{'Pieza' | translate}}</label>
+                                                    <input type="text" pInputText [(ngModel)]="data.hbqb" readonly>
+                                                </div>
 
-                                            <div class="ui-g-12 ui-md-2">
-                                                <label class="lbl">{{'Precio Venta' | translate}}</label>
-                                                <input type="text" pInputText [(ngModel)]="data.pvp" readonly>
-                                            </div>
+                                                <div class="ui-g-12 ui-md-3">
+                                                    <label class="lbl">{{'BCH' | translate}}</label>
+                                                    <input type="text" pInputText [(ngModel)]="data.tallosxbch"
+                                                        readonly>
+                                                </div>
 
-                                            <div class="ui-g-12 ui-md-2">
-                                                <label class="lbl">{{'Precio Compra' | translate}}</label>
-                                                <input type="text" pInputText [(ngModel)]="data.pcomp" readonly>
-                                            </div>
-                                            <div class="ui-g-12 ui-md-3">
-                                                <label class="lbl">{{'Empresa de Carga' | translate}}</label>
-                                                <input type="text" pInputText [(ngModel)]="data.cargname" readonly>
-                                            </div>
+                                                <div class="ui-g-12 ui-md-3">
+                                                    <label class="lbl">{{'No BCH' | translate}}</label>
+                                                    <input type="text" pInputText [(ngModel)]="data.cantidadbch"
+                                                        readonly>
+                                                </div>
 
-                                        </div>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="footer">
-                                <tr>
-                                    <td colspan="11" class="total_table">{{'Totales' | translate}}</td>
-                                    <td><span class="total_tallos">{{ total }}</span></td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
+
+                                                <div class="ui-g-12 ui-md-3">
+                                                    <label class="lbl">{{'Tamaño' | translate}}</label>
+                                                    <input type="text" pInputText [(ngModel)]="data.cm" readonly>
+                                                </div>
+
+                                                <div class="ui-g-12 ui-md-3">
+                                                    <label class="lbl">{{'Precio Venta' | translate}}</label>
+                                                    <input type="text" pInputText [(ngModel)]="data.pvp" readonly>
+                                                </div>
+
+                                                <div class="ui-g-12 ui-md-3">
+                                                    <label class="lbl">{{'Precio Compra' | translate}}</label>
+                                                    <input type="text" pInputText [(ngModel)]="data.pcomp" readonly>
+                                                </div>
+                                                <div class="ui-g-12 ui-md-3">
+                                                    <label class="lbl">{{'Empresa de Carga' | translate}}</label>
+                                                    <input type="text" pInputText [(ngModel)]="data.cargname" readonly>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer">
+                                    <tr>
+                                        <td [attr.colspan]="step=='DE' ? '9' : '11'" class="total_table">{{'Totales' |
+                                            translate}}</td>
+                                        <td><span class="total_tallos">{{ total }}</span></td>
+                                        <td></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
                         <br>
-                        <p-accordion *ngIf="editvisible">
-                            <p-accordionTab [header]="'Editando el item' | translate" [selected]="true">
-                                <form [formGroup]="prealertForm" (ngSubmit)="save()">
-                                    <div class="ui-g form-group ui-fluid">
-
-                                        <div class="ui-g-12 ui-md-2">
-                                            <label for="Datos de envío" class="lbl">{{'Fecha de envio' | translate }}
-                                            </label>
-                                            <p-calendar formControlName="fecha" class="form-control"
-                                                dateFormat="yy/mm/dd" [readonlyInput]="true" [minDate]="minDateValue"
-                                                [ngClass]="{ 'is-invalid': submitted && f.fecha.errors }">
-                                            </p-calendar>
-                                            <div *ngIf="submitted && f.fecha.errors" class="invalid-feedback">
-                                                <div *ngIf="f.fecha.errors.required">{{'Fecha es requerido' | translate
-                                                    }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="ui-g-12 ui-md-3">
-                                            <label class="lbl">{{'Finca' | translate }}</label>
-                                            <p-dropdown [options]="fincas" formControlName="finca" optionLabel="nombres"
-                                                [filter]="true" placeholder="Seleccione" class="form-control"
-                                                [ngClass]="{ 'is-invalid': submitted && f.finca.errors }"></p-dropdown>
-                                            <div *ngIf="submitted && f.finca.errors" class="invalid-feedback">
-                                                <div *ngIf="f.finca.errors.required">{{'Finca es requerido' | translate
-                                                    }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-1"></div>
-
-                                        <div class="ui-g-12 ui-md-3">
-                                            <label class="lbl">{{'Finca propia' | translate }}</label>
-                                            <div class="ui-field-checkbox">
-                                                <p-checkbox formControlName="fincapropia" binary="true"
-                                                    inputId="binary">
-                                                </p-checkbox> &nbsp;
-                                                <label for="binary">{{'Rosa Mística' | translate }}</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-3">
-                                            <label for="marca" class="lbl">{{'Marca' | translate}}</label>
-                                            <p-dropdown [ngClass]="{ 'is-invalid': submitted && f.marca.errors }"
-                                                [options]="marks" optionLabel="nombre" class="form-control"
-                                                formControlName="marca" [filter]="true" placeholder="Seleccione">
-                                            </p-dropdown>
-                                            <div *ngIf="submitted && f.marca.errors" class="invalid-feedback">
-                                                <div *ngIf="f.marca.errors.required">{{'Marca es requerido' |
-                                                    translate}}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-7">
-
-                                            <div class="ui-g-12 ui-md-2">
-                                                <label for="hbbq" class="lbl">{{'HB/QB' | translate}}</label>
-                                                <input type="text" pInputText formControlName="HBBQ"
-                                                    class="form-control" pKeyFilter="int" placeholder="0">
-                                            </div>
-
-
-                                            <div class="ui-g-12 ui-md-5">
-                                                <label for="rosamistica" class="lbl">{{'Variedad' | translate}}</label>
-                                                <p-dropdown [options]="flores" formControlName="rosamistica"
-                                                    optionLabel="nombre" [filter]="true" placeholder="Seleccione"
-                                                    class="form-control" readonly="true"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.rosamistica.errors }">
-                                                </p-dropdown>
-                                                <div *ngIf="submitted && f.rosamistica.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.rosamistica.errors.required">
-                                                        {{'Variedad es requerido' | translate}}
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="ui-g-12 ui-md-3">
-                                                <label for="tallos" class="lbl">{{'Tallos' | translate}}</label>
-                                                <input type="text" pInputText class="form-control"
-                                                    formControlName="tallos" pKeyFilter="int" placeholder="0"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.tallos.errors }">
-                                                <div *ngIf="submitted && f.tallos.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.tallos.errors.required">
-                                                        {{'Tallos es requerido' | translate}}</div>
-                                                </div>
-                                            </div>
-
-                                            <div class="ui-g-12 ui-md-2">
-                                                <label for="totaltallos" style="color: #ff4456;font-weight: bold;"
-                                                    class="lbl">{{'T. Tallos' | translate}}</label>
-                                                <input type="text" pInputText class="form-control"
-                                                    formControlName="totaltallos" pKeyFilter="int" placeholder="0"
-                                                    readonly pTooltip="Este valor se auto calculara"
-                                                    tooltipPosition="bottom"
-                                                    style="font-size: 14px;font-weight: bold;text-align: center;background-color: #FFFAF0;"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.totaltallos.errors }">
-                                                <div *ngIf="submitted && f.totaltallos.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.totaltallos.errors.required">
-                                                        {{'Total tallos es requerido' | translate}}</div>
-                                                </div>
-                                            </div>
-
-                                            <div class="ui-g-12 ui-md-6">
-                                                <label for="carga" class="lbl">{{'Empresa carga' | translate }}</label>
-                                                <p-dropdown [options]="deliveries" formControlName="carga"
-                                                    optionLabel="nombres" [filter]="true" placeholder="Seleccione"
-                                                    class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.carga.errors }">
-                                                </p-dropdown>
-                                                <div *ngIf="submitted && f.carga.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.carga.errors.required">
-                                                        {{'Empresa carga es requerido' | translate}}</div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="ui-g-12 ui-md-6">
-                                                <label class="lbl">{{'Estado' | translate}}</label>
-                                                <p-dropdown [options]="status" placeholder="Seleccione"
-                                                    class="form-control" optionLabel="nombre" formControlName="estado"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.estado.errors }">
-                                                </p-dropdown>
-                                                <div *ngIf="submitted && f.estado.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.estado.errors.required">
-                                                        {{'Estado es requerido' | translate}}</div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="ui-g-12 ui-md-5">
-                                            <p-fieldset legend="Valores">
-                                                <div class="ui-g-12 ui-md-12" [ngClass]="{'isvalueForm':estado}">
-
-                                                    <div class="ui-g-12 ui-md-3">
-                                                        <label for="tamanio" class="lbl">{{'Tamaño' |
-                                                            translate}}</label>
-                                                        <p-dropdown [options]="tamanios" formControlName="tamanio"
-                                                            optionLabel="name" [filter]="true" class="form-control"
-                                                            placeholder="Seleccione">
-                                                        </p-dropdown>
-                                                    </div>
-
-                                                    <div class="ui-g-12 ui-md-4">
-                                                        <label class="lbl">{{'Precio compra' | translate}}</label>
-                                                        <input type="text" pInputText class="form-control"
-                                                            formControlName="preciocomp" pKeyFilter="pnum"
-                                                            placeholder="$0.00">
-                                                    </div>
-
-                                                    <div class="ui-g-12 ui-md-3">
-                                                        <label class="lbl">{{'Precio venta' | translate }}</label>
-                                                        <input type="text" pInputText pKeyFilter="pnum"
-                                                            class="form-control" placeholder="$0.00"
-                                                            formControlName="preciovent">
-
-                                                    </div>
-
-                                                    <div class="ui-g-12 ui-md-2" style="text-align: center;">
-                                                        <br>
-                                                        <button pButton type="button" style="width: 50%;" label="+"
-                                                            (click)="add()"></button>
-                                                    </div>
-                                                    <div class="ui-g-12 ui-md-12" *ngIf="estado"
-                                                        style="color: #ff4456;font-weight: bold;">
-                                                        {{'Falta agregar campos' | translate }}
-                                                    </div>
-                                                </div>
-
-                                                <div *ngFor="let numero of cantidadPrice" class="ui-g-12 ui-md-12">
-
-                                                    <div class="ui-g-12 ui-md-3">
-                                                        <input type="text" [value]="numero.tamanio" pInputText readonly>
-                                                    </div>
-
-                                                    <div class="ui-g-12 ui-md-4">
-                                                        <input type="text" pInputText [value]="numero.preccomp"
-                                                            readonly>
-                                                    </div>
-
-                                                    <div class="ui-g-12 ui-md-3">
-                                                        <input type="text" pInputText [value]="numero.precvent"
-                                                            readonly>
-                                                    </div>
-                                                    <div class="ui-g-12 ui-md-2" style="text-align: center;">
-                                                        <button pButton type="button" label="X" style="width: 50%;"
-                                                            (click)="remove(numero)"></button>
-                                                    </div>
-                                                </div>
-                                            </p-fieldset>
-                                        </div>
-
-
-                                        <div class="ui-g-12 ui-md-12" *ngIf="select.items.length>items.length">
-                                            <div class="ui-g-12 ui-md-10"></div>
-                                            <div class="ui-g-12 ui-md-2">
-                                                <button pButton icon="pi pi-plus"
-                                                    class="ui-button-primary ouput_btn_table"
-                                                    [label]="'Modificar' | translate"></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </p-accordionTab>
-                        </p-accordion>
-                        <br>
-                        <div class="ui-g form-group ui-fluid" *ngIf="!editvisible">
+                        <div class="ui-g-12" *ngIf="step=='DE'">
+                            <div class="ui-g-12 ui-md-6"></div>
                             <div class="ui-g-12 ui-md-3">
+                                <button pButton type="button" [label]="'Regresar' | translate"
+                                    icon="pi pi-arrow-circle-left" class="ui-button-warning btn"
+                                    (click)="back()"></button>
+                            </div>
+                            <div class="ui-g-12 ui-md-3">
+                                <button pButton label="Actualizar" icon="pi pi-save" iconPos="right"
+                                    (click)="changedates()" [disabled]="!activebtn" class="ui-button-info btn"></button>
+                            </div>
+
+                        </div>
+                        <div class="ui-g-12" *ngIf="(!editvisible && !createvisible) && step!='DE'">
+                            <div class="ui-g-12 ui-md-3">
+                                <button pButton type="button" [label]="'Regresar' | translate" icon="pi pi-arrow-left"
+                                    class="ui-button-warning btn" (click)="back()"></button>
                             </div>
                             <div class="ui-g-12 ui-md-3">
                                 <button pButton label="Rechazar pedido" icon="pi pi-trash" (click)="cancel()"
-                                    [disabled]="select==null" class="ui-button-help"></button>
+                                    iconPos="right" [disabled]="select==null" class="ui-button-help btn"></button>
                             </div>
                             <div class="ui-g-12 ui-md-3">
                                 <button pButton label="Notificar prealerta" icon="pi pi-th-large" iconPos="right"
-                                    (click)="notificar()" [disabled]="items.length < select?.items.length"
-                                    class="ui-button-success"></button>
+                                    (click)="notificar()" [disabled]="!activebtn"
+                                    class="ui-button-success btn"></button>
                             </div>
                             <div class="ui-g-12 ui-md-3">
                                 <button pButton label="Enviar a facturar" icon="pi pi-arrow-right" iconPos="right"
-                                    (click)="prealerta()" [disabled]="items.length < select?.items.length"
-                                    class="ui-button-info"></button>
+                                    (click)="prealerta()" [disabled]="!activebtn" class="ui-button-info btn"></button>
                             </div>
+                        </div>
+                        <br>
+                        <div class="ui-g-12">
+                            <p-accordion *ngIf="editvisible">
+                                <p-accordionTab [header]="'Editando el item' | translate" [selected]="true">
+                                    <form [formGroup]="prealertForm" (ngSubmit)="save()">
+                                        <div class="ui-g form-group ui-fluid">
+
+                                            <!--<div class="ui-g-12 ui-md-2">
+                                                <label for="Datos de envío" class="lbl">{{'Fecha de envio' | translate
+                                                    }}
+                                                </label>
+                                                <p-calendar formControlName="fecha" class="form-control"
+                                                    dateFormat="yy/mm/dd" [readonlyInput]="true"
+                                                    [minDate]="minDateValue"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.fecha.errors }">
+                                                </p-calendar>
+                                                <div *ngIf="submitted && f.fecha.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.fecha.errors.required">{{'Fecha es requerido' |
+                                                        translate
+                                                        }}
+                                                    </div>
+                                                </div>
+                                            </div>-->
+
+                                            <div class="ui-g-12 ui-md-7">
+                                                <div class="ui-g-12">
+                                                    <div class="ui-g-12 ui-md-5">
+                                                        <label class="lbl">{{'Finca' | translate }}</label>
+                                                        <p-dropdown [options]="fincas" formControlName="finca"
+                                                            optionLabel="nombres" [filter]="true"
+                                                            placeholder="Seleccione" class="form-control"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.finca.errors }">
+                                                        </p-dropdown>
+                                                        <div *ngIf="submitted && f.finca.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.finca.errors.required">{{'Finca es requerido'
+                                                                |
+                                                                translate
+                                                                }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-1"></div>
+
+                                                    <div class="ui-g-12 ui-md-3">
+                                                        <label class="lbl">{{'Finca propia' | translate }}</label>
+                                                        <div class="ui-field-checkbox">
+                                                            <p-checkbox formControlName="fincapropia" binary="true"
+                                                                inputId="binary">
+                                                            </p-checkbox> &nbsp;
+                                                            <label for="binary">{{'Rosa Mística' | translate }}</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-3">
+                                                        <label class="lbl">{{'Estado' | translate}}</label>
+                                                        <p-dropdown [options]="status" placeholder="Seleccione"
+                                                            class="form-control" optionLabel="nombre"
+                                                            formControlName="estado"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.estado.errors }">
+                                                        </p-dropdown>
+                                                        <div *ngIf="submitted && f.estado.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.estado.errors.required">
+                                                                {{'Estado es requerido' | translate}}</div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <!--<div class="ui-g-12 ui-md-3">
+                                                <label for="marca" class="lbl">{{'Marca' | translate}}</label>
+                                                <p-dropdown [ngClass]="{ 'is-invalid': submitted && f.marca.errors }"
+                                                    [options]="marks" optionLabel="nombre" class="form-control"
+                                                    formControlName="marca" [filter]="true" placeholder="Seleccione">
+                                                </p-dropdown>
+                                                <div *ngIf="submitted && f.marca.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.marca.errors.required">{{'Marca es requerido' |
+                                                        translate}}
+                                                    </div>
+                                                </div>
+                                            </div>-->
+
+
+                                                <div class="ui-g-12">
+                                                    <div class="ui-g-12 ui-md-2">
+                                                        <label class="lbl">{{'Caja' | translate}}</label>
+                                                        <p-dropdown [options]="cajas" optionLabel="name"
+                                                            formControlName="caja"
+                                                            [placeholder]="'Seleccione' | translate">
+                                                        </p-dropdown>
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-2">
+                                                        <label class="lbl">{{'Piezas' | translate}}</label>
+                                                        <input type="text" pInputText formControlName="HBBQ"
+                                                            (focusout)="calculatetallos()" class="form-control"
+                                                            pKeyFilter="int" placeholder="0">
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-5">
+                                                        <label class="lbl">{{'Variedad' |
+                                                            translate}}</label>
+                                                        <p-dropdown [options]="flores" formControlName="rosamistica"
+                                                            optionLabel="nombre" [filter]="true"
+                                                            placeholder="Seleccione" class="form-control"
+                                                            readonly="true"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.rosamistica.errors }">
+                                                        </p-dropdown>
+                                                        <div *ngIf="submitted && f.rosamistica.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.rosamistica.errors.required">
+                                                                {{'Variedad es requerido' | translate}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-3">
+                                                        <label class="lbl">{{'BCH' | translate}}</label>
+                                                        <input type="text" pInputText class="form-control"
+                                                            (focusout)="calculatebch()" pKeyFilter="int" placeholder="0"
+                                                            formControlName="bch"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.bch.errors }">
+                                                        <div *ngIf="submitted && f.bch.errors" class="invalid-feedback">
+                                                            <div *ngIf="f.bch.errors.required">
+                                                                {{'BCH es requerido' | translate}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ui-g-12">
+                                                    <div class="ui-g-12 ui-md-3">
+                                                        <label class="lbl">{{'No BCH' | translate}}</label>
+                                                        <input type="text" pInputText class="form-control"
+                                                            formControlName="nobch" pKeyFilter="int" placeholder="0"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.nobch.errors }">
+                                                        <div *ngIf="submitted && f.nobch.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.nobch.errors.required">
+                                                                {{'No BCH es requerido' | translate}}</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-2">
+                                                        <label class="lbl"
+                                                            style="color: #ff4456;font-weight: bold;">{{'Tallos' |
+                                                            translate}}</label>
+                                                        <input type="text" pInputText class="form-control"
+                                                            style="font-size: 14px;font-weight: bold;text-align: center;background-color: #FFFAF0;"
+                                                            formControlName="tallos" pKeyFilter="int" placeholder="0"
+                                                            readonly pTooltip="Este valor se auto calculara"
+                                                            tooltipPosition="bottom" readonly
+                                                            [ngClass]="{ 'is-invalid': submitted && f.tallos.errors }">
+                                                        <div *ngIf="submitted && f.tallos.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.tallos.errors.required">
+                                                                {{'Tallos es requerido' | translate}}</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-2">
+                                                        <label for="totaltallos"
+                                                            style="color: #ff4456;font-weight: bold;" class="lbl">{{'T.
+                                                            Tallos' | translate}}</label>
+                                                        <input type="text" pInputText class="form-control"
+                                                            formControlName="totaltallos" pKeyFilter="int"
+                                                            placeholder="0" readonly
+                                                            pTooltip="Este valor se auto calculara"
+                                                            tooltipPosition="bottom"
+                                                            style="font-size: 14px;font-weight: bold;text-align: center;background-color: #FFFAF0;"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.totaltallos.errors }">
+                                                        <div *ngIf="submitted && f.totaltallos.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.totaltallos.errors.required">
+                                                                {{'Total tallos es requerido' | translate}}</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!--<div class="ui-g-12 ui-md-6">
+                                                    <label for="carga" class="lbl">{{'Empresa carga' | translate
+                                                        }}</label>
+                                                    <p-dropdown [options]="deliveries" formControlName="carga"
+                                                        optionLabel="nombres" [filter]="true" placeholder="Seleccione"
+                                                        class="form-control"
+                                                        [ngClass]="{ 'is-invalid': submitted && f.carga.errors }">
+                                                    </p-dropdown>
+                                                    <div *ngIf="submitted && f.carga.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.carga.errors.required">
+                                                            {{'Empresa carga es requerido' | translate}}</div>
+                                                    </div>
+                                                </div>-->
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="ui-g-12 ui-md-5">
+                                                <p-fieldset legend="Valores">
+                                                    <div class="ui-g-12 ui-md-12" [ngClass]="{'isvalueForm':estado}">
+
+                                                        <div class="ui-g-12 ui-md-3">
+                                                            <label for="tamanio" class="lbl">{{'Tamaño' |
+                                                                translate}}</label>
+                                                            <p-dropdown [options]="tamanios" formControlName="tamanio"
+                                                                optionLabel="name" [filter]="true" class="form-control"
+                                                                placeholder="Seleccione">
+                                                            </p-dropdown>
+                                                        </div>
+
+                                                        <div class="ui-g-12 ui-md-4">
+                                                            <label class="lbl">{{'Precio compra' | translate}}</label>
+                                                            <input type="text" pInputText class="form-control"
+                                                                formControlName="preciocomp" pKeyFilter="pnum"
+                                                                placeholder="$0.00">
+                                                        </div>
+
+                                                        <div class="ui-g-12 ui-md-3">
+                                                            <label class="lbl">{{'Precio venta' | translate }}</label>
+                                                            <input type="text" pInputText pKeyFilter="pnum"
+                                                                class="form-control" placeholder="$0.00"
+                                                                formControlName="preciovent">
+
+                                                        </div>
+
+                                                        <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                                                            <br>
+                                                            <button pButton type="button" style="width: 50%;" label="+"
+                                                                (click)="add()"></button>
+                                                        </div>
+                                                        <div class="ui-g-12 ui-md-12" *ngIf="estado"
+                                                            style="color: #ff4456;font-weight: bold;">
+                                                            {{'Falta agregar campos' | translate }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngFor="let numero of cantidadPrice" class="ui-g-12 ui-md-12">
+
+                                                        <div class="ui-g-12 ui-md-3">
+                                                            <input type="text" [value]="numero.tamanio" pInputText
+                                                                readonly>
+                                                        </div>
+
+                                                        <div class="ui-g-12 ui-md-4">
+                                                            <input type="text" pInputText [value]="numero.preccomp"
+                                                                readonly>
+                                                        </div>
+
+                                                        <div class="ui-g-12 ui-md-3">
+                                                            <input type="text" pInputText [value]="numero.precvent"
+                                                                readonly>
+                                                        </div>
+                                                        <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                                                            <button pButton type="button" label="X" style="width: 50%;"
+                                                                (click)="remove(numero)"></button>
+                                                        </div>
+                                                    </div>
+                                                </p-fieldset>
+                                            </div>
+
+
+                                            <div class="ui-g-12 ui-md-12" *ngIf="select.items.length>items.length">
+                                                <div class="ui-g-12 ui-md-8"></div>
+                                                <div class="ui-g-12 ui-md-2">
+                                                    <button pButton icon="pi pi-times" (click)="cancelar()"
+                                                        class="ui-button-warning btn"
+                                                        [label]="'Cancelar' | translate"></button>
+                                                </div>
+                                                <div class="ui-g-12 ui-md-2">
+                                                    <button pButton icon="pi pi-plus" class="ui-button-primary btn"
+                                                        [disabled]="prealertForm.invalid"
+                                                        [label]="'Guardar' | translate"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                        <div class="ui-g-12">
+                            <p-accordion *ngIf="createvisible">
+                                <p-accordionTab [header]="'Crear el item' | translate" [selected]="true">
+                                    <form [formGroup]="prealertForm" (ngSubmit)="savenewrow()">
+                                        <div class="ui-g form-group ui-fluid">
+
+                                            <div class="ui-g-12 ui-md-7">
+                                                <div class="ui-g-12">
+                                                    <div class="ui-g-12 ui-md-5">
+                                                        <label class="lbl">{{'Finca' | translate }}</label>
+                                                        <p-dropdown [options]="fincas" formControlName="finca"
+                                                            optionLabel="nombres" [filter]="true"
+                                                            placeholder="Seleccione" class="form-control"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.finca.errors }">
+                                                        </p-dropdown>
+                                                        <div *ngIf="submitted && f.finca.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.finca.errors.required">{{'Campo es requerido'
+                                                                |
+                                                                translate
+                                                                }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-1"></div>
+
+                                                    <div class="ui-g-12 ui-md-3">
+                                                        <label class="lbl">{{'Finca propia' | translate }}</label>
+                                                        <div class="ui-field-checkbox">
+                                                            <p-checkbox formControlName="fincapropia" binary="true"
+                                                                inputId="binary">
+                                                            </p-checkbox> &nbsp;
+                                                            <label for="binary">{{'Rosa Mística' | translate }}</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-3">
+                                                        <label class="lbl">{{'Estado' | translate}}</label>
+                                                        <p-dropdown [options]="status" placeholder="Seleccione"
+                                                            class="form-control" optionLabel="nombre"
+                                                            formControlName="estado"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.estado.errors }">
+                                                        </p-dropdown>
+                                                        <div *ngIf="submitted && f.estado.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.estado.errors.required">
+                                                                {{'Campo es requerido' | translate}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ui-g-12">
+                                                    <div class="ui-g-12 ui-md-2">
+                                                        <label class="lbl">{{'Caja' | translate}}</label>
+                                                        <p-dropdown [options]="cajas" optionLabel="name"
+                                                            formControlName="caja"
+                                                            [placeholder]="'Seleccione' | translate">
+                                                        </p-dropdown>
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-2">
+                                                        <label class="lbl">{{'Piezas' | translate}}</label>
+                                                        <input type="text" pInputText formControlName="HBBQ"
+                                                            class="form-control"
+                                                            pKeyFilter="int" placeholder="0">
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-5">
+                                                        <label class="lbl">{{'Variedad' |
+                                                            translate}}</label>
+                                                        <p-dropdown [options]="flores" formControlName="rosamistica"
+                                                            optionLabel="nombre" [filter]="true"
+                                                            placeholder="Seleccione" class="form-control"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.rosamistica.errors }">
+                                                        </p-dropdown>
+                                                        <div *ngIf="submitted && f.rosamistica.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.rosamistica.errors.required">
+                                                                {{'Campo es requerido' | translate}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-3">
+                                                        <label class="lbl">{{'BCH' | translate}}</label>
+                                                        <input type="text" pInputText class="form-control"
+                                                            (focusout)="calculatebch()" pKeyFilter="int" placeholder="0"
+                                                            formControlName="bch"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.bch.errors }">
+                                                        <div *ngIf="submitted && f.bch.errors" class="invalid-feedback">
+                                                            <div *ngIf="f.bch.errors.required">
+                                                                {{'Campo es requerido' | translate}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ui-g-12">
+                                                    <div class="ui-g-12 ui-md-3">
+                                                        <label class="lbl">{{'No BCH' | translate}}</label>
+                                                        <input type="text" pInputText class="form-control"
+                                                            formControlName="nobch" pKeyFilter="int" placeholder="0"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.nobch.errors }">
+                                                        <div *ngIf="submitted && f.nobch.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.nobch.errors.required">
+                                                                {{'Campo es requerido' | translate}}</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-2">
+                                                        <label class="lbl">{{'Tallos' | translate}}</label>
+                                                        <input type="text" pInputText class="form-control"
+                                                            formControlName="tallos" pKeyFilter="int" placeholder="0"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.tallos.errors }">
+                                                        <div *ngIf="submitted && f.tallos.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.tallos.errors.required">
+                                                                {{'Campo es requerido' | translate}}</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ui-g-12 ui-md-2">
+                                                        <label for="totaltallos" class="lbl">{{'T. Tallos' |
+                                                            translate}}</label>
+                                                        <input type="text" pInputText class="form-control"
+                                                            formControlName="totaltallos" pKeyFilter="int"
+                                                            placeholder="0" (focusout)="calculatetotaltallos()"
+                                                            pTooltip="Con este valor se calcularan otros valores"
+                                                            tooltipPosition="bottom"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.totaltallos.errors }">
+                                                        <div *ngIf="submitted && f.totaltallos.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.totaltallos.errors.required">
+                                                                {{'Campo es requerido' | translate}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ui-g-12 ui-md-5"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="ui-g-12 ui-md-5">
+                                                <p-fieldset legend="Valores">
+                                                    <div class="ui-g-12 ui-md-12" [ngClass]="{'isvalueForm':estado}">
+
+                                                        <div class="ui-g-12 ui-md-3">
+                                                            <label for="tamanio" class="lbl">{{'Tamaño' |
+                                                                translate}}</label>
+                                                            <p-dropdown [options]="tamanios" formControlName="tamanio"
+                                                                optionLabel="name" [filter]="true" class="form-control"
+                                                                placeholder="Seleccione">
+                                                            </p-dropdown>
+                                                        </div>
+
+                                                        <div class="ui-g-12 ui-md-4">
+                                                            <label class="lbl">{{'Precio compra' | translate}}</label>
+                                                            <input type="text" pInputText class="form-control"
+                                                                formControlName="preciocomp" pKeyFilter="pnum"
+                                                                placeholder="$0.00">
+                                                        </div>
+
+                                                        <div class="ui-g-12 ui-md-3">
+                                                            <label class="lbl">{{'Precio venta' | translate }}</label>
+                                                            <input type="text" pInputText pKeyFilter="pnum"
+                                                                class="form-control" placeholder="$0.00"
+                                                                formControlName="preciovent">
+
+                                                        </div>
+
+                                                        <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                                                            <br>
+                                                            <button pButton type="button" style="width: 50%;" label="+"
+                                                                (click)="add()"></button>
+                                                        </div>
+                                                        <div class="ui-g-12 ui-md-12" *ngIf="estado"
+                                                            style="color: #ff4456;font-weight: bold;">
+                                                            {{'Falta agregar campos' | translate }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngFor="let numero of cantidadPrice" class="ui-g-12 ui-md-12">
+
+                                                        <div class="ui-g-12 ui-md-3">
+                                                            <input type="text" [value]="numero.tamanio" pInputText
+                                                                readonly>
+                                                        </div>
+
+                                                        <div class="ui-g-12 ui-md-4">
+                                                            <input type="text" pInputText [value]="numero.preccomp"
+                                                                readonly>
+                                                        </div>
+
+                                                        <div class="ui-g-12 ui-md-3">
+                                                            <input type="text" pInputText [value]="numero.precvent"
+                                                                readonly>
+                                                        </div>
+                                                        <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                                                            <button pButton type="button" label="X" style="width: 50%;"
+                                                                (click)="remove(numero)"></button>
+                                                        </div>
+                                                    </div>
+                                                </p-fieldset>
+                                            </div>
+
+                                            <div class="ui-g-12 ui-md-12" *ngIf="select.items.length>items.length">
+                                                <div class="ui-g-12 ui-md-8"></div>
+                                                <div class="ui-g-12 ui-md-2">
+                                                    <button pButton icon="pi pi-times" (click)="cancelar()"
+                                                        class="ui-button-warning btn"
+                                                        [label]="'Cancelar' | translate"></button>
+                                                </div>
+                                                <div class="ui-g-12 ui-md-2">
+                                                    <button pButton icon="pi pi-plus" class="ui-button-primary btn"
+                                                        [label]="'Guardar' | translate"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </p-accordionTab>
+                            </p-accordion>
                         </div>
                     </div>
                     <!--Notificaciones-->
                     <div class="ui-g-12 ui-md-2">
                         <p-fieldset legend="Header" legend="Notificaciones" [toggleable]="true">
-                            <div *ngFor="let notificacion of select?.prealerts">
-                                <label>{{notificacion.pdf}}</label>
-                            </div>
-
+                            <ul *ngFor="let notificacion of select?.prealerts">
+                                <li><a target="_blank" [href]="'https://addsoft-tech.com:8443/rmi/'+notificacion.pdf"
+                                        style="text-decoration: underline;color: #00008B;font-weight: bold;">
+                                        {{notificacion.fechcrea | date: 'dd-MMM-yyyy HH:mm:ss'}} <i
+                                            class="fa fa-file-pdf-o" aria-hidden="true" style="font-size: 1.5rem"></i>
+                                    </a>
+                                </li>
+                            </ul>
                         </p-fieldset>
 
                     </div>

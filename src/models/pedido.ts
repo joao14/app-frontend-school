@@ -1,7 +1,7 @@
-import {Item} from './item'
+import { Item } from './item'
 
-export interface Pedido{
-    head:{        
+export interface Pedido {
+    head: {
         estado: string,
         fecha: string,
         fechactu: string,
@@ -11,13 +11,22 @@ export interface Pedido{
         pediId: number,
         fase: string,
         usuaId: number,
-        client:{
+        client: {
             clieId: number,
             nombres: string
-        }
+        },
+        marcId: {
+            marcId: number,
+            nombre: string
+        },
+        cargcompId: {
+            cargcompId: number,
+            nombre: string
+        },
+        mawb: string
     },
     items: Array<Item>,
-    prealerts:Array<{
+    prealerts: Array<{
         fechcrea: string,
         pdf: string
     }>

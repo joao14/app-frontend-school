@@ -13,7 +13,14 @@ import { ApisService } from 'src/services/apis.service';
 import { UtilService } from 'src/services/util.service';
 import * as moment from 'moment';
 import { user } from 'src/models/user';
-import { environment } from 'src/environments/environment';
+import { DatePipe } from '@angular/common';
+
+export interface detail {
+  fecha: Date,
+  variedad: any,
+  stem: any,
+  cantidad: number
+}
 
 export interface Status {
   titrId: number,
@@ -78,34 +85,7 @@ export interface Detail {
   status: string;
 }
 
-export interface PedidoTemporal {
-  fecha: Date;
-  flower: string;
-  cm: string;
-  totaltallos: string;
-  detalle: string;
-}
 
-export interface ItemTemporal {
-  cargcompId: string,
-  cargname: string,
-  cm: string,
-  farm: string,
-  farmId: string,
-  fincapropia: string,
-  florId: string,
-  flower: string,
-  hbqb: number,
-  line: number,
-  marcId: string,
-  mark: string,
-  pcomp: string,
-  pvp: string,
-  shippingdate: string,
-  status: string,
-  tallos: number
-  totaltallos: number
-}
 
 
 @Component({
@@ -134,24 +114,43 @@ export class OrderComponent implements OnInit {
   tamanios: any[] = []
   cantidadPrice: Numeros[] = [];
   hbqb: number;
-  items: Item[] = []
+  items: Array<detail> = []
   item: Item
   total: number
   selectitem: number
   user: user
-  pedidotemporal: Array<PedidoTemporal> = []
   temporal: any
+
+  submittedpedido = false;
   editvisible: boolean
-  selectItem_: ItemTemporal
+  createvisible: boolean
+  activebtn: boolean;
+  pedidoForm: FormGroup
+  dateEnvio: Date = new Date()
+  minDate: Date = new Date()
+  clientselect: client
+  profile: string
+  markselected: mark
+  empresacargoselected: delivery
+  mawba: string
+  cajas: any[] = []
+  fechadespacho: Date
+  fecharecibido: Date
+  HBQB: string
+  CAJA: string
+
 
   constructor(private api: ApisService, private util: UtilService, private router: Router, private formBuilder: FormBuilder,
-    private confirmationService: ConfirmationService, private messageService: MessageService) {
+    private confirmationService: ConfirmationService, private messageService: MessageService, private datePipe: DatePipe) {
     this.prealertForm = this.formBuilder.group({
-      fecha: [new Date(), Validators.required],
-      cliente: ['', Validators.required],
+      fecha: [new Date()],
+      cliente: [''],
       finca: ['', Validators.required],
-      marca: ['', Validators.required],
+      marca: [this.markselected],
+      caja: [''],
       HBBQ: [''],
+      bch: ['25', Validators.required],
+      nobch: ['', Validators.required],
       rosamistica: ['', [Validators.required]],
       fincapropia: [false],
       tamanio: [''],
@@ -159,11 +158,20 @@ export class OrderComponent implements OnInit {
       totaltallos: ['', Validators.required],
       preciovent: [''],
       preciocomp: [''],
-      carga: ['', Validators.required],
+      carga: [this.empresacargoselected],
       estado: ['', Validators.required],
       repeat: [''],
       line: ['']
     });
+    this.pedidoForm = this.formBuilder.group({
+      fecha: [{ value: this.dateEnvio, disabled: true }, Validators.required],
+      flor: [null, Validators.required],
+      tamanio: [null, Validators.required],
+      cantidad: ['', Validators.required],
+
+    });
+
+    this.profile = localStorage.getItem("rolactive");
   }
 
   async ngOnInit() {
@@ -175,9 +183,15 @@ export class OrderComponent implements OnInit {
   }
 
   inicializar() {
-
+    this.activebtn = false
+    this.select = null
+    this.items = []
     this.selectitem = -1
-    this.selectItem_ = null
+    this.markselected = null
+    this.empresacargoselected = null
+    this.fechadespacho = new Date()
+    this.fecharecibido = new Date()
+    this.mawba = ""
     this.item = {
       fecha: '',
       cliente: null,
@@ -207,6 +221,12 @@ export class OrderComponent implements OnInit {
       { name: '110', code: '110' },
       { name: '150', code: '150' }
     ]
+
+    this.cajas = [
+      { name: "HB", code: "HB" },
+      { name: "QB", code: "QB" },
+    ]
+
   }
 
   async getPedidos() {
@@ -225,26 +245,15 @@ export class OrderComponent implements OnInit {
       }
     })
     this.util.isLoading.next(false);
-    console.log('****');
-    console.log(this.pedidos);
 
   }
 
   editPedido(pedido: Pedido, indice: number) {
-    console.log('Pedido');
-    console.log(pedido);
     this.select = pedido
     this.indice = indice
-    this.pedidotemporal = []
-
-    this.select.items.forEach(element => {
-      this.pedidotemporal.push({
-        fecha: new Date(element.shippingdate),
-        flower: element.flower,
-        cm: element.cm,
-        totaltallos: String(element.totaltallos),
-        detalle: 'SC'
-      })
+    this.total = 0;
+    this.select.items.forEach(item => {
+      this.total += parseInt(item.totaltallos + "");
     });
   }
 
@@ -288,8 +297,8 @@ export class OrderComponent implements OnInit {
         type = 'Facturado'
         break;
       }
-      case 'PRE': {
-
+      case 'DE': {
+        type = 'Despachado'
         break;
       }
       case 'CA': {
@@ -306,67 +315,135 @@ export class OrderComponent implements OnInit {
 
   }
 
+  /**
+   * Funcion que permite editar cada fila
+   * @param item 
+   */
   async editrow(item: any) {
-    console.log('Vamos a editar');
+    console.log('...EDIT..');
     console.log(item);
     this.editvisible = true
-    this.selectItem_ = item
-    console.log('NEXT');
-    const flower = await this.getFlowerbyName(item.flower)
-    const client = await this.getClientbyName(this.select.head.client.nombres)
-    this.prealertForm.get('fecha').setValue(new Date(item.shippingdate))
-    this.prealertForm.get('rosamistica').setValue(flower)
-    this.prealertForm.get('totaltallos').setValue(item.totaltallos)
-    this.prealertForm.get('cliente').setValue(client)
-    this.prealertForm.get('tamanio').setValue({ 'name': item.cm, 'code': item.cm })
-    this.prealertForm.get('line').setValue(item.line)
-    await this.onOptionsSelected()
-    console.log(this.selectItem_);
+    if (item.farmId != null) {
+      //Validar si la caja y pieza forman parte del mismo grupo
+      if (item.tipoempaque == "") {
+        console.log("??? Esa vacio vamos a validar...");
+        let tipoempaquetemporal = ""
+        let cajastemporal = 0
+        await this.select.items.forEach(async (temp) => {
+          if (temp.line == (item.line - 1)) {
+            console.log('Paso atras -1 ');
+            tipoempaquetemporal = temp.tipoempaque
+            cajastemporal = temp.hbqb
+          }
+        })
+      }
+
+      await this.onOptionsSelected()
+      const flower = await this.getFlowerbyName(item.flower)
+      const client = await this.getClientbyName(this.select.head.client.nombres)
+      const cargname = await this.getEmpresaCargabyName(item.cargname)
+      const farm = await this.getFincabyNameComplete(item.farm)
+      const mark = await this.getMarcbyName(this.select.head.client.clieId, this.select.head.marcId.nombre)
+      console.log(this.cajas);
+      const caja = await this.cajas.filter(caja => caja.code == item.tipoempaque)
+      console.log('FINAL');
+      console.log(caja);
+      this.markselected = mark
+      this.prealertForm.get('fecha').setValue(new Date(item.shippingdate))
+      this.prealertForm.get('rosamistica').setValue(flower)
+      this.prealertForm.get('caja').setValue(caja[0])
+      this.prealertForm.get('HBBQ').setValue(item.hbqb)
+      this.prealertForm.get('finca').setValue(farm)
+      this.prealertForm.get('marca').setValue(mark)
+      this.prealertForm.get('tallos').setValue(item.totaltallos / item.hbqb)
+      this.prealertForm.get('totaltallos').setValue(item.totaltallos)
+      this.prealertForm.get('cliente').setValue(client)
+      this.prealertForm.get('fincapropia').setValue(item.fincapropia == null || item.fincapropia == 'N' ? false : true)
+      this.prealertForm.get('line').setValue(item.line)
+      this.prealertForm.get('carga').setValue(cargname)
+      this.prealertForm.get('bch').setValue(item.tallosxbch)
+      this.prealertForm.get('nobch').setValue(item.totaltallos / this.prealertForm.get('bch').value)
+
+      if (item.status.nombre == null) {
+        let status = await this.status.filter(state => state.nombre == (item.status));
+        this.prealertForm.get('estado').setValue(status[0])
+      }
+      else {
+        this.prealertForm.get('estado').setValue(item.status)
+      }
+
+      this.cantidadPrice = []
+      this.cantidadPrice.push({
+        tamanio: item.cm,
+        preccomp: item.pcomp,
+        precvent: item.pvp
+      })
+
+    } else {
+      console.log('SIN EDITAR ITEM')
+      const flower = await this.getFlowerbyName(item.flower)
+      const client = await this.getClientbyName(this.select.head.client.nombres)
+      this.prealertForm.get('fecha').setValue(new Date(item.shippingdate))
+      this.prealertForm.get('rosamistica').setValue(flower)
+      this.prealertForm.get('totaltallos').setValue(item.totaltallos)
+      this.prealertForm.get('bch').value == null ? this.prealertForm.get('bch').setValue(25) : ''
+      this.prealertForm.get('nobch').setValue(item.totaltallos / this.prealertForm.get('bch').value)
+      this.prealertForm.get('cliente').setValue(client)
+      this.prealertForm.get('tamanio').setValue({ 'name': item.cm, 'code': item.cm })
+      this.prealertForm.get('line').setValue(item.line)
+      await this.onOptionsSelected()
+    }
+
 
   }
 
-  continuarrevision() {
-    this.step = "RE"
-    /*console.log('Revisando los valores....')
+
+  /**
+   * Function to continue to revision
+   */
+  async continuarrevision() {
+    console.log('Continuar revisiÓN');
     console.log(this.select);
 
-    this.select.items.forEach(item => {
+    this.select.head.fase == 'DE' ? this.step = 'DE' : this.step = "RE";
+    if (this.select.head.fase == 'DE') {
+      this.fechadespacho = new Date(this.select.head.fechdesp)
+      this.fecharecibido = new Date(this.select.head.fecharri)
+      console.log(this.fechadespacho);
+      console.log(this.fecharecibido);
+    }
+    const mark = await this.getMarcbyName(this.select.head.client.clieId, this.select.head.marcId.nombre == 'NO DEFINIDO' && this.markselected ? this.markselected.nombre : this.select.head.marcId.nombre)
+    this.markselected = mark
+    const empresacargo = await this.getEmpresaCargabyName(this.select.head?.cargcompId['nombre'] == 'NO DEFINIDO' && this.empresacargoselected ? this.empresacargoselected.nombres : this.select.head.cargcompId.nombre)
+    this.empresacargoselected = empresacargo
+    this.mawba = this.select.head.mawb
+    await this.onOptionsSelected()
+    //Validamos si todos los registros estan completos
+    for (let item of this.select.items) {
       console.log(item);
-      let item_ = {
-        fecha: item.shippingdate+'.000',
-        cliente: item.,
-        fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
-        finca: this.prealertForm.get('finca').value,
-        marca: this.prealertForm.get('marca').value,
-        HBBQ: this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : '0',
-        rosamistica: this.prealertForm.get('rosamistica').value,
-        tamanio: cm,
-        tallos: this.prealertForm.get('tallos').value,
-        totaltallos: ((this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : this.hbqb) * this.prealertForm.get('tallos').value),
-        preciovent: pvp,
-        preciocomp: pcomp,
-        carga: this.prealertForm.get('carga').value,
-        status: this.prealertForm.get('estado').value
+      if (item.farmId == null) {
+        this.activebtn = false
+        break;
+      } else {
+        this.activebtn = true
       }
+    }
 
-    })*/
+    //Validamos los ultimos registros
+    await Promise.all(this.select.items.map(async (element) => {
+      if (element.hbqb != 0) {
+        this.CAJA = element.tipoempaque
+        this.HBQB = String(element.hbqb)
+      }
+    })
+    );
 
-    /*this.item = {
-      fecha: this.prealertForm.get('fecha').value,
-      cliente: this.prealertForm.get('cliente').value,
-      fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
-      finca: this.prealertForm.get('finca').value,
-      marca: this.prealertForm.get('marca').value,
-      HBBQ: this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : '0',
-      rosamistica: this.prealertForm.get('rosamistica').value,
-      tamanio: cm,
-      tallos: this.prealertForm.get('tallos').value,
-      totaltallos: ((this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : this.hbqb) * this.prealertForm.get('tallos').value),
-      preciovent: pvp,
-      preciocomp: pcomp,
-      carga: this.prealertForm.get('carga').value,
-      status: this.prealertForm.get('estado').value
-    }*/
+    console.log("****Resultados finales*****");
+    console.log(this.CAJA);
+    console.log(this.HBQB);
+
+
+
   }
 
   confirmar() {
@@ -401,10 +478,20 @@ export class OrderComponent implements OnInit {
             totaltallos: element.totaltallos
           })
         });
+
+        this.total = 0;
+        this.select.items.forEach(item => {
+          this.total += parseInt(item.totaltallos + "");
+        });
+
         let pedido = {
           pedido: head,
           detalle: items
         }
+
+        console.log('PEDITO TEMP');
+        console.log(pedido);
+
         console.log(pedido);
         this.util.isLoading.next(true)
         await this.api.addpedido(pedido, localStorage.getItem('token')).then(async (data) => {
@@ -412,9 +499,11 @@ export class OrderComponent implements OnInit {
           console.log(data);
           if (data.headerApp.code == 200) {
             this.step = "RE"
+            this.createvisible = false
+            this.editvisible = false
+            this.onOptionsSelected()
 
           }
-
         }).catch(err => {
           console.log(err);
           if (err.error.code == 401 || err.error.code == 0) {
@@ -423,66 +512,74 @@ export class OrderComponent implements OnInit {
           }
         })
         this.util.isLoading.next(false)
+
 
 
       }
     })
   }
 
+  /**
+   * Function the use to conitnue step DESPACHADO
+   */
   prealerta() {
     this.confirmationService.confirm({
       message: "Are you sure to continue to next step?",
       accept: async () => {
-        console.log('ORDER ACCEPTED');
         this.step = "RE"
-        console.log('SELECT');
-        console.log(this.select);
-        console.log('ITEMS');
-        console.log(this.items);
 
         let head = {
-          clieId: this.select.head.client.clieId,
-          estado: this.select.head.estado,
-          fase: "BF",
-          fecha: this.select.head.fecha + ".000",
           pediId: this.select.head.pediId,
-          usuaId: this.select.head.usuaId
+          fecha: this.select.head.fecha != null ? this.select.head.fecha + '.000' : this.select.head.fecha,
+          fechrequ: this.select.head.fechrequ != null ? this.select.head.fechrequ + '.000' : this.select.head.fechrequ,
+          fechdesp: this.select.head.fechdesp != null ? this.select.head.fechrequ + '.000' : this.select.head.fechdesp,
+          fecharri: this.select.head.fecharri != null ? this.select.head.fecharri + '.000' : this.select.head.fecharri,
+          usuaId: this.select.head.usuaId,
+          estado: this.select.head.estado,
+          fase: "DE",
+          clieId: this.select.head.client.clieId,
+          marcId: this.markselected.marcId,
+          cargcompId: this.empresacargoselected.entiId,
+          mawb: this.mawba
         }
-        console.log('Procesando...');
+
         let items: Array<any> = []
-        this.items.forEach(async (element, index) => {
+        await Promise.all(this.select.items.map(async (element, index) => {
           items.push({
-            cargcompId: element.carga['entiId'],
-            cm: element.tamanio,
-            farmId: element.finca['entiId'],
+            cargcompId: element.cargcompId,
+            cm: element.cm,
+            farmId: element.farmId,
             fincapropia: element.fincapropia,
-            florId: element.rosamistica['florId'],
-            hbqb: element.HBBQ,
-            line: index,
-            marcId: element.marca['entiId'],
-            pcomp: element.preciocomp,
-            pvp: element.preciovent,
-            shippingdate: this.select.head.fecha + '.000',
-            status: element.status.nombre,
+            florId: element.florId,
+            hbqb: element.hbqb,
+            line: element.line,
+            marcId: element.marcId,
+            pcomp: element.pcomp,
+            pvp: element.pvp,
+            shippingdate: this.getFormatDate(new Date(element.shippingdate)),
+            status: element.status,
             tallos: element.tallos,
-            totaltallos: element.totaltallos
+            totaltallos: element.totaltallos,
+            tipoempaque: element.tipoempaque,
+            tallosxbch: element.tallosxbch,
+            cantidadbch: element.cantidadbch
           })
-        });
+        }))
+
         let pedido = {
           pedido: head,
           detalle: items
         }
-        console.log('PEDIDO FINALlll');
+
+        console.log('TEMPORALll');
         console.log(pedido);
+
         this.util.isLoading.next(true)
         await this.api.addpedido(pedido, localStorage.getItem('token')).then(async (data) => {
-          console.log('Se ha guardado la siguiente fase correctamente')
+          console.log('Se ha enviado a la siguiente fase correctamente')
           console.log(data);
           if (data.headerApp.code == 200) {
-            this.step = 'PE'
-            this.select = null
-            this.items = []
-            this.getPedidos()
+            this.step = 'DE'
           }
 
         }).catch(err => {
@@ -493,7 +590,6 @@ export class OrderComponent implements OnInit {
           }
         })
         this.util.isLoading.next(false)
-
 
       }
     })
@@ -564,14 +660,167 @@ export class OrderComponent implements OnInit {
 
   }
 
-  async save() {
+  cancelar() {
+    this.editvisible = false
+    this.createvisible = false
+    this.prealertForm.reset()
+    this.prealertForm.get("bch").setValue("25")
+    this.submitted = false
+    this.cantidadPrice = []
+  }
+
+  async changedates() {
+    console.log('Vamos a cambiar el estado');
+    let order = {
+      fechdesp: this.getFormatDate(this.fechadespacho),
+      fecharri: this.getFormatDate(this.fecharecibido),
+      pediId: this.select.head.pediId
+    }
+
+    console.log('.....ITEM PEDIDO FINAL ACUTALI FECHAS...');
+
+    this.util.isLoading.next(true)
+    await this.api.updatedatesorder(order, localStorage.getItem('token')).then(async (data) => {
+      console.log('Se actualizaron correctamente las fechas')
+      console.log(data);
+      if (data.headerApp.code == 200) {
+        this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Se actulizado la informaciòn del pedido' });
+        this.step = "RE"
+        await this.getServicios()
+        this.prealertForm.reset()
+
+      }
+
+    }).catch(err => {
+      console.log(err);
+      if (err.error.code == 401 || err.error.code == 0) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    this.util.isLoading.next(false)
+
+
+  }
+
+
+  /**
+   * Function the save new row of the order for the administrator
+   * @returns 
+   */
+  async savenewrow() {
     if (this.cantidadPrice.length <= 0) {
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Debe agregar valores a la prealerta' });
       this.estado = true;
       return;
     }
-    this.estado = false;
-    this.submitted = true;
+
+    if (this.markselected == null || this.empresacargoselected == null || this.mawba == "") {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los valores de la cabecera son obligatorios' });
+      return;
+    }
+
+    this.estado = false
+    this.submitted = true
+
+    // stop here if form is invalid
+    if (this.prealertForm.invalid) {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios' });
+      return;
+    }
+
+    let pvp = "";
+    let pcomp = "";
+    let cm = "";
+
+    this.cantidadPrice.forEach(data => {
+      pvp = pvp + data.precvent + " ",
+        pcomp = pcomp + data.preccomp + " ",
+        cm = cm + data.tamanio + " "
+    });
+
+    const farm = await this.getFincabyName(this.prealertForm.get('finca').value.nombres)
+    const mark = await this.getMarcbyName(this.select.head.client.clieId, this.select.head.marcId == null || this.select.head.marcId.nombre == 'NO DEFINIDO' ? this.markselected.nombre : this.select.head.marcId.nombre)
+    const empresacargo = await this.getEmpresaCargabyName(this.select.head.cargcompId == null || this.select.head.cargcompId.nombre == 'NO DEFINIDO' ? this.empresacargoselected.nombres : this.select.head.cargcompId.nombre)
+    const rosamistica = await this.getFlowerbyName(this.prealertForm.get('rosamistica').value.nombre)
+
+    this.select.items.push({
+      shippingdate: this.getFormatDate(new Date(this.prealertForm.get('fecha').value)),
+      fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
+      farm: farm.nombres,
+      farmId: farm.entiId,
+      marcId: mark.marcId,
+      mark: mark.nombre,
+      hbqb: this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : '0',
+      florId: rosamistica.florId,
+      flower: rosamistica.nombre,
+      cm: cm,
+      tallos: this.prealertForm.get('tallos').value,
+      totaltallos: (this.prealertForm.get('totaltallos').value),
+      pvp: pvp,
+      pcomp: pcomp,
+      cargcompId: empresacargo.entiId,
+      cargname: empresacargo.nombres,
+      status: this.prealertForm.get('estado').value?.titrId ? this.prealertForm.get('estado').value?.nombre : this.prealertForm.get('estado').value,
+      line: this.select.items[this.select.items.length - 1].line + 1,
+      tipoempaque: this.prealertForm.get('caja').value.code,
+      tallosxbch: this.prealertForm.get('bch').value,
+      cantidadbch: this.prealertForm.get('nobch').value,
+    });
+
+    await this.savechangesbyrow()
+
+    this.submitted = false
+    this.editvisible = false
+    this.createvisible = false
+    this.cantidadPrice = []
+    this.total = 0;
+    this.select.items.forEach(item => {
+      this.total += parseInt(item.totaltallos + "");
+    });
+    this.prealertForm.reset();
+    this.prealertForm.get("bch").setValue("25")
+    //Validamos si todos los registros estan completos   
+    for (let item of this.select.items) {
+      if (item.farmId == null) {
+        this.activebtn = false
+        break;
+      } else {
+        this.activebtn = true
+      }
+    }
+
+    //Validamos los ultimos registros
+    await Promise.all(this.select.items.map(async (element) => {
+      if (element.hbqb != 0) {
+        this.CAJA = element.tipoempaque
+        this.HBQB = String(element.hbqb)
+      }
+    })
+    );
+
+  }
+
+  /**
+   * Function the used when save or edit rows of the order 
+   * @returns 
+   */
+  async save() {
+
+    if (this.cantidadPrice.length <= 0) {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Debe agregar valores a la prealerta' });
+      this.estado = true;
+      return;
+    }
+
+    if (this.markselected == null || this.empresacargoselected == null || this.mawba == "") {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los valores de la cabecera son obligatorios' });
+      return;
+    }
+
+    this.estado = false
+    this.submitted = true
+
     // stop here if form is invalid
     if (this.prealertForm.invalid) {
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios' });
@@ -592,36 +841,14 @@ export class OrderComponent implements OnInit {
         pcomp = pcomp + data.preccomp + " ",
         cm = cm + data.tamanio + " "
     });
-    console.log('ITEMSSS.....');
 
     await Promise.all(this.select.items.map(async (item, index) => {
       if (item.line == this.prealertForm.get('line').value) {
-        console.log('Si encontro :)');
-        console.log(item);
-        console.log(this.prealertForm.get('finca').value)
-        console.log(this.prealertForm.get('marca').value)
-        console.log(this.prealertForm.get('carga').value)
-        console.log(this.prealertForm.get('HBBQ').value)
-        console.log(this.prealertForm.get('rosamistica').value)
-        console.log('BREAK...');
-
-
         const farm = await this.getFincabyName(this.prealertForm.get('finca').value.nombres)
-        console.log(farm);
-
-        const mark = await this.getMarcbyName(this.select.head.client.clieId, this.prealertForm.get('marca').value.nombre)
-        console.log(mark);
-
-        const empresacargo = await this.getEmpresaCargabyName(this.prealertForm.get('carga').value.nombres)
-        console.log(empresacargo);
-
+        const mark = await this.getMarcbyName(this.select.head.client.clieId, this.select.head.marcId == null || this.select.head.marcId.nombre == 'NO DEFINIDO' ? this.markselected.nombre : this.select.head.marcId.nombre)
+        const empresacargo = await this.getEmpresaCargabyName(this.select.head.cargcompId == null || this.select.head.cargcompId.nombre == 'NO DEFINIDO' ? this.empresacargoselected.nombres : this.select.head.cargcompId.nombre)
         const rosamistica = await this.getFlowerbyName(this.prealertForm.get('rosamistica').value.nombre)
-        console.log('ROSA MISTICA');
-        console.log(rosamistica);
-
-
         this.select.items[index] = {
-          //let data = {
           shippingdate: this.getFormatDate(new Date(this.prealertForm.get('fecha').value)),
           fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
           farm: farm.nombres,
@@ -633,108 +860,123 @@ export class OrderComponent implements OnInit {
           flower: rosamistica.nombre,
           cm: cm,
           tallos: this.prealertForm.get('tallos').value,
-          totaltallos: ((this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : this.hbqb) * this.prealertForm.get('tallos').value),
+          totaltallos: (this.prealertForm.get('totaltallos').value),
           pvp: pvp,
           pcomp: pcomp,
           cargcompId: empresacargo.entiId,
           cargname: empresacargo.nombres,
-          status: this.prealertForm.get('estado').value,
-          line: this.prealertForm.get('line').value
+          status: this.prealertForm.get('estado').value?.titrId ? this.prealertForm.get('estado').value?.nombre : this.prealertForm.get('estado').value,
+          line: this.prealertForm.get('line').value,
+          tipoempaque: this.prealertForm.get('caja').value.code,
+          tallosxbch: this.prealertForm.get('bch').value,
+          cantidadbch: this.prealertForm.get('nobch').value,
         }
-
-        console.log('DATA RETURN....');
-        console.log(this.select.items);
-
       }
     }));
-
-
-    /*let temp = {
-      fecha: this.prealertForm.get('fecha').value,
-      cliente: this.prealertForm.get('cliente').value,
-      fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
-      finca: this.prealertForm.get('finca').value,
-      marca: this.prealertForm.get('marca').value,
-      HBBQ: this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : '0',
-      rosamistica: this.prealertForm.get('rosamistica').value,
-      tamanio: cm,
-      tallos: this.prealertForm.get('tallos').value,
-      totaltallos: ((this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : this.hbqb) * this.prealertForm.get('tallos').value),
-      preciovent: pvp,
-      preciocomp: pcomp,
-      carga: this.prealertForm.get('carga').value,
-      status: this.prealertForm.get('estado').value
-    }*/
-
-    this.submitted = false;
-    this.editvisible = false
-    this.cantidadPrice = [];
-    this.total = 0;
-    this.items.forEach(item => {
-      this.total += parseInt(item.totaltallos + "");
-    });
-    this.prealertForm.reset();
-    console.log('Temporal ITEMS');
+    console.log('..Finalizar...');
     console.log(this.select);
 
 
-    /*this.item = {
-      fecha: this.prealertForm.get('fecha').value,
-      cliente: this.prealertForm.get('cliente').value,
-      fincapropia: this.prealertForm.get('fincapropia').value ? 'S' : 'N',
-      finca: this.prealertForm.get('finca').value,
-      marca: this.prealertForm.get('marca').value,
-      HBBQ: this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : '0',
-      rosamistica: this.prealertForm.get('rosamistica').value,
-      tamanio: cm,
-      tallos: this.prealertForm.get('tallos').value,
-      totaltallos: ((this.prealertForm.get('HBBQ').value ? this.prealertForm.get('HBBQ').value : this.hbqb) * this.prealertForm.get('tallos').value),
-      preciovent: pvp,
-      preciocomp: pcomp,
-      carga: this.prealertForm.get('carga').value,
-      status: this.prealertForm.get('estado').value
-    }
+    await this.savechangesbyrow()
 
-    console.log('ITEMS');
-    console.log(this.item);
-
-
-    this.prealertForm.get('HBBQ').value ? this.hbqb = this.prealertForm.get('HBBQ').value : '';
-
-    this.items.push(this.item);
-    console.log('ITEMS FINAL');
-    console.log(this.items);
-    this.cantidadPrice = [];
+    this.submitted = false
+    this.editvisible = false
+    this.cantidadPrice = []
     this.total = 0;
-    this.items.forEach(item => {
+    this.select.items.forEach(item => {
       this.total += parseInt(item.totaltallos + "");
     });
-    this.submitted = false;
-    if (!this.prealertForm.get('repeat').value) {
-      this.prealertForm.reset();
-    } else {
-      this.prealertForm.get('HBBQ').setValue(null);
-      this.prealertForm.get('rosamistica').setValue(null);
-      this.prealertForm.get('tallos').setValue(null);
-      this.prealertForm.get('totaltallos').setValue(null);
+    this.prealertForm.reset();
+    this.prealertForm.get("bch").setValue("25")
+
+    //Validamos si todos los registros estan completos
+
+    for (let item of this.select.items) {
+      console.log(item);
+      if (item.farmId == null) {
+        this.activebtn = false
+        break;
+      } else {
+        this.activebtn = true
+      }
     }
 
-    this.prealertForm.get('fecha').setValue(new Date());
-    //Validate registro completado 
-    this.pedidotemporal.forEach((tmp, index) => {
-      if (JSON.stringify(tmp) == JSON.stringify(this.temporal)) {
-        this.pedidotemporal[index] = {
-          fecha: tmp.fecha,
-          flower: tmp.flower,
-          cm: tmp.cm,
-          totaltallos: tmp.totaltallos,
-          detalle: 'C'
-        }
+    //Validamos los ultimos registros
+    await Promise.all(this.select.items.map(async (element) => {
+      if (element.hbqb != 0) {
+        this.CAJA = element.tipoempaque
+        this.HBQB = String(element.hbqb)
       }
-    })*/
+    })
+    );
 
+  }
 
+  /**
+   * Function the save changes by row
+   */
+  async savechangesbyrow() {
+    let head = {
+      clieId: this.select.head.client.clieId,
+      estado: this.select.head.estado,
+      fase: "RE",
+      fecha: this.select.head.fecha + ".000",
+      marcId: this.markselected.marcId,
+      pediId: this.select.head.pediId,
+      usuaId: this.select.head.usuaId,
+      cargcompId: this.empresacargoselected.entiId,
+      mawb: this.mawba
+    }
 
+    let items: Array<any> = []
+    await Promise.all(this.select.items.map(async (element, index) => {
+      items.push({
+        cargcompId: element.cargcompId,
+        cm: element.cm,
+        farmId: element.farmId,
+        fincapropia: element.fincapropia,
+        florId: element.florId,
+        hbqb: element.hbqb,
+        line: element.line,
+        marcId: element.marcId,
+        pcomp: element.pcomp,
+        pvp: element.pvp,
+        shippingdate: this.getFormatDate(new Date(element.shippingdate)),
+        status: element.status,
+        tallos: element.tallos,
+        totaltallos: element.totaltallos,
+        tipoempaque: element.tipoempaque,
+        tallosxbch: element.tallosxbch,
+        cantidadbch: element.cantidadbch
+      })
+    })
+    )
+
+    let pedido = {
+      pedido: head,
+      notify: false,
+      detalle: items
+    }
+
+    console.log('.....ITEM PEDIDO FINAL...');
+    console.log(pedido);
+
+    this.util.isLoading.next(true)
+    await this.api.addpedido(pedido, localStorage.getItem('token')).then(async (data) => {
+      console.log('Se ha actualizado correctamente')
+      console.log(data);
+      if (data.headerApp.code == 200) {
+        this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Se actulizado la informaciòn del pedido' });
+      }
+
+    }).catch(err => {
+      console.log(err);
+      if (err.error.code == 401 || err.error.code == 0) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    this.util.isLoading.next(false)
   }
 
   async getServicios() {
@@ -786,6 +1028,7 @@ export class OrderComponent implements OnInit {
           }
         });
         this.flores = temp;
+
       }
     }).catch(err => {
 
@@ -833,6 +1076,10 @@ export class OrderComponent implements OnInit {
     })
 
     this.util.isLoading.next(false);
+  }
+
+  new() {
+    this.step = 'NEW'
   }
 
   add() {
@@ -897,6 +1144,8 @@ export class OrderComponent implements OnInit {
   async getMarcbyName(entiId: number, name: string): Promise<any> {
     let marc: mark = null;
     await this.api.getMarcbyName(entiId, name.toUpperCase(), localStorage.getItem("token")).then(data => {
+      console.log('DATA');
+      console.log(data);
       if (data.headerApp.code == 200) {
         marc = data.data.mark;
       }
@@ -924,60 +1173,84 @@ export class OrderComponent implements OnInit {
     return flower;
   }
 
-
-  viewxlsx() {
-    let head: Cabecera = {
+  async finalizar() {
+    if (this.clientselect == null) {
+      this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'El cliente es requerido para generar el pedido' });
+      return;
+    }
+    let head = {
+      pediId: 0,
       fecha: this.getFormatDate(new Date()),
+      fechrequ: this.getFormatDate(new Date(this.dateEnvio + '')),
       usuaId: this.user.usuaid,
-      pralCerrado: "N",
-      estado: "B",
-      pralId: 0
+      estado: 'A',
+      fase: 'PE',
+      clieId: this.profile == 'ADM' ? this.clientselect.entiId : this.user.empresa.entiid
     }
 
-    let detail: Array<Detail> = [];
-    let contador = 0;
-    this.items.forEach(data => {
-      detail.push({
-        line: contador,
-        shippingdate: this.getFormatDate(new Date(data.fecha)),
-        clieId: data.cliente.entiId,
-        fincapropia: data.fincapropia == 'N' ? 'N' : 'S',
-        farmId: data.finca.entiId,
-        marcId: data.marca.marcId,
-        hbqb: data.HBBQ == null ? '' : data.HBBQ,
-        florId: data.rosamistica['florId'],
-        cm: data.tamanio,
-        tallos: data.tallos,
-        totaltallos: data.totaltallos,
-        pcomp: data.preciocomp,
-        cargcompId: parseInt(data.carga['entiId']),
-        pvp: data.preciovent,
-        status: data.status.nombre
-      })
-      contador++;
-    })
+    console.log('DATA????');
+    console.log(this.items);
 
-    let prealert = {
-      prealerta: head,
-      detalle: detail
+
+    let items = []
+    this.items.forEach(async (item, index) => {
+      items.push(
+        {
+          line: index,
+          shippingdate: this.getFormatDate(new Date(item.fecha + '')),
+          fincapropia: null,
+          farmId: null,
+          marcId: null,
+          hbqb: 0,
+          florId: item.variedad.florId,
+          cm: item.stem.code,
+          tallos: 0,
+          totaltallos: item.cantidad,
+          pcomp: "0.00",
+          cargcompId: null,
+          pvp: "0.00",
+          status: 'LOOKING'
+        }
+      )
+
+    });
+
+    let order = {
+      pedido: head,
+      detalle: items
     }
 
-    this.util.isLoading.next(true);
-    this.api.getExcelPrealertDraft(prealert, localStorage.getItem('token')).then((data) => {
-      if (data.headerApp.code == 200) {
-        location.href = environment.url + data.data.xls;
-        this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'El archivo se ha descargado correctamente' });
-      }
-    }).catch(err => {
-      console.log(err);
-      if (err.error.code == 401) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
+    console.log('FINISH ORDER TO SEND FROM PEDIDO');
+    console.log(order);
+    this.confirmationService.confirm({
+      message: "Are you sure to create a new order?",
+      accept: async () => {
+        this.util.isLoading.next(true)
+        await this.api.addpedido(order, localStorage.getItem('token')).then(async (data) => {
+          console.log('Se ha guarado correctamente from pedidos');
+          console.log(data);
+          if (data.headerApp.code == 200) {
+            this.step = 'PE'
+            await this.inicializar()
+            await this.getPedidos()
+            await this.getServicios()
+
+          }
+
+        }).catch(err => {
+          console.log(err);
+          if (err.error.code == 401 || err.error.code == 0) {
+            localStorage.clear();
+            this.router.navigate(['/login']);
+          }
+        })
+        this.util.isLoading.next(false)
       }
     })
-    this.util.isLoading.next(false);
+
 
   }
+
 
   rowexpasion(indice: number) {
 
@@ -988,9 +1261,27 @@ export class OrderComponent implements OnInit {
 
   }
 
+  async getFincabyNameComplete(name: string): Promise<any> {
+    let finca: finca = null;
+    await this.api.getObjectbyNameComplete('F', name.toUpperCase(), localStorage.getItem("token")).then(data => {
+
+      if (data.headerApp.code == 200) {
+        finca = data.data.farm;
+
+      }
+    }).catch(err => {
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
+    return finca;
+  }
+
   async getFincabyName(name: string): Promise<any> {
     let finca: finca = null;
     await this.api.getObjectbyName('F', name.toUpperCase(), localStorage.getItem("token")).then(data => {
+
       if (data.headerApp.code == 200) {
         finca = data.data.farm;
       }
@@ -1001,6 +1292,31 @@ export class OrderComponent implements OnInit {
       }
     })
     return finca;
+  }
+
+  viewPDF(notificacion: any) {
+    console.log('URL...');
+    console.log(notificacion);
+
+    console.log(notificacion.url);
+    this.router.navigate(notificacion.pdf);
+    console.log('BIEN');
+
+
+  }
+
+  /**
+   * Function to search input
+   * @param $event 
+   */
+  async applyFilter($event) {
+    if ($event.keyCode == 8) {
+      await this.getPedidos()
+      this.pedidos = await this.pedidos.filter(pedido => (pedido.head.client.nombres.toLocaleLowerCase()).includes($event.target.value.toLocaleLowerCase()))
+    } else {
+      this.pedidos = this.pedidos.filter(pedido => (pedido.head.client.nombres.toLocaleLowerCase()).includes($event.target.value.toLocaleLowerCase()))
+    }
+
   }
 
   async getEmpresaCargabyName(name: string): Promise<any> {
@@ -1018,75 +1334,116 @@ export class OrderComponent implements OnInit {
     return delivery;
   }
 
+  /**
+   * Function delete order created for client
+   */
+  deleteItemcreateorder(item: any) {
+    this.items = this.items.filter(row => row != item)
+  }
 
+  /**
+   * Function the delete item
+   * @param prealert 
+   */
 
+  async deleteItem(prealert: any) {
 
-
-  deleteItem(prealert: any) {
-    /*if (this.items.length <= 1) {
-      this.messageService.add({ severity: 'warn', summary: 'Rosa Mística', detail: 'No se puede dejar sin items la prelaerta' });
-      return
-    }*/
-    console.log('Data');
-    console.log(prealert);
-    let temporal = {
-      fecha: prealert.fecha,
-      flower: prealert.rosamistica.nombre,
-      cm: prealert.tamanio.trim(),
-      totaltallos: String(prealert.totaltallos),
-      detalle: 'C'
+    if (this.markselected == null || this.empresacargoselected == null || this.mawba == "") {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los valores de la cabecera son obligatorios' });
+      return;
     }
-    console.log('TEMPORAL***');
-    console.log(temporal);
-    console.log('DATOS**');
-    console.log(this.pedidotemporal);
-    this.pedidotemporal.forEach((pedido, index) => {
-      if (JSON.stringify(pedido) == JSON.stringify(temporal)) {
-        console.log('...Si se encoentro para eliminar...');
-        console.log(pedido);
-        this.pedidotemporal[index] = {
-          fecha: pedido.fecha,
-          flower: pedido.flower,
-          cm: pedido.cm,
-          totaltallos: pedido.totaltallos,
-          detalle: 'SC'
-        }
-      }
-    })
 
-    this.items = this.items.filter((element) => element != prealert);
-    this.total = 0;
-    this.items.forEach(item => {
-      this.total += parseInt(item.totaltallos + "");
+    if (this.select.items.length <= 1) {
+      this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'No puede eliminar el ùltimo registro del pedido' });
+      return
+    }
+
+    this.confirmationService.confirm({
+      message: "Are you sure to delete iten?",
+      accept: async () => {
+        this.select.items = this.select.items.filter((element) => element != prealert);
+        console.log('DELETE FINAL');
+        console.log(this.select);
+        await this.savechangesbyrow()
+        this.total = 0;
+        this.select.items.forEach(item => {
+          this.total += parseInt(item.totaltallos + "");
+        });
+
+      }
     });
+
 
   }
 
+
+  /**
+   * Function back when return get all orders
+   */
   back() {
     this.step = 'PE'
+    this.select = null
+    this.editvisible = false
+    this.createvisible = false
+    this.activebtn = false
+    this.prealertForm.get("bch").setValue("25")
+    this.prealertForm.reset()
+    this.submitted = false
+    this.cantidadPrice = []
+    this.markselected = null
+    this.empresacargoselected = null
+    this.mawba = ""
     this.getPedidos()
   }
 
+  /**
+   * Convert date to string
+   * @param date 
+   * @returns 
+   */
   getFormatDate(date: Date): string {
     return (moment(date)).format('yyyy-MM-DD HH:mm:ss.SSS');
   }
 
 
-  calculate() {
-    this.prealertForm.get('totaltallos').setValue((this.prealertForm.get('HBBQ').value == null || this.prealertForm.get('HBBQ').value == 0 ? this.hbqb : this.prealertForm.get('HBBQ').value) * this.prealertForm.get('tallos').value)
-  }
+
 
   remove(cantidad: Numeros) {
     this.cantidadPrice = this.cantidadPrice.filter(numero => numero != cantidad);
   }
 
+  saveNewOrder() {
+    this.submitted = true;
+    if (this.pedidoForm.invalid) {
+      this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios para gregar un item al pedido' });
+      return;
+    }
+
+    this.items.push({
+      fecha: this.pedidoForm.get('fecha').value,
+      variedad: this.pedidoForm.get('flor').value,
+      stem: this.pedidoForm.get('tamanio').value,
+      cantidad: this.pedidoForm.get('cantidad').value,
+    })
+
+    console.log('ITESSSS');
+    console.log(this.items);
+
+    this.submitted = false
+    this.pedidoForm.reset()
+    this.pedidoForm.get('fecha').setValue(this.dateEnvio)
+  }
+
+
+  /**
+   * Funcion que permite notificar la prelaerta
+   */
   async notificar() {
-    console.log('Notificar el despacho');
-    console.log(this.select);
 
     this.confirmationService.confirm({
-      message: "Are you sure to continue to dispatched?",
+      message: "Are you sure to continue with notfication?",
       accept: async () => {
+
         let head = {
           pediId: this.select.head.pediId,
           fecha: this.select.head.fecha != null ? this.select.head.fecha + '.000' : this.select.head.fecha,
@@ -1096,47 +1453,50 @@ export class OrderComponent implements OnInit {
           usuaId: this.select.head.usuaId,
           estado: this.select.head.estado,
           fase: "RE",
-          clieId: this.select.head.client.clieId
+          clieId: this.select.head.client.clieId,
+          marcId: this.markselected.marcId,
+          cargcompId: this.empresacargoselected.entiId,
+          mawb: this.mawba
         }
 
-        console.log('ITEMS...');
-        console.log(this.items);
-
         let items: Array<any> = []
-        this.items.forEach(async (element, index) => {
+        this.select.items.forEach(async (element, index) => {
           items.push({
-            cargcompId: element.carga['entiId'],
-            cm: element.tamanio,
-            farmId: element.finca['entiId'],
+            cargcompId: element.cargcompId,
+            cm: element.cm,
+            farmId: element.farmId,
             fincapropia: element.fincapropia,
-            florId: element.rosamistica['florId'],
-            hbqb: element.HBBQ,
-            line: index,
-            marcId: element.marca['marcId'],
-            pcomp: element.preciocomp,
-            pvp: element.preciovent,
-            shippingdate: this.select.head.fecha + '.000',
-            status: element.status.nombre,
+            florId: element.florId,
+            hbqb: element.hbqb,
+            line: element.line,
+            marcId: element.marcId,
+            pcomp: element.pcomp,
+            pvp: element.pvp,
+            shippingdate: this.getFormatDate(new Date(element.shippingdate)),
+            status: element.status,
             tallos: element.tallos,
-            totaltallos: element.totaltallos
+            totaltallos: element.totaltallos,
+            tipoempaque: element.tipoempaque,
+            tallosxbch: element.tallosxbch,
+            cantidadbch: element.cantidadbch
           })
         });
         let pedido = {
           pedido: head,
           detalle: items
         }
-        console.log('PEDIDO FINALlll DE NOTIFICACION');
+
+        console.log('...PEDIDOS..');
         console.log(pedido);
 
         this.util.isLoading.next(true)
         await this.api.sendnotification(pedido, localStorage.getItem('token')).then(async (data) => {
-          console.log('Se ha guardado la siguiente fase correctamente....')
-          console.log(data);
+
           if (data.headerApp.code == 200) {
-            //this.step = 'PE'
-            //this.select = null
-            //this.items = []
-            //this.getPedidos()
+            this.select.prealerts = data.data.prealert.files
+            this.messageService.add({ severity: 'success', summary: 'Rosa Mística', detail: 'Notificaciòn enviada correctamente' });
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: '¡Algo sucedio y no se pudo notificar al cliente!' });
           }
 
         }).catch(err => {
@@ -1150,10 +1510,62 @@ export class OrderComponent implements OnInit {
 
       }
     })
+  }
 
+  choose($event) {
+    this.pedidoForm.get('fecha').setValue($event)
+  }
 
+  onOptionsSelectedMarca() {
+    this.prealertForm.get('marca').setValue(this.markselected)
+  }
 
+  onOptionsSelecteDelivery() {
+    this.prealertForm.get('carga').setValue(this.empresacargoselected)
+  }
 
+  /**
+  * Operation calculate
+  */
+  calculate() {
+    this.prealertForm.get('totaltallos').setValue((this.prealertForm.get('HBBQ').value == null || this.prealertForm.get('HBBQ').value == 0 ? this.hbqb : this.prealertForm.get('HBBQ').value) * this.prealertForm.get('tallos').value)
+  }
+
+  calculatebch() {
+    this.prealertForm.get('nobch').setValue(this.prealertForm.get('bch').value == null || this.prealertForm.get('bch').value == 0 ? '0' : this.prealertForm.get('totaltallos').value / (this.prealertForm.get('bch').value))
+  }
+
+  calculatetallos() {
+    this.prealertForm.get('tallos').setValue(this.prealertForm.get('HBBQ').value == null || this.prealertForm.get('HBBQ').value == 0 ? '0' : this.prealertForm.get('totaltallos').value / this.prealertForm.get('HBBQ').value)
+  }
+
+  calculatetotaltallos() {
+    console.log('DATOS');
+    console.log(this.prealertForm.get('HBBQ').value);
+    console.log(this.HBQB);
+    console.log(this.CAJA);    
+    
+    if (this.prealertForm.get('HBBQ').value == 0 && this.HBQB == "") {
+      this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'No puede calcular valores sin nùmero de cajas' });
+      this.prealertForm.get("totaltallos").setValue(null);
+      return
+    }
+
+    if (this.prealertForm.get('HBBQ').value == 0 && this.HBQB != "") {
+      this.prealertForm.get('nobch').setValue(this.prealertForm.get('bch').value == null || this.prealertForm.get('bch').value == 0 ? '0' : this.prealertForm.get('totaltallos').value / (this.prealertForm.get('bch').value))
+      this.prealertForm.get('tallos').setValue(this.prealertForm.get('totaltallos').value / Number(this.HBQB))
+    } else {
+      this.prealertForm.get('nobch').setValue(this.prealertForm.get('bch').value == null || this.prealertForm.get('bch').value == 0 ? '0' : this.prealertForm.get('totaltallos').value / (this.prealertForm.get('bch').value))
+      this.prealertForm.get('tallos').setValue(this.prealertForm.get('HBBQ').value == null || this.prealertForm.get('HBBQ').value == 0 ? '0' : this.prealertForm.get('totaltallos').value / this.prealertForm.get('HBBQ').value)
+    }
+
+  }
+
+  /**
+   * Formularios reactivos
+   */
+  get fp() {
+    return this.pedidoForm.controls;
   }
 
   get f() {

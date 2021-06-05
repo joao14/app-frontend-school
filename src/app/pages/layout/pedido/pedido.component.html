@@ -8,8 +8,10 @@
             </ngx-spinner>
             <div *ngIf="pedidos.length > 0 && step <= 1">
                 <h1>{{'Pedidos' | translate}}</h1>
-                <p-table [value]="pedidos" class="p-datatable-responsive-demo" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+                <p-table [value]="pedidos" class="p-datatable-responsive-demo" [paginator]="true" [rows]="10"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[10,25,50]">
                     <ng-template pTemplate="caption">
                         <div class="p-d-flex p-ai-center p-jc-between">
                             {{'Pedidos en trámite'| translate}} [ {{pedidos.length}} ]
@@ -69,18 +71,26 @@
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <label for="flor" class="lbl">{{'Fecha envío' | translate}}</label>
-                        <p-calendar [(ngModel)]="dateEnvio" [showIcon]="true" [readonlyInput]="true" (onSelect)="choose($event)"
-                            [minDate]="minDate" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'">
+                        <p-calendar [(ngModel)]="dateEnvio" [showIcon]="true" [readonlyInput]="true"
+                            (onSelect)="choose($event)" [minDate]="minDate" [showTransitionOptions]="'0ms'"
+                            [hideTransitionOptions]="'0ms'">
                         </p-calendar>
                     </div>
-                    <div class="ui-g-12 ui-md-8"></div>
+
+                    <div class="ui-g-12 ui-md-4" *ngIf="profile=='ADM'">
+                        <label for="flor" class="lbl">{{'Cliente' | translate}}</label>
+                        <p-dropdown [options]="clientes" optionLabel="nombres" [(ngModel)]="clientselect"                           
+                            class="form-control"  [filter]="true"
+                            [placeholder]="'Seleccione' | translate"></p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-md-4"></div>
                 </div>
                 <form [formGroup]="pedidoForm" (ngSubmit)="save()">
                     <p-accordion>
                         <p-accordionTab [header]="'Datos del pedido' | translate" [selected]="true">
                             <div class="ui-g form-group ui-fluid">
                                 <div class="ui-g-12 ui-md-3">
-                                    <label for="flor" class="lbl">{{'Fecha' | translate}}</label>
+                                    <label for="flor" class="lbl">{{'Fecha envio' | translate}}</label>
                                     <p-calendar formControlName="fecha" [showIcon]="true" [readonlyInput]="true"
                                         [ngClass]="{ 'is-invalid': submitted && f.fecha.errors }" class="form-control"
                                         [minDate]="minDate" [showTransitionOptions]="'0ms'"
@@ -88,7 +98,7 @@
                                     </p-calendar>
                                     <div *ngIf="submitted && f.fecha.errors" class="invalid-feedback">
                                         <div *ngIf="f.fecha.errors.required">
-                                            {{'Fecha es requerida' | translate}}
+                                            {{'Fecha envio es requerida' | translate}}
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +211,7 @@
                             [class]="selectpedido.head.fase=='PE' || selectpedido.head.fase=='RE' ||  selectpedido.head.fase=='BF' ?'step_active':'step_inactive'">
                             <i class="pi pi-check" style="font-size: 2rem"></i>
                             <br>
-                            <label>Generado</label>
+                            <label>Pedido</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase!='CA'">
@@ -211,7 +221,21 @@
                             <br>
                             <label>Revisión</label>
                         </div>
-                    </div>                    
+                    </div>
+                    <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase!='CA'">
+                        <div [class]="selectpedido.head.fase=='BF' ?'step_active':'step_inactive'">
+                            <i class="pi pi-file" style="font-size: 2rem"></i>
+                            <br>
+                            <label>Despachado</label>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase!='CA'">
+                        <div [class]="selectpedido.head.fase=='BF' ?'step_active':'step_inactive'">
+                            <i class="pi pi-file" style="font-size: 2rem"></i>
+                            <br>
+                            <label>En envío</label>
+                        </div>
+                    </div>
                     <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase!='CA'">
                         <div [class]="selectpedido.head.fase=='BF' ?'step_active':'step_inactive'">
                             <i class="pi pi-file" style="font-size: 2rem"></i>

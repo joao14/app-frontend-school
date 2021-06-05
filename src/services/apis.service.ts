@@ -546,6 +546,25 @@ export class ApisService {
         });
     }
 
+    public getObjectbyNameComplete(type: string, name: string, token: string): Promise<any> {
+        let json = {
+            name: name
+        }
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.searchtypeComplete + type, json, opt).toPromise().then(invoice => {
+                resolve(invoice);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
     public getObjectbyName(type: string, name: string, token: string): Promise<any> {
         let json = {
             name: name
@@ -1005,6 +1024,22 @@ export class ApisService {
         return new Promise<any>((resolve, reject) => {
             this.http.post<any>(environment.pedidoregister, pedido, opt).toPromise().then(pedido => {
                 resolve(pedido);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public updatedatesorder(order: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.updatedatesorder, order, opt).toPromise().then(order => {
+                resolve(order);
             }).catch(error => {
                 reject(error);
             })

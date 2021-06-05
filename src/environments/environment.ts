@@ -38,6 +38,7 @@ export const environment = {
     registerinvoice: URL + '/romi/apirm/invoice/register',
     registerinvoicedraft: URL + '/romi/apirm/invoice/registertmp',
     searchtype: URL +'/romi/apirm/crm/entity/',
+    searchtypeComplete: URL +'/romi/apirm/crm/entity/complete/',
     registerpaymentandclaim: URL +'/romi/apirm/trx/register',
     registerprealert: URL +'/romi/apirm/prealert/register',
     getsales: URL + '/romi/apirm/invoice/find/date/',
@@ -66,5 +67,6 @@ export const environment = {
     pedidos: URL +'/romi/apirm/order/list/pendings',
     pedidobyclient: URL +'/romi/apirm/orders/',
     pedidoregister: URL + '/romi/apirm/order/register',
-    notificationprealert: URL + '/romi/apirm/order/notification'
+    notificationprealert: URL + '/romi/apirm/order/notification',
+    updatedatesorder: URL + '/romi/apirm/order/update/dates'
 };

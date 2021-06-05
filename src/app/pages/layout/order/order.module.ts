@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { OrderRoutingModule } from './order-routing.module';
 import { OrderComponent } from './order.component';
 import { AccordionModule, AutoCompleteModule, ButtonModule, CalendarModule, CardModule, CheckboxModule, ConfirmDialogModule, DialogModule, DropdownModule, FieldsetModule, InputTextareaModule, InputTextModule, KeyFilterModule, PanelModule, RadioButtonModule, SelectButtonModule, SharedModule, SplitButtonModule, TableModule, ToastModule, ToolbarModule, TooltipModule } from 'primeng';
@@ -40,6 +40,9 @@ import { TranslateModule } from '@ngx-translate/core';
     FieldsetModule,
     CheckboxModule,
     CalendarModule
-  ]
+  ],
+  providers: [
+    DatePipe
+  ],
 })
 export class OrderModule { }

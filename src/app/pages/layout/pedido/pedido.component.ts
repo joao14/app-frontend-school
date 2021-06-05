@@ -10,6 +10,8 @@ import { user } from 'src/models/user';
 import { ApisService } from 'src/services/apis.service';
 import { UtilService } from 'src/services/util.service';
 import * as moment from 'moment';
+import { LayoutComponent } from '../layout.component';
+import { client } from 'src/models/client';
 
 export interface detail {
   fecha: Date,
@@ -40,16 +42,23 @@ export class PedidoComponent implements OnInit {
   selectpedido: Pedido
   etapa: number
   minDate: Date = new Date()
+  profile: string;
+  clientes: Array<client> = []
+  clientselect: client
+
 
   constructor(private api: ApisService, private util: UtilService, private router: Router, private messageService: MessageService,
-    private confirmationService: ConfirmationService, private formBuilder: FormBuilder, private spinner: NgxSpinnerService) {
+    private confirmationService: ConfirmationService, private formBuilder: FormBuilder, private spinner: NgxSpinnerService,
+    public app: LayoutComponent) {
     this.pedidoForm = this.formBuilder.group({
-      fecha: [this.dateEnvio, Validators.required],
+      fecha: [{ value: this.dateEnvio, disabled: true }, Validators.required],
       flor: [null, Validators.required],
       tamanio: [null, Validators.required],
       cantidad: ['', Validators.required],
 
     });
+    this.profile = localStorage.getItem("rolactive");
+
   }
 
   async ngOnInit() {
@@ -116,6 +125,24 @@ export class PedidoComponent implements OnInit {
      */
   async getServicios() {
     this.util.isLoading.next(true);
+    this.clientes = [];
+    await this.api.getclients(localStorage.getItem("token")).then(cliente => {
+      if (cliente.headerApp.code === 200) {
+        let clientTemp: client[] = [];
+        cliente.data.clientes.forEach(data => {
+          if (data.cliente.estado == 'A') {
+            clientTemp.push(data.cliente);
+          }
+        });
+        this.clientes = clientTemp;
+      }
+    }).catch(err => {
+
+      if (err.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    })
     await this.api.getflowers(localStorage.getItem("token")).then(flor => {
       this.flores = [];
       if (flor.headerApp.code === 200) {
@@ -214,7 +241,7 @@ export class PedidoComponent implements OnInit {
   }
 
   save() {
-   
+
     this.submitted = true;
     if (this.pedidoForm.invalid) {
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Los campos son obligatorios para gregar un item al pedido' });
@@ -367,8 +394,10 @@ export class PedidoComponent implements OnInit {
   }
 
   async finalizar() {
-    console.log('Finalizar...');
-    console.log('Todo va bien...');
+    if (this.clientselect == null && this.profile == 'ADM') {
+      this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'El cliente es requerido para generar el pedido' });
+      return;
+    }
     let head = {
       pediId: 0,
       fecha: this.getFormatDate(new Date()),
@@ -376,7 +405,7 @@ export class PedidoComponent implements OnInit {
       usuaId: this.user.usuaid,
       estado: 'A',
       fase: 'PE',
-      clieId: this.user.empresa.entiid
+      clieId: this.profile == 'ADM' ? this.clientselect.entiId : this.user.empresa.entiid
     }
 
     let items = []
@@ -487,7 +516,7 @@ export class PedidoComponent implements OnInit {
     return (moment(date)).format('yyyy-MM-DD HH:mm:ss.SSS');
   }
 
-  choose($event){
+  choose($event) {
     this.pedidoForm.get('fecha').setValue($event)
   }
 

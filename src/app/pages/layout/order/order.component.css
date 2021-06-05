@@ -29,7 +29,40 @@
     border-radius: 8px;
 }
 
-.fase{
+.pendiente{
+    font-weight: bold;
+    font-size: 12px;
+    background-color: #ff4456;
+    color: white;
+    padding: 4px;
+    width: 50%;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.revision{
+    font-weight: bold;
+    font-size: 12px;
+    background-color: #007ad9;
+    color: white;
+    padding: 4px;
+    width: 50%;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.despachado{
+    font-weight: bold;
+    font-size: 12px;
+    background-color: #5e8f32;
+    color: white;
+    padding: 4px;
+    width: 50%;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.otra{
     font-weight: bold;
     font-size: 12px;
     background-color: #ff4456;
@@ -53,6 +86,7 @@
 
 .label{
     font-weight: bold;
+    font-size: 20px;
 }
 
 .lbl {
@@ -74,4 +108,32 @@
     text-align: center;
     font-size: 18px;
     font-weight: bold !important;
+}
+
+.btn{
+    height: 40px;
+    border-radius: 9px;
+    font-size: 18px;
+}
+
+.form-control {
+    border: 1px solid #c4c4c4 !important;
+}
+ 
+.is-invalid {
+    border: 1px solid #dc3545 !important;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #42a948; /* green */
+}
+
+.ng-invalid:not(form) {
+    border-left: 5px solid #a94442; /* red */
 }

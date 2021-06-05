@@ -16,5 +16,8 @@ export interface Item {
     shippingdate: string,
     status: string,
     tallos: number,
-    totaltallos: number
+    totaltallos: number,
+    tipoempaque:string,
+    tallosxbch: number,
+    cantidadbch : number
 }
