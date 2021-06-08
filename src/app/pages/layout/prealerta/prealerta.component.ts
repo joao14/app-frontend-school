@@ -40,6 +40,7 @@ export interface Item {
   preciocomp: string;
   carga: string;
   status: Status;
+  line: number;
 }
 
 export interface Cabecera {
@@ -76,6 +77,7 @@ export interface Numeros {
 
 export interface Prealert {
   prealerta: Cabecera;
+  lstdist: Array<any>;
   detalle: Array<Detail>;
 }
 
@@ -109,6 +111,7 @@ export interface ClientDraft {
     status: string;
     tallos: number;
     totaltallos: number;
+    line: number;
   }>;
 }
 
@@ -174,6 +177,13 @@ export class PrealertaComponent implements OnInit {
   activeitembyedit: Item;
   tempStatus: Status;
   pralId: string;
+  dialogVisibleClients: boolean = false
+  arraycodes: any[] = []
+  clients: Array<{
+    nombres: String,
+    code: Number,
+    isSelected: Boolean
+  }> = []
 
   constructor(private messageService: MessageService, private formBuilder: FormBuilder, private confirmationService: ConfirmationService,
     private api: ApisService, private router: Router, private utilService: UtilService, private spinner: NgxSpinnerService) {
@@ -198,9 +208,8 @@ export class PrealertaComponent implements OnInit {
 
   async ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
-    await this.inicializate();
-    await this.prealertdraft();
-    await this.prealertbypedido()
+    await this.inicializate()
+    await this.prealertdraft()
     await this.getServicios();
   }
 
@@ -232,11 +241,13 @@ export class PrealertaComponent implements OnInit {
       preciovent: "",
       preciocomp: "",
       carga: "",
-      status: null
+      status: null,
+      line: 0
     }
 
     this.prealert = {
       prealerta: null,
+      lstdist: [],
       detalle: []
     }
 
@@ -265,27 +276,6 @@ export class PrealertaComponent implements OnInit {
     await this.api.getprealertsdraft(localStorage.getItem('token')).then(prealert => {
       if (prealert.headerApp.code == 200) {
         this.prealertsdraft = prealert.data.prealerts;
-      }
-    }).catch(err => {
-      if (err.error.code == 401) {
-        localStorage.clear();
-        this.router.navigate(['/login']);
-      }
-    })
-    this.utilService.isLoading.next(false);
-  }
-
-  async prealertbypedido() {
-    console.log('Begin....');
-
-    this.prealertsdraft = [];
-    this.utilService.isLoading.next(true);
-    await this.api.pedidosbyclient(this.user.empresa.entiid, 'PR', localStorage.getItem('token')).then(pedido => {
-      console.log('Estos son');
-      console.log(pedido);
-
-      if (pedido.headerApp.code == 200) {
-        //this.prealertsdraft = pedido.data.prealerts;
       }
     }).catch(err => {
       if (err.error.code == 401) {
@@ -334,7 +324,6 @@ export class PrealertaComponent implements OnInit {
         cm = cm + data.tamanio + " "
     });
 
-
     this.item = {
       fecha: this.prealertForm.get('fecha').value,
       cliente: this.prealertForm.get('cliente').value,
@@ -349,7 +338,8 @@ export class PrealertaComponent implements OnInit {
       preciovent: pvp,
       preciocomp: pcomp,
       carga: this.prealertForm.get('carga').value,
-      status: this.prealertForm.get('estado').value
+      status: this.prealertForm.get('estado').value,
+      line: this.items.length <= 0 ? 0 : this.items[this.items.length - 1].line + 1
     }
 
     this.prealertForm.get('HBBQ').value ? this.hbqb = this.prealertForm.get('HBBQ').value : '';
@@ -389,6 +379,7 @@ export class PrealertaComponent implements OnInit {
     this.items = [];
     this.prealert = {
       prealerta: null,
+      lstdist: [],
       detalle: []
     }
   }
@@ -491,12 +482,23 @@ export class PrealertaComponent implements OnInit {
           preciovent: data[i]['PRECIO VENTA'],
           preciocomp: data[i]['PRECIO COMPRA'],
           carga: delivery,
-          status: status
+          status: status,
+          line: i
         }
         data[i]['HB/QB'] > 0 ? this.hbqb = data[i]['HB/QB'] : '';
         this.items.push(item);
         this.total += item.totaltallos;
       }
+
+      this.items.sort(function (a, b) {
+        if (a.line > b.line) {
+          return 1;
+        }
+        if (a.line < b.line) {
+          return -1;
+        }
+        return 0;
+      });
 
       this.spinner.hide();
       this.utilService.isLoading.next(false);
@@ -593,7 +595,38 @@ export class PrealertaComponent implements OnInit {
   }
 
 
+  async presend() {
+
+    let objects: Array<{
+      nombres: String,
+      code: Number,
+      isSelected: Boolean
+    }> = []
+
+
+    this.clients = []
+    this.utilService.isLoading.next(true)
+    await Promise.all(this.items.map(async (item) => {
+      objects.push({
+        nombres: item.cliente.nombres,
+        code: item.cliente.entiId,
+        isSelected: true
+      })
+    })
+    );
+    this.utilService.isLoading.next(false)
+    let clientstemporal: any = await this.eliminaPersonasDuplicadas(objects)
+    this.clients = clientstemporal
+    this.arraycodes = []
+    await this.clients.forEach(async (element) => {
+      this.arraycodes.push(element.code)
+    });
+    this.dialogVisibleClients = true
+
+  }
+
   send() {
+    this.dialogVisibleClients = false
     let head: Cabecera = {
       fecha: this.getFormatDate(new Date()),
       usuaId: this.user.usuaid,
@@ -629,8 +662,18 @@ export class PrealertaComponent implements OnInit {
       totaltallos += parseInt(data.totaltallos + "");
     })
 
+
     this.prealert = {
       prealerta: head,
+      lstdist: this.arraycodes,
+      detalle: detail
+    }
+
+
+
+    let prealertfinal = {
+      prealerta: head,
+      lstdist: this.createstringcodes(this.arraycodes),
       detalle: detail
     }
 
@@ -642,7 +685,7 @@ export class PrealertaComponent implements OnInit {
       message: "Are you sure to send the prealert?",
       accept: async () => {
         this.spinner.show();
-        await this.api.registerPrealert(this.prealert, localStorage.getItem("token")).then(data => {
+        await this.api.registerPrealert(prealertfinal, localStorage.getItem("token")).then(data => {
           this.spinner.hide();
           if (data.headerApp.code == 200) {
             this.prealertdraft();
@@ -981,6 +1024,7 @@ export class PrealertaComponent implements OnInit {
 
     this.prealert = {
       prealerta: head,
+      lstdist: [],
       detalle: detail
     }
 
@@ -1005,6 +1049,7 @@ export class PrealertaComponent implements OnInit {
 
 
   async edit(draft: Draft) {
+  
     this.editPrealert = true;
     this.optionSelect = 'manual';
     this.step = 2;
@@ -1013,11 +1058,12 @@ export class PrealertaComponent implements OnInit {
     this.spinner.show();
     this.utilService.isLoading.next(true);
     this.total = 0;
-    for (const clie of draft.clients) {
-      for (const item of clie.items) {
-        const cliente = await this.getClientbyName(clie.info.nombres);
+    //Validamos el DRAFT
+    await Promise.all(draft.clients.map(async (client) => {
+      await Promise.all(client.items.map(async (item) => {
+        const cliente = await this.getClientbyName(client.info.nombres);
         const finca = await this.getFincabyName(item.farm);
-        const marca = await this.getMarcbyName(clie.info.clieId, item.mark);
+        const marca = await this.getMarcbyName(client.info.clieId, item.mark);
         const rosamistica = await this.getFlowerbyName(item.flower);
         const carga = await this.getEmpresaCargabyName(item.cargname);
         await this.getStatus(item.status);
@@ -1036,14 +1082,28 @@ export class PrealertaComponent implements OnInit {
           preciovent: item.pvp,
           preciocomp: item.pcomp,
           carga: carga,
-          status: this.tempStatus
+          status: this.tempStatus,
+          line: item.line
         }
 
         item.hbqb != null && item.hbqb > 0 ? this.hbqb = item.hbqb : '';
         this.total += temp.totaltallos;
         this.items.push(temp);
+      })
+      );
+    })
+    );
+
+   
+    this.items.sort(function (a, b) {
+      if (a.line > b.line) {
+        return 1;
       }
-    }
+      if (a.line < b.line) {
+        return -1;
+      }
+      return 0;
+    });
 
     this.utilService.isLoading.next(false);
     this.spinner.hide();
@@ -1088,9 +1148,10 @@ export class PrealertaComponent implements OnInit {
 
     this.prealert = {
       prealerta: head,
+      lstdist: [],
       detalle: detail
     }
-
+    
     if (!this.editPrealert && this.pralId != "") {
       this.prealert.prealerta.pralId = parseInt(this.pralId)
     }
@@ -1121,10 +1182,29 @@ export class PrealertaComponent implements OnInit {
     this.utilService.isLoading.next(false);
   }
 
+
   editrow(item: any) {
     this.editvisible = true;
     this.activeitembyedit = { ...item };
   }
+
+
+  eliminaPersonasDuplicadas = (data) => {
+    const clients = data.map(clie => {
+      return [clie.nombres, clie]
+    });
+    return [...new Map(clients).values()];
+  }
+
+  createstringcodes = (array) => {
+    let codearray = ""
+    array.forEach(code => {
+      codearray += "[" + code + "]"
+    })
+    return codearray
+  }
+
+
 
 
   get f() {

@@ -63,47 +63,7 @@ export interface Draft {
         mawb: string;
         numeboxes: number;
         numetallos: number;
-        pdf: string;
-        puntemis: string;
-        secuencial: number;
-        subtotal1: number;
-        total: number;
-    },
-    detalles: Array<{
-        cantidad: number;
-        cantidadbch: number;
-        cantidadcajas: number;
-        farm: string;
-        farmId: number;
-        florId: number;
-        flower: string;
-        medidatallo: string;
-        preciounitario: number;
-        tallosxbch: number;
-        tipoempaque: string;
-        total: number;
-        line: number;
-    }>,
-    idObjTmp: string;
-}
-
-export interface Draft {
-    cabecera: {
-        cargcompId: number;
-        cargname: string;
-        claveacceso: string;
-        cliente: client;
-        codiesta: string;
-        contdocu: number;
-        estado: string;
-        fecha: string;
-        marcId: number;
-        mark: string;
-        markCiu: string;
-        markDir: string;
-        mawb: string;
-        numeboxes: number;
-        numetallos: number;
+        observacion: string;
         pdf: string;
         puntemis: string;
         secuencial: number;
@@ -787,7 +747,7 @@ export class FacturaComponent implements OnInit {
             ice: 0.00,
             iva: 0.00,
             total: this.factura.total,
-            observacion: '-',
+            observacion: this.selectdraft.cabecera.observacion,
             numetallos: this.factura.tallos,
             numeboxes: this.factura.boxes,
             estado: "T",
@@ -1214,7 +1174,7 @@ export class FacturaComponent implements OnInit {
             ice: 0.00,
             iva: 0.00,
             total: this.factura.total,
-            observacion: '-',
+            observacion: this.selectdraft.cabecera.observacion,
             numetallos: this.factura.tallos,
             numeboxes: this.factura.boxes,
             estado: "B",

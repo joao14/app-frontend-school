@@ -997,7 +997,11 @@ export class ApisService {
 
     }
 
-    public pedidosbyclient(clieId: number, estado: string, token: string): Promise<any> {        
+    public getInformationAllOrders(dateIni: string, dateFin: string, token: string): Promise<any> {
+        console.log('PARAMETROS');
+        console.log(dateIni);
+        console.log(dateFin);        
+        
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -1005,7 +1009,39 @@ export class ApisService {
             })
         }
         return new Promise<any>((resolve, reject) => {
-            this.http.get<any>(environment.pedidobyclient + clieId + '/' + estado +'/20210414000000/20210414000000', opt).toPromise().then(pedidos => {
+            this.http.get<any>(environment.historicordersall + '/' + dateIni + '/' + dateFin, opt).toPromise().then(pedidos => {
+                resolve(pedidos);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public getInformationAllOrdersbyClient(clieId: number, estado: string, dateIni: string, dateFin: string, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.historicordersbyclient + clieId + '/' + estado + '/' + dateIni + '/' + dateFin, opt).toPromise().then(pedidos => {
+                resolve(pedidos);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public pedidosbyclient(clieId: number, estado: string, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.pedidobyclient + clieId + '/' + estado + '/20210414000000/20210414000000', opt).toPromise().then(pedidos => {
                 resolve(pedidos);
             }).catch(error => {
                 reject(error);

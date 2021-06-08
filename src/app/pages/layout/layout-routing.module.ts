@@ -24,6 +24,7 @@ const routes: Routes = [
             { path: 'marcas', loadChildren: () => import('./crm/marking/marking.module').then(m => m.MarkingModule) },
             { path: 'editMarca', loadChildren: () => import('./crm/marking/edit/edit.module').then(m => m.EditModule) },
             { path: 'balance', loadChildren: () => import('./reporte/balance/balance.module').then(m => m.BalanceModule) },
+            { path: 'historicopedido', loadChildren: () => import('./reporte/pedidos/pedidos.module').then(m => m.PedidosModule) },
             { path: 'documento', loadChildren: () => import('./reporte/documento/documento.module').then(m => m.DocumentoModule) },
             { path: 'usuario', loadChildren: () => import('./security/usuario/usuario.module').then(m => m.UsuarioModule) },
             { path: 'edituser', loadChildren: () => import('./security/usuario/edit/edit.module').then(m => m.EditModule) },

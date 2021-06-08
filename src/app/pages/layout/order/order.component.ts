@@ -604,7 +604,7 @@ export class OrderComponent implements OnInit {
         this.step = "PE"
         let head = {
           clieId: this.select.head.client.clieId,
-          estado: this.select.head.estado,
+          estado: "F",
           fase: "RX",
           fecha: this.select.head.fecha + ".000",
           pediId: this.select.head.pediId,
@@ -670,25 +670,20 @@ export class OrderComponent implements OnInit {
   }
 
   async changedates() {
-    console.log('Vamos a cambiar el estado');
+   
     let order = {
       fechdesp: this.getFormatDate(this.fechadespacho),
       fecharri: this.getFormatDate(this.fecharecibido),
       pediId: this.select.head.pediId
     }
-
-    console.log('.....ITEM PEDIDO FINAL ACUTALI FECHAS...');
-
+   
     this.util.isLoading.next(true)
-    await this.api.updatedatesorder(order, localStorage.getItem('token')).then(async (data) => {
-      console.log('Se actualizaron correctamente las fechas')
-      console.log(data);
+    await this.api.updatedatesorder(order, localStorage.getItem('token')).then(async (data) => {     
       if (data.headerApp.code == 200) {
         this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Se actulizado la informaciòn del pedido' });
-        this.step = "RE"
+        this.step = "DE"
         await this.getServicios()
         this.prealertForm.reset()
-
       }
 
     }).catch(err => {
@@ -763,7 +758,7 @@ export class OrderComponent implements OnInit {
       cargname: empresacargo.nombres,
       status: this.prealertForm.get('estado').value?.titrId ? this.prealertForm.get('estado').value?.nombre : this.prealertForm.get('estado').value,
       line: this.select.items[this.select.items.length - 1].line + 1,
-      tipoempaque: this.prealertForm.get('caja').value.code,
+      tipoempaque: this.prealertForm.get('caja').value ? this.prealertForm.get('caja').value.code : "",
       tallosxbch: this.prealertForm.get('bch').value,
       cantidadbch: this.prealertForm.get('nobch').value,
     });
@@ -1543,8 +1538,8 @@ export class OrderComponent implements OnInit {
     console.log('DATOS');
     console.log(this.prealertForm.get('HBBQ').value);
     console.log(this.HBQB);
-    console.log(this.CAJA);    
-    
+    console.log(this.CAJA);
+
     if (this.prealertForm.get('HBBQ').value == 0 && this.HBQB == "") {
       this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'No puede calcular valores sin nùmero de cajas' });
       this.prealertForm.get("totaltallos").setValue(null);

@@ -1,0 +1,33 @@
+.generado{
+    font-weight: bold;
+    color: #ff4456;
+}
+
+.revision{
+    font-weight: bold;
+    color: #007ad9;
+}
+
+
+.despachado{
+    font-weight: bold;
+    color: #5e8f32;
+}
+
+
+.enentrega{
+    font-weight: bold;
+    color: #f5b60f;
+}
+
+
+.facturado{ 
+    font-weight: bold;
+    color: #B2F0F1;
+
+}
+
+.cancelado{
+    font-weight: bold;
+    color: #F1B2C4;
+}

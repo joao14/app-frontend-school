@@ -25,18 +25,20 @@
                     <ng-template pTemplate="body" let-rowData let-item>
                         <tr style="background-color: white;">
                             <td><span class="p-column-title">
-                                    <button pButton type="button" class="ui-button-warning" (click)="edit(item)" style="height: 30px; border-radius: 5px;">
+                                    <button pButton type="button" class="ui-button-warning" (click)="edit(item)"
+                                        style="height: 30px; border-radius: 5px;">
                                         <i class="pi pi-pencil" style="font-size: 1.7rem"></i>
                                     </button>
                                     &nbsp;
-                                    <button pButton type="button" class="ui-button-success" (click)="viewdraft(item)" style="height: 30px; border-radius: 5px;">
-                                        <i class="pi pi-download" style="font-size: 1.7rem"></i> 
+                                    <button pButton type="button" class="ui-button-success" (click)="viewdraft(item)"
+                                        style="height: 30px; border-radius: 5px;">
+                                        <i class="pi pi-download" style="font-size: 1.7rem"></i>
                                     </button>
                                     &nbsp;
                                     <button pButton type="button" class="ui-button-success" icon="pi pi-replay"
                                         style="display: none;" (click)="finish(item)"></button>
                                     &nbsp;
-                                    
+
                                 </span>
                             </td>
                             <td><span class="p-column-title">{{item.head.pralId }}</span></td>
@@ -210,7 +212,7 @@
                                             <p-dropdown [options]="status" placeholder="Seleccione" class="form-control"
                                                 optionLabel="nombre" formControlName="estado"
                                                 [ngClass]="{ 'is-invalid': submitted && f.estado.errors }">
-                                            </p-dropdown>  
+                                            </p-dropdown>
                                             <div *ngIf="submitted && f.estado.errors" class="invalid-feedback">
                                                 <div *ngIf="f.estado.errors.required">
                                                     {{'Estado es requerido' | translate}}</div>
@@ -320,10 +322,9 @@
                 <p-table [value]="items" class="p-datatable-responsive-demo">
                     <ng-template pTemplate="caption">
                         <div class="p-d-flex p-ai-center p-jc-between">
-                            <button pButton type="button" class="ui-button-success" (click)="viewxlsx()" 
-                                *ngIf="items.length >=1 "
-                                style="height: 30px; border-radius: 5px;">
-                                <i class="pi pi-download" style="font-size: 1.7rem"></i> 
+                            <button pButton type="button" class="ui-button-success" (click)="viewxlsx()"
+                                *ngIf="items.length >=1 " style="height: 30px; border-radius: 5px;">
+                                <i class="pi pi-download" style="font-size: 1.7rem"></i>
                             </button> &nbsp;
                             {{'Items de la prealerta' | translate }} [ {{items.length}} ]
                         </div>
@@ -365,7 +366,8 @@
                             </td>
                             <td><span class="p-column-title">{{data.fecha | date :'dd-MMM-yyyy' }}</span></td>
                             <td><span class="p-column-title">{{data.cliente.nombres | titlecase }}</span></td>
-                            <td><span class="p-column-title">{{data.fincapropia=='S'? 'Rosa Mística' : 'N/A' }}</span></td>
+                            <td><span class="p-column-title">{{data.fincapropia=='S'? 'Rosa Mística' : 'N/A' }}</span>
+                            </td>
                             <td><span class="p-column-title">{{data.finca.nombres | titlecase }}</span></td>
                             <td><span class="p-column-title">{{data.marca.nombre | titlecase }}</span></td>
                             <td><span class="p-column-title">{{data.status.nombre | titlecase}}</span></td>
@@ -423,7 +425,7 @@
                     <div class="ui-grid-col-1"></div>
                     <div class="ui-grid-col-2">
                         <button pButton type="button" icon="pi pi-arrow-right" class="ui-button-help btn_enviar"
-                            label="Finalizar" (click)="send()" [disabled]="items.length <= 0"></button>
+                            label="Finalizar" (click)="presend()" [disabled]="items.length <= 0"></button>
                     </div>
                 </div>
                 <!--Resumen totales-->
@@ -441,7 +443,7 @@
                             <div class="ui-grid-col-10"></div>
                             <div class="ui-grid-col-2">
                                 <button pButton icon="pi pi-arrow-right" class="ui-button-help btn_enviar_responsive"
-                                    [label]="'Enviar'| translate" (click)="send()"></button>
+                                    [label]="'Enviar'| translate" (click)="presend()"></button>
                             </div>
                         </div>
                     </div>
@@ -510,8 +512,8 @@
         <p-dialog [(visible)]="dialogVisible" [style]="{width: '50vw'}" [baseZIndex]="10000" [maximizable]="true"
             [modal]="true" [resizable]="true">
             <p-header>
-                <span><i class="pi pi-paperclip"
-                        style="font-size: 1rem"></i>&nbsp;{{'Resumen de la prealerta' | translate}}</span>
+                <span><i class="pi pi-paperclip" style="font-size: 1rem"></i>&nbsp;{{'Resumen de la prealerta' |
+                    translate}}</span>
             </p-header>
             <div class="ui-g form-group ui-fluid">
                 <div class="card card-w-title">
@@ -560,19 +562,44 @@
         </p-dialog>
 
         <p-dialog [header]="'Prealerta borrador' | translate" [(visible)]="dialogVisiblePDF" [style]="{width: '50vw'}"
-            [baseZIndex]="10000" [maximizable]="true" [modal]="true" [resizable]="true">
+            [baseZIndex]="10000" [modal]="true" [resizable]="true">
             <iframe [src]="url | safe" *ngIf="dialogVisiblePDF" width="100%" height="500px" style="border-width: 0PX;">
             </iframe>
+        </p-dialog>
+
+        <!-- Dialog all clientes to prealert-->
+        <p-dialog [header]="'Clientes para prealerta' | translate" [(visible)]="dialogVisibleClients"
+            [style]="{width: '20vw'}" [baseZIndex]="10000" [modal]="true" [resizable]="true">
+            <div class="ui-g form-group ui-fluid">
+                <div class="card card-w-title" style="width: 100%;">
+                    <div *ngFor="let client of clients">
+                        <div class="ui-g-12">
+                            <div class="ui-g-12 ui-md-12">
+                                <p-checkbox name="group2" value="client.code" [value]="client.code"
+                                    [(ngModel)]="arraycodes" [inputId]="client.code"></p-checkbox>&nbsp;
+                                <label [for]="client.code">{{client.nombres | titlecase }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p-footer>
+                <button type="button" pButton icon="pi pi-times" class="ui-button-danger"
+                    [label]="'Cancelar' | translate" (click)="dialogVisibleClients=false"></button>
+
+                <button type="button" pButton icon="pi pi-check" class="ui-button-success"
+                    [label]="'Enviar' | translate" (click)="send()"></button>
+            </p-footer>
         </p-dialog>
 
         <!--Dialog edit prealert-->
         <p-dialog [(visible)]="editvisible" [style]="{width: '50vw'}" [baseZIndex]="10000" [maximizable]="true"
             [modal]="true" [resizable]="true">
             <p-header>
-                <span><i class="pi pi-paperclip"
-                        style="font-size: 1rem"></i>&nbsp;{{'Editando el item' | translate}}</span>
+                <span><i class="pi pi-paperclip" style="font-size: 1rem"></i>&nbsp;{{'Editando el item' |
+                    translate}}</span>
             </p-header>
-            <div class="ui-g form-group ui-fluid"> 
+            <div class="ui-g form-group ui-fluid">
                 <div class="card card-w-title">
                     <div class="ui-g-12 ui-md-4">
                         <label class="lbl">{{'Fecha' | translate}}</label>
@@ -606,12 +633,12 @@
                         <input type="text" pInputText [value]="activeitembyedit?.rosamistica.name" readonly>
                     </div>
 
-                   
+
                 </div>
             </div>
             <p-footer>
-                <button type="button" pButton icon="pi pi-check" class="ui-button-success" [label]="'Guardar' | translate"
-                    (click)="dialogVisible=false"></button>
+                <button type="button" pButton icon="pi pi-check" class="ui-button-success"
+                    [label]="'Guardar' | translate" (click)="dialogVisible=false"></button>
             </p-footer>
         </p-dialog>
 

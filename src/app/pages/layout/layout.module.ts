@@ -36,6 +36,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { CrystalLightboxModule } from '@crystalui/angular-lightbox';
 import { OrderComponent } from './order/order.component';
 import { PedidoComponent } from './pedido/pedido.component';
+import { PedidosComponent } from './reporte/pedidos/pedidos.component';
 
 @NgModule({
     imports: [
@@ -87,7 +88,7 @@ import { PedidoComponent } from './pedido/pedido.component';
         MenuComponent,
         TopbarComponent,
         PanelComponent,
-        DragdropDirective,                
+        DragdropDirective                        
         
     ], providers: [
         MenuService,

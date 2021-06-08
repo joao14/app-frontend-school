@@ -68,5 +68,7 @@ export const environment = {
     pedidobyclient: URL +'/romi/apirm/orders/',
     pedidoregister: URL + '/romi/apirm/order/register',
     notificationprealert: URL + '/romi/apirm/order/notification',
-    updatedatesorder: URL + '/romi/apirm/order/update/dates'
+    updatedatesorder: URL + '/romi/apirm/order/update/dates',
+    historicordersbyclient: URL +'/romi/apirm/orders/',
+    historicordersall: URL +'/romi/apirm/orders/finished',
 };

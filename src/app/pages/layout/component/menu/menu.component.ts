@@ -570,6 +570,8 @@ export class MenuComponent implements OnInit, OnChanges {
                                         } else
                                             if (item == 'RPL') {
                                                 this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Prealertas' }])
+                                            } else if (item == 'HIS') {
+                                                this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Histórico pedidos' }])
                                             } else
                                                 if (item == 'STATUS') {
                                                     this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Estados' }])

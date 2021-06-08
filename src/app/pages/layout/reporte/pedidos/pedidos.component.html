@@ -1,0 +1,230 @@
+<div class="ui-g">
+    <div class="ui-g-12">
+        <div class="card card-w-title">
+            <h1>{{'Histórico de pedidos' | translate}}</h1>
+            <p-toast></p-toast>
+            <div class="ui-g form-group ui-fluid">
+                <div class="ui-g-12 ui-md-3">
+                    <label for="client" class="lbl">{{'Cliente' | translate}}</label>
+                    <p-dropdown [options]="clientes" optionLabel="nombres" [(ngModel)]="selectClient"
+                        *ngIf="typerol=='ADM'" class="form-control" [filter]="true"
+                        [placeholder]="'Seleccione' | translate">
+                    </p-dropdown>
+                    <input type="text" pInputText [value]="selectClient?.nombres" readonly *ngIf="typerol!='ADM'" />
+
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                    <br>
+                    <div class="ui-field-checkbox">
+                        <p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary">
+                        </p-checkbox> &nbsp;
+                        <label for="binary">{{'Todos' | translate }}</label>
+                    </div>
+
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                    <label class="lbl">{{'Fecha inicial' | translate }}</label>
+                    <p-calendar [(ngModel)]="dateIni" [showIcon]="true" [readonlyInput]="true"
+                        [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-calendar>
+                </div>
+
+                <div class="ui-g-12 ui-md-2">
+                    <label class="lbl">{{'Fecha final' | translate }}</label>
+                    <p-calendar [(ngModel)]="dateFin" [showIcon]="true" [readonlyInput]="true"
+                        [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-calendar>
+                </div>
+
+                <div class="ui-g-12 ui-md-3">
+                    <br>
+                    <button pButton type="button" [label]="'Consultar' | translate" icon="fa fa-search" iconPos="left"
+                        class="ui-button-success" (click)="consultar()"></button>
+                </div>
+            </div>
+            <br>
+            <div class="ui-g form-group ui-fluid">
+                <div class="ui-g-12 ui-md-2">
+                </div>
+                <div class="ui-g-12 ui-md-8">
+                    <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                        <label>Generado</label>&nbsp; <button pButton type="button" label=" "
+                            style="border-radius: 5px;"></button>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                        <label>Revisiòn </label> &nbsp; <button pButton type="button" label=" "
+                            style="background-color: #007ad9;border-color: #007ad9;border-radius: 5px;"></button>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                        <label>Despachado</label> &nbsp; <button pButton type="button" label=" "
+                            style="background-color: #5e8f32;border-color: #5e8f32;border-radius: 5px;"></button>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                        <label>En entrega</label> &nbsp; <button pButton type="button" label=" "
+                            style="background-color: #f5b60f;border-color: #f5b60f;border-radius: 5px;"></button>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                        <label>Facturado</label> &nbsp; <button pButton type="button" label=" "
+                            style="background-color: #B2F0F1;border-color: #B2F0F1;border-radius: 5px;"></button>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-2" style="text-align: center;">
+                        <label>Cancelado</label> &nbsp; <button pButton type="button" label=" "
+                            style="background-color: #F1B2C4;border-color: #F1B2C4;border-radius: 5px;"></button>
+                    </div>
+
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                </div>
+            </div>
+            <br>
+            <div class="ui-g form-group ui-fluid">
+                <p-table #dt [value]="pedidos" class="p-datatable-responsive-demo" [paginator]="true" [rows]="10"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[10,25,50,100]">
+                    <ng-template pTemplate="caption" class="head_table" style="padding: 2px !important">
+                        <div class="ui-g form-group ui-fluid">
+                            <div class="ui-g-12 ui-md-11">
+                                <div style="margin-top: 5px;">
+                                    {{'Número de pedidos' | translate }} [ {{pedidos.length}} ]
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width: 5em;"></th>
+                            <th>{{'Pedido' | translate }}</th>
+                            <th>{{'Cliente' | translate }}</th>
+                            <th>{{'Marca' | translate }}</th>
+                            <th>{{'Estado' | translate }}</th>
+                            <th>{{'Fase' | translate }}</th>
+                            <th>{{'Empresa Cargo' | translate}}</th>
+                            <th>{{'Fecha requerida' | translate}}</th>
+                        </tr>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                                <div class="ui-fluid">
+                                    <input pInputText type="text"
+                                        (input)="dt.filter($event.target.value, 'head.pediId', 'contains')"
+                                        [placeholder]="'Buscar' | translate" class="p-column-filter">
+                                </div>
+                            </th>
+                            <th>
+                                <div class="ui-fluid">
+                                    <input pInputText type="text"
+                                        (input)="dt.filter($event.target.value, 'head.client.nombres', 'contains')"
+                                        [placeholder]="'Buscar' | translate" class="p-column-filter">
+                                </div>
+                            </th>
+                            <th>
+                                <div class="ui-fluid">
+                                    <input pInputText type="text"
+                                        (input)="dt.filter($event.target.value, 'head.marcId.nombre', 'contains')"
+                                        [placeholder]="'Buscar' | translate" class="p-column-filter">
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="ui-fluid">
+                                    <input pInputText type="text"
+                                        (input)="dt.filter($event.target.value, 'head.estado', 'contains')"
+                                        [placeholder]="'Buscar' | translate" class="p-column-filter">
+                                </div>
+                            </th>
+                            <th>
+                                <div class="ui-fluid">
+                                    <input pInputText type="text"
+                                        (input)="dt.filter($event.target.value, 'head.fase', 'contains')"
+                                        [placeholder]="'Buscar' | translate" class="p-column-filter">
+                                </div>
+                            </th>
+                            <th>
+                                <div class="ui-fluid">
+                                    <input pInputText type="text"
+                                        (input)="dt.filter($event.target.value, 'head.cargcompId.nombre', 'contains')"
+                                        [placeholder]="'Buscarr' | translate" class="p-column-filter">
+                                </div>
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-item>
+                        <tr style="background-color: white;">
+                            <td>
+                                <button type="button" pButton icon="fa fa-eye" style="border-radius: 8px;"
+                                    *ngIf="item.prealerts!=null" class="ui-button-info"></button>
+                            </td>
+                            <td><span class="p-column-title">{{item.head.pediId}}</span></td>
+                            <td><span class="p-column-title">{{item.head.client.nombres | titlecase }}</span></td>
+                            <td><span class="p-column-title">{{item.head.marcId.nombre | titlecase }}</span></td>
+                            <td><span class="p-column-title">{{item.head.estado=='F'?'Finalizado':'Abierto' }}</span>
+                            </td>
+                            <td
+                                [ngClass]="{'generado': item.head.fase=='PE', 'revision': item.head.fase=='RE', 'despachado': item.head.fase=='DE', 'enentrega': item.head.fase=='IN', 'facturado': item.head.fase=='FA' , 'cancelado':item.head.fase=='RX'}">
+                                <span class="p-column-title">{{getState(item.head.fase)}}</span>
+                            </td>
+                            <td><span class="p-column-title">{{item.head.cargcompId.nombre |
+                                    titlecase }}</span>
+                            </td>
+                            <td style="text-align: right;"><span class="p-column-title">{{item.head.fecha }}</span>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+            </div>
+        </div>
+
+        <!--Table responsive-->
+        <!--<div class="tbl_responsive">           
+            <div style="overflow-y: scroll; height: 500px;width: 100%;" *ngIf="invoices.length > 0">
+                <div class="ui-grid ui-grid-responsive ui-fluid" class="data" *ngFor="let invoice of invoices">
+                    <div class="target">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-12">
+                                <button pButton type="button" class="ui-button-info btn_card" icon="fa fa-eye"
+                                    ></button>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Fecha' | translate}}</span>
+                            </div>
+                            <div class="ui-grid-col-6"><span
+                                    class="value">{{invoice.fecha | date :'dd-MMM-yy h:mm:ss'}}</span></div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Monto' | translate}}</span>
+                            </div>
+                            <div class="ui-grid-col-6"><span class="value">{{invoice.monto | currency}}</span></div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'N° de documento' | translate }}</span>
+                            </div>
+                            <div class="ui-grid-col-6"><span class="value">{{invoice.numedocu}}</span></div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6"><span class="label">{{'Tipo transacción' | translate }}</span>
+                            </div>
+                            <div class="ui-grid-col-6"><span class="value">{{invoice.tipo}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer" *ngIf="invoices.length > 0">
+                {{ 'Número de registros' | translate }} [<span>34</span>]
+            </div>
+        </div>  -->
+    </div>
+
+</div>

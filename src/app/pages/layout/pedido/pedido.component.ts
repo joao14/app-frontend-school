@@ -90,11 +90,7 @@ export class PedidoComponent implements OnInit {
 
   getState(state: string) {
     let type = null;
-    switch (state) {
-      case 'PR': {
-        type = 'Pre alerta'
-        break;
-      }
+    switch (state) {     
       case 'PE': {
         type = 'Generado'
         break;
@@ -107,12 +103,12 @@ export class PedidoComponent implements OnInit {
         type = 'Facturado'
         break;
       }
-      case 'CA': {
-        type = 'Cancelado'
+      case 'DE': {
+        type = 'Despachado'
         break;
       }
       default: {
-        type = 'Pedido'
+        type = ''
         break;
       }
     }
@@ -330,8 +326,8 @@ export class PedidoComponent implements OnInit {
       pediId: this.selectpedido.head.pediId,
       fecha: this.selectpedido.head.fecha + '.000',
       usuaId: this.selectpedido.head.usuaId,
-      estado: this.selectpedido.head.estado,
-      fase: 'CA',
+      estado: "F",
+      fase: 'RX',
       clieId: this.selectpedido.head.client.clieId
     }
 
@@ -340,7 +336,7 @@ export class PedidoComponent implements OnInit {
       items.push(
         {
           line: index,
-          shippingdate: item.fecha + '.000',
+          shippingdate: this.getFormatDate(new Date(item.fecha)),
           fincapropia: null,
           farmId: null,
           marcId: null,
@@ -413,7 +409,7 @@ export class PedidoComponent implements OnInit {
       items.push(
         {
           line: index,
-          shippingdate: this.getFormatDate(new Date(item.fecha + '')),
+          shippingdate: this.getFormatDate(new Date(item.fecha)),
           fincapropia: null,
           farmId: null,
           marcId: null,

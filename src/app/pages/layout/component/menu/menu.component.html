@@ -186,6 +186,15 @@
                         </a>
                     </li>
 
+                    <li *ngIf="typerol=='ADM' || typerol=='CLI'">
+                        <a routerLink="/historicopedido" routerLinkActive="active" style="font-size: 14px;"
+                        [class]="activeItem=='HIS'?'active-item':'no-active-item'"
+                        (click)="selectItemMenu('HIS')">
+                            <i class="fa fa-fw fa-file-text-o" [ngStyle]="{'color':activeItem ==='HIS'? '#ff4456': '#828282'}"></i>
+                            <span>{{ 'Histórico de pedidos' | translate }} </span>
+                        </a>
+                    </li>
+
                 </ul>
             </li>
         </ul>
