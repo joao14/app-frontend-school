@@ -8,6 +8,8 @@ import { ApisService } from 'src/services/apis.service';
 import { UtilService } from 'src/services/util.service';
 import * as moment from 'moment';
 import { Pedido } from 'src/models/pedido';
+import { environment } from 'src/environments/environment';
+
 
 
 @Component({
@@ -29,6 +31,12 @@ export class PedidosComponent implements OnInit {
   typerol: string;
   pedidos: Array<Pedido> = []
   checked: Boolean = false
+  dialogVisibleUrls: Boolean = false
+  files: Array<{
+    pdf: string,
+    fecha: string
+  }> = []
+
 
   constructor(private api: ApisService, private router: Router, public dialogService: DialogService,
     private messageService: MessageService,
@@ -125,13 +133,13 @@ export class PedidosComponent implements OnInit {
 
     if (!this.checked) {
       if (!this.selectClient) {
-        this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Seleccione un cliente' });
+        this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Select a client' });
         return true;
       } else {
         this.consultbyClient()
       }
     } else {
-      this.selectClient=null
+      this.selectClient = null
       this.consultAll()
     }
   }
@@ -140,13 +148,10 @@ export class PedidosComponent implements OnInit {
     this.pedidos = []
     this.utilService.isLoading.next(true);
     await this.api.getInformationAllOrders(this.getFormatDate(this.dateIni).replace(/-/g, '') + "000000", this.getFormatDate(this.dateFin).replace(/-/g, '') + "235959", localStorage.getItem("token")).then(data => {
-      console.log('DATA');
-      console.log(data);
+
       if (data.headerApp.code == 200) {
         this.pedidos = data.data.orders
       }
-      console.log('ORDERS');
-      console.log(this.pedidos);
 
     }).catch(err => {
 
@@ -159,7 +164,7 @@ export class PedidosComponent implements OnInit {
     this.utilService.isLoading.next(false);
 
     if (this.pedidos.length <= 0) {
-      this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'No existe pedidos en el filtro de búsquedas' });
+      this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'There are no orders' });
       return true;
     }
   }
@@ -168,13 +173,10 @@ export class PedidosComponent implements OnInit {
     this.pedidos = []
     this.utilService.isLoading.next(true);
     await this.api.getInformationAllOrdersbyClient(this.selectClient.entiId, 'F', this.getFormatDate(this.dateIni).replace(/-/g, '') + "000000", this.getFormatDate(this.dateFin).replace(/-/g, '') + "235959", localStorage.getItem("token")).then(data => {
-      console.log('DATA');
-      console.log(data);
+      
       if (data.headerApp.code == 200) {
         this.pedidos = data.data.orders
-      }
-      console.log('ORDERS');
-      console.log(this.pedidos);
+      }     
 
     }).catch(err => {
 
@@ -187,11 +189,23 @@ export class PedidosComponent implements OnInit {
     this.utilService.isLoading.next(false);
 
     if (this.pedidos.length <= 0) {
-      this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'No existe pedidos en el filtro de búsquedas' });
+      this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'There are no orders' });
       return true;
     }
   }
 
+
+  viewprealerts = async (pedido: Pedido) => {
+    this.dialogVisibleUrls = true
+    this.files = []
+    await pedido.prealerts.forEach(prealert => {
+      this.files.push({
+        pdf: environment.url + prealert.pdf,
+        fecha: prealert.fechcrea
+      })
+    })
+
+  }
 
 
   getFormatDate(date: Date) {

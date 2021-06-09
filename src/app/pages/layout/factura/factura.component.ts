@@ -238,9 +238,7 @@ export class FacturaComponent implements OnInit {
     async getinvoicesdraft() {
         this.invoicesdraft = [];
         this.utilService.isLoading.next(true);
-        await this.api.getinvoicesdraft(localStorage.getItem('token')).then(invoice => {
-            console.log('DRAFT');
-            console.log(invoice);
+        await this.api.getinvoicesdraft(localStorage.getItem('token')).then(invoice => {           
             
             if (invoice.headerApp.code == 200) {
                 this.invoicesdraft = invoice.data.invoices;

@@ -515,6 +515,8 @@ export class MenuComponent implements OnInit, OnChanges {
         } else
             if (menu == 'PREALERT') {
                 this.app.utilservice.itemsSource.next([{ 'label': 'Prealertas' }])
+            } else if (menu == 'PEDIDO') {
+                this.app.utilservice.itemsSource.next([{ 'label': 'Pedidos' }])
             }
 
         if (this.activeMenuItem == menu) {

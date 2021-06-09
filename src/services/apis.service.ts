@@ -998,11 +998,7 @@ export class ApisService {
     }
 
     public getInformationAllOrders(dateIni: string, dateFin: string, token: string): Promise<any> {
-        console.log('PARAMETROS');
-        console.log(dateIni);
-        console.log(dateFin);        
-        
-        let opt = {
+               let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token

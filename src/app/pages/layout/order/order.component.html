@@ -337,8 +337,7 @@
                             </div>
                         </div>
                         <br>
-                        <div class="ui-g-12 ui-md-10"
-                            *ngIf="step=='RE' && (!createvisible && !editvisible)">
+                        <div class="ui-g-12 ui-md-10" *ngIf="step=='RE' && (!createvisible && !editvisible)">
                         </div>
                         <div class="ui-g-12 ui-md-2" *ngIf="step=='RE' && (!createvisible && !editvisible)">
                             <button pButton type="button" class="ui-button-warning" label="Nuevo" icon="pi pi-clone"
@@ -696,6 +695,15 @@
                                                         </div>
                                                     </div>
 
+                                                    <div class="ui-g-12 ui-md-4">
+                                                        <br>
+                                                        <p-checkbox binary="true" inputId="binary"
+                                                            formControlName="used" label="Usar caja superior"
+                                                            (onChange)="changevalue()">
+                                                        </p-checkbox> &nbsp;
+
+                                                    </div>
+
                                                     <!--<div class="ui-g-12 ui-md-6">
                                                     <label for="carga" class="lbl">{{'Empresa carga' | translate
                                                         }}</label>
@@ -858,9 +866,8 @@
 
                                                     <div class="ui-g-12 ui-md-2">
                                                         <label class="lbl">{{'Piezas' | translate}}</label>
-                                                        <input type="text" pInputText formControlName="HBBQ"
-                                                            class="form-control"
-                                                            pKeyFilter="int" placeholder="0">
+                                                        <input type="text" pInputText formControlName="HBBQ" (focusout)="calculatetallosbyhbch()"
+                                                            class="form-control" pKeyFilter="int" placeholder="0">
                                                     </div>
 
                                                     <div class="ui-g-12 ui-md-5">
@@ -907,7 +914,8 @@
                                                     <div class="ui-g-12 ui-md-2">
                                                         <label class="lbl">{{'Tallos' | translate}}</label>
                                                         <input type="text" pInputText class="form-control"
-                                                            formControlName="tallos" pKeyFilter="int" placeholder="0"
+                                                            (focusout)="calculatetotaltallos()" formControlName="tallos"
+                                                            pKeyFilter="int" placeholder="0"
                                                             [ngClass]="{ 'is-invalid': submitted && f.tallos.errors }">
                                                         <div *ngIf="submitted && f.tallos.errors"
                                                             class="invalid-feedback">
@@ -917,13 +925,15 @@
                                                     </div>
 
                                                     <div class="ui-g-12 ui-md-2">
-                                                        <label for="totaltallos" class="lbl">{{'T. Tallos' |
-                                                            translate}}</label>
+                                                        <label for="totaltallos"
+                                                            style="color: #ff4456;font-weight: bold;" class="lbl">{{'T.
+                                                            Tallos' | translate}}</label>
                                                         <input type="text" pInputText class="form-control"
                                                             formControlName="totaltallos" pKeyFilter="int"
-                                                            placeholder="0" (focusout)="calculatetotaltallos()"
+                                                            placeholder="0" readonly
                                                             pTooltip="Con este valor se calcularan otros valores"
                                                             tooltipPosition="bottom"
+                                                            style="font-size: 14px;font-weight: bold;text-align: center;background-color: #FFFAF0;"
                                                             [ngClass]="{ 'is-invalid': submitted && f.totaltallos.errors }">
                                                         <div *ngIf="submitted && f.totaltallos.errors"
                                                             class="invalid-feedback">
@@ -931,7 +941,14 @@
                                                                 {{'Campo es requerido' | translate}}</div>
                                                         </div>
                                                     </div>
-                                                    <div class="ui-g-12 ui-md-5"></div>
+
+                                                    <!--<div class="ui-g-12 ui-md-4">
+                                                        <br>
+                                                        <p-checkbox binary="true" inputId="binary" formControlName="used"
+                                                            label="Usar caja superior" (onChange)="changevalue()">
+                                                        </p-checkbox> &nbsp;
+
+                                                    </div>-->
                                                 </div>
                                             </div>
 

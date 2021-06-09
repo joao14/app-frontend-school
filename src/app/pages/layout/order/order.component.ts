@@ -138,7 +138,7 @@ export class OrderComponent implements OnInit {
   fecharecibido: Date
   HBQB: string
   CAJA: string
-
+  used: Boolean = false
 
   constructor(private api: ApisService, private util: UtilService, private router: Router, private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService, private messageService: MessageService, private datePipe: DatePipe) {
@@ -161,7 +161,8 @@ export class OrderComponent implements OnInit {
       carga: [this.empresacargoselected],
       estado: ['', Validators.required],
       repeat: [''],
-      line: ['']
+      line: [''],
+      used: ['']
     });
     this.pedidoForm = this.formBuilder.group({
       fecha: [{ value: this.dateEnvio, disabled: true }, Validators.required],
@@ -232,9 +233,7 @@ export class OrderComponent implements OnInit {
   async getPedidos() {
     this.util.isLoading.next(true);
     this.pedidos = []
-    await this.api.pedidos(localStorage.getItem('token')).then(async (data) => {
-      console.log('data');
-      console.log(data);
+    await this.api.pedidos(localStorage.getItem('token')).then(async (data) => {      
       if (data.headerApp.code == 200) {
         this.pedidos = data.data.orders;
       }
@@ -281,12 +280,8 @@ export class OrderComponent implements OnInit {
   getState(state: string) {
     let type = null;
     switch (state) {
-      case 'PR': {
-        type = 'Pre alerta'
-        break;
-      }
       case 'PE': {
-        type = 'Pendiente'
+        type = 'Generado'
         break;
       }
       case 'RE': {
@@ -301,7 +296,7 @@ export class OrderComponent implements OnInit {
         type = 'Despachado'
         break;
       }
-      case 'CA': {
+      case 'RX': {
         type = 'Cancelado'
         break;
       }
@@ -320,18 +315,14 @@ export class OrderComponent implements OnInit {
    * @param item 
    */
   async editrow(item: any) {
-    console.log('...EDIT..');
-    console.log(item);
     this.editvisible = true
     if (item.farmId != null) {
       //Validar si la caja y pieza forman parte del mismo grupo
       if (item.tipoempaque == "") {
-        console.log("??? Esa vacio vamos a validar...");
         let tipoempaquetemporal = ""
         let cajastemporal = 0
         await this.select.items.forEach(async (temp) => {
           if (temp.line == (item.line - 1)) {
-            console.log('Paso atras -1 ');
             tipoempaquetemporal = temp.tipoempaque
             cajastemporal = temp.hbqb
           }
@@ -344,10 +335,7 @@ export class OrderComponent implements OnInit {
       const cargname = await this.getEmpresaCargabyName(item.cargname)
       const farm = await this.getFincabyNameComplete(item.farm)
       const mark = await this.getMarcbyName(this.select.head.client.clieId, this.select.head.marcId.nombre)
-      console.log(this.cajas);
       const caja = await this.cajas.filter(caja => caja.code == item.tipoempaque)
-      console.log('FINAL');
-      console.log(caja);
       this.markselected = mark
       this.prealertForm.get('fecha').setValue(new Date(item.shippingdate))
       this.prealertForm.get('rosamistica').setValue(flower)
@@ -380,7 +368,7 @@ export class OrderComponent implements OnInit {
       })
 
     } else {
-      console.log('SIN EDITAR ITEM')
+
       const flower = await this.getFlowerbyName(item.flower)
       const client = await this.getClientbyName(this.select.head.client.nombres)
       this.prealertForm.get('fecha').setValue(new Date(item.shippingdate))
@@ -402,15 +390,12 @@ export class OrderComponent implements OnInit {
    * Function to continue to revision
    */
   async continuarrevision() {
-    console.log('Continuar revisiÓN');
-    console.log(this.select);
 
     this.select.head.fase == 'DE' ? this.step = 'DE' : this.step = "RE";
     if (this.select.head.fase == 'DE') {
       this.fechadespacho = new Date(this.select.head.fechdesp)
       this.fecharecibido = new Date(this.select.head.fecharri)
-      console.log(this.fechadespacho);
-      console.log(this.fecharecibido);
+     
     }
     const mark = await this.getMarcbyName(this.select.head.client.clieId, this.select.head.marcId.nombre == 'NO DEFINIDO' && this.markselected ? this.markselected.nombre : this.select.head.marcId.nombre)
     this.markselected = mark
@@ -420,7 +405,6 @@ export class OrderComponent implements OnInit {
     await this.onOptionsSelected()
     //Validamos si todos los registros estan completos
     for (let item of this.select.items) {
-      console.log(item);
       if (item.farmId == null) {
         this.activebtn = false
         break;
@@ -437,12 +421,6 @@ export class OrderComponent implements OnInit {
       }
     })
     );
-
-    console.log("****Resultados finales*****");
-    console.log(this.CAJA);
-    console.log(this.HBQB);
-
-
 
   }
 
@@ -489,14 +467,9 @@ export class OrderComponent implements OnInit {
           detalle: items
         }
 
-        console.log('PEDITO TEMP');
-        console.log(pedido);
-
-        console.log(pedido);
         this.util.isLoading.next(true)
         await this.api.addpedido(pedido, localStorage.getItem('token')).then(async (data) => {
-          console.log('Se ha guardado la siguiente fase correctamente')
-          console.log(data);
+
           if (data.headerApp.code == 200) {
             this.step = "RE"
             this.createvisible = false
@@ -505,7 +478,6 @@ export class OrderComponent implements OnInit {
 
           }
         }).catch(err => {
-          console.log(err);
           if (err.error.code == 401 || err.error.code == 0) {
             localStorage.clear();
             this.router.navigate(['/login']);
@@ -571,19 +543,15 @@ export class OrderComponent implements OnInit {
           detalle: items
         }
 
-        console.log('TEMPORALll');
-        console.log(pedido);
+
 
         this.util.isLoading.next(true)
         await this.api.addpedido(pedido, localStorage.getItem('token')).then(async (data) => {
-          console.log('Se ha enviado a la siguiente fase correctamente')
-          console.log(data);
           if (data.headerApp.code == 200) {
             this.step = 'DE'
           }
 
         }).catch(err => {
-          console.log(err);
           if (err.error.code == 401 || err.error.code == 0) {
             localStorage.clear();
             this.router.navigate(['/login']);
@@ -596,11 +564,9 @@ export class OrderComponent implements OnInit {
   }
 
   cancel() {
-    console.log('Cancelar RX');
     this.confirmationService.confirm({
       message: "Are you sure to cancel this order?",
       accept: async () => {
-        console.log('ORDER ACCEPTEDddddd..');
         this.step = "PE"
         let head = {
           clieId: this.select.head.client.clieId,
@@ -610,7 +576,6 @@ export class OrderComponent implements OnInit {
           pediId: this.select.head.pediId,
           usuaId: this.select.head.usuaId
         }
-        console.log('Procesando...');
         let items: Array<any> = []
 
         this.select.items.forEach(element => {
@@ -635,18 +600,14 @@ export class OrderComponent implements OnInit {
           pedido: head,
           detalle: items
         }
-        console.log(pedido);
         this.util.isLoading.next(true)
         await this.api.addpedido(pedido, localStorage.getItem('token')).then(async (data) => {
-          console.log('Se ha guardado la siguiente fase correctamente')
-          console.log(data);
           if (data.headerApp.code == 200) {
             this.indice = null
             this.select = null
             await this.getPedidos()
           }
         }).catch(err => {
-          console.log(err);
           if (err.error.code == 401 || err.error.code == 0) {
             localStorage.clear();
             this.router.navigate(['/login']);
@@ -670,15 +631,15 @@ export class OrderComponent implements OnInit {
   }
 
   async changedates() {
-   
+
     let order = {
       fechdesp: this.getFormatDate(this.fechadespacho),
       fecharri: this.getFormatDate(this.fecharecibido),
       pediId: this.select.head.pediId
     }
-   
+
     this.util.isLoading.next(true)
-    await this.api.updatedatesorder(order, localStorage.getItem('token')).then(async (data) => {     
+    await this.api.updatedatesorder(order, localStorage.getItem('token')).then(async (data) => {
       if (data.headerApp.code == 200) {
         this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Se actulizado la informaciòn del pedido' });
         this.step = "DE"
@@ -687,7 +648,6 @@ export class OrderComponent implements OnInit {
       }
 
     }).catch(err => {
-      console.log(err);
       if (err.error.code == 401 || err.error.code == 0) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -775,6 +735,7 @@ export class OrderComponent implements OnInit {
     });
     this.prealertForm.reset();
     this.prealertForm.get("bch").setValue("25")
+    this.prealertForm.get("used").setValue(false)
     //Validamos si todos los registros estan completos   
     for (let item of this.select.items) {
       if (item.farmId == null) {
@@ -862,15 +823,12 @@ export class OrderComponent implements OnInit {
           cargname: empresacargo.nombres,
           status: this.prealertForm.get('estado').value?.titrId ? this.prealertForm.get('estado').value?.nombre : this.prealertForm.get('estado').value,
           line: this.prealertForm.get('line').value,
-          tipoempaque: this.prealertForm.get('caja').value.code,
+          tipoempaque: this.prealertForm.get('caja').value ? this.prealertForm.get('caja').value.code : 0,
           tallosxbch: this.prealertForm.get('bch').value,
           cantidadbch: this.prealertForm.get('nobch').value,
         }
       }
     }));
-    console.log('..Finalizar...');
-    console.log(this.select);
-
 
     await this.savechangesbyrow()
 
@@ -882,12 +840,12 @@ export class OrderComponent implements OnInit {
       this.total += parseInt(item.totaltallos + "");
     });
     this.prealertForm.reset();
+    this.prealertForm.get("used").setValue(false)
     this.prealertForm.get("bch").setValue("25")
 
     //Validamos si todos los registros estan completos
 
     for (let item of this.select.items) {
-      console.log(item);
       if (item.farmId == null) {
         this.activebtn = false
         break;
@@ -953,19 +911,13 @@ export class OrderComponent implements OnInit {
       detalle: items
     }
 
-    console.log('.....ITEM PEDIDO FINAL...');
-    console.log(pedido);
-
     this.util.isLoading.next(true)
     await this.api.addpedido(pedido, localStorage.getItem('token')).then(async (data) => {
-      console.log('Se ha actualizado correctamente')
-      console.log(data);
       if (data.headerApp.code == 200) {
         this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Se actulizado la informaciòn del pedido' });
       }
 
     }).catch(err => {
-      console.log(err);
       if (err.error.code == 401 || err.error.code == 0) {
         localStorage.clear();
         this.router.navigate(['/login']);
@@ -1078,7 +1030,6 @@ export class OrderComponent implements OnInit {
   }
 
   add() {
-    console.log('AGREGAR');
 
     if ((this.prealertForm.get('tamanio').value == '' || this.prealertForm.get('tamanio').value == null) || this.prealertForm.get('preciocomp').value == '' || this.prealertForm.get('preciovent').value == '') {
       this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'Falta agregar campos para añadir el valor' });
@@ -1090,9 +1041,6 @@ export class OrderComponent implements OnInit {
       preccomp: this.prealertForm.get('preciocomp').value,
       precvent: this.prealertForm.get('preciovent').value
     })
-    console.log('????');
-
-    console.log(this.cantidadPrice);
 
     this.estado = false;
     this.prealertForm.get('tamanio').setValue(null);
@@ -1139,8 +1087,6 @@ export class OrderComponent implements OnInit {
   async getMarcbyName(entiId: number, name: string): Promise<any> {
     let marc: mark = null;
     await this.api.getMarcbyName(entiId, name.toUpperCase(), localStorage.getItem("token")).then(data => {
-      console.log('DATA');
-      console.log(data);
       if (data.headerApp.code == 200) {
         marc = data.data.mark;
       }
@@ -1183,10 +1129,6 @@ export class OrderComponent implements OnInit {
       clieId: this.profile == 'ADM' ? this.clientselect.entiId : this.user.empresa.entiid
     }
 
-    console.log('DATA????');
-    console.log(this.items);
-
-
     let items = []
     this.items.forEach(async (item, index) => {
       items.push(
@@ -1215,25 +1157,19 @@ export class OrderComponent implements OnInit {
       detalle: items
     }
 
-    console.log('FINISH ORDER TO SEND FROM PEDIDO');
-    console.log(order);
     this.confirmationService.confirm({
       message: "Are you sure to create a new order?",
       accept: async () => {
         this.util.isLoading.next(true)
         await this.api.addpedido(order, localStorage.getItem('token')).then(async (data) => {
-          console.log('Se ha guarado correctamente from pedidos');
-          console.log(data);
           if (data.headerApp.code == 200) {
             this.step = 'PE'
             await this.inicializar()
             await this.getPedidos()
             await this.getServicios()
-
           }
 
         }).catch(err => {
-          console.log(err);
           if (err.error.code == 401 || err.error.code == 0) {
             localStorage.clear();
             this.router.navigate(['/login']);
@@ -1290,14 +1226,7 @@ export class OrderComponent implements OnInit {
   }
 
   viewPDF(notificacion: any) {
-    console.log('URL...');
-    console.log(notificacion);
-
-    console.log(notificacion.url);
     this.router.navigate(notificacion.pdf);
-    console.log('BIEN');
-
-
   }
 
   /**
@@ -1357,8 +1286,6 @@ export class OrderComponent implements OnInit {
       message: "Are you sure to delete iten?",
       accept: async () => {
         this.select.items = this.select.items.filter((element) => element != prealert);
-        console.log('DELETE FINAL');
-        console.log(this.select);
         await this.savechangesbyrow()
         this.total = 0;
         this.select.items.forEach(item => {
@@ -1421,9 +1348,6 @@ export class OrderComponent implements OnInit {
       cantidad: this.pedidoForm.get('cantidad').value,
     })
 
-    console.log('ITESSSS');
-    console.log(this.items);
-
     this.submitted = false
     this.pedidoForm.reset()
     this.pedidoForm.get('fecha').setValue(this.dateEnvio)
@@ -1481,9 +1405,6 @@ export class OrderComponent implements OnInit {
           detalle: items
         }
 
-        console.log('...PEDIDOS..');
-        console.log(pedido);
-
         this.util.isLoading.next(true)
         await this.api.sendnotification(pedido, localStorage.getItem('token')).then(async (data) => {
 
@@ -1495,7 +1416,6 @@ export class OrderComponent implements OnInit {
           }
 
         }).catch(err => {
-          console.log(err);
           if (err.error.code == 401 || err.error.code == 0) {
             localStorage.clear();
             this.router.navigate(['/login']);
@@ -1534,26 +1454,46 @@ export class OrderComponent implements OnInit {
     this.prealertForm.get('tallos').setValue(this.prealertForm.get('HBBQ').value == null || this.prealertForm.get('HBBQ').value == 0 ? '0' : this.prealertForm.get('totaltallos').value / this.prealertForm.get('HBBQ').value)
   }
 
-  calculatetotaltallos() {
-    console.log('DATOS');
-    console.log(this.prealertForm.get('HBBQ').value);
-    console.log(this.HBQB);
-    console.log(this.CAJA);
+  calculatetallosbyhbch = () => {
+    if (this.prealertForm.get('HBBQ').value == null || this.prealertForm.get('HBBQ').value == 0) {
+      this.calculatetotaltallos()
+    } else {
+      this.prealertForm.get('totaltallos').setValue((this.prealertForm.get('HBBQ').value == null || this.prealertForm.get('HBBQ').value == 0 ? this.hbqb : this.prealertForm.get('HBBQ').value) * this.prealertForm.get('tallos').value)
+      this.prealertForm.get('nobch').setValue(this.prealertForm.get('bch').value == null || this.prealertForm.get('bch').value == 0 ? '0' : this.prealertForm.get('totaltallos').value / (this.prealertForm.get('bch').value))
+    }
 
-    if (this.prealertForm.get('HBBQ').value == 0 && this.HBQB == "") {
+  }
+
+  calculatetotaltallos = () => {
+
+    if (!this.prealertForm.get('HBBQ').value && !this.HBQB) {
       this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'No puede calcular valores sin nùmero de cajas' });
       this.prealertForm.get("totaltallos").setValue(null);
       return
     }
 
-    if (this.prealertForm.get('HBBQ').value == 0 && this.HBQB != "") {
+    if (!this.prealertForm.get('HBBQ').value && this.HBQB) {
+      this.prealertForm.get('totaltallos').setValue(this.prealertForm.get('tallos').value * Number(this.HBQB))
       this.prealertForm.get('nobch').setValue(this.prealertForm.get('bch').value == null || this.prealertForm.get('bch').value == 0 ? '0' : this.prealertForm.get('totaltallos').value / (this.prealertForm.get('bch').value))
-      this.prealertForm.get('tallos').setValue(this.prealertForm.get('totaltallos').value / Number(this.HBQB))
+
     } else {
+      this.prealertForm.get('totaltallos').setValue(this.prealertForm.get('tallos').value * Number(this.prealertForm.get('HBBQ').value))
       this.prealertForm.get('nobch').setValue(this.prealertForm.get('bch').value == null || this.prealertForm.get('bch').value == 0 ? '0' : this.prealertForm.get('totaltallos').value / (this.prealertForm.get('bch').value))
-      this.prealertForm.get('tallos').setValue(this.prealertForm.get('HBBQ').value == null || this.prealertForm.get('HBBQ').value == 0 ? '0' : this.prealertForm.get('totaltallos').value / this.prealertForm.get('HBBQ').value)
+
     }
 
+  }
+
+  changevalue = () => {
+    if (this.prealertForm.get('used').value) {
+      this.prealertForm.get('caja').setValue("")
+      this.prealertForm.get('HBBQ').setValue("")
+      this.prealertForm.get('tallos').setValue(this.prealertForm.get('totaltallos').value / Number(this.HBQB))
+    } else {
+      this.prealertForm.get('caja').setValue("")
+      this.prealertForm.get('HBBQ').setValue("")
+      this.prealertForm.get('tallos').setValue("")
+    }
   }
 
   /**

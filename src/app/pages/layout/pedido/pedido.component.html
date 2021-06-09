@@ -90,7 +90,7 @@
                         <p-accordionTab [header]="'Datos del pedido' | translate" [selected]="true">
                             <div class="ui-g form-group ui-fluid">
                                 <div class="ui-g-12 ui-md-3">
-                                    <label for="flor" class="lbl">{{'Fecha envio' | translate}}</label>
+                                    <label for="flor" class="lbl">{{'Fecha envío' | translate}}</label>
                                     <p-calendar formControlName="fecha" [showIcon]="true" [readonlyInput]="true"
                                         [ngClass]="{ 'is-invalid': submitted && f.fecha.errors }" class="form-control"
                                         [minDate]="minDate" [showTransitionOptions]="'0ms'"
@@ -199,7 +199,7 @@
                             {{'Tracking del pedido' | translate}} # {{selectpedido.head.pediId}}</h1>
                     </div>
                     <div class="ui-g-12 ui-md-3">
-                        <button pButton type="button" icon="pi pi-arrow-circle-left" [label]="'Regresar' | translate"
+                        <button pButton type="button" icon="pi pi-arrow-circle-left" [label]="'Atrás' | translate"
                             icon="pi pi-arrow-circle-left" class="ui-button-warning ouput_btn_table"
                             (click)="back()"></button>
                     </div>
@@ -209,45 +209,45 @@
                     <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase!='RX'">
                         <div
                             [class]="selectpedido.head.fase=='PE' || selectpedido.head.fase=='RE' ||  selectpedido.head.fase=='DE' ?'step_active':'step_inactive'">
-                            <i class="pi pi-check" style="font-size: 2rem"></i>
+                            <i [class]="selectpedido.head.fase=='PE' || selectpedido.head.fase=='RE' ||  selectpedido.head.fase=='DE'? 'pi pi-check': 'pi pi-times'" style="font-size: 2rem"></i>
                             <br>
-                            <label>Pedido</label>
+                            <label> {{'Generado' | translate}}</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase!='RX'">
                         <div
                             [class]="selectpedido.head.fase=='RE' || selectpedido.head.fase=='DE' ?'step_active':'step_inactive'">
-                            <i class="pi pi-user" style="font-size: 2rem"></i>
+                            <i [class]="selectpedido.head.fase=='RE' ||  selectpedido.head.fase=='DE'? 'pi pi-check': 'pi pi-times'" style="font-size: 2rem"></i>
                             <br>
-                            <label>Revisión</label>
+                            <label>{{'Revisión' | translate}} </label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase!='RX'">
                         <div [class]="selectpedido.head.fase=='DE' ?'step_active':'step_inactive'">
-                            <i class="pi pi-file" style="font-size: 2rem"></i>
+                            <i [class]="selectpedido.head.fase=='DE'? 'pi pi-check': 'pi pi-times'" style="font-size: 2rem"></i>
                             <br>
-                            <label>Despachado</label>
+                            <label>{{'Despachado' | translate}}</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase!='RX'">
                         <div [class]="selectpedido.head.fase=='IN' ?'step_active':'step_inactive'">
-                            <i class="pi pi-file" style="font-size: 2rem"></i>
+                            <i [class]="selectpedido.head.fase=='IN'? 'pi pi-check': 'pi pi-times'" style="font-size: 2rem"></i>
                             <br>
-                            <label>Recibido</label>
+                            <label>{{'Recibido' | translate}}</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase!='RX'">
                         <div [class]="selectpedido.head.fase=='FA' ?'step_active':'step_inactive'">
-                            <i class="pi pi-file" style="font-size: 2rem"></i>
+                            <i [class]="selectpedido.head.fase=='FA'? 'pi pi-check': 'pi pi-times'" style="font-size: 2rem"></i>
                             <br>
-                            <label>Facturado</label>
-                        </div>
+                            <label>{{'Facturado' | translate}}</label>
+                        </div> 
                     </div>
                     <div class="ui-g-12 ui-md-2" *ngIf="selectpedido.head.fase=='RX'">
                         <div [class]="selectpedido.head.fase=='RX'?'step_active':'step_inactive'">
                             <i class="pi pi-times" style="font-size: 2rem"></i>
                             <br>
-                            <label>Cancelado</label>
+                            <label>{{'Cancelado' | translate}}</label>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-1"></div>

@@ -163,7 +163,37 @@ export const ru={
     "Acerca de":"около",
     "Facturas":"счета",
     "Pagos":"Платежи",
-    "Reclamos":"претензии"
+    "Reclamos":"претензии",
+    "Pedidos": "заказы",
+    "Pedidos en trámite":"Заказы в обработке",
+    "Fase": "Фаза",
+    "# Pedido": "# Заказ",
+    "Nuevo pedido":"Новый порядок",
+    "Editando el pedido":"Редактирование заказа",
+    "Crear pedido":"Создать заказ",
+    "Lista de pedidos":"Список заказа",
+    "Fecha envío":"Дата отправки",
+    "Fecha envio es requerida":"Дата отгрузки обязательна",
+    "Cantidad":"Количество",
+    "Cantidad es requerido":"Требуется количество",
+    "Finalizar":"Завершить",
+    "Cancelar Pedido":"Отменить заказ",
+    "Tracking del pedido":"Отслеживание заказа",
+    "Items del pedido":"Товары для заказа",
+    "Generado":"Создано",
+    "Revisión":"Редакция",
+    "Despachado":"Отправлено",
+    "Recibido":"Получили",
+    "Facturado":"Выставлен счет",
+    "Cancelado":"Отменено",
+    "Regresar":"Возвращаться",
+    "Histórico de pedidos":"История заказов",
+    "Transacciones":"Сделки",
+    "Todos":"Все",
+    "Número de pedidos":"Número de pedidos"
+
+
+
 
 
 };

@@ -7,13 +7,13 @@
                 <div class="ui-g-12 ui-md-3">
                     <label for="client" class="lbl">{{'Cliente' | translate}}</label>
                     <p-dropdown [options]="clientes" optionLabel="nombres" [(ngModel)]="selectClient"
-                        *ngIf="typerol=='ADM'" class="form-control" [filter]="true"
+                        *ngIf="typerol=='ADM'" class="form-control" [filter]="true" [disabled]="checked"
                         [placeholder]="'Seleccione' | translate">
                     </p-dropdown>
                     <input type="text" pInputText [value]="selectClient?.nombres" readonly *ngIf="typerol!='ADM'" />
 
                 </div>
-                <div class="ui-g-12 ui-md-2">
+                <div class="ui-g-12 ui-md-1" style="text-align: center;" *ngIf="typerol=='ADM'">
                     <br>
                     <div class="ui-field-checkbox">
                         <p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary">
@@ -22,19 +22,19 @@
                     </div>
 
                 </div>
-                <div class="ui-g-12 ui-md-2">
+                <div class="ui-g-12 ui-md-3">
                     <label class="lbl">{{'Fecha inicial' | translate }}</label>
                     <p-calendar [(ngModel)]="dateIni" [showIcon]="true" [readonlyInput]="true"
                         [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-calendar>
                 </div>
 
-                <div class="ui-g-12 ui-md-2">
+                <div class="ui-g-12 ui-md-3">
                     <label class="lbl">{{'Fecha final' | translate }}</label>
                     <p-calendar [(ngModel)]="dateFin" [showIcon]="true" [readonlyInput]="true"
                         [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-calendar>
                 </div>
 
-                <div class="ui-g-12 ui-md-3">
+                <div [ngClass]="{'ui-g-12 ui-md-2':typerol=='ADM','ui-g-12 ui-md-3':typerol!='ADM'}">
                     <br>
                     <button pButton type="button" [label]="'Consultar' | translate" icon="fa fa-search" iconPos="left"
                         class="ui-button-success" (click)="consultar()"></button>
@@ -46,33 +46,33 @@
                 </div>
                 <div class="ui-g-12 ui-md-8">
                     <div class="ui-g-12 ui-md-2" style="text-align: center;">
-                        <label>Generado</label>&nbsp; <button pButton type="button" label=" "
+                        <label>{{'Generado' | translate }}</label>&nbsp; <button pButton type="button" label=" "
                             style="border-radius: 5px;"></button>
                     </div>
 
                     <div class="ui-g-12 ui-md-2" style="text-align: center;">
-                        <label>Revisiòn </label> &nbsp; <button pButton type="button" label=" "
+                        <label>{{'Revisión' | translate }} </label> &nbsp; <button pButton type="button" label=" "
                             style="background-color: #007ad9;border-color: #007ad9;border-radius: 5px;"></button>
                     </div>
 
                     <div class="ui-g-12 ui-md-2" style="text-align: center;">
-                        <label>Despachado</label> &nbsp; <button pButton type="button" label=" "
+                        <label>{{'Despachado' | translate }}</label> &nbsp; <button pButton type="button" label=" "
                             style="background-color: #5e8f32;border-color: #5e8f32;border-radius: 5px;"></button>
                     </div>
 
                     <div class="ui-g-12 ui-md-2" style="text-align: center;">
-                        <label>En entrega</label> &nbsp; <button pButton type="button" label=" "
+                        <label>{{'Recibido' | translate }}</label> &nbsp; <button pButton type="button" label=" "
                             style="background-color: #f5b60f;border-color: #f5b60f;border-radius: 5px;"></button>
                     </div>
 
                     <div class="ui-g-12 ui-md-2" style="text-align: center;">
-                        <label>Facturado</label> &nbsp; <button pButton type="button" label=" "
-                            style="background-color: #B2F0F1;border-color: #B2F0F1;border-radius: 5px;"></button>
+                        <label>{{'Facturado' | translate }}</label> &nbsp; <button pButton type="button" label=" "
+                            style="background-color: #566573;border-color: #566573;border-radius: 5px;"></button>
                     </div>
 
                     <div class="ui-g-12 ui-md-2" style="text-align: center;">
-                        <label>Cancelado</label> &nbsp; <button pButton type="button" label=" "
-                            style="background-color: #F1B2C4;border-color: #F1B2C4;border-radius: 5px;"></button>
+                        <label>{{'Cancelado' | translate }}</label> &nbsp; <button pButton type="button" label=" "
+                            style="background-color: #7D3C98;border-color: #7D3C98;border-radius: 5px;"></button>
                     </div>
 
                 </div>
@@ -95,15 +95,15 @@
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header" let-columns>
-                        <tr>
+                        <tr> 
                             <th style="width: 5em;"></th>
-                            <th>{{'Pedido' | translate }}</th>
+                            <th>{{'Pedidos' | translate }}</th>
                             <th>{{'Cliente' | translate }}</th>
                             <th>{{'Marca' | translate }}</th>
                             <th>{{'Estado' | translate }}</th>
                             <th>{{'Fase' | translate }}</th>
-                            <th>{{'Empresa Cargo' | translate}}</th>
-                            <th>{{'Fecha requerida' | translate}}</th>
+                            <th>{{'Empresa carga' | translate}}</th>
+                            <th>{{'Fecha envío' | translate}}</th>
                         </tr>
                         <tr>
                             <th>
@@ -159,7 +159,8 @@
                         <tr style="background-color: white;">
                             <td>
                                 <button type="button" pButton icon="fa fa-eye" style="border-radius: 8px;"
-                                    *ngIf="item.prealerts!=null" class="ui-button-info"></button>
+                                    (click)="viewprealerts(item)" *ngIf="item.prealerts!=null"
+                                    class="ui-button-info"></button>
                             </td>
                             <td><span class="p-column-title">{{item.head.pediId}}</span></td>
                             <td><span class="p-column-title">{{item.head.client.nombres | titlecase }}</span></td>
@@ -174,6 +175,13 @@
                                     titlecase }}</span>
                             </td>
                             <td style="text-align: right;"><span class="p-column-title">{{item.head.fecha }}</span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage" let-columns>
+                        <tr> 
+                            <td colspan="8" style="text-align: center;">
+                                No records found
                             </td>
                         </tr>
                     </ng-template>
@@ -225,6 +233,31 @@
                 {{ 'Número de registros' | translate }} [<span>34</span>]
             </div>
         </div>  -->
+
+        <!--Dialog properties-->
+        <p-dialog [(visible)]="dialogVisibleUrls" [style]="{width: '20vw'}" [baseZIndex]="10000" [modal]="true"
+            [resizable]="true">
+            <p-header>
+                <span><i class="pi pi-paperclip" style="font-size: 1rem"></i>&nbsp;{{'Resumen de envìo de prealertas' |
+                    translate}}</span>
+            </p-header>
+            <div class="ui-g form-group ui-fluid">
+                <div class="card card-w-title" style="width: 100%;">
+                    <div class="ui-g-12 ui-md-12">
+                        <label class="lbl">{{'Prealertas' | translate}}</label>
+                        <ul *ngFor="let file of files">
+                            <li><a target="_blank" [href]="file.pdf"
+                                    style="text-decoration: underline;color: #00008B;font-weight: bold;">{{file.fecha }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <p-footer>
+                <button type="button" pButton icon="pi pi-check" class="ui-button-success" [label]="'Listo' | translate"
+                    (click)="dialogVisibleUrls=false"></button>
+            </p-footer>
+        </p-dialog>
     </div>
 
 </div>
