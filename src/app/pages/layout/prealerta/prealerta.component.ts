@@ -77,7 +77,7 @@ export interface Numeros {
 
 export interface Prealert {
   prealerta: Cabecera;
-  lstdist: Array<any>;
+  lstdist: string;
   detalle: Array<Detail>;
 }
 
@@ -247,7 +247,7 @@ export class PrealertaComponent implements OnInit {
 
     this.prealert = {
       prealerta: null,
-      lstdist: [],
+      lstdist: "",
       detalle: []
     }
 
@@ -379,7 +379,7 @@ export class PrealertaComponent implements OnInit {
     this.items = [];
     this.prealert = {
       prealerta: null,
-      lstdist: [],
+      lstdist: "",
       detalle: []
     }
   }
@@ -665,7 +665,7 @@ export class PrealertaComponent implements OnInit {
 
     this.prealert = {
       prealerta: head,
-      lstdist: this.arraycodes,
+      lstdist: this.createstringcodes(this.arraycodes),
       detalle: detail
     }
 
@@ -1024,7 +1024,7 @@ export class PrealertaComponent implements OnInit {
 
     this.prealert = {
       prealerta: head,
-      lstdist: [],
+      lstdist: "",
       detalle: detail
     }
 
@@ -1148,9 +1148,9 @@ export class PrealertaComponent implements OnInit {
 
     this.prealert = {
       prealerta: head,
-      lstdist: [],
+      lstdist: "",
       detalle: detail
-    }
+    }   
     
     if (!this.editPrealert && this.pralId != "") {
       this.prealert.prealerta.pralId = parseInt(this.pralId)

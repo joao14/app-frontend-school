@@ -238,8 +238,8 @@ export class FacturaComponent implements OnInit {
     async getinvoicesdraft() {
         this.invoicesdraft = [];
         this.utilService.isLoading.next(true);
-        await this.api.getinvoicesdraft(localStorage.getItem('token')).then(invoice => {           
-            
+        await this.api.getinvoicesdraft(localStorage.getItem('token')).then(invoice => {
+
             if (invoice.headerApp.code == 200) {
                 this.invoicesdraft = invoice.data.invoices;
             }
@@ -745,7 +745,7 @@ export class FacturaComponent implements OnInit {
             ice: 0.00,
             iva: 0.00,
             total: this.factura.total,
-            observacion: this.selectdraft.cabecera.observacion,
+            observacion: this.selectdraft != null ? this.selectdraft.cabecera.observacion : null,
             numetallos: this.factura.tallos,
             numeboxes: this.factura.boxes,
             estado: "T",
@@ -1082,7 +1082,7 @@ export class FacturaComponent implements OnInit {
         this.selectdraft = draft;
         this.step = 2;
         this.idFactura = draft.cabecera.secuencial;
-        const cliente = await this.getClientbyName(draft.cabecera.cliente.nombres);       
+        const cliente = await this.getClientbyName(draft.cabecera.cliente.nombres);
         this.facturaForm.get('cliente').setValue(cliente);
         await this.onOptionsSelected();
         const mark = await this.getMarcbyName(draft.cabecera.cliente.entiId, draft.cabecera.mark);
@@ -1172,7 +1172,7 @@ export class FacturaComponent implements OnInit {
             ice: 0.00,
             iva: 0.00,
             total: this.factura.total,
-            observacion: this.selectdraft.cabecera.observacion,
+            observacion: this.selectdraft == null ? null : this.selectdraft.cabecera.observacion,
             numetallos: this.factura.tallos,
             numeboxes: this.factura.boxes,
             estado: "B",
