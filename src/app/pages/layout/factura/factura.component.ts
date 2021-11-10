@@ -299,6 +299,7 @@ export class FacturaComponent implements OnInit {
             { name: "90", code: "90" },
             { name: "100", code: "100" },
             { name: "110", code: "110" },
+            { name: "140", code: "140" },
             { name: "150", code: "150" }
         ];
         this.cajas = [
