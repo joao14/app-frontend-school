@@ -33,29 +33,15 @@ export class MenuComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.nameRol = JSON.parse(localStorage.getItem('user')).roles[0].rol;
-        this.typerol = JSON.parse(localStorage.getItem('user')).roles[0].shorcut;
+        this.nameRol = JSON.parse(localStorage.getItem('user'))['perfil'].name;
+        this.typerol = JSON.parse(localStorage.getItem('user'))['perfil'].code;
         this.activeMenuItem = "DASH";
         this.activeSubMenu = "";
-        this.activeItem = "";
+        this.activeItem = "";  
     }
 
 
     ngOnChanges() {
-
-        /* this.nameRol = this.rol;
-         switch (this.rol.toUpperCase()) {
-             case 'ADMINISTRADOR':
-                 this.getAdministrador();
-                 break;
-             case 'CLIENTE':
-                 this.getCliente();
-                 break;
-             default:
-                 console.log('No se encuentra el perfil');
- 
-                 break;
-         }*/
 
     }
 

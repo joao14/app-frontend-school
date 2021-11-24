@@ -1,11 +1,11 @@
 <body class="login-body">
     <div class="login-topbar">
         <a href="#" class="logo">
-            <span style="color: white;font-weight: bold;font-size: 1.5rem;">ROSA MISTICA</span>
-        </a>        
+            <span style="color: white;font-weight: bold;font-size: 1.5rem;">CONTROL DE OBRAS WEB</span>
+        </a>
     </div>
     <p-progressBar [mode]="estado" [style]="{'height': '6px'}"></p-progressBar>
-    
+
 
     <div class="login-image">
         <div class="login-panel">
@@ -17,19 +17,23 @@
 
                 <div class="ui-g-12">
                     <div class="input-wrapper">
-                        <input type="text" autocomplete="off" placeholder="Username" class="ui-inputtext ui-widget"
-                            pInputText formControlName="username">
+                        <input type="text" autocomplete="off" placeholder="Username" class="ui-inputtext ui-widget" pInputText formControlName="username">
                     </div>
                 </div>
                 <div class="ui-g-12">
                     <div class="input-wrapper">
-                        <input type="password" autocomplete="off" placeholder="Password" class="ui-inputtext ui-widget"
-                            pInputText formControlName="password">
+                        <input type="password" autocomplete="off" placeholder="Password" class="ui-inputtext ui-widget" pInputText formControlName="password">
                     </div>
                 </div>
 
-                <button pButton pRipple type="submit" label="Entrar" style="width: 50%;" styleClass="ui-button-lg"
-                    icon="pi pi-sign-in"></button>
+                <button pButton pRipple type="submit" label="Entrar" style="width: 50%;" styleClass="ui-button-lg" icon="pi pi-sign-in"></button>
+
+                <div class="ui-g-12" *ngIf="obras.length > 0 ">
+                    <div class="input-wrapper">
+                        <p-dropdown [options]="obras" optionLabel="obra" placeholder="Seleccione la obra" class="obras" formControlName="obra"></p-dropdown>
+                    </div>
+                </div>
+
 
                 <!--<div class="checkbox-container">
                     <div class="remember-me">
@@ -55,7 +59,7 @@
             </div>
         </div>
         <!--Footer-->
-       
+
 
     </div>
 

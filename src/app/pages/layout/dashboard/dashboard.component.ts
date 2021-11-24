@@ -157,7 +157,7 @@ export class DashboardComponent implements OnInit {
             this.router.navigate(["/login"]);
             return;
         }
-        switch (this.user.roles[0].shorcut) {
+        /*switch (this.user.roles[0].shorcut) {
             case "ADM":
                 await this.getRosaMistica();
                 break;
@@ -173,7 +173,7 @@ export class DashboardComponent implements OnInit {
             default:
                 console.error('El rol seleccionado es equivocado o no tiene permisos sobre el mismo');
                 break;
-        }
+        }*/
     }
 
     async getRosaMistica() {        
@@ -337,7 +337,7 @@ export class DashboardComponent implements OnInit {
         this.utilservice.isLoading.next(false);
     }
 
-    async getClientRosaMistica() {
+    /*async getClientRosaMistica() {
         this.actuallydate = new Date();
         this.graphics = null;
         this.utilservice.isLoading.next(true);
@@ -514,7 +514,7 @@ export class DashboardComponent implements OnInit {
             }
         })
         this.utilservice.isLoading.next(false);
-    }
+    }*/
 
     viewprealert() {
         this.dialogVisiblePDF = true;

@@ -9,7 +9,7 @@ export const environment = {
     production: false,
     email: 'lukassant77@gmail.com', 
     url: 'https://addsoft-tech.com:8443/rmi/',
-    login: URL + '/romi/apirm/user/login',
+    login: URL + '/coob/wsapi/auth/login',
     client: URL + '/romi/apirm/crm/clients',
     addclient: URL + '/romi/apirm/crm/client/add',
     updateclient: URL + '/romi/apirm/crm/client/update',

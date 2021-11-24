@@ -39,7 +39,7 @@ export class TopbarComponent implements OnInit {
 
         this.app.utilservice.user.subscribe(data => {
             this.user = JSON.parse(data);
-            this.name = this.user.name + ' ' + this.user.lastname;
+            this.name = this.user.usuaNombres + ' ' + this.user.usuaApellidos;
         })
     }
 
@@ -47,7 +47,7 @@ export class TopbarComponent implements OnInit {
     ngOnInit() {
         this.activeMenuUser = false;
         this.user = JSON.parse(localStorage.getItem('user'));
-        this.name = this.user.name + ' ' + this.user.lastname;
+        this.name = this.user.usuaNombres + ' ' + this.user.usuaApellidos;
        
         this.languajes = [
             { name: 'Español', code: 'es' },

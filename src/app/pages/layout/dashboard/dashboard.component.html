@@ -1,9 +1,8 @@
-<div class="layout-dashboard" *ngIf="user?.roles[0].shorcut=='ADM'">
+<div class="layout-dashboard" *ngIf="1==1">
     <div class="ui-g">
         <div class="ui-g-12 ui-md-6 ui-lg-3">
             <div class="overview-box sales">
-                <i class="fa fa-plane" aria-hidden="true"
-                    style="font-size: 2rem; float: right;padding-right: 20px;"></i>
+                <i class="fa fa-plane" aria-hidden="true" style="font-size: 2rem; float: right;padding-right: 20px;"></i>
                 <div class="overview-title"></div>
                 <div class="overview-numbers">
                     {{'E. de carga' | translate }}
@@ -16,11 +15,10 @@
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-3">
             <div class="overview-box views">
-                <i class="fa fa-pagelines" aria-hidden="true"
-                    style="font-size: 2rem; float: right;padding-right: 20px;"></i>
+                <i class="fa fa-pagelines" aria-hidden="true" style="font-size: 2rem; float: right;padding-right: 20px;"></i>
                 <div class="overview-title"></div>
                 <div class="overview-numbers">
-                    {{'Flores' | translate }} 
+                    {{'Flores' | translate }}
                 </div>
                 <div class="overview-subinfo user stock">
                     <i class="fa fa-circle"></i>
@@ -30,8 +28,7 @@
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-3">
             <div class="overview-box users">
-                <i class="fa fa-user-circle" aria-hidden="true"
-                    style="font-size: 2rem; float: right;padding-right: 20px;"></i>
+                <i class="fa fa-user-circle" aria-hidden="true" style="font-size: 2rem; float: right;padding-right: 20px;"></i>
                 <div class="overview-title"></div>
                 <div class="overview-numbers">
                     {{'Clientes' | translate }}
@@ -44,8 +41,7 @@
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-3">
             <div class="overview-box checkins">
-                <i class="fa fa-university" aria-hidden="true"
-                    style="font-size: 2rem; float: right;padding-right: 20px;"></i>
+                <i class="fa fa-university" aria-hidden="true" style="font-size: 2rem; float: right;padding-right: 20px;"></i>
                 <div class="overview-title"></div>
                 <div class="overview-numbers">
                     {{'Fincas' | translate }}
@@ -57,7 +53,7 @@
             </div>
         </div>
         <!--Estadísticas-->
-        <div class="ui-g-12 ui-md-6 ui-lg-6 ui-xl-6">
+        <!--<div class="ui-g-12 ui-md-6 ui-lg-6 ui-xl-6">
             <p-panel [header]="'Monto' | translate" styleClass="statistics">
                 <div style="padding: 10px;" *ngIf="state">
                     <ngx-skeleton-loader count="3" [theme]="{'border-radius': '5px',height: '50px'}">
@@ -66,14 +62,12 @@
                 <div class="ui-g" *ngIf="!state">
                     <div class="ui-g-12 ui-md-6 ui-lg-6 ui-xl-6 stats-left">
                         <div>
-                            <i class="fa fa-level-up" style="color: #7DC931;"
-                                *ngIf="graphics?.count_inv.POR_CREDITO >= 50"></i>
-                            <i class="fa fa-level-down" style="color: red;"
-                                *ngIf="graphics?.count_inv.POR_CREDITO < 50"></i>
+                            <i class="fa fa-level-up" style="color: #7DC931;" *ngIf="graphics?.count_inv.POR_CREDITO >= 50"></i>
+                            <i class="fa fa-level-down" style="color: red;" *ngIf="graphics?.count_inv.POR_CREDITO < 50"></i>
                             <span>{{graphics?.count_inv.POR_CREDITO >= 50 ? 'High':'Low'}}</span>
                             <!--<i class="fa fa-usd"></i>
                             <span>75%</span>-->
-                            <i class="fa fa-history" style="color: #7DC931;"></i>
+        <!--<i class="fa fa-history" style="color: #7DC931;"></i>
                             <span>{{percentage | number : '1.2-2'}}%</span>
                         </div>
                         <div class="knob-container">
@@ -81,13 +75,11 @@
                         </div>
                         <div class="details">
                             <i class="fa fa-chevron-right"></i>
-                            <span>Debit</span>
-                            {{graphics?.count_inv.PORC_DEBITO | number : '1.0-0'}}%
+                            <span>Debit</span> {{graphics?.count_inv.PORC_DEBITO | number : '1.0-0'}}%
                         </div>
                         <div class="details">
                             <i class="fa fa-chevron-right"></i>
-                            <span>Credit</span>
-                            {{graphics?.count_inv.POR_CREDITO | number : '1.0-0'}}%
+                            <span>Credit</span> {{graphics?.count_inv.POR_CREDITO | number : '1.0-0'}}%
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-6 ui-xl-6 stats-right">
@@ -117,8 +109,7 @@
                         </div>
                         <i class="fa fa-clock-o"></i>
                         <span class="icon-label">Remaining</span>
-                        <span style="font-size: 18px !important;"
-                            class="number_sales">{{actuallydate | date:'dd-MMM-yyyy HH:mm' }}</span>
+                        <span style="font-size: 18px !important;" class="number_sales">{{actuallydate | date:'dd-MMM-yyyy HH:mm' }}</span>
                         <div class="statsbar">
                             <div class="statsbar-value" [style.width.px]="percentage"></div>
                         </div>
@@ -159,10 +150,10 @@
                     </tbody>
                 </table>
             </p-panel>
-        </div>
+        </div>-->
 
         <!--Graficos-->
-        <div class="ui-g-12 ui-md-6 ui-lg-6 ui-xl-6">
+        <!--<div class="ui-g-12 ui-md-6 ui-lg-6 ui-xl-6">
             <p-panel [header]="'Número de transacciones' | translate" styleClass="global-sales">
                 <div style="padding: 10px;" *ngIf="state">
                     <ngx-skeleton-loader count="3" [theme]="{'border-radius': '5px',height: '50px'}">
@@ -217,18 +208,17 @@
                 </div>
                 <p-chart type="bar" [data]="graphics?.week_month_sales" *ngIf="!state"></p-chart>
             </p-panel>
-        </div>
+        </div>-->
 
     </div>
 </div>
 <!--Cliente-->
-<div class="layout-dashboard" *ngIf="user?.roles[0].shorcut=='CLI'">
+<div class="layout-dashboard" *ngIf="1==2">
     <div class="ui-g">
         <!--Datos generales-->
         <div class="ui-g-12 ui-md-6 ui-lg-3">
             <div class="overview-box sales">
-                <i class="fa fa-file-text" aria-hidden="true"
-                    style="font-size: 2rem; float: right;padding-right: 20px;"></i>
+                <i class="fa fa-file-text" aria-hidden="true" style="font-size: 2rem; float: right;padding-right: 20px;"></i>
                 <div class="overview-title"></div>
                 <div class="overview-numbers">
                     {{'Facturas' | translate }}
@@ -241,8 +231,7 @@
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-3">
             <div class="overview-box views">
-                <i class="fa fa-money" aria-hidden="true"
-                    style="font-size: 2rem; float: right;padding-right: 20px;"></i>
+                <i class="fa fa-money" aria-hidden="true" style="font-size: 2rem; float: right;padding-right: 20px;"></i>
                 <div class="overview-title"></div>
                 <div class="overview-numbers">
                     {{'Pagos' | translate }}
@@ -255,8 +244,7 @@
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-3">
             <div class="overview-box users">
-                <i class="fa fa-credit-card-alt" aria-hidden="true"
-                    style="font-size: 2rem; float: right;padding-right: 20px;"></i>
+                <i class="fa fa-credit-card-alt" aria-hidden="true" style="font-size: 2rem; float: right;padding-right: 20px;"></i>
                 <div class="overview-title"></div>
                 <div class="overview-numbers">
                     {{'Débitos' | translate }}
@@ -269,8 +257,7 @@
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-3">
             <div class="overview-box checkins">
-                <i class="fa fa-exchange" aria-hidden="true"
-                    style="font-size: 2rem; float: right;padding-right: 20px;"></i>
+                <i class="fa fa-exchange" aria-hidden="true" style="font-size: 2rem; float: right;padding-right: 20px;"></i>
                 <div class="overview-title"></div>
                 <div class="overview-numbers">
                     {{'Reclamos' | translate }}
@@ -291,10 +278,8 @@
                 <div class="ui-g" *ngIf="!state">
                     <div class="ui-g-12 ui-md-6 ui-lg-6 ui-xl-6 stats-left">
                         <div>
-                            <i class="fa fa-level-up" style="color: #7DC931;"
-                                *ngIf="graphics?.count_inv.POR_CREDITO >= 50"></i>
-                            <i class="fa fa-level-down" style="color: red;"
-                                *ngIf="graphics?.count_inv.POR_CREDITO < 50 || graphics?.count_inv.POR_CREDITO =='undefined' "></i>
+                            <i class="fa fa-level-up" style="color: #7DC931;" *ngIf="graphics?.count_inv.POR_CREDITO >= 50"></i>
+                            <i class="fa fa-level-down" style="color: red;" *ngIf="graphics?.count_inv.POR_CREDITO < 50 || graphics?.count_inv.POR_CREDITO =='undefined' "></i>
                             <span>{{graphics?.count_inv.POR_CREDITO >= 50 ? 'High':'Low'}}</span>
                             <!--<i class="fa fa-usd"></i>
                             <span>75%</span>-->
@@ -309,13 +294,11 @@
                         </div>
                         <div class="details">
                             <i class="fa fa-chevron-right"></i>
-                            <span>Debit</span>
-                            {{graphics?.count_inv.PORC_DEBITO | number : '1.0-0'}}%
+                            <span>Debit</span> {{graphics?.count_inv.PORC_DEBITO | number : '1.0-0'}}%
                         </div>
                         <div class="details">
                             <i class="fa fa-chevron-right"></i>
-                            <span>Credit</span>
-                            {{graphics?.count_inv.POR_CREDITO | number : '1.0-0'}}%
+                            <span>Credit</span> {{graphics?.count_inv.POR_CREDITO | number : '1.0-0'}}%
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-6 ui-lg-6 ui-xl-6 stats-right">
@@ -333,8 +316,7 @@
                         </div>
                         <i class="fa fa-clock-o"></i>
                         <span class="icon-label">Remaining</span>
-                        <span style="font-size: 18px !important;"
-                            class="number_sales">{{actuallydate | date:'dd-MMM-yyyy HH:mm' }}</span>
+                        <span style="font-size: 18px !important;" class="number_sales">{{actuallydate | date:'dd-MMM-yyyy HH:mm' }}</span>
                         <div class="statsbar">
                             <div class="statsbar-value" [style.width.px]="percentage"></div>
                         </div>
@@ -351,8 +333,7 @@
                 </div>
                 <div *ngIf="!state && graphics.prealerts !=null">
                     <div class="ui-g-12 ui-md-10">
-                        <label for="totaltallos" style="font-weight: bold;" class="lbl">{{'Fecha' | translate}}</label>
-                        &nbsp;
+                        <label for="totaltallos" style="font-weight: bold;" class="lbl">{{'Fecha' | translate}}</label> &nbsp;
                         <label for="totaltallos" class="lbl">{{graphics.prealerts!=null?graphics.prealerts.fecha:''}}</label>
                     </div>
                     <div class="ui-g-12 ui-md-2">
@@ -372,10 +353,10 @@
                     </thead>
                     <tbody *ngIf="graphics.prealerts !=null">
                         <tr *ngFor="let prealert of graphics.prealerts.detalle; index as i;">
-                            <td>{{i+1}}.- </td>   
-                            <td class="country">                                
+                            <td>{{i+1}}.- </td>
+                            <td class="country">
                                 <span>{{prealert.fincapropia=='S'?'Rosa Mística':prealert.farm}}</span>
-                            </td>                         
+                            </td>
                             <td class="country">
                                 <span>{{prealert.flower}}</span>
                             </td>
@@ -435,16 +416,14 @@
             </p-panel>
         </div>
         <!--Dialogo-->
-        <p-dialog [header]="'Prealerta' | translate" [(visible)]="dialogVisiblePDF" [style]="{width: '50vw'}"
-            [baseZIndex]="10000" [maximizable]="true" [modal]="true" [resizable]="true">
-            <iframe [src]="graphics?.prealerts.pdf | safe" *ngIf="dialogVisiblePDF" width="100%" height="500px"
-                style="border-width: 0PX;">
+        <p-dialog [header]="'Prealerta' | translate" [(visible)]="dialogVisiblePDF" [style]="{width: '50vw'}" [baseZIndex]="10000" [maximizable]="true" [modal]="true" [resizable]="true">
+            <iframe [src]="graphics?.prealerts.pdf | safe" *ngIf="dialogVisiblePDF" width="100%" height="500px" style="border-width: 0PX;">
             </iframe>
         </p-dialog>
     </div>
 </div>
 <!--Otros perfiles como facturacion y compras-->
-<div class="layout-dashboard" *ngIf="user?.roles[0].shorcut!='CLI' && user?.roles[0].shorcut!='ADM'">
+<!--<div class="layout-dashboard" *ngIf="user?.roles[0].shorcut!='CLI' && user?.roles[0].shorcut!='ADM'">
     <div class="ui-g">
         <div class="ui-g-12 ui-md-6 ui-lg-3">
             <div class="overview-box sales">
@@ -502,4 +481,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->

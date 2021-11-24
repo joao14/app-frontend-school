@@ -7,6 +7,7 @@ import {
     HttpHeaders,
     HttpErrorResponse,
 } from "@angular/common/http";
+import { UtilcryptoService } from "./utilcrypto.services";
 export class AuthInfo {
     constructor(public $uid: string) { }
 
@@ -25,7 +26,7 @@ export class ApisService {
         ApisService.UNKNOWN_USER
     );
     constructor(
-        private http: HttpClient
+        private http: HttpClient, private encdec: UtilcryptoService
     ) { }
 
     /** Http Options */
@@ -56,11 +57,12 @@ export class ApisService {
         let credential = {
             user: email,
             pass: password,
-        };;
+        }
+        
         return this.http
             .post<any>(
                 environment.login,
-                JSON.stringify(credential),
+                this.encdec.encryptUsingTripleDES(JSON.stringify(credential), true),
                 this.httpOptions
             )
             .pipe(retry(2), catchError(this.handleError)).toPromise();

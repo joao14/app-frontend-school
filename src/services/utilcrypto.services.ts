@@ -1,0 +1,56 @@
+import { Injectable } from '@angular/core';
+import * as CryptoJS from 'crypto-js';
+@Injectable({
+  providedIn: 'root'
+})
+export class UtilcryptoService {
+  /** OJO VARIABLES PARA ENVIROMENT */
+  key: any = '7689DD23F81457689DD23F81';
+  IV = 'yz?vFGvG';
+  constructor() { }
+
+
+  // ENCRYPTION USING CBC TRIPLE DES 8BITS y 24LENGTH PASSFRASE
+  public encryptUsingTripleDES(res: any, typeObj: boolean): string {
+    const data = typeObj ? JSON.stringify(res) : res;
+    const keyHex = CryptoJS.enc.Utf8.parse(this.key);
+    const iv = CryptoJS.enc.Utf8.parse(this.IV);
+    const mode = CryptoJS.mode.CBC;
+    const padding = CryptoJS.pad.Pkcs7;
+    const encrypted = CryptoJS.TripleDES.encrypt(data, keyHex, {
+      iv,
+      mode,
+      padding
+    });
+    return encrypted.toString();
+  }
+
+  // DECRYPTION USING CBC TRIPLE DES  8BITS y 24LENGTH PASSFRASE
+  public decryptUsingTripleDES(encrypted: string): string {
+    const keyHex = CryptoJS.enc.Utf8.parse(this.key);
+    const iv = CryptoJS.enc.Utf8.parse(this.IV);
+    const mode = CryptoJS.mode.CBC;
+    const decrypted = CryptoJS.TripleDES.decrypt(encrypted, keyHex, {
+      iv,
+      mode
+    });
+    console.log(decrypted.toString(CryptoJS.enc.Utf8));
+    return decrypted.toString(CryptoJS.enc.Utf8);
+  }
+
+  // ENCRYPTION USING AES
+  encryptUsingAES(res: any, typeObj: boolean): string {
+    const data = typeObj ? JSON.stringify(res) : res;
+    const hash = CryptoJS.MD5(this.key).toString();
+    const encrypted = CryptoJS.AES.encrypt(data, hash);
+    return encrypted.toString();
+  }
+
+  // DECRYPTION USING AES
+  decryptUsingAES(encrypted: string): string {
+    const hash = CryptoJS.MD5(this.key).toString();
+    const decrypted = CryptoJS.AES.decrypt(encrypted, hash);
+    return decrypted.toString(CryptoJS.enc.Utf8);
+  }
+
+}

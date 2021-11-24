@@ -29,7 +29,8 @@
         "@ngx-translate/core": "^13.0.0",
         "@ngx-translate/http-loader": "^6.0.0",
         "angular-steps": "^1.1.0",
-        "chart.js": "^2.7.3",
+        "chart.js": "^2.9.4",
+        "crypto-js": "^4.1.1",
         "faker": "^5.1.0",
         "file-saver": "^2.0.2",
         "font-awesome": "4.7.0",
@@ -42,11 +43,11 @@
         "ngx-spinner": "^10.0.1",
         "primeicons": "1.0.0",
         "primeng": "9.0.5",
-        "prismjs": "1.15.0",
+        "prismjs": "^1.25.0",
         "quill": "1.1.8",
         "rxjs": "6.5.4",
         "web-animations-js": "github:angular/web-animations-js#release_pr208",
-        "xlsx": "^0.16.7",
+        "xlsx": "^0.17.4",
         "zone.js": "0.10.2"
     },
     "devDependencies": {

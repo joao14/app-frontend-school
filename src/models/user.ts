@@ -1,20 +1,12 @@
-import { roles } from './roles';
 
 export interface user {
-    usuaid: number;
-    dni: string;
-    email: string;
-    state: string;
-    name: string;
-    lastname: string;
-    roles: roles[];
-    photo: any;
-    empresa: {
-        dni: string;
-        entiid: number;
-        nombcome: string;
-        razosoci: string;
-    },
-    clave: string;
-    nickname: string;
+    usuaId: number;
+    usuaApellidos: string;
+    usuaNombres: string;
+    usuaNick: string;
+    obraId: number;
+    perfil: {
+        code: string;
+        name: string;
+    }
 }
