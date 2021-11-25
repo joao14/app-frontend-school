@@ -44,11 +44,11 @@ export class MiperfilComponent implements OnInit {
         this.icon = "pi pi-eye";
         this.looking = false;
         this.user = JSON.parse(localStorage.getItem('user'));        
-        this.user.clave = atob(this.user.clave);
-        this.profileForm.get('identification').setValue(this.user.dni);
-        this.profileForm.get('name').setValue(this.user.name);
-        this.profileForm.get('lastname').setValue(this.user.lastname);
-        this.profileForm.get('email').setValue(this.user.email);
+        //this.user.clave = atob(this.user.clave);
+        //this.profileForm.get('identification').setValue(this.user.dni);
+        //this.profileForm.get('name').setValue(this.user.name);
+        //this.profileForm.get('lastname').setValue(this.user.lastname);
+        //this.profileForm.get('email').setValue(this.user.email);
     }
 
     changelookpasswor() {
@@ -91,9 +91,9 @@ export class MiperfilComponent implements OnInit {
         var reader = new FileReader();
         reader.readAsDataURL(files[0]);
         this.urlphoto = files[0].name;
-        reader.onload = (_event) => {
+        /*reader.onload = (_event) => {
             this.user.photo = reader.result.toString();
-        }
+        }*/
     }
 
     modify() {
@@ -105,7 +105,7 @@ export class MiperfilComponent implements OnInit {
     }
 
     async sendData() {
-        let user = {
+        /*let user = {
             apellidos: this.user.lastname,
             nombres: this.user.name,
             dni: this.user.dni,
@@ -117,10 +117,10 @@ export class MiperfilComponent implements OnInit {
             photo: this.urlphoto == '' ? null : this.urlphoto + ';' + this.user.photo,
             usuaId: this.user.usuaid,
             fechregi: new Date().toISOString()
-        }
+        }*/
         
         this.utilService.isLoading.next(true);
-        await this.api.updateUser(user, localStorage.getItem('token')).then(async (data) => {
+        /*await this.api.updateUser(user, localStorage.getItem('token')).then(async (data) => {
           
             if (data.headerApp.code == 200) {
                 await localStorage.removeItem('user');
@@ -169,7 +169,7 @@ export class MiperfilComponent implements OnInit {
             }
 
         });
-        this.utilService.isLoading.next(false);
+        this.utilService.isLoading.next(false);*/
 
     }
 

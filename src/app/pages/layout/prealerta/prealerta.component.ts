@@ -628,13 +628,13 @@ export class PrealertaComponent implements OnInit {
 
   send() {
     this.dialogVisibleClients = false
-    let head: Cabecera = {
+    /*let head: Cabecera = {
       fecha: this.getFormatDate(new Date()),
-      usuaId: this.user.usuaid,
+      //usuaId: this.user.usuaid,
       pralCerrado: "N",
       estado: "T",
       pralId: this.idPrealert == undefined ? 0 : this.idPrealert
-    }
+    }*/
 
     let detail: Array<Detail> = [];
     let contador = 0;
@@ -664,19 +664,19 @@ export class PrealertaComponent implements OnInit {
     })
 
 
-    this.prealert = {
+    /*this.prealert = {
       prealerta: head,
       lstdist: this.createstringcodes(this.arraycodes),
       detalle: detail
-    }
+    }*/
 
 
 
-    let prealertfinal = {
+    /*let prealertfinal = {
       prealerta: head,
       lstdist: this.createstringcodes(this.arraycodes),
       detalle: detail
-    }
+    }*/
 
     if (!this.editPrealert && this.pralId != "") {
       this.prealert.prealerta.pralId = parseInt(this.pralId)
@@ -686,7 +686,7 @@ export class PrealertaComponent implements OnInit {
       message: "Are you sure to send the prealert?",
       accept: async () => {
         this.spinner.show();
-        await this.api.registerPrealert(prealertfinal, localStorage.getItem("token")).then(data => {
+        await this.api.registerPrealert(null, localStorage.getItem("token")).then(data => {
           this.spinner.hide();
           if (data.headerApp.code == 200) {
             this.prealertdraft();
@@ -929,7 +929,7 @@ export class PrealertaComponent implements OnInit {
 
     let head: Cabecera = {
       fecha: this.getFormatDate(new Date()),
-      usuaId: this.user.usuaid,
+      usuaId: null,
       pralCerrado: "N",
       estado: "B",
       pralId: draft.head.pralId
@@ -994,7 +994,7 @@ export class PrealertaComponent implements OnInit {
   viewxlsx() {
     let head: Cabecera = {
       fecha: this.getFormatDate(new Date()),
-      usuaId: this.user.usuaid,
+      usuaId: null,
       pralCerrado: "N",
       estado: "B",
       pralId: this.idPrealert == undefined ? 0 : this.idPrealert
@@ -1114,7 +1114,7 @@ export class PrealertaComponent implements OnInit {
   async saveeraser() {
     let head: Cabecera = {
       fecha: this.getFormatDate(new Date()),
-      usuaId: this.user.usuaid,
+      usuaId: null,
       pralCerrado: "N",
       estado: "B",
       pralId: this.idPrealert == undefined ? 0 : this.idPrealert

@@ -40,13 +40,13 @@
 
     <a id="topbar-profile-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)" class="mobile img">
         <span>{{name | titlecase }}</span>
-        <img [src]="user.photo" alt="ecuador-layout" class="topbar-profile" onError="this.src='assets/images/user2.png'" />
+        <!--<img [src]="user.photo" alt="ecuador-layout" class="topbar-profile" onError="this.src='assets/images/user2.png'" />-->
         <i class="fa fa-sort-desc"></i>
     </a>
 
     <a id="topbar-profile-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)" class="web">
         <span>{{name | titlecase }}</span>
-        <img *ngIf="user.photo!=null" [src]="user.photo" alt="ecuador-layout" class="topbar-profile" onError="this.src='assets/images/user2.png'" />
+        <!--<img *ngIf="user.photo!=null" [src]="user.photo" alt="ecuador-layout" class="topbar-profile" onError="this.src='assets/images/user2.png'" />-->
         <i class="fa fa-sort-desc"></i>
     </a>
 

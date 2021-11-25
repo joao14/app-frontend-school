@@ -37,7 +37,7 @@ export class MenuComponent implements OnInit, OnChanges {
         this.typerol = JSON.parse(localStorage.getItem('user'))['perfil'].code;
         this.activeMenuItem = "DASH";
         this.activeSubMenu = "";
-        this.activeItem = "";  
+        this.activeItem = "";
     }
 
 
@@ -538,39 +538,42 @@ export class MenuComponent implements OnInit, OnChanges {
                 } else
                     if (item == 'ECA') {
                         this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Empresas de Cargas' }])
-                    }
-                    else
-                        if (item == 'CL') {
-                            this.app.utilservice.itemsSource.next([{ 'label': 'Ventas' }, { 'label': 'Clientes' }])
+                    } else
+                        if (item == 'UNIDADES') {
+                            this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Unidades' }])
                         }
                         else
-                            if (item == 'FAC') {
-                                this.app.utilservice.itemsSource.next([{ 'label': 'Ventas' }, { 'label': 'Facturación' }])
-                            } else
-                                if (item == 'ASIE') {
-                                    this.app.utilservice.itemsSource.next([{ 'label': 'Ventas' }, { 'label': 'Registro de asientos' }])
+                            if (item == 'CL') {
+                                this.app.utilservice.itemsSource.next([{ 'label': 'Ventas' }, { 'label': 'Clientes' }])
+                            }
+                            else
+                                if (item == 'FAC') {
+                                    this.app.utilservice.itemsSource.next([{ 'label': 'Ventas' }, { 'label': 'Facturación' }])
                                 } else
-                                    if (item == 'VD') {
-                                        this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Ventas Diarias' }])
+                                    if (item == 'ASIE') {
+                                        this.app.utilservice.itemsSource.next([{ 'label': 'Ventas' }, { 'label': 'Registro de asientos' }])
                                     } else
-                                        if (item == 'DC') {
-                                            this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Documentos de clientes' }])
+                                        if (item == 'VD') {
+                                            this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Ventas Diarias' }])
                                         } else
-                                            if (item == 'RPL') {
-                                                this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Prealertas' }])
-                                            } else if (item == 'HIS') {
-                                                this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Histórico pedidos' }])
+                                            if (item == 'DC') {
+                                                this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Documentos de clientes' }])
                                             } else
-                                                if (item == 'STATUS') {
-                                                    this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Estados' }])
+                                                if (item == 'RPL') {
+                                                    this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Prealertas' }])
+                                                } else if (item == 'HIS') {
+                                                    this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Histórico pedidos' }])
                                                 } else
-                                                    if (item == 'TEMP') {
-                                                        this.app.utilservice.itemsSource.next([{ 'label': 'Templates' }, { 'label': 'Facturación' }])
-                                                    } else if (item == 'ORDER') {
-                                                        this.app.utilservice.itemsSource.next([{ 'label': 'Ordenes' }])
-                                                    } else if (item == 'PEDIDO') {
-                                                        this.app.utilservice.itemsSource.next([{ 'label': 'Pedidos' }])
-                                                    }
+                                                    if (item == 'STATUS') {
+                                                        this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Estados' }])
+                                                    } else
+                                                        if (item == 'TEMP') {
+                                                            this.app.utilservice.itemsSource.next([{ 'label': 'Templates' }, { 'label': 'Facturación' }])
+                                                        } else if (item == 'ORDER') {
+                                                            this.app.utilservice.itemsSource.next([{ 'label': 'Ordenes' }])
+                                                        } else if (item == 'PEDIDO') {
+                                                            this.app.utilservice.itemsSource.next([{ 'label': 'Pedidos' }])
+                                                        }
 
         if (this.activeItem == item) {
             this.activeItem = "";

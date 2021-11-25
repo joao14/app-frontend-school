@@ -215,7 +215,7 @@ export class EditComponent implements OnInit {
       fechcrea: this.getFormatDate(new Date()),
       nombre: this.template.cabecera.nombre,
       estado: this.template.cabecera.estado,
-      usuario: this.user.nickname
+      //usuario: this.user.nickname
     }
 
     this.api.addTemplateHead(head, localStorage.getItem('token')).then(data => {

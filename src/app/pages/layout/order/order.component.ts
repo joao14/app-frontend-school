@@ -1123,10 +1123,10 @@ export class OrderComponent implements OnInit {
       pediId: 0,
       fecha: this.getFormatDate(new Date()),
       fechrequ: this.getFormatDate(new Date(this.dateEnvio + '')),
-      usuaId: this.user.usuaid,
+      //usuaId: this.user.usuaid,
       estado: 'A',
       fase: 'PE',
-      clieId: this.profile == 'ADM' ? this.clientselect.entiId : this.user.empresa.entiid
+      //clieId: this.profile == 'ADM' ? this.clientselect.entiId : this.user.empresa.entiid
     }
 
     let items = []

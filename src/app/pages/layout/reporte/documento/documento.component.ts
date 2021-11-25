@@ -132,7 +132,7 @@ export class DocumentoComponent implements OnInit {
 
   async getDatabyClient() {
     this.utilService.isLoading.next(true);
-    await this.api.getPrealertActivebyClient(this.user.empresa.entiid, localStorage.getItem("token")).then(data => {
+    /*await this.api.getPrealertActivebyClient(this.user.empresa.entiid, localStorage.getItem("token")).then(data => {
       
       if (data.headerApp.code == 200) {
         this.prealert = data.data.prealert;
@@ -143,7 +143,7 @@ export class DocumentoComponent implements OnInit {
         localStorage.clear();
         this.router.navigate(['/login']);
       }
-    })
+    })*/
     this.utilService.isLoading.next(false);
   }
 

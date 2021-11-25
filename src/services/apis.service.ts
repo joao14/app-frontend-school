@@ -335,6 +335,22 @@ export class ApisService {
         });
     }
 
+    public getunidades(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.unidades, opt).toPromise().then(finca => {
+                resolve(finca);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
 
     public getfinca(token: string): Promise<any> {
         let opt = {
@@ -353,7 +369,7 @@ export class ApisService {
 
     }
 
-    public addfinca(finca: any, token: string): Promise<any> {
+    public addunidad(unidad: any, token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -361,7 +377,7 @@ export class ApisService {
             })
         }
         return new Promise<any>((resolve, reject) => {
-            this.http.post<any>(environment.addfinca, finca, opt).toPromise().then(finca => {
+            this.http.post<any>(environment.addunidad, unidad, opt).toPromise().then(finca => {
                 resolve(finca);
             }).catch(error => {
                 reject(error);
@@ -369,7 +385,7 @@ export class ApisService {
         });
     }
 
-    public updatefinca(finca: any, token: string): Promise<any> {
+    public updateunidad(unidad: any, token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -377,7 +393,7 @@ export class ApisService {
             })
         }
         return new Promise<any>((resolve, reject) => {
-            this.http.put<any>(environment.updatefinca, finca, opt).toPromise().then(finca => {
+            this.http.post<any>(environment.updateunidad, unidad, opt).toPromise().then(finca => {
                 resolve(finca);
             }).catch(error => {
                 reject(error);

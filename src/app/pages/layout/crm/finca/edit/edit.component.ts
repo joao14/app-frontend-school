@@ -54,7 +54,7 @@ export class EditComponent implements OnInit {
   }
 
   save() {  
-    this.api.addfinca(this.finca, localStorage.getItem("token")).then(data => {
+    /*this.api.addfinca(this.finca, localStorage.getItem("token")).then(data => {
       
       if (data.headerApp.code === 200) {
         this.router.navigate(['fincas']);
@@ -65,7 +65,7 @@ export class EditComponent implements OnInit {
         localStorage.clear();
         this.router.navigate(['/login']);
       }
-    })
+    })*/
 
   }
 
@@ -74,7 +74,7 @@ export class EditComponent implements OnInit {
   }
 
   modificar(){  
-    this.api.updatefinca(this.finca, localStorage.getItem("token")).then(data => {      
+    /*this.api.updatefinca(this.finca, localStorage.getItem("token")).then(data => {      
       if (data.headerApp.code === 200) {
         this.router.navigate(['fincas']);
         this.inicializateValores();
@@ -84,7 +84,7 @@ export class EditComponent implements OnInit {
         localStorage.clear();
         this.router.navigate(['/login']);
       }
-    })
+    })*/
   }
 
 }

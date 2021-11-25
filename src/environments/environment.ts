@@ -10,6 +10,13 @@ export const environment = {
     email: 'lukassant77@gmail.com', 
     url: 'https://addsoft-tech.com:8443/rmi/',
     login: URL + '/coob/wsapi/auth/login',
+    unidades: URL + '/coob/wsapi/adm/units',
+    addunidad: URL + '/coob/wsapi/adm/unit/create',
+    updateunidad: URL + '/coob/wsapi/adm/unit/update',
+
+
+
+
     client: URL + '/romi/apirm/crm/clients',
     addclient: URL + '/romi/apirm/crm/client/add',
     updateclient: URL + '/romi/apirm/crm/client/update',
