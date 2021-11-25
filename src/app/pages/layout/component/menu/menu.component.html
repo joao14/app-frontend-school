@@ -29,7 +29,7 @@
             <li *ngIf="typerol=='ADM' || typerol=='CLI' || typerol=='FAC' || typerol=='COM'">
                 <a (click)="itemClick('CAT')" style="font-size: 14px;" [class]="activeSubMenu=='CAT'?'is-active':'no-active'">
                     <i class="fa fa-fw fa-table" [ngStyle]="{'color':activeSubMenu === 'CAT'? 'white': '#828282'}"></i>
-                    <span>{{ 'Catálogos' | translate }}</span>
+                    <span>{{ 'Administración' | translate }}</span>
                     <i [class]="activeSubMenu=='CAT'?'fa fa-fw fa-angle-up layout-menuitem-toggler': 'fa fa-fw fa-angle-down layout-menuitem-toggler'" [ngStyle]="{'color':activeSubMenu === 'CAT'? 'white': '#828282'}"></i>
                 </a>
             </li>
@@ -57,6 +57,12 @@
                         <a routerLink="/estados" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='STATUS'?'active-item':'no-active-item'" (click)="selectItemMenu('STATUS')">
                             <i class="fa fa-fw fa-etsy" [ngStyle]="{'color':activeItem ==='STATUS'? '#ff4456': '#828282'}"></i>
                             <span>{{ 'Estados' | translate }} </span>
+                        </a>
+                    </li>
+                    <li *ngIf="typerol=='ADM' || typerol=='FAC' || typerol=='COM'">
+                        <a routerLink="/cargos" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='CARGOS'?'active-item':'no-active-item'" (click)="selectItemMenu('CARGOS')">
+                            <i class="fa fa-fw fa-cubes" [ngStyle]="{'color':activeItem ==='CARGOS'? '#ff4456': '#828282'}"></i>
+                            <span>{{ 'Cargos' | translate }} </span>
                         </a>
                     </li>
                     <li *ngIf="typerol=='ADM' || typerol=='FAC' || typerol=='COM'">

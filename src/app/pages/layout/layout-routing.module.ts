@@ -9,6 +9,13 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
             { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
+            { path: 'unidades', loadChildren: () => import('./crm/unidades/unidades.module').then(m => m.UnidadesModule) },
+            { path: 'editunidades', loadChildren: () => import('./crm/unidades/edit/edit.module').then(m => m.EditModule) },
+            { path: 'cargos', loadChildren: () => import('./crm/cargos/cargos.module').then(m => m.CargosModule) },  
+            { path: 'editcargos', loadChildren: () => import('./crm/cargos/edit/edit.module').then(m => m.EditModule) },
+
+
+
             { path: 'clientes', loadChildren: () => import('./crm/clientes/clientes.module').then(m => m.ClientesModule) },
             { path: 'flores', loadChildren: () => import('./crm/flores/flores.module').then(m => m.FloresModule) },
             { path: 'fincas', loadChildren: () => import('./crm/finca/finca.module').then(m => m.FincaModule) },
@@ -34,8 +41,6 @@ const routes: Routes = [
             { path: 'general', loadChildren: () => import('./reporte/general/general.module').then(m => m.GeneralModule) }, 
             { path: 'estados', loadChildren: () => import('./crm/estados/estados.module').then(m => m.EstadosModule) }, 
             { path: 'editarestados', loadChildren: () => import('./crm/estados/edit/edit.module').then(m => m.EditModule) },
-            { path: 'unidades', loadChildren: () => import('./crm/unidades/unidades.module').then(m => m.UnidadesModule) },
-            { path: 'editunidades', loadChildren: () => import('./crm/unidades/edit/edit.module').then(m => m.EditModule) },
             { path: 'template', loadChildren: () => import('./templates/templates.module').then(m => m.TemplatesModule) },
             { path: 'edittemplate', loadChildren: () => import('./templates/edit/edit.module').then(m => m.EditModule) }, 
             { path: 'order', loadChildren: () => import('./order/order.module').then(m => m.OrderModule) }, 

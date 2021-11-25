@@ -13,7 +13,9 @@ export const environment = {
     unidades: URL + '/coob/wsapi/adm/units',
     addunidad: URL + '/coob/wsapi/adm/unit/create',
     updateunidad: URL + '/coob/wsapi/adm/unit/update',
-
+    cargos: URL + '/coob/wsapi/adm/cargos',
+    addcargo: URL + '/coob/wsapi/adm/cargo/create',
+    updatecargo: URL + '/coob/wsapi/adm/cargo/update',
 
 
 

@@ -352,6 +352,57 @@ export class ApisService {
 
     }
 
+    public getcargos(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.cargos, opt).toPromise().then(finca => {
+                resolve(finca);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+    public addcargo(cargo: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.addcargo, cargo, opt).toPromise().then(finca => {
+                resolve(finca);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public updatecargo(cargo: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => { 
+            this.http.post<any>(environment.updatecargo, cargo, opt).toPromise().then(finca => {
+                resolve(finca);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+
+
     public getfinca(token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
