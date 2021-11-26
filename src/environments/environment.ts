@@ -16,8 +16,20 @@ export const environment = {
     cargos: URL + '/coob/wsapi/adm/cargos',
     addcargo: URL + '/coob/wsapi/adm/cargo/create',
     updatecargo: URL + '/coob/wsapi/adm/cargo/update',
+    obras: URL + '/coob/wsapi/liob/obras',
+    addobra: URL + '/coob/wsapi/liob/obra/create',
+    updateobra: URL + '/coob/wsapi/liob/obra/update',
 
 
+
+
+
+
+
+
+
+
+    
 
     client: URL + '/romi/apirm/crm/clients',
     addclient: URL + '/romi/apirm/crm/client/add',

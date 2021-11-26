@@ -13,6 +13,8 @@ const routes: Routes = [
             { path: 'editunidades', loadChildren: () => import('./crm/unidades/edit/edit.module').then(m => m.EditModule) },
             { path: 'cargos', loadChildren: () => import('./crm/cargos/cargos.module').then(m => m.CargosModule) },  
             { path: 'editcargos', loadChildren: () => import('./crm/cargos/edit/edit.module').then(m => m.EditModule) },
+            { path: 'obras', loadChildren: () => import('./crm/obras/obras.module').then(m => m.ObrasModule) },  
+            { path: 'editobras', loadChildren: () => import('./crm/obras/edit/edit.module').then(m => m.EditModule) },
 
 
 

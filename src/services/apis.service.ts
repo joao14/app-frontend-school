@@ -401,6 +401,57 @@ export class ApisService {
         });
     }
 
+    public getobras(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.obras, opt).toPromise().then(finca => {
+                resolve(finca);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
+
+    public addobra(obra: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.addobra, obra, opt).toPromise().then(finca => {
+                resolve(finca);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public updateobra(obra: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => { 
+            this.http.post<any>(environment.updateobra, obra, opt).toPromise().then(finca => {
+                resolve(finca);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+
 
 
     public getfinca(token: string): Promise<any> {

@@ -60,8 +60,14 @@
                         </a>
                     </li>
                     <li *ngIf="typerol=='ADM' || typerol=='FAC' || typerol=='COM'">
+                        <a routerLink="/obras" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='OBRA'?'active-item':'no-active-item'" (click)="selectItemMenu('OBRA')">
+                            <i class="fa fa-building-o" [ngStyle]="{'color':activeItem ==='OBRA'? '#ff4456': '#828282'}"></i>
+                            <span>{{ 'Obras' | translate }} </span>
+                        </a>
+                    </li>
+                    <li *ngIf="typerol=='ADM' || typerol=='FAC' || typerol=='COM'">
                         <a routerLink="/cargos" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='CARGOS'?'active-item':'no-active-item'" (click)="selectItemMenu('CARGOS')">
-                            <i class="fa fa-fw fa-cubes" [ngStyle]="{'color':activeItem ==='CARGOS'? '#ff4456': '#828282'}"></i>
+                            <i class="fa fa-users" [ngStyle]="{'color':activeItem ==='CARGOS'? '#ff4456': '#828282'}"></i>
                             <span>{{ 'Cargos' | translate }} </span>
                         </a>
                     </li>
