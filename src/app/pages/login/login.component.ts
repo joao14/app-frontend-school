@@ -38,9 +38,6 @@ export class LoginComponent implements OnInit {
         this.estado = "indeterminate";
         this.api.login(this.checkoutForm.get("username").value, this.checkoutForm.get("password").value).then(data => {
 
-            console.log("DATA");
-            console.log(data);
-
             if (data.headerApp.code === 200) {
 
                 data.data.obras.forEach(obra => {

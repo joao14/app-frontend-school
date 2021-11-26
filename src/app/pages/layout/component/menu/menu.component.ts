@@ -549,9 +549,9 @@ export class MenuComponent implements OnInit, OnChanges {
                         if (item == 'OBRA') {
                             this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Obras' }])
                         }
-                        else
-                            if (item == 'CL') {
-                                this.app.utilservice.itemsSource.next([{ 'label': 'Ventas' }, { 'label': 'Clientes' }])
+                        else 
+                            if (item == 'USERS') {
+                                this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Usuarios' }])
                             }
                             else
                                 if (item == 'FAC') {

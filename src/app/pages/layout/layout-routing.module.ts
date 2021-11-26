@@ -15,6 +15,12 @@ const routes: Routes = [
             { path: 'editcargos', loadChildren: () => import('./crm/cargos/edit/edit.module').then(m => m.EditModule) },
             { path: 'obras', loadChildren: () => import('./crm/obras/obras.module').then(m => m.ObrasModule) },  
             { path: 'editobras', loadChildren: () => import('./crm/obras/edit/edit.module').then(m => m.EditModule) },
+            { path: 'users', loadChildren: () => import('./crm/users/users.module').then(m => m.UsersModule) },  
+            { path: 'editusers', loadChildren: () => import('./crm/users/edit/edit.module').then(m => m.EditModule) },
+
+
+            
+            
 
 
 

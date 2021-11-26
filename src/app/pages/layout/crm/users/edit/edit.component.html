@@ -1,0 +1,71 @@
+<div class="ui-g">
+    <div class="ui-g-12 ui-lg-1"></div>
+    <div class="ui-g-12 ui-lg-10">
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+                <button (click)="save()" pButton class="ui-button-success" icon="pi pi-check" label="Guardar" *ngIf="!edit"></button> &nbsp;
+
+                <button (click)="modificar()" pButton class="ui-button-success" icon="pi pi-save" label="Actualizar" *ngIf="edit"></button> &nbsp;
+
+                <button (click)="cancelar()" pButton class="ui-button-warning" icon="pi pi-arrow-left" label="Atrás"></button> &nbsp;
+
+            </div>
+        </p-toolbar>
+        <div class="card card-w-title ui-fluid">
+
+            <h1 *ngIf="!edit">Agregar nuevo usuario</h1>
+            <h1 *ngIf="edit">Editar Usuario</h1>
+            <div class="ui-g form-group">
+                <div class="ui-g-12 ui-md-6">
+                    <label for="nombres">Nombres</label>
+                    <input type="text" name="nombres" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.usuaNombres" />
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <label for="apellidos">Apellidos</label>
+                    <input type="text" name="apellidos" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.usuaApellidos" />
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <label for="nick">Nick</label>
+                    <input type="text" name="nick" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.usuaNick" />
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <label class="lbl">Password</label>
+                    <div class="ui-inputgroup">
+                        <input type="password" autocomplete="off" maxlength="100" pPassword [showPassword]="looking" [(ngModel)]="user.usuaClave" />
+                        <button type="button" pButton pRipple [icon]="icon" (click)="changelookpasswor()"></button>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <label for="perfil">Perfil</label>
+                    <p-dropdown [options]="perfiles" [(ngModel)]="user.usuaPerfil" optionLabel="name" placeholder="Seleccione un perfil"></p-dropdown>
+                </div>
+
+                <div class="ui-g-12 ui-md-12">
+                    <p-fieldset legend="Obras">
+                        <div class="ui-g form-group">
+
+                            <div class="ui-g-12 ui-md-12">
+                                <p-pickList [source]="obras" [target]="obrasSelect" sourceHeader="Obras" (onMoveToTarget)="enabled($event)" (onMoveToSource)="disabled($event)" [showSourceControls]="false" [showTargetControls]="false" targetHeader="Obras seleccionadas" dragdrop="true"
+                                    [responsive]="true" dragdrop="true" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="nombre" sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
+                                    <ng-template let-obra pTemplate="item">
+                                        <div class="marks-item">
+                                            <div class="mark-list-detail">
+                                                <h5 class="p-mb-2">{{obra.obraNombre | titlecase}}</h5>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </p-pickList>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-lg-1"></div>
+</div>

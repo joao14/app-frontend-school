@@ -19,6 +19,7 @@ export const environment = {
     obras: URL + '/coob/wsapi/liob/obras',
     addobra: URL + '/coob/wsapi/liob/obra/create',
     updateobra: URL + '/coob/wsapi/liob/obra/update',
+    users: URL + '/coob/wsapi/auth/users',
 
 
 
@@ -29,12 +30,11 @@ export const environment = {
 
 
 
-    
 
     client: URL + '/romi/apirm/crm/clients',
     addclient: URL + '/romi/apirm/crm/client/add',
     updateclient: URL + '/romi/apirm/crm/client/update',
-    users: URL + '/romi/apirm/user/all',
+    //users: URL + '/romi/apirm/user/all',
     adduser: URL + '/romi/apirm/user/add',
     updateuser: URL + '/romi/apirm/user/update',
     resetpassword: URL + '/romi/apirm/user/reset/pass/',

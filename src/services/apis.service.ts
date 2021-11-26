@@ -352,6 +352,23 @@ export class ApisService {
 
     }
 
+    public getusuarios(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.users, opt).toPromise().then(finca => {
+                resolve(finca);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
     public getcargos(token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
