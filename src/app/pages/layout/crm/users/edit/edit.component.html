@@ -18,30 +18,30 @@
             <div class="ui-g form-group">
                 <div class="ui-g-12 ui-md-6">
                     <label for="nombres">Nombres</label>
-                    <input type="text" name="nombres" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.usuaNombres" />
+                    <input type="text" name="nombres" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.user.usuaNombres" />
                 </div>
 
                 <div class="ui-g-12 ui-md-6">
                     <label for="apellidos">Apellidos</label>
-                    <input type="text" name="apellidos" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.usuaApellidos" />
+                    <input type="text" name="apellidos" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.user.usuaApellidos" />
                 </div>
 
                 <div class="ui-g-12 ui-md-6">
                     <label for="nick">Nick</label>
-                    <input type="text" name="nick" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.usuaNick" />
+                    <input type="text" name="nick" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.user.usuaNick" />
                 </div>
 
                 <div class="ui-g-12 ui-md-6">
                     <label class="lbl">Password</label>
                     <div class="ui-inputgroup">
-                        <input type="password" autocomplete="off" maxlength="100" pPassword [showPassword]="looking" [(ngModel)]="user.usuaClave" />
+                        <input type="password" autocomplete="off" maxlength="100" pPassword [showPassword]="looking" [(ngModel)]="user.user.usuaClave" />
                         <button type="button" pButton pRipple [icon]="icon" (click)="changelookpasswor()"></button>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-6">
                     <label for="perfil">Perfil</label>
-                    <p-dropdown [options]="perfiles" [(ngModel)]="user.usuaPerfil" optionLabel="name" placeholder="Seleccione un perfil"></p-dropdown>
+                    <p-dropdown [options]="perfiles" [(ngModel)]="user.user.usuaPerfil" optionLabel="name" placeholder="Seleccione un perfil" [showClear]="true"></p-dropdown>
                 </div>
 
                 <div class="ui-g-12 ui-md-12">
@@ -49,7 +49,7 @@
                         <div class="ui-g form-group">
 
                             <div class="ui-g-12 ui-md-12">
-                                <p-pickList [source]="obras" [target]="obrasSelect" sourceHeader="Obras" (onMoveToTarget)="enabled($event)" (onMoveToSource)="disabled($event)" [showSourceControls]="false" [showTargetControls]="false" targetHeader="Obras seleccionadas" dragdrop="true"
+                                <p-pickList [source]="obras" [target]="user.obras" sourceHeader="Obras" (onMoveToTarget)="enabled($event)" (onMoveToSource)="disabled($event)" [showSourceControls]="false" [showTargetControls]="false" targetHeader="Obras seleccionadas" dragdrop="true"
                                     [responsive]="true" dragdrop="true" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="nombre" sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
                                     <ng-template let-obra pTemplate="item">
                                         <div class="marks-item">

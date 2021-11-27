@@ -9,11 +9,11 @@
                 </div>
             </p-toolbar>
 
-            <p-table #dt [value]="usuarios" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" class="p-datatable-responsive-demo" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50,100]">
+            <p-table #dt [value]="users" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" class="p-datatable-responsive-demo" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50,100]">
 
                 <ng-template pTemplate="caption">
                     <div class="table-header">
-                        {{'Lista de Usuarios' | translate}} [{{usuarios.length}}]
+                        {{'Lista de Usuarios' | translate}} [{{users.length}}]
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
@@ -60,12 +60,12 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-usuario let-columns="columns">
                     <tr style="background-color: white;">
-                        <td>{{usuario.usuaId}}</td>
-                        <td>{{usuario.usuaNombres | titlecase}}</td>
-                        <td>{{usuario.usuaApellidos | titlecase}}</td>
-                        <td>{{usuario.usuaNick | titlecase}}</td>
-                        <td>{{usuario.usuaEstado }}</td>
-                        <td>{{usuario.usuaPerfil | titlecase}}</td>
+                        <td>{{usuario.user.usuaId}}</td>
+                        <td>{{usuario.user.usuaNombres | titlecase}}</td>
+                        <td>{{usuario.user.usuaApellidos | titlecase}}</td>
+                        <td>{{usuario.user.usuaNick | titlecase}}</td>
+                        <td>{{usuario.user.usuaEstado }}</td>
+                        <td>{{usuario.user.usuaPerfil | titlecase}}</td>
                         <td>
                             <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil" (click)="edit(usuario)"></button>
                         </td>
