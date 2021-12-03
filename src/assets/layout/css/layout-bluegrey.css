@@ -114,14 +114,14 @@ a {
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-  background-color: #16222A;
-  background-image: -webkit-gradient(linear, left top, right top, from(#16222A), to(#3A6073));
-  background-image: -webkit-linear-gradient(to right, #16222A, #3A6073);
-  background-image: -moz-linear-gradient(to right, #16222A, #3A6073);
-  background-image: -ms-linear-gradient(to right, #16222A, #3A6073);
-  background-image: -o-linear-gradient(to right, #16222A, #3A6073);
-  background-image: linear-gradient(to right, #16222A, #3A6073);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#16222A", endColorstr="#3A6073", gradientType="1");
+  background-color: #4E7487;
+  background-image: -webkit-gradient(linear, left top, right top, from(#4E7487), to(#3A6073));
+  background-image: -webkit-linear-gradient(to right, #4E7487, #3A6073);
+  background-image: -moz-linear-gradient(to right, #4E7487, #3A6073);
+  background-image: -ms-linear-gradient(to right, #4E7487, #3A6073);
+  background-image: -o-linear-gradient(to right, #4E7487, #3A6073);
+  background-image: linear-gradient(to right, #4E7487, #3A6073);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#4E7487", endColorstr="#4E7487", gradientType="1");
 }
 .layout-wrapper .layout-topbar #topbar-menu-button {
   float: left;
@@ -2008,7 +2008,7 @@ body .layout-wrapper .layout-main .layout-content {
 }
 .login-body .login-image {
   height: 100%;
-  background: url("../../layout/images/bg-image-login.jpg") no-repeat;
+  background: url("../../layout/images/cmb1.jpg") no-repeat;
   background-size: cover;
   background-position: center;
 }

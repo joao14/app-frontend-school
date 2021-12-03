@@ -16,7 +16,7 @@
 }
 
 .is-active{
-    background-color: #ff4456;
+    background-color: #4E7487;
     color: white !important;
     font-weight: bold;
 }
@@ -35,8 +35,8 @@
 }
 
 .active-item{
-    /*border-color: #ff4456 !important;*/
-    color: red !important;
+    border-color: #059bb4 !important;
+    color: #4E7487 !important;
     font-weight: bold;
 }
 
