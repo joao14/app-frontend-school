@@ -44,7 +44,12 @@
                     <p-dropdown [options]="perfiles" [(ngModel)]="user.user.usuaPerfil" optionLabel="name" placeholder="Seleccione un perfil" [showClear]="true"></p-dropdown>
                 </div>
 
-                <div class="ui-g-12 ui-md-12">
+                <div class="ui-g-12 ui-md-3">
+                    <label for="state">Estado</label>
+                    <p-selectButton [options]="options" [(ngModel)]="user.user.usuaEstado"></p-selectButton>
+                </div>
+
+                <div class="ui-g-12 ui-md-12" *ngIf="edit">
                     <p-fieldset legend="Obras">
                         <div class="ui-g form-group">
 

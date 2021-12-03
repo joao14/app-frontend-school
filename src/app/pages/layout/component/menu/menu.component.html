@@ -15,7 +15,7 @@
                     <i [ngStyle]="{'color':activeSubMenu === 'SG'? 'white': '#828282'}" [class]="activeSubMenu=='SG'?'fa fa-fw fa-angle-up layout-menuitem-toggler': 'fa fa-fw fa-angle-down layout-menuitem-toggler'"></i>
                 </a>
             </li>
-            <li *ngIf="activeSubMenu=='SG'">
+            <!--<li *ngIf="activeSubMenu=='SG'">
                 <ul>
                     <li *ngIf="typerol=='ADM'">
                         <a routerLink="/usuario" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='EC'?'active-item':'no-active-item'" (click)="selectItemMenu('EC')">
@@ -25,7 +25,7 @@
                     </li>
 
                 </ul>
-            </li>
+            </li>-->
             <li *ngIf="typerol=='ADM' || typerol=='CLI' || typerol=='FAC' || typerol=='COM'">
                 <a (click)="itemClick('CAT')" style="font-size: 14px;" [class]="activeSubMenu=='CAT'?'is-active':'no-active'">
                     <i class="fa fa-fw fa-table" [ngStyle]="{'color':activeSubMenu === 'CAT'? 'white': '#828282'}"></i>
@@ -35,7 +35,7 @@
             </li>
             <li *ngIf="activeSubMenu=='CAT'">
                 <ul>
-                    <li *ngIf="typerol=='ADM' || typerol=='CLI' || typerol=='FAC' || typerol=='COM'">
+                    <!--<li *ngIf="typerol=='ADM' || typerol=='CLI' || typerol=='FAC' || typerol=='COM'">
                         <a routerLink="/flores" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='FL'?'active-item':'no-active-item'" (click)="selectItemMenu('FL')">
                             <i class="fa fa-fw fa-cubes" [ngStyle]="{'color':activeItem ==='FL'? '#ff4456': '#828282'}"></i>
                             <span>{{ 'Flores' | translate }} </span>
@@ -52,10 +52,10 @@
                             <i class="fa fa-fw fa-truck" [ngStyle]="{'color':activeItem ==='ECA'? '#ff4456': '#828282'}"></i>
                             <span>{{ 'E.Carga' | translate }} </span>
                         </a>
-                    </li>
+                    </li>-->
                     <li *ngIf="typerol=='ADM' || typerol=='FAC' || typerol=='COM'">
                         <a routerLink="/users" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='USERS'?'active-item':'no-active-item'" (click)="selectItemMenu('USERS')">
-                            <i class="fa fa-fw fa-etsy" [ngStyle]="{'color':activeItem ==='USERS'? '#ff4456': '#828282'}"></i>
+                            <i class="fa fa-fw fa-users" [ngStyle]="{'color':activeItem ==='USERS'? '#ff4456': '#828282'}"></i>
                             <span>{{ 'Usuarios' | translate }} </span>
                         </a>
                     </li>

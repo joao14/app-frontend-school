@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
 
                 data.data.obras.forEach(obra => {
                     this.obras.push(obra);
-                })
+                })   
 
                 this.estado = "determinate";
 

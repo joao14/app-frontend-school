@@ -25,7 +25,7 @@ import { BlockUIModule, ButtonModule, DropdownModule, FieldsetModule, InputSwitc
     BlockUIModule,
     PasswordModule,
     PickListModule,
-    FieldsetModule
+    FieldsetModule,
   ]
 })
 export class EditModule { }

@@ -64,7 +64,7 @@
                         <td>{{usuario.user.usuaNombres | titlecase}}</td>
                         <td>{{usuario.user.usuaApellidos | titlecase}}</td>
                         <td>{{usuario.user.usuaNick | titlecase}}</td>
-                        <td>{{usuario.user.usuaEstado }}</td>
+                        <td>{{usuario.user.usuaEstado? 'Activo' : 'Inactivo' | titlecase }}</td>
                         <td>{{usuario.user.usuaPerfil | titlecase}}</td>
                         <td>
                             <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil" (click)="edit(usuario)"></button>

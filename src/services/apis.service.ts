@@ -488,6 +488,54 @@ export class ApisService {
 
     }
 
+    public adduser(user: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.adduser, user, opt).toPromise().then(usuario => {
+                resolve(usuario);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public updateusuario(usuario: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.updateuser, usuario, opt).toPromise().then(usuario => {
+                resolve(usuario);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public addobrabyuser(relation: any, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.addobrabyuser, relation, opt).toPromise().then(relation => {
+                resolve(relation);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
     public addunidad(unidad: any, token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
