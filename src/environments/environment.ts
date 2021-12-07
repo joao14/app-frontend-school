@@ -22,8 +22,8 @@ export const environment = {
     users: URL + '/coob/wsapi/auth/users',
     adduser: URL + '/coob/wsapi/auth/user/create',
     updateuser: URL + '/coob/wsapi/auth/user/update',
-    addobrabyuser: URL + 'coob/wsapi/auth/usuaobra/create',  
-
+    addobrabyuser: URL + '/coob/wsapi/auth/usuaobra/create',  
+    removeobrabyuser: URL + '/coob/wsapi/auth/usuaobra/delete/',  
 
 
 

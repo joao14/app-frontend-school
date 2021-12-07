@@ -55,7 +55,7 @@
 
                             <div class="ui-g-12 ui-md-12">
                                 <p-pickList [source]="obras" [target]="user.obras" sourceHeader="Obras" (onMoveToTarget)="enabled($event)" (onMoveToSource)="disabled($event)" [showSourceControls]="false" [showTargetControls]="false" targetHeader="Obras seleccionadas" dragdrop="true"
-                                    [responsive]="true" dragdrop="true" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="nombre" sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
+                                    [responsive]="true" dragdrop="true" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="obraNombre" sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
                                     <ng-template let-obra pTemplate="item">
                                         <div class="marks-item">
                                             <div class="mark-list-detail">

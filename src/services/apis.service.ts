@@ -58,7 +58,7 @@ export class ApisService {
             user: email,
             pass: password,
         }
-        
+
         return this.http
             .post<any>(
                 environment.login,
@@ -409,7 +409,7 @@ export class ApisService {
                 'Authorization': 'Bearer ' + token
             })
         }
-        return new Promise<any>((resolve, reject) => { 
+        return new Promise<any>((resolve, reject) => {
             this.http.post<any>(environment.updatecargo, cargo, opt).toPromise().then(finca => {
                 resolve(finca);
             }).catch(error => {
@@ -459,7 +459,7 @@ export class ApisService {
                 'Authorization': 'Bearer ' + token
             })
         }
-        return new Promise<any>((resolve, reject) => { 
+        return new Promise<any>((resolve, reject) => {
             this.http.post<any>(environment.updateobra, obra, opt).toPromise().then(finca => {
                 resolve(finca);
             }).catch(error => {
@@ -529,6 +529,22 @@ export class ApisService {
         }
         return new Promise<any>((resolve, reject) => {
             this.http.post<any>(environment.addobrabyuser, relation, opt).toPromise().then(relation => {
+                resolve(relation);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    public removeobrabyuser(idObra: string, token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.post<any>(environment.removeobrabyuser + idObra, null, opt).toPromise().then(relation => {
                 resolve(relation);
             }).catch(error => {
                 reject(error);
@@ -1183,7 +1199,7 @@ export class ApisService {
     }
 
     public getInformationAllOrders(dateIni: string, dateFin: string, token: string): Promise<any> {
-               let opt = {
+        let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token

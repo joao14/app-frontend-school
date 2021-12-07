@@ -45,6 +45,8 @@ export class UsersComponent implements OnInit {
   async getUsuarios() {
     this.utilservice.isLoading.next(true);
     await this.apis.getusuarios(localStorage.getItem("token")).then(async data => {
+      console.log("USUARIOS");
+      console.log(data);
       if (data.headerApp.code == 200) {
         data.data.forEach(element => {
           this.user = {

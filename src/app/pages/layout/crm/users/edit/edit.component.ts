@@ -44,7 +44,7 @@ export class EditComponent implements OnInit {
   obras: Array<obra> = []
   obrasSelect: Array<obra> = []
 
-  constructor(private api: ApisService, private router: Router, private utilService: UtilService) {
+  constructor(private api: ApisService, private router: Router, private utilService: UtilService, private messageService: MessageService,) {
     if (this.router.getCurrentNavigation().extras.state != null) {
       this.userTemp = JSON.parse(this.router.getCurrentNavigation().extras.state.user);
       this.edit = true;
@@ -172,26 +172,16 @@ export class EditComponent implements OnInit {
   }
 
   enabled(event: any) {
-    console.log("Habilitar");
     event.items.forEach(async (element) => {
-      console.log("DATAAAA");
-      console.log(element);
       let relation = {
-        obraId: {
-          obraId: element.obraId
-        },
-        usuaId: {
-          usuaId: this.user.user.usuaId
-        }
-      } 
-      console.log("RELATION");
-      console.log(relation);
+        obraId: element.obraId,
+        usuaId: this.user.user.usuaId
+      }
       await this.api.addobrabyuser(relation, localStorage.getItem("token")).then(data => {
-        console.log("RESPUESTA");
-        console.log(data);
+
         if (data.headerApp.code === 200) {
           //this.user.roles = data.data.roles;
-          //this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Se agrego un nuevo rol al usuario' });
+          this.messageService.add({ severity: 'info', summary: 'Informativo', detail: 'Se agrego una obra al usuario' });
         }
       }).catch(err => {
         console.log("ERROR");
@@ -202,44 +192,26 @@ export class EditComponent implements OnInit {
         }
       })
     });
+  }  
+ 
+  disabled(event: any) { 
+    console.log("Desabilitar..");  
+    event.items.forEach(async element => {  
+      console.log(element.obraId); 
+      console.log("ELEMENTOSSS");      
+      console.log(localStorage.getItem("token"));
+      this.api.removeobrabyuser(element.obraId, localStorage.getItem("token")).then(data => {
+        if (data.headerApp.code === 200) {    
+          this.messageService.add({ severity: 'info', summary: 'Informativo', detail: 'Se quito un rol al usuario' });
+        }  
+      }).catch(err => {
 
-    /*event.items.forEach(async (element) => {
-      if ((element.nombre).toUpperCase() == 'CLIENTE' && this.user.empresa.entiid == 1) {
-        this.messageService.add({ severity: 'error', summary: 'Rosa Mística', detail: 'No puede agregar perfil de cliente a la empresa original' });
-        return true;
-      }
-      let rol = {
-        usuaId: this.user.usuaid,
-        rolId: element.rolId
-      }
-      
-
-    });*/
-  }
-
-  disabled(event: any) {
-    console.log("Desabilitar..");
-
-    /*
-        event.items.forEach(async element => {
-    
-          let rol = {
-            usroId: element.usroId,
-            usuaId: this.user.usuaid,
-            rolId: element.rolId
-          }
-          this.api.removeRolesByUser(rol, localStorage.getItem("token")).then(data => {
-            if (data.headerApp.code === 200) {
-              this.messageService.add({ severity: 'info', summary: 'Rosa Mística', detail: 'Se quito un rol al usuario' });
-            }
-          }).catch(err => {
-             
-            if (err.error.code == 401) {
-              localStorage.clear();
-              this.router.navigate(['/login']);
-            }
-          })
-        });*/
+        if (err.error.code == 401) {
+          localStorage.clear();
+          this.router.navigate(['/login']);
+        }
+      })
+    });
   }
 
 
