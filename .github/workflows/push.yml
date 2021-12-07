@@ -43,10 +43,10 @@ jobs:
       - name: Build, Push and Deploy to Heroku #set the whatever name you want to this step
         id: heroku
         uses: mtsmachado8/heroku-deploy@v1.0.0  # use the latest version of the action
-        with:
+        with: 
           email: ${{ secrets.HEROKU_EMAIL }} # your heroku email
           api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
           app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplication name
-          dockerfile_path: Dockerfile # set the path to the folder wher the Dokerfile is located
+          dockerfile_path: '/Users/alexander.merino/Documents/Alexander Merino/Programas/app-frontend-school/.github/workflows/Dockerfile' # set the path to the folder wher the Dokerfile is located
           options: '' # Docker Build Options
      
