@@ -52,12 +52,12 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-          heroku container:push web --app ${{ secrets.HEROKU_API_NAME }}
+          heroku container:push web -a ${{ secrets.HEROKU_API_NAME }}
           echo "Pushed OK"
       - name: Release
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: | 
-          heroku container:release web --app ${{ secrets.HEROKU_API_NAME }}
+          heroku container:release web -a ${{ secrets.HEROKU_API_NAME }}
           echo "Relased OK"
      
