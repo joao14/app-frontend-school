@@ -38,26 +38,15 @@ jobs:
     name: Build and deploy to container Heroku
     runs-on: ubuntu-latest 
     steps:
-      - name: Hello
-        run: echo Hola Alex como vas
-      - name: Check out repository
+      - name: Checkout
         uses: actions/checkout@v2
-      - name: Login to Heroku Container registry
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          heroku container:login
-          echo "Login satisfactorio"
-      - name: Build and push
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          heroku container:push web -a ${{ secrets.HEROKU_API_NAME }}
-          echo "Pushed OK"
-      - name: Release
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: | 
-          heroku container:release web -a ${{ secrets.HEROKU_API_NAME }}
-          echo "Relased OK"
+      - name: Build, Push and Deploy to Heroku #set the whatever name you want to this step
+        id: heroku
+        uses: mtsmachado8/heroku-deploy@v1.0.0  # use the latest version of the action
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }} # your heroku email
+          api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
+          app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplication name
+          dockerfile_path: . # set the path to the folder wher the Dokerfile is located
+          options: '' # Docker Build Options
      
