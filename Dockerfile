@@ -1,7 +1,7 @@
 # Stage 1: Compile and Build angular codebase
 
 # Use official node image as the base image
-FROM node:latest as build
+FROM node:12-alpine as build
 
 # Set the working directory
 WORKDIR /app
@@ -10,7 +10,7 @@ WORKDIR /app
 COPY ./ /app/
 
 # Install all the dependencies
-RUN npm install
+RUN npm install 
 
 # Generate the build of the application
 RUN npm run build
@@ -22,7 +22,7 @@ RUN npm run build
 FROM nginx:latest
 
 # Copy the build output to replace the default nginx contents.
-COPY --from=build /app/dist/app-frontend-school /usr/share/nginx/html
+COPY --from=build /app/dist/app-school /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
