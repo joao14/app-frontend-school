@@ -36,7 +36,9 @@ export class LoginComponent implements OnInit {
     onSubmit() {
 
         this.estado = "indeterminate";
-        this.api.login(this.checkoutForm.get("username").value, this.checkoutForm.get("password").value).then(data => {
+        this.api.loginschool(this.checkoutForm.get("username").value, this.checkoutForm.get("password").value).then(data => {
+            console.log("Usuario conetado");
+            console.log(data);
 
             if (data.headerApp.code === 200) {
 

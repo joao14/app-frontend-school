@@ -68,6 +68,22 @@ export class ApisService {
             .pipe(retry(2), catchError(this.handleError)).toPromise();
     }
 
+    public loginschool(username: string, password: string): Promise<any> {
+        let credential = {
+            username: username,
+            password: password,
+        }
+
+        return this.http
+            .post<any>(
+                environment.loginschool,
+                credential,
+                this.httpOptions
+            )
+            .pipe(retry(2), catchError(this.handleError)).toPromise();
+    }
+
+
     public resetpassword(email: string, token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({
