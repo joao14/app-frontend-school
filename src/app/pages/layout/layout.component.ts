@@ -136,8 +136,6 @@ export class LayoutComponent implements OnInit {
     }
 
     onTopbarSubItemClickRoles(event) {
-        console.log('LAYOUT---');
-        console.log(event.target.textContent);
 
         this.utilservice.rolselected.next(event.target.textContent);
         switch ((event.target.textContent).toUpperCase()) {

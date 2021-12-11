@@ -21,9 +21,9 @@
                         <th> {{'Id' | translate}}</th>
                         <th> {{'Nombres' | translate}}</th>
                         <th> {{'Apellidos' | translate}}</th>
-                        <th> {{'Nick' | translate}}</th>
-                        <th> {{'Estado' | translate}}</th>
-                        <th> {{'Perfil' | translate}}</th>
+                        <th> {{'Username' | translate}}</th>
+                        <th> {{'Email' | translate}}</th>
+                        <th> {{'Phone' | translate}}</th>
                         <th style="width: 8em; text-align: center;">
                             <button pButton type="button" icon="pi pi-cog"></button>
                         </th>
@@ -32,27 +32,27 @@
                         <th></th>
                         <th>
                             <div class="ui-fluid">
-                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuaNombres', 'contains')" placeholder="Search by Nombres" class="p-column-filter">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'user_name', 'contains')" placeholder="Search by Nombres" class="p-column-filter">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
-                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuaApellidos', 'contains')" placeholder="Search by Apellidos" class="p-column-filter">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'user_lastname', 'contains')" placeholder="Search by Apellidos" class="p-column-filter">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
-                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuaNick', 'contains')" placeholder="Search by Nick" class="p-column-filter">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'user_username', 'contains')" placeholder="Search by Nick" class="p-column-filter">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
-                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuaEstado', 'contains')" placeholder="Search by Estado" class="p-column-filter">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'user_email', 'contains')" placeholder="Search by Estado" class="p-column-filter">
                             </div>
                         </th>
                         <th>
                             <div class="ui-fluid">
-                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'usuaPerfil', 'contains')" placeholder="Search by Perfil" class="p-column-filter">
+                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'user_phone', 'contains')" placeholder="Search by Perfil" class="p-column-filter">
                             </div>
                         </th>
                         <th></th>
@@ -60,12 +60,12 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-usuario let-columns="columns">
                     <tr style="background-color: white;">
-                        <td>{{usuario.user.usuaId}}</td>
-                        <td>{{usuario.user.usuaNombres | titlecase}}</td>
-                        <td>{{usuario.user.usuaApellidos | titlecase}}</td>
-                        <td>{{usuario.user.usuaNick | titlecase}}</td>
-                        <td>{{usuario.user.usuaEstado? 'Activo' : 'Inactivo' | titlecase }}</td>
-                        <td>{{usuario.user.usuaPerfil | titlecase}}</td>
+                        <td>{{usuario.user_id}}</td>
+                        <td>{{usuario.user_name | titlecase}}</td>
+                        <td>{{usuario.user_lastname | titlecase}}</td>
+                        <td>{{usuario.user_username | titlecase}}</td>
+                        <td>{{usuario.user_email | titlecase }}</td>
+                        <td>{{usuario.user_phone | titlecase}}</td>
                         <td>
                             <button pButton type="button" class="ui-button-warning" icon="pi pi-pencil" (click)="edit(usuario)"></button>
                         </td>

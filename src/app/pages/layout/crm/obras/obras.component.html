@@ -1,7 +1,7 @@
 <div class="ui-g">
     <div class="ui-g-12">
         <div class="card no-margin">
-            <h1>{{'Lista de Obras' | translate}}</h1>
+            <h1>{{'Lista de Cursos' | translate}}</h1>
             <p-toast></p-toast>
             <p-toolbar>
                 <div class="p-toolbar-group-left">
@@ -13,7 +13,7 @@
 
                 <ng-template pTemplate="caption">
                     <div class="table-header">
-                        {{'Lista de Obras' | translate}} [{{obras.length}}]
+                        {{'Lista de Cursos' | translate}} [{{obras.length}}]
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
@@ -21,7 +21,6 @@
                         <th> {{'Id' | translate}}</th>
                         <th> {{'Nombre' | translate}}</th>
                         <th> {{'Descripcion' | translate}}</th>
-                        <th> {{'Dirección' | translate}}</th>
                         <th style="width: 8em; text-align: center;">
                             <button pButton type="button" icon="pi pi-cog"></button>
                         </th>
@@ -36,11 +35,6 @@
                         <th>
                             <div class="ui-fluid">
                                 <input pInputText type="text" (input)="dt.filter($event.target.value, 'obraDescripcion', 'contains')" placeholder="Search by Descripcion" class="p-column-filter">
-                            </div>
-                        </th>
-                        <th>
-                            <div class="ui-fluid">
-                                <input pInputText type="text" (input)="dt.filter($event.target.value, 'obraDireccion', 'contains')" placeholder="Search by Direction" class="p-column-filter">
                             </div>
                         </th>
                         <th></th>

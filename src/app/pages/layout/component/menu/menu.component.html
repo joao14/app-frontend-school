@@ -8,13 +8,13 @@
                     <span>{{ 'Tablero' | translate }} </span>
                 </a>
             </li>
-            <li *ngIf="typerol=='ADM'">
+            <!--<li *ngIf="typerol=='ADM'">
                 <a (click)="itemClick('SG')" style="font-size: 14px;" [class]="activeSubMenu=='SG'?'is-active':'no-active'">
                     <i class="fa fa-fw fa-cogs" [ngStyle]="{'color':activeSubMenu === 'SG'? 'white': '#444444'}"></i>
                     <span>{{ 'Seguridad' | translate }}</span>
                     <i [ngStyle]="{'color':activeSubMenu === 'SG'? 'white': '#444444'}" [class]="activeSubMenu=='SG'?'fa fa-fw fa-angle-up layout-menuitem-toggler': 'fa fa-fw fa-angle-down layout-menuitem-toggler'"></i>
                 </a>
-            </li>
+            </li>-->
             <!--<li *ngIf="activeSubMenu=='SG'">
                 <ul>
                     <li *ngIf="typerol=='ADM'">
@@ -62,21 +62,21 @@
                     <li *ngIf="typerol=='ADM' || typerol=='FAC' || typerol=='COM'">
                         <a routerLink="/obras" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='OBRA'?'active-item':'no-active-item'" (click)="selectItemMenu('OBRA')">
                             <i class="fa fa-building-o" [ngStyle]="{'color':activeItem ==='OBRA'? '#047f94': '#444444'}"></i>
-                            <span>{{ 'Obras' | translate }} </span>
+                            <span>{{ 'Cursos' | translate }} </span>
                         </a>
                     </li>
-                    <li *ngIf="typerol=='ADM' || typerol=='FAC' || typerol=='COM'">
+                    <!--<li *ngIf="typerol=='ADM' || typerol=='FAC' || typerol=='COM'">
                         <a routerLink="/cargos" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='CARGOS'?'active-item':'no-active-item'" (click)="selectItemMenu('CARGOS')">
                             <i class="fa fa-users" [ngStyle]="{'color':activeItem ==='CARGOS'? '#047f94': '#444444'}"></i>
-                            <span>{{ 'Cargos' | translate }} </span>
+                            <span>{{ 'Días' | translate }} </span>
                         </a>
                     </li>
                     <li *ngIf="typerol=='ADM' || typerol=='FAC' || typerol=='COM'">
                         <a routerLink="/unidades" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='UNIDADES'?'active-item':'no-active-item'" (click)="selectItemMenu('UNIDADES')">
                             <i class="fa fa-fw fa-cubes" [ngStyle]="{'color':activeItem ==='UNIDADES'? '#047f94': '#444444'}"></i>
-                            <span>{{ 'Unidades' | translate }} </span>
+                            <span>{{ 'Horas' | translate }} </span>
                         </a>
-                    </li>
+                    </li>-->
 
                 </ul>
             </li>
@@ -86,7 +86,7 @@
                     <span>{{ 'Pedidos' | translate }} </span>
                 </a>
             </li>
-            <li *ngIf="typerol=='ADM' || typerol=='FAC'">
+            <!--<li *ngIf="typerol=='ADM' || typerol=='FAC'">
                 <a (click)="itemClick('VENT')" style="font-size: 14px;" [class]="activeSubMenu=='VENT'?'is-active':'no-active'">
                     <i class="fa fa-money" [ngStyle]="{'color':activeSubMenu === 'VENT'? 'white': '#444444'}"></i>
                     <span>{{ 'Ventas' | translate }}</span>
@@ -127,56 +127,14 @@
                     </li>
 
                 </ul>
-            </li>
+            </li>-->
             <li *ngIf="typerol=='ADM' || typerol=='COM'">
                 <a routerLink="/prealerta" routerLinkActive="active" style="font-size: 14px;" (click)="activeMenu('PREALERT')" [class]="activeMenuItem=='PREALERT'?'is-active':'no-active'">
                     <i class="fa fa-fw fa-pencil-square-o" [ngStyle]="{'color':activeMenuItem === 'PREALERT'? 'white': '#444444'}"></i>
-                    <span>{{ 'Generar prealertas' | translate }} </span>
+                    <span>{{ 'Inscripciones' | translate }} </span>
                 </a>
             </li>
-            <li *ngIf="typerol=='ADM' || typerol=='CLI' || typerol=='COM' || typerol=='FAC'">
-                <a (click)="itemClick('REP')" style="font-size: 14px;" [class]="activeSubMenu=='REP'?'is-active':'no-active'">
-                    <i class="fa fa-fw fa-wpforms" [ngStyle]="{'color':activeSubMenu === 'REP'? 'white': '#444444'}"></i>
-                    <span>{{ 'Reportes' | translate }}</span>
-                    <i [class]="activeSubMenu=='REP'?'fa fa-fw fa-angle-up layout-menuitem-toggler': 'fa fa-fw fa-angle-down layout-menuitem-toggler'" [ngStyle]="{'color':activeSubMenu === 'REP'? 'white': '#444444'}"></i>
-                </a>
-            </li>
-            <li *ngIf="activeSubMenu=='REP'">
-                <ul>
-                    <li *ngIf="typerol=='ADM'">
-                        <a routerLink="/sales" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='VD'?'active-item':'no-active-item'" (click)="selectItemMenu('VD')">
-                            <i class="fa fa-fw fa-file-text-o" [ngStyle]="{'color':activeItem ==='VD'? '#047f94': '#444444'}"></i>
-                            <span>{{ 'Venta diarias de flores' | translate }} </span>
-                        </a>
-                    </li>
-                    <li *ngIf="typerol=='ADM' || typerol=='CLI'">
-                        <a routerLink="/general" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='GN'?'active-item':'no-active-item'" (click)="selectItemMenu('GN')">
-                            <i class="fa fa-fw fa-file-text-o" [ngStyle]="{'color':activeItem ==='GN'? '#047f94': '#444444'}"></i>
-                            <span>{{ 'Balance' | translate}} </span>
-                        </a>
-                    </li>
-                    <li *ngIf="typerol=='ADM' || typerol=='FAC'">
-                        <a routerLink="/balance" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='DC'?'active-item':'no-active-item'" (click)="selectItemMenu('DC')">
-                            <i class="fa fa-fw fa-file-text-o" [ngStyle]="{'color':activeItem ==='DC'? '#047f94': '#444444'}"></i>
-                            <span>{{ 'Transacciones' | translate}} </span>
-                        </a>
-                    </li>
-                    <li *ngIf="typerol=='ADM' || typerol=='COM' || typerol=='CLI' || typerol=='FAC'">
-                        <a routerLink="/documento" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='RPL'?'active-item':'no-active-item'" (click)="selectItemMenu('RPL')">
-                            <i class="fa fa-fw fa-file-text-o" [ngStyle]="{'color':activeItem ==='RPL'? '#047f94': '#444444'}"></i>
-                            <span>{{ 'Reporte prealerta' | translate }} </span>
-                        </a>
-                    </li>
 
-                    <li *ngIf="typerol=='ADM' || typerol=='CLI'">
-                        <a routerLink="/historicopedido" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='HIS'?'active-item':'no-active-item'" (click)="selectItemMenu('HIS')">
-                            <i class="fa fa-fw fa-file-text-o" [ngStyle]="{'color':activeItem ==='HIS'? '#047f94': '#444444'}"></i>
-                            <span>{{ 'Histórico de pedidos' | translate }} </span>
-                        </a>
-                    </li>
-
-                </ul>
-            </li>
         </ul>
 
     </div>

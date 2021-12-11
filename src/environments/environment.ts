@@ -5,7 +5,8 @@ const PUERTO: string = "8780"
 
 //const URL: string = IP + PUERTO;
 
-const URL: string = "https://app-backend-school.herokuapp.com"
+const URL: string = "http://localhost:3000"; 
+//const URL: string = "https://app-backend-school.herokuapp.com"
 
 export const environment = {
     production: false,
@@ -22,9 +23,9 @@ export const environment = {
     obras: URL + '/coob/wsapi/liob/obras',
     addobra: URL + '/coob/wsapi/liob/obra/create',
     updateobra: URL + '/coob/wsapi/liob/obra/update',
-    users: URL + '/coob/wsapi/auth/users',
-    adduser: URL + '/coob/wsapi/auth/user/create',
-    updateuser: URL + '/coob/wsapi/auth/user/update',
+    users: URL + '/app/v1/user/all',
+    adduser: URL + '/app/v1/user/add',
+    updateuser: URL + '/app/v1/user/update',
     addobrabyuser: URL + '/coob/wsapi/auth/usuaobra/create',
     removeobrabyuser: URL + '/coob/wsapi/auth/usuaobra/delete/',
 

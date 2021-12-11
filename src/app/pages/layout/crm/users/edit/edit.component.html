@@ -16,57 +16,58 @@
             <h1 *ngIf="!edit">Agregar nuevo usuario</h1>
             <h1 *ngIf="edit">Editar Usuario</h1>
             <div class="ui-g form-group">
+
+                <div class="ui-g-12 ui-md-6">
+                    <label for="identification">Identificación</label>
+                    <input type="text" name="identification" pInputText autocomplete="off" maxlength="13" [(ngModel)]="user.user_identification" />
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <label class="lbl">Gender</label>
+                    <p-dropdown [options]="gender" optionLabel="name" placeholder="Seleccione un genero" [(ngModel)]="user.user_gender" [showClear]="true"></p-dropdown>
+                </div>
+
                 <div class="ui-g-12 ui-md-6">
                     <label for="nombres">Nombres</label>
-                    <input type="text" name="nombres" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.user.usuaNombres" />
+                    <input type="text" name="nombres" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.user_name" />
                 </div>
 
                 <div class="ui-g-12 ui-md-6">
                     <label for="apellidos">Apellidos</label>
-                    <input type="text" name="apellidos" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.user.usuaApellidos" />
+                    <input type="text" name="apellidos" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.user_lastname" />
                 </div>
 
                 <div class="ui-g-12 ui-md-6">
-                    <label for="nick">Nick</label>
-                    <input type="text" name="nick" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.user.usuaNick" />
+                    <label for="nick">Username</label>
+                    <input type="text" name="nick" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.user_username" />
                 </div>
 
                 <div class="ui-g-12 ui-md-6">
                     <label class="lbl">Password</label>
                     <div class="ui-inputgroup">
-                        <input type="password" autocomplete="off" maxlength="100" pPassword [showPassword]="looking" [(ngModel)]="user.user.usuaClave" />
+                        <input type="password" autocomplete="off" maxlength="100" pPassword [showPassword]="looking" [(ngModel)]="user.user_password" />
                         <button type="button" pButton pRipple [icon]="icon" (click)="changelookpasswor()"></button>
                     </div>
                 </div>
 
                 <div class="ui-g-12 ui-md-6">
+                    <label for="perfil">Email</label>
+                    <input type="text" name="nick" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.user_email" />
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
                     <label for="perfil">Perfil</label>
-                    <p-dropdown [options]="perfiles" [(ngModel)]="user.user.usuaPerfil" optionLabel="name" placeholder="Seleccione un perfil" [showClear]="true"></p-dropdown>
+                    <p-dropdown [options]="perfiles" optionLabel="name" placeholder="Seleccione un perfil" [showClear]="true" [(ngModel)]="user.prof_id"></p-dropdown>
                 </div>
 
-                <div class="ui-g-12 ui-md-3">
-                    <label for="state">Estado</label>
-                    <p-selectButton [options]="options" [(ngModel)]="user.user.usuaEstado"></p-selectButton>
+                <div class="ui-g-12 ui-md-6">
+                    <label for="phone">Phone</label>
+                    <input type="text" name="phone" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.user_phone" />
                 </div>
 
-                <div class="ui-g-12 ui-md-12" *ngIf="edit">
-                    <p-fieldset legend="Obras">
-                        <div class="ui-g form-group">
-
-                            <div class="ui-g-12 ui-md-12">
-                                <p-pickList [source]="obras" [target]="user.obras" sourceHeader="Obras" (onMoveToTarget)="enabled($event)" (onMoveToSource)="disabled($event)" [showSourceControls]="false" [showTargetControls]="false" targetHeader="Obras seleccionadas" dragdrop="true"
-                                    [responsive]="true" dragdrop="true" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="obraNombre" sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
-                                    <ng-template let-obra pTemplate="item">
-                                        <div class="marks-item">
-                                            <div class="mark-list-detail">
-                                                <h5 class="p-mb-2">{{obra.obraNombre | titlecase}}</h5>
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                </p-pickList>
-                            </div>
-                        </div>
-                    </p-fieldset>
+                <div class="ui-g-12 ui-md-6">
+                    <label for="age">Edad</label>
+                    <input type="text" name="age" pInputText autocomplete="off" maxlength="100" [(ngModel)]="user.user_age" />
                 </div>
 
             </div>

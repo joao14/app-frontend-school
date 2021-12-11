@@ -372,7 +372,8 @@ export class ApisService {
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
+                'auth-token': token
+                //'Authorization': 'Bearer ' + token
             })
         }
         return new Promise<any>((resolve, reject) => {
@@ -508,7 +509,7 @@ export class ApisService {
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
+                'auth-token': token
             })
         }
         return new Promise<any>((resolve, reject) => {
@@ -524,11 +525,11 @@ export class ApisService {
         let opt = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
+                'auth-token': token
             })
         }
         return new Promise<any>((resolve, reject) => {
-            this.http.post<any>(environment.updateuser, usuario, opt).toPromise().then(usuario => {
+            this.http.put<any>(environment.updateuser, usuario, opt).toPromise().then(usuario => {
                 resolve(usuario);
             }).catch(error => {
                 reject(error);

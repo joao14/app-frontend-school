@@ -13,15 +13,15 @@
 
     <a href="/" class="logo-container">
         <!--<img src="assets/layout/images/ecuador-logo.png" alt="ecuador-layout" />-->
-        <span style="color: white;font-weight: bold;font-size: 1.5rem;">CONTROL OBRAS</span>
+        <span style="color: white;font-weight: bold;font-size: 1.5rem;">ADMIN SCHOOL</span>
     </a>
 
     <a href="/" style="float: left!important;margin-top: -36px;" class="mobile">
         <!--<img src="assets/layout/images/ecuador-logo.png" alt="ecuador-layout" />-->
-        <span style="color: white;font-weight: bold;font-size: 1.5rem;">CONTROL OBRAS</span>
+        <span style="color: white;font-weight: bold;font-size: 1.5rem;">ADMIN SCHOOL</span>
     </a>
 
-    <div class="search-input languajes">
+    <!--<div class="search-input languajes">
         <i class="fa fa-language" aria-hidden="true" style="color: white;"></i> &nbsp;
         <select name="miselect" (change)="onChange($event)" class="fixed">
             <option value="es" selected="selected">Español</option>
@@ -29,14 +29,14 @@
             <option value="ru">Rusia</option>
             <option value="ch">日本人</option>
         </select>
-    </div>
+    </div>-->
 
-    <div class="balance" *ngIf="typerol=='CLI'" (click)="app.reportbalance()">
+    <!--<div class="balance" *ngIf="typerol=='CLI'" (click)="app.reportbalance()">
         <span style="font-size: 15px;color: white;font-weight: bold;">             
             <i class="fa fa-line-chart" style="font-size: 1.5rem;color: white;"></i> &nbsp; {{ 'Balance' | translate }}: &nbsp;
              {{balance | currency}}
         </span>
-    </div>
+    </div>-->
 
     <a id="topbar-profile-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)" class="mobile img">
         <span>{{name | titlecase }}</span>
