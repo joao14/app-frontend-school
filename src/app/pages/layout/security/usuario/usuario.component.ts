@@ -5,6 +5,13 @@ import { MessageService } from 'primeng';
 import { TranslateService } from '@ngx-translate/core';
 import { UtilService } from 'src/services/util.service';
 
+export interface schedule{
+  cour_name: string;
+  day_name: string;
+  hour_end: string;
+  hour_start: string;
+}
+
 export interface Empresa {
   dni: string,
   entiid: number,
@@ -43,13 +50,31 @@ export class UsuarioComponent implements OnInit {
 
   users: Array<User> = [];
   identificacion: string = "";
+  schedules: Array<schedule> = [];
+
   constructor(private api: ApisService, private router: Router, private messageService: MessageService, private utilService: UtilService) { 
    
   }
 
   ngOnInit(): void {
     this.identificacion = "";
-    this.getUsers();
+    //this.getUsers();
+    this.getschedules();
+  }
+
+  getschedules(){
+    this.utilService.isLoading.next(true);
+    this.api.getSchedule(localStorage.getItem('token')).then(data => {
+        console.log(data);
+        this.schedules=data.schedule
+        this.utilService.isLoading.next(false);
+    }).catch(error => {
+      this.utilService.isLoading.next(false);
+     /* if (error.error.code == 401) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }*/
+    })
   }
 
   getUsers() {

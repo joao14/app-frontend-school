@@ -100,6 +100,22 @@ export class ApisService {
         });
     }
 
+    public getSchedule(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'auth-token': token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.schedule, opt).toPromise().then(users => {
+                resolve(users);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+    }
+
     public getUsers(token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({

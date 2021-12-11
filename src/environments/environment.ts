@@ -28,6 +28,7 @@ export const environment = {
     updateuser: URL + '/app/v1/user/update',
     addobrabyuser: URL + '/coob/wsapi/auth/usuaobra/create',
     removeobrabyuser: URL + '/coob/wsapi/auth/usuaobra/delete/',
+    schedule: URL + '/app/v1/schedule/get/schedule',
 
 
 

@@ -8,24 +8,30 @@
                     <span>{{ 'Tablero' | translate }} </span>
                 </a>
             </li>
-            <!--<li *ngIf="typerol=='ADM'">
+            <li *ngIf="typerol=='ADM'">
                 <a (click)="itemClick('SG')" style="font-size: 14px;" [class]="activeSubMenu=='SG'?'is-active':'no-active'">
                     <i class="fa fa-fw fa-cogs" [ngStyle]="{'color':activeSubMenu === 'SG'? 'white': '#444444'}"></i>
-                    <span>{{ 'Seguridad' | translate }}</span>
+                    <span>{{ 'Horarios' | translate }}</span>
                     <i [ngStyle]="{'color':activeSubMenu === 'SG'? 'white': '#444444'}" [class]="activeSubMenu=='SG'?'fa fa-fw fa-angle-up layout-menuitem-toggler': 'fa fa-fw fa-angle-down layout-menuitem-toggler'"></i>
                 </a>
-            </li>-->
-            <!--<li *ngIf="activeSubMenu=='SG'">
+            </li>
+            <li *ngIf="activeSubMenu=='SG'">
                 <ul>
                     <li *ngIf="typerol=='ADM'">
                         <a routerLink="/usuario" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='EC'?'active-item':'no-active-item'" (click)="selectItemMenu('EC')">
                             <i class="fa fa-fw fa-users" [ngStyle]="{'color':activeItem ==='EC'? '#047f94': '#444444'}"></i>
-                            <span>{{ 'Usuarios' | translate }} </span>
+                            <span>{{ 'School' | translate }} </span>
+                        </a>
+                    </li>
+                    <li *ngIf="typerol=='ADM'">
+                        <a routerLink="/usuario" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='EC'?'active-item':'no-active-item'" (click)="selectItemMenu('EC')">
+                            <i class="fa fa-fw fa-users" [ngStyle]="{'color':activeItem ==='EC'? '#047f94': '#444444'}"></i>
+                            <span>{{ 'Mis horarios' | translate }} </span>
                         </a>
                     </li>
 
                 </ul>
-            </li>-->
+            </li>
             <li *ngIf="typerol=='ADM' || typerol=='CLI' || typerol=='FAC' || typerol=='COM'">
                 <a (click)="itemClick('CAT')" style="font-size: 14px;" [class]="activeSubMenu=='CAT'?'is-active':'no-active'">
                     <i class="fa fa-fw fa-table" [ngStyle]="{'color':activeSubMenu === 'CAT'? 'white': '#444444'}"></i>
