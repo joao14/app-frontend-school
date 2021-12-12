@@ -38,11 +38,11 @@ export class LoginComponent implements OnInit {
         this.estado = "indeterminate";
         this.api.loginschool(this.checkoutForm.get("username").value, this.checkoutForm.get("password").value).then(data => {
             console.log("Usuario conetado");
-            console.log(data);
+            console.log(data);  
             localStorage.setItem("token", data.token)
             localStorage.setItem("user", JSON.stringify(data.user))
             this.router.navigate(['/dashboard'])
-            this.estado = "determinate";
+            this.estado = "determinate";    
 
             /*if (data.headerApp.code === 200) {
 

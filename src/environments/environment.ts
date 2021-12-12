@@ -29,6 +29,7 @@ export const environment = {
     addobrabyuser: URL + '/coob/wsapi/auth/usuaobra/create',
     removeobrabyuser: URL + '/coob/wsapi/auth/usuaobra/delete/',
     schedule: URL + '/app/v1/schedule/get/schedule',
+    courses: URL + '/app/v1/course/all',
 
 
 

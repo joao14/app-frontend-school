@@ -6,8 +6,8 @@ const routes: Routes = [
     {
         path: '',
         component: LayoutComponent,
-        children: [
-            { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
+        children: [ 
+            { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },  
             { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
             { path: 'unidades', loadChildren: () => import('./crm/unidades/unidades.module').then(m => m.UnidadesModule) },
             { path: 'editunidades', loadChildren: () => import('./crm/unidades/edit/edit.module').then(m => m.EditModule) },

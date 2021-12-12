@@ -32,11 +32,29 @@ export class MenuComponent implements OnInit, OnChanges {
         })
     }
 
-    ngOnInit() {  
+    ngOnInit() {
         //this.nameRol = JSON.parse(localStorage.getItem('user'))['perfil'].name;
-        this.nameRol = "Administrador";
+        this.user=JSON.parse(localStorage.getItem('user'))
+        console.log(this.user);
+        if(this.user.prof_id=="1"){
+            console.log("UNO");
+            this.nameRol = "Administrator";
+            this.typerol = "ADM";
+        }else
+        if(this.user.prof_id=="2"){
+            console.log("DOS");
+            this.nameRol = "Student";
+            this.typerol = "STUDY";
+
+        }else if(this.user.prof_id=="3"){
+            console.log("TRES");
+            this.nameRol = "Teacher";
+            this.typerol = "TEACH";
+
+        }
+        //this.nameRol = "Administrador";
         //this.typerol = JSON.parse(localStorage.getItem('user'))['perfil'].code;
-        this.typerol = "ADM";
+        //this.typerol = "ADM";
         this.activeMenuItem = "DASH";
         this.activeSubMenu = "";
         this.activeItem = "";
@@ -544,45 +562,54 @@ export class MenuComponent implements OnInit, OnChanges {
                         if (item == 'UNIDADES') {
                             this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Unidades' }])
                         }
-                        else     
-                        if (item == 'CARGOS') {
-                            this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Cargos' }])
-                        } else     
-                        if (item == 'OBRA') {
-                            this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Obras' }])
-                        }
-                        else 
-                            if (item == 'USERS') {
-                                this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Usuarios' }])
-                            }
-                            else
-                                if (item == 'FAC') {
-                                    this.app.utilservice.itemsSource.next([{ 'label': 'Ventas' }, { 'label': 'Facturación' }])
-                                } else
-                                    if (item == 'ASIE') {
-                                        this.app.utilservice.itemsSource.next([{ 'label': 'Ventas' }, { 'label': 'Registro de asientos' }])
-                                    } else
-                                        if (item == 'VD') {
-                                            this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Ventas Diarias' }])
+                        else
+                            if (item == 'CARGOS') {
+                                this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Cargos' }])
+                            } else
+                                if (item == 'OBRA') {
+                                    this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Obras' }])
+                                }
+                                else
+                                    if (item == 'USERS') {
+                                        this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Usuarios' }])
+                                    }
+                                    else
+
+                                        if (item == 'SCHE') {
+                                            this.app.utilservice.itemsSource.next([{ 'label': 'Horarios' }, { 'label': 'Materias Disponibles' }])
                                         } else
-                                            if (item == 'DC') {
-                                                this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Documentos de clientes' }])
+
+                                            if (item == 'MYSCHE') {
+                                                this.app.utilservice.itemsSource.next([{ 'label': 'Horarios' }, { 'label': 'Mis Materias' }])
                                             } else
-                                                if (item == 'RPL') {
-                                                    this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Prealertas' }])
-                                                } else if (item == 'HIS') {
-                                                    this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Histórico pedidos' }])
+
+                                                if (item == 'FAC') {
+                                                    this.app.utilservice.itemsSource.next([{ 'label': 'Ventas' }, { 'label': 'Facturación' }])
                                                 } else
-                                                    if (item == 'STATUS') {
-                                                        this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Estados' }])
+                                                    if (item == 'ASIE') {
+                                                        this.app.utilservice.itemsSource.next([{ 'label': 'Ventas' }, { 'label': 'Registro de asientos' }])
                                                     } else
-                                                        if (item == 'TEMP') {
-                                                            this.app.utilservice.itemsSource.next([{ 'label': 'Templates' }, { 'label': 'Facturación' }])
-                                                        } else if (item == 'ORDER') {
-                                                            this.app.utilservice.itemsSource.next([{ 'label': 'Ordenes' }])
-                                                        } else if (item == 'PEDIDO') {
-                                                            this.app.utilservice.itemsSource.next([{ 'label': 'Pedidos' }])
-                                                        }
+                                                        if (item == 'VD') {
+                                                            this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Ventas Diarias' }])
+                                                        } else
+                                                            if (item == 'DC') {
+                                                                this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Documentos de clientes' }])
+                                                            } else
+                                                                if (item == 'RPL') {
+                                                                    this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Prealertas' }])
+                                                                } else if (item == 'HIS') {
+                                                                    this.app.utilservice.itemsSource.next([{ 'label': 'Reportes' }, { 'label': 'Histórico pedidos' }])
+                                                                } else
+                                                                    if (item == 'STATUS') {
+                                                                        this.app.utilservice.itemsSource.next([{ 'label': 'Cátalogos' }, { 'label': 'Estados' }])
+                                                                    } else
+                                                                        if (item == 'TEMP') {
+                                                                            this.app.utilservice.itemsSource.next([{ 'label': 'Templates' }, { 'label': 'Facturación' }])
+                                                                        } else if (item == 'ORDER') {
+                                                                            this.app.utilservice.itemsSource.next([{ 'label': 'Ordenes' }])
+                                                                        } else if (item == 'PEDIDO') {
+                                                                            this.app.utilservice.itemsSource.next([{ 'label': 'Pedidos' }])
+                                                                        }
 
         if (this.activeItem == item) {
             this.activeItem = "";

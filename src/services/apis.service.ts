@@ -402,6 +402,23 @@ export class ApisService {
 
     }
 
+    public getcourses(token: string): Promise<any> {
+        let opt = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'auth-token': token
+            })
+        }
+        return new Promise<any>((resolve, reject) => {
+            this.http.get<any>(environment.courses, opt).toPromise().then(finca => {
+                resolve(finca);
+            }).catch(error => {
+                reject(error);
+            })
+        });
+
+    }
+
     public getcargos(token: string): Promise<any> {
         let opt = {
             headers: new HttpHeaders({

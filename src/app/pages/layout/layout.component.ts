@@ -3,6 +3,7 @@ import { MenuService } from "./../../../services/app.menu.service";
 import { Component, OnInit, Input, AfterViewInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { UtilService } from 'src/services/util.service';
+import { user } from "src/models/user";
 
 @Component({
     selector: "app-layout",
@@ -43,6 +44,8 @@ export class LayoutComponent implements OnInit {
 
     typerol: string;
 
+    user: user
+
     constructor(
         private menuService: MenuService,
         private router: Router,
@@ -54,15 +57,25 @@ export class LayoutComponent implements OnInit {
         })
 
         this.utilservice.typerolselected.subscribe(data => {
-            console.log('Variable');
             this.type = data;
         })
 
     }
 
     ngOnInit() {
-        localStorage.setItem("rolactive", "admin");
-        this.utilservice.typerolselected.next("admin");
+        this.user = JSON.parse(localStorage.getItem("user"))
+        if (this.user.prof_id == "1") {
+            localStorage.setItem("rolactive", "admin");
+            this.utilservice.typerolselected.next("admin");
+        } else
+            if (this.user.prof_id == "2") {
+                localStorage.setItem("rolactive", "student");
+                this.utilservice.typerolselected.next("admin");
+            } else
+                if (this.user.prof_id == "3") {
+                    localStorage.setItem("rolactive", "teacher");
+                    this.utilservice.typerolselected.next("admin");
+                }
 
         this.utilservice.itemsSource.next([
             { label: 'Dashboard' }]);
@@ -199,7 +212,7 @@ export class LayoutComponent implements OnInit {
         event.preventDefault();
     }
 
-    reportbalance(){       
+    reportbalance() {
         this.router.navigate(['/general'])
     }
 

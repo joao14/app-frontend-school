@@ -8,7 +8,7 @@
                     <span>{{ 'Tablero' | translate }} </span>
                 </a>
             </li>
-            <li *ngIf="typerol=='ADM'">
+            <li>
                 <a (click)="itemClick('SG')" style="font-size: 14px;" [class]="activeSubMenu=='SG'?'is-active':'no-active'">
                     <i class="fa fa-fw fa-cogs" [ngStyle]="{'color':activeSubMenu === 'SG'? 'white': '#444444'}"></i>
                     <span>{{ 'Horarios' | translate }}</span>
@@ -17,22 +17,22 @@
             </li>
             <li *ngIf="activeSubMenu=='SG'">
                 <ul>
-                    <li *ngIf="typerol=='ADM'">
-                        <a routerLink="/usuario" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='EC'?'active-item':'no-active-item'" (click)="selectItemMenu('EC')">
-                            <i class="fa fa-fw fa-users" [ngStyle]="{'color':activeItem ==='EC'? '#047f94': '#444444'}"></i>
+                    <li>
+                        <a routerLink="/usuario" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='SCHE'?'active-item':'no-active-item'" (click)="selectItemMenu('SCHE')">
+                            <i class="fa fa-fw fa-users" [ngStyle]="{'color':activeItem ==='SCHE'? '#047f94': '#444444'}"></i>
                             <span>{{ 'School' | translate }} </span>
                         </a>
                     </li>
-                    <li *ngIf="typerol=='ADM'">
-                        <a routerLink="/usuario" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='EC'?'active-item':'no-active-item'" (click)="selectItemMenu('EC')">
-                            <i class="fa fa-fw fa-users" [ngStyle]="{'color':activeItem ==='EC'? '#047f94': '#444444'}"></i>
+                    <li *ngIf="typerol!='ADM'">
+                        <a routerLink="/usuario" routerLinkActive="active" style="font-size: 14px;" [class]="activeItem=='MYSCHE'?'active-item':'no-active-item'" (click)="selectItemMenu('MYSCHE')">
+                            <i class="fa fa-fw fa-users" [ngStyle]="{'color':activeItem ==='MYSCHE'? '#047f94': '#444444'}"></i>
                             <span>{{ 'Mis horarios' | translate }} </span>
                         </a>
                     </li>
 
                 </ul>
             </li>
-            <li *ngIf="typerol=='ADM' || typerol=='CLI' || typerol=='FAC' || typerol=='COM'">
+            <li *ngIf="typerol=='ADM'">
                 <a (click)="itemClick('CAT')" style="font-size: 14px;" [class]="activeSubMenu=='CAT'?'is-active':'no-active'">
                     <i class="fa fa-fw fa-table" [ngStyle]="{'color':activeSubMenu === 'CAT'? 'white': '#444444'}"></i>
                     <span>{{ 'Administración' | translate }}</span>
@@ -134,7 +134,8 @@
 
                 </ul>
             </li>-->
-            <li *ngIf="typerol=='ADM' || typerol=='COM'">
+            <!--<li *ngIf="typerol=='ADM' || typerol=='COM'">-->
+            <li>
                 <a routerLink="/prealerta" routerLinkActive="active" style="font-size: 14px;" (click)="activeMenu('PREALERT')" [class]="activeMenuItem=='PREALERT'?'is-active':'no-active'">
                     <i class="fa fa-fw fa-pencil-square-o" [ngStyle]="{'color':activeMenuItem === 'PREALERT'? 'white': '#444444'}"></i>
                     <span>{{ 'Inscripciones' | translate }} </span>
